@@ -1,0 +1,30 @@
+{
+   "expo": {
+    "name": "Splitwallet",
+    "description": "...",
+    "slug": "sohobase-splitwallet",
+    "privacy": "public",
+    "sdkVersion": "20.0.0",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./assets/app-icon.png",
+    "loading": {
+      "icon": "./assets/app-loading.png",
+      "hideExponentText": true,
+      "backgroundColor": "#cccccc"
+    },
+    "notification": {
+      "icon": "./assets/app-icon.png",
+      "color": "#FFFFFF",
+    },
+    "ios": {
+      "bundleIdentifier": "com.sohobase.splitwallet",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.sohobase.splitwallet",
+      "versionCode": 1
+    }
+   }
+ }
