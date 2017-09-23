@@ -11,7 +11,7 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
-  style: undefined,
+  style: [],
 };
 
 export default Logo;

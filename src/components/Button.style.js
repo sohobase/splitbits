@@ -7,9 +7,18 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: COLOR.PRIMARY,
-    borderRadius: THEME.OFFSET * 2,
     display: 'flex',
+  },
+
+  square: {
+    borderRadius: THEME.OFFSET * 2,
     padding: THEME.OFFSET,
+  },
+
+  circle: {
+    width: THEME.BUTTON_CIRCLE_SIZE,
+    height: THEME.BUTTON_CIRCLE_SIZE,
+    borderRadius: THEME.BUTTON_CIRCLE_SIZE / 2,
   },
 
   disabled: {

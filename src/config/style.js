@@ -24,6 +24,22 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
 
+  LAYOUT_TOP: {
+    flex: 1,
+    height: '35%',
+    minHeight: '35%',
+    maxHeight: '35%',
+    backgroundColor: COLOR.PRIMARY,
+  },
+
+  LAYOUT_BOTTOM: {
+    flex: 0,
+    height: '50%',
+    // minHeight: '50%',
+    // maxHeight: '50%',
+    backgroundColor: COLOR.WHITE,
+  },
+
   ROW: {
     display: 'flex',
     flexDirection: 'row',
@@ -32,6 +48,5 @@ export default StyleSheet.create({
 
   SCREEN: {
     flex: 1,
-    backgroundColor: COLOR.BACKGROUND,
   },
 });

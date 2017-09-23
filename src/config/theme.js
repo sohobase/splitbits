@@ -11,9 +11,10 @@ export default {
   },
 
   COLOR: {
-    PRIMARY: '#9e9e9e',
-    ACCENT: '#3f51b5',
-    BACKGROUND: '#fafafa',
+    PRIMARY: '#3f51b5',
+    ACCENT: '#e91e63',
+    BACKGROUND: Color(WHITE).darken(0.03),
+    DIVIDER: Color(WHITE).darken(0.1),
     TEXT_DEFAULT: Color(BLACK).alpha(0.87),
     TEXT_SECONDARY: Color(BLACK).alpha(0.54),
     TEXT_DISABLED: Color(BLACK).alpha(0.38),
@@ -38,6 +39,8 @@ export default {
     },
   },
 
-  UNIT,
+  BORDER_RADIUS: UNIT / 2,
+  BUTTON_CIRCLE_SIZE: 64,
   OFFSET: UNIT * 1.6,
+  UNIT,
 };
