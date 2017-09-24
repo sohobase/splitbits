@@ -3,26 +3,11 @@ import { FlatList, RefreshControl, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Button } from '../../components';
 import { STYLE } from '../../config';
+import { ActivityService, WalletService } from '../../services';
 import { ActivityItem, FooterOption, Header, OperationModal, WalletItem } from './components';
 import styles from './MainScreen.style';
 
-const keyExtractor = item => item.symbol;
-const ACTIVITIES = [
-  {
-    id: '0129',
-    amount: 10.239,
-    createdAt: new Date(),
-    wallet: { name: 'mikel', image: 'http://' },
-    symbol: 'BTC',
-  },
-  {
-    id: '39s',
-    amount: 3.5,
-    createdAt: new Date(),
-    wallet: { name: 'mikel', image: 'http://' },
-    symbol: 'LTC',
-  },
-];
+const keyExtractor = item => item.id;
 
 class Main extends Component {
   // static navigationOptions({ navigation: { navigate } }) {
@@ -36,12 +21,21 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      activities: undefined,
+      wallets: undefined,
       operationModal: false,
       prefetch: false,
       refreshing: false,
     };
     this._onClose = this._onClose.bind(this);
     this._renderActivity = this._renderActivity.bind(this);
+  }
+
+  async componentWillMount() {
+    this.setState({
+      activities: await ActivityService.list(),
+      wallets: await WalletService.list(),
+    });
   }
 
   _renderActivity({ item }) {
@@ -56,9 +50,13 @@ class Main extends Component {
     this.setState({ operationModal: !this.state.operationModal });
   }
 
+  _onSwipeWallet(event, state, context) {
+    console.log('>>>>', state, context);
+  }
+
   render() {
-    const { _onClose } = this;
-    const { operationModal, refreshing, prefetch } = this.state;
+    const { _onClose, _onSwipeWallet } = this;
+    const { activities = [], wallets = [], operationModal, refreshing, prefetch } = this.state;
 
     return (
       <View style={[STYLE.SCREEN, styles.main]}>
@@ -67,32 +65,17 @@ class Main extends Component {
           <Swiper
             bounces
             loop={false}
+            _onTouchStart={_onSwipeWallet}
+            _removeClippedSubviews={false}
             showsPagination={false}
             style={styles.wallets}
-            _showsHorizontalScrollIndicator
           >
-            <WalletItem
-              data={{
-                name: 'coinbase',
-                amount: 10098.23,
-                symbol: 'btc',
-                qr: 'https://coinbase.com',
-              }}
-            />
-
-            <WalletItem
-              data={{
-                name: 'blockchain.org',
-                amount: 0.02923,
-                symbol: 'btc',
-                qr: 'https://sohobase.com',
-              }}
-            />
+            { wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />)}
           </Swiper>
         </View>
 
         <FlatList
-          data={ACTIVITIES}
+          data={activities}
           extraData={this.state}
           keyExtractor={(keyExtractor)}
           refreshControl={
