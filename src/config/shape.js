@@ -1,4 +1,4 @@
-import { date, number, shape, string } from 'prop-types';
+import { date, func, number, shape, string } from 'prop-types';
 
 const WALLET = shape({
   id: string,
@@ -17,6 +17,10 @@ export default {
     createdAt: date,
     wallet: WALLET,
     symbol: string,
+  }),
+  NAVIGATION: shape({
+    navigate: func,
+    setParams: func,
   }),
   WALLET,
 };

@@ -2,22 +2,14 @@ import React, { Component } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Button } from '../../components';
-import { STYLE } from '../../config';
+import { SHAPE, STYLE } from '../../config';
 import { ActivityService, WalletService } from '../../services';
 import { ActivityItem, FooterOption, Header, OperationModal, WalletItem } from './components';
-import styles from './MainScreen.style';
+import styles from './Main.style';
 
 const keyExtractor = item => item.id;
 
 class Main extends Component {
-  // static navigationOptions({ navigation: { navigate } }) {
-  //   return {
-  //     // header: null,
-  //     // title: '$ 0.000,00',
-  //     // headerRight: <Icon value="search" onPress={() => navigate('Currencies')} />,
-  //   };
-  // }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +20,7 @@ class Main extends Component {
       refreshing: false,
     };
     this._onClose = this._onClose.bind(this);
+    this._onSwipeWallet = this._onSwipeWallet.bind(this);
     this._renderActivity = this._renderActivity.bind(this);
   }
 
@@ -39,10 +32,13 @@ class Main extends Component {
   }
 
   _renderActivity({ item }) {
-    const { refreshing } = this.state;
+    const { navigation: { navigate } } = this.props;
 
     return (
-      <ActivityItem data={item} />
+      <ActivityItem
+        data={item}
+        onPress={() => navigate('Activity', { activity: item })}
+      />
     );
   }
 
@@ -56,6 +52,7 @@ class Main extends Component {
 
   render() {
     const { _onClose, _onSwipeWallet } = this;
+    const { navigation: { navigate } } = this.props;
     const { activities = [], wallets = [], operationModal, refreshing, prefetch } = this.state;
 
     return (
@@ -85,9 +82,9 @@ class Main extends Component {
         />
 
         <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
-          <FooterOption icon="profile" caption="Profile" />
+          <FooterOption icon="profile" caption="Profile" onPress={() => navigate('Profile')} />
           <Button accent animation="bounceIn" circle icon="operations" onPress={_onClose} style={styles.button} />
-          <FooterOption icon="settings" caption="Settings" />
+          <FooterOption icon="settings" caption="Settings" onPress={() => navigate('Settings')} />
         </View>
 
         <OperationModal visible={operationModal} onClose={_onClose} />
@@ -95,5 +92,13 @@ class Main extends Component {
     );
   }
 }
+
+Main.propTypes = {
+  navigation: SHAPE.NAVIGATION,
+};
+
+Main.defaultProps = {
+  navigation: undefined,
+};
 
 export default Main;

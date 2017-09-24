@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import { STYLE } from '../config';
 import { Logo } from '../components';
-import styles from './LoadingScreen.style';
+import styles from './Loading.style';
 
 export default () => {
   return (

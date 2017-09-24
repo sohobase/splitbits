@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { COLOR, FONT } = THEME;
+const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
 const QR_SIZE = THEME.UNIT * 8;
 
@@ -11,15 +11,17 @@ export default StyleSheet.create({
     flex: 1,
     width: '75%',
     height: '100%',
+    maxHeight: UNIT * 17.2,
     backgroundColor: COLOR.WHITE,
-    margin: THEME.OFFSET,
+    margin: OFFSET,
+    // marginLeft: '-25%',
     alignSelf: 'flex-start',
     borderRadius: THEME.BORDER_RADIUS,
   },
 
   content: {
     flex: 1,
-    padding: THEME.OFFSET,
+    padding: OFFSET,
   },
 
   info: {

@@ -1,1 +1,1 @@
-export default from './MainScreen';
+export default from './Main';

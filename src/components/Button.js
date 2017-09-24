@@ -1,6 +1,6 @@
 import { array, bool, func, number, oneOfType, string } from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';

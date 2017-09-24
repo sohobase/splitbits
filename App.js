@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { STYLE, THEME } from './src/config';
-import { LoadingScreen, MainScreen } from './src/screens';
+import {
+  ActivityScreen,
+  LoadingScreen,
+  MainScreen,
+  ProfileScreen,
+  SettingsScreen,
+  WalletScreen,
+} from './src/screens';
 import { initialize } from './src/store';
 
 const navigationOptions = {
@@ -14,7 +21,11 @@ const navigationOptions = {
 
 const Navigation = StackNavigator({
   Main: { screen: MainScreen, navigationOptions: { header: null } },
-  // Settings: { screen: MainScreen, navigationOptions },
+
+  Activity: { screen: ActivityScreen, navigationOptions },
+  Profile: { screen: ProfileScreen, navigationOptions },
+  Settings: { screen: SettingsScreen, navigationOptions },
+  Wallet: { screen: WalletScreen, navigationOptions },
 });
 
 class App extends Component {

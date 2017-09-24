@@ -6,8 +6,8 @@ import { Amount, Touchable } from '../../../components';
 import styles from './ActivityItem.style';
 
 const ActivityItem = ({ data: { wallet = {}, amount, symbol, createdAt } , onPress }) => (
-  <Touchable>
-    <View style={[STYLE.ROW, styles.container]} onPress={onPress}>
+  <Touchable onPress={onPress}>
+    <View style={[STYLE.ROW, styles.container]}>
       <Image style={styles.image} />
       <View style={styles.info}>
         <Text style={[styles.name]}>{wallet.name}</Text>
