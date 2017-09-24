@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { SHAPE, STYLE } from '../../config';
-import styles from './Activity.style';
+import styles from './Transaction.style';
 
-class Activity extends Component {
+class Transaction extends Component {
   static navigationOptions({ navigation: { navigate } }) {
     return {
-      title: 'Activity',
+      title: 'Transaction',
       // headerRight: <Icon value="search" onPress={() => navigate('Currencies')} />,
     };
   }
@@ -18,12 +18,12 @@ class Activity extends Component {
   }
 }
 
-Activity.propTypes = {
+Transaction.propTypes = {
   navigation: SHAPE.NAVIGATION,
 };
 
-Activity.defaultProps = {
+Transaction.defaultProps = {
   navigation: undefined,
 };
 
-export default Activity;
+export default Transaction;

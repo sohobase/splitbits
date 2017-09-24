@@ -3,11 +3,11 @@ import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { STYLE, THEME } from './src/config';
 import {
-  ActivityScreen,
   LoadingScreen,
   MainScreen,
   ProfileScreen,
   SettingsScreen,
+  TransactionScreen,
   WalletScreen,
 } from './src/screens';
 import { initialize } from './src/store';
@@ -22,7 +22,7 @@ const navigationOptions = {
 const Navigation = StackNavigator({
   Main: { screen: MainScreen, navigationOptions: { header: null } },
 
-  Activity: { screen: ActivityScreen, navigationOptions },
+  Transaction: { screen: TransactionScreen, navigationOptions },
   Profile: { screen: ProfileScreen, navigationOptions },
   Settings: { screen: SettingsScreen, navigationOptions },
   Wallet: { screen: WalletScreen, navigationOptions },

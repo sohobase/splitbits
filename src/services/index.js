@@ -1,11 +1,11 @@
-import ActivityService from './activity';
 import ProfileService from './profile';
 import SettingsService from './settings';
+import TransactionService from './transaction';
 import WalletService from './wallet';
 
 export {
-  ActivityService,
   ProfileService,
   SettingsService,
+  TransactionService,
   WalletService,
 };

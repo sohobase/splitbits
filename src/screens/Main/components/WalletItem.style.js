@@ -11,7 +11,7 @@ export default StyleSheet.create({
     flex: 1,
     width: '75%',
     height: '100%',
-    maxHeight: UNIT * 17.2,
+    maxHeight: UNIT * 20.8,
     backgroundColor: COLOR.WHITE,
     margin: OFFSET,
     // marginLeft: '-25%',
@@ -45,6 +45,13 @@ export default StyleSheet.create({
 
   fiat: {
     fontSize: FONT.SIZE.DEFAULT,
+  },
+
+  trend: {
+    width: FONT.SIZE.LARGE,
+    height: FONT.SIZE.LARGE,
+    tintColor: COLOR.TEXT_SECONDARY,
+    marginRight: UNIT / 2,
   },
 
   qr: {

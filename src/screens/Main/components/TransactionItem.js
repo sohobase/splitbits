@@ -3,9 +3,9 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { SHAPE, STYLE } from '../../../config';
 import { Amount, Touchable } from '../../../components';
-import styles from './ActivityItem.style';
+import styles from './TransactionItem.style';
 
-const ActivityItem = ({ data: { wallet = {}, amount, symbol, createdAt } , onPress }) => (
+const TransactionItem = ({ data: { wallet = {}, amount, symbol, createdAt }, onPress }) => (
   <Touchable onPress={onPress}>
     <View style={[STYLE.ROW, styles.container]}>
       <Image style={styles.image} />
@@ -21,14 +21,14 @@ const ActivityItem = ({ data: { wallet = {}, amount, symbol, createdAt } , onPre
   </Touchable>
 );
 
-ActivityItem.propTypes = {
+TransactionItem.propTypes = {
   data: SHAPE.ACTIVITY,
   onPress: func,
 };
 
-ActivityItem.defaultProps = {
+TransactionItem.defaultProps = {
   data: {},
   onPress: undefined,
 };
 
-export default ActivityItem;
+export default TransactionItem;
