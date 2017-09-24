@@ -103,7 +103,7 @@ class Main extends Component {
 
         <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
           <FooterOption icon="profile" caption="Profile" />
-          <Button icon="operations" accent circle onPress={_onClose} style={styles.button} />
+          <Button accent animation="bounceIn" circle icon="operations" onPress={_onClose} style={styles.button} />
           <FooterOption icon="settings" caption="Settings" />
         </View>
 
