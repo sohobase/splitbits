@@ -1,11 +1,12 @@
 import { array, bool, func, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Icon from './Icon';
 import Touchable from './Touchable';
 import { STYLE } from '../config';
 import styles from './Button.style';
 
-const Button = ({ accent, caption, captionStyle, circle, disabled, onPress, style }) => (
+const Button = ({ accent, caption, captionStyle, circle, disabled, icon, onPress, style }) => (
   <Touchable onPress={!disabled ? onPress : undefined}>
     <View
       style={StyleSheet.flatten([
@@ -17,6 +18,8 @@ const Button = ({ accent, caption, captionStyle, circle, disabled, onPress, styl
         (accent ? styles.accent : undefined),
       ])}
     >
+      { icon &&
+        <Icon value={icon} style={[styles.icon]} /> }
       { caption &&
         <Text style={[styles.caption, captionStyle]}>{caption}</Text> }
     </View>
@@ -29,6 +32,7 @@ Button.propTypes = {
   captionStyle: oneOfType(array, number),
   circle: bool,
   disabled: bool,
+  icon: string,
   onPress: func,
   style: oneOfType(array, number),
 };
@@ -39,6 +43,7 @@ Button.defaultProps = {
   captionStyle: [],
   circle: false,
   disabled: false,
+  icon: undefined,
   onPress: undefined,
   style: [],
 };

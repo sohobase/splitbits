@@ -3,10 +3,8 @@ import { THEME } from '../config';
 
 export default StyleSheet.create({
   icon: {
-    width: THEME.UNIT * 2.8,
-    height: THEME.UNIT * 2.8,
-    marginLeft: THEME.UNIT,
-    marginRight: THEME.UNIT,
+    width: THEME.ICON_SIZE,
+    height: THEME.ICON_SIZE,
     resizeMode: 'cover',
   },
 });

@@ -40,7 +40,10 @@ export default {
   },
 
   BORDER_RADIUS: UNIT / 2,
-  BUTTON_CIRCLE_SIZE: 64,
+  BUTTON_CIRCLE_SIZE: UNIT * 6.4,
+  FOOTER_SIZE: UNIT * 5.6,
+  HEADER_SIZE: UNIT * 6,
+  ICON_SIZE: UNIT * 3.2,
   OFFSET: UNIT * 1.6,
   UNIT,
 };

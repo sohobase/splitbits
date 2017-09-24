@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { FlatList, Text, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { Button, ButtonIcon } from '../../components';
+import { Button } from '../../components';
 import { STYLE } from '../../config';
-import { ActivityItem, WalletItem } from './components';
+import { ActivityItem, FooterOption, Header, OperationModal, WalletItem } from './components';
 import styles from './MainScreen.style';
 
 const keyExtractor = item => item.symbol;
@@ -25,19 +25,22 @@ const ACTIVITIES = [
 ];
 
 class Main extends Component {
-  static navigationOptions({ navigation: { navigate } }) {
-    return {
-      title: '$ 0.000,00',
-      // headerRight: <ButtonIcon icon="add" onPress={() => navigate('Currencies')} />,
-    };
-  }
+  // static navigationOptions({ navigation: { navigate } }) {
+  //   return {
+  //     // header: null,
+  //     // title: '$ 0.000,00',
+  //     // headerRight: <Icon value="search" onPress={() => navigate('Currencies')} />,
+  //   };
+  // }
 
   constructor(props) {
     super(props);
     this.state = {
+      operationModal: false,
       prefetch: false,
       refreshing: false,
     };
+    this._onClose = this._onClose.bind(this);
     this._renderActivity = this._renderActivity.bind(this);
   }
 
@@ -49,12 +52,18 @@ class Main extends Component {
     );
   }
 
+  _onClose() {
+    this.setState({ operationModal: !this.state.operationModal });
+  }
+
   render() {
-    const { refreshing, prefetch } = this.state;
+    const { _onClose } = this;
+    const { operationModal, refreshing, prefetch } = this.state;
 
     return (
       <View style={[STYLE.SCREEN, styles.main]}>
         <View style={[STYLE.LAYOUT_TOP]}>
+          <Header />
           <Swiper
             bounces
             loop={false}
@@ -82,7 +91,6 @@ class Main extends Component {
           </Swiper>
         </View>
 
-
         <FlatList
           data={ACTIVITIES}
           extraData={this.state}
@@ -94,11 +102,12 @@ class Main extends Component {
         />
 
         <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
-          <Text>Profile</Text>
-          <Button caption="?" icon="add" accent circle style={styles.action} />
-          <Text>Settings</Text>
+          <FooterOption icon="profile" caption="Profile" />
+          <Button icon="operations" accent circle onPress={_onClose} style={styles.button} />
+          <FooterOption icon="settings" caption="Settings" />
         </View>
 
+        <OperationModal visible={operationModal} onClose={_onClose} />
       </View>
     );
   }

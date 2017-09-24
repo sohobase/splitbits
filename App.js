@@ -13,7 +13,8 @@ const navigationOptions = {
 };
 
 const Navigation = StackNavigator({
-  Main: { screen: MainScreen, navigationOptions },
+  Main: { screen: MainScreen, navigationOptions: { header: null } },
+  // Settings: { screen: MainScreen, navigationOptions },
 });
 
 class App extends Component {

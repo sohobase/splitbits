@@ -7,17 +7,23 @@ const QR_SIZE = THEME.UNIT * 8;
 
 export default StyleSheet.create({
   container: {
+    zIndex: 1,
     flex: 1,
     width: '75%',
+    height: '100%',
     backgroundColor: COLOR.WHITE,
     margin: THEME.OFFSET,
-    padding: THEME.OFFSET,
+    alignSelf: 'flex-start',
     borderRadius: THEME.BORDER_RADIUS,
+  },
+
+  content: {
+    flex: 1,
+    padding: THEME.OFFSET,
   },
 
   info: {
     flex: 1,
-    alignSelf: 'flex-end',
   },
 
   name: {
