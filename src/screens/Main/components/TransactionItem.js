@@ -6,7 +6,7 @@ import { Amount, Touchable } from '../../../components';
 import styles from './TransactionItem.style';
 
 const TransactionItem = ({ data: { wallet = {}, amount, symbol, createdAt }, onPress }) => (
-  <Touchable onPress={onPress}>
+  <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, styles.container]}>
       <Image style={styles.image} />
       <View style={styles.info}>

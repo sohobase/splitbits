@@ -1,14 +1,14 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { STYLE } from '../../../config';
-import { Modal } from '../../../components';
+import { Button, Modal } from '../../../components';
 import styles from './OperationModal.style';
 
 const OperationModal = ({ visible, onClose }) => (
-  <Modal visible={visible} onClose={onClose}>
+  <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <Text>Hello World</Text>
-    <Button title="Close" onPress={onClose} />
+    <Button accent caption="Close" onPress={onClose} />
   </Modal>
 );
 

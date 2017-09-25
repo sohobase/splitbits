@@ -6,9 +6,10 @@ const IMAGE_SIZE = THEME.BUTTON_CIRCLE_SIZE * 0.65;
 
 export default StyleSheet.create({
   container: {
-    padding: OFFSET,
+    backgroundColor: COLOR.BACKGROUND,
     borderBottomColor: COLOR.DIVIDER,
     borderBottomWidth: 1,
+    padding: OFFSET,
   },
 
   image: {

@@ -3,16 +3,15 @@ import {
   ADD_WALLET,
   REMOVE_WALLET,
 } from './actions';
-import { C } from '../config';
 
 const initialState = {
   token: undefined,
   wallets: [],
+  transactions: [],
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
-
     // -- token
     case ADD_TOKEN:
       return { ...state, token: action.token };

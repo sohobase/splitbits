@@ -6,8 +6,9 @@ const { COLOR, FONT, FOOTER_SIZE, UNIT } = THEME;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    minWidth: '35%',
+    minWidth: '50%',
     height: FOOTER_SIZE,
+    backgroundColor: COLOR.WHITE,
   },
 
   icon: {

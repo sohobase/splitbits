@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { BUTTON_CIRCLE_SIZE, COLOR, FOOTER_SIZE, UNIT } = THEME;
+const { COLOR, FOOTER_SIZE } = THEME;
 
 export default StyleSheet.create({
   main: {},
@@ -22,8 +22,8 @@ export default StyleSheet.create({
   },
 
   button: {
-    top: BUTTON_CIRCLE_SIZE * -0.25,
-    marginLeft: UNIT,
-    marginRight: UNIT,
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: FOOTER_SIZE * 0.25,
   },
 });

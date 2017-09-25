@@ -7,17 +7,18 @@ import Touchable from './Touchable';
 import { STYLE } from '../config';
 import styles from './Button.style';
 
-const Button = ({ accent, animation, caption, captionStyle, circle, disabled, icon, onPress, style }) => (
+const Button = ({ accent, caption, captionStyle, circle, disabled, icon, onPress, raised, style, ...animation }) => (
   <Touchable onPress={!disabled ? onPress : undefined}>
     <Animatable
-      animation={animation}
+      {...animation}
       style={StyleSheet.flatten([
         styles.container,
         style,
-        (circle ? styles.circle : styles.square),
-        (circle ? STYLE.CENTERED : undefined),
-        (disabled ? styles.disabled : undefined),
-        (accent ? styles.accent : undefined),
+        STYLE.CENTERED,
+        (circle && styles.circle),
+        (!circle && !raised && styles.square),
+        (disabled && styles.disabled),
+        (accent && styles.accent),
       ])}
     >
       { icon &&
@@ -37,6 +38,7 @@ Button.propTypes = {
   disabled: bool,
   icon: string,
   onPress: func,
+  raised: bool,
   style: oneOfType(array, number),
 };
 
@@ -49,6 +51,7 @@ Button.defaultProps = {
   disabled: false,
   icon: undefined,
   onPress: undefined,
+  raised: false,
   style: [],
 };
 

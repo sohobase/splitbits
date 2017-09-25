@@ -7,11 +7,12 @@ import { SHAPE, STYLE, THEME } from '../../../config';
 import { Amount, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
-const { COLOR } = THEME;
+const { ANIMATION: { DURATION }, COLOR } = THEME;
 
 const WalletItem = ({ data, onPress, style }) => (
   <Animatable
     animation="bounceIn"
+    duration={DURATION}
     onPress={onPress}
     style={[styles.container, style]}
   >

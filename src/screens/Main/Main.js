@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Button } from '../../components';
-import { SHAPE, STYLE } from '../../config';
+import { SHAPE, STYLE, THEME } from '../../config';
 import { TransactionService, WalletService } from '../../services';
 import { Header, FooterOption, TransactionItem, OperationModal, WalletItem } from './components';
 import styles from './Main.style';
+
+const { DURATION } = THEME.ANIMATION;
 
 class Main extends Component {
   constructor(props) {
@@ -13,11 +15,11 @@ class Main extends Component {
     this.state = {
       transactions: undefined,
       wallets: undefined,
-      operationModal: false,
+      modal: false,
       prefetch: false,
       refreshing: false,
     };
-    this._onClose = this._onClose.bind(this);
+    this._onModal = this._onModal.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
     this._renderTransaction = this._renderTransaction.bind(this);
   }
@@ -40,8 +42,8 @@ class Main extends Component {
     );
   }
 
-  _onClose() {
-    this.setState({ operationModal: !this.state.operationModal });
+  _onModal() {
+    this.setState({ modal: !this.state.modal });
   }
 
   async _onSwipeWallet(event, { index }) {
@@ -53,9 +55,9 @@ class Main extends Component {
   }
 
   render() {
-    const { _onClose, _onSwipeWallet } = this;
+    const { _onModal, _onSwipeWallet } = this;
     const { navigation: { navigate } } = this.props;
-    const { transactions = [], wallets = [], operationModal, refreshing } = this.state;
+    const { transactions = [], wallets = [], modal, refreshing } = this.state;
 
     return (
       <View style={[STYLE.SCREEN, styles.main]}>
@@ -86,11 +88,19 @@ class Main extends Component {
 
         <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
           <FooterOption icon="profile" caption="Profile" onPress={() => navigate('Profile')} />
-          <Button accent animation="bounceIn" circle icon="operations" onPress={_onClose} style={styles.button} />
           <FooterOption icon="settings" caption="Settings" onPress={() => navigate('Settings')} />
         </View>
-
-        <OperationModal visible={operationModal} onClose={_onClose} />
+        <Button
+          accent
+          animation={modal ? 'bounceOutDown' : 'bounceInUp'}
+          delay={modal ? 0 : DURATION / 2}
+          duration={DURATION}
+          circle
+          icon="operations"
+          onPress={_onModal}
+          style={styles.button}
+        />
+        <OperationModal visible={modal} onClose={_onModal} />
       </View>
     );
   }

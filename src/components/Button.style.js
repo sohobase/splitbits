@@ -6,16 +6,17 @@ const { COLOR, FONT } = THEME;
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: COLOR.PRIMARY,
     display: 'flex',
   },
 
   square: {
+    backgroundColor: COLOR.PRIMARY,
     borderRadius: THEME.OFFSET * 2,
     padding: THEME.OFFSET,
   },
 
   circle: {
+    backgroundColor: COLOR.PRIMARY,
     width: THEME.BUTTON_CIRCLE_SIZE,
     height: THEME.BUTTON_CIRCLE_SIZE,
     borderRadius: THEME.BUTTON_CIRCLE_SIZE / 2,

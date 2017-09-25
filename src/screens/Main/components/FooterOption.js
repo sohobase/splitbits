@@ -6,7 +6,7 @@ import { Icon, Touchable } from '../../../components';
 import styles from './FooterOption.style';
 
 const FooterOption = ({ caption, icon, onPress }) => (
-  <Touchable onPress={onPress}>
+  <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.CENTERED, styles.container]}>
       <Icon value={icon} style={[styles.icon]} />
       <Text style={[styles.caption]}>{caption}</Text>

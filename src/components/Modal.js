@@ -6,7 +6,7 @@ import { STYLE, THEME } from '../config';
 import Button from './Button';
 import styles from './Modal.style';
 
-const { ANIMATION } = THEME;
+const { ANIMATION: { DURATION } } = THEME;
 
 const Modal = ({ children, onClose, title, visible }) => (
   <ReactNativeModal
@@ -14,19 +14,25 @@ const Modal = ({ children, onClose, title, visible }) => (
     visible={visible}
     onRequestClose={() => { }}
   >
-    <Animatable animation="fadeIn" duration={ANIMATION.DURATION} style={styles.container}>
+    <Animatable
+      animation={visible ? 'fadeIn' : 'fadeOut'}
+      duration={DURATION / 2}
+      delay={visible ? 0 : DURATION / 2}
+      style={styles.container}
+    >
       <Animatable
-        animation="bounceInUp"
-        delay={ANIMATION.DURATION}
-        duration={ANIMATION.DURATION}
-        easing={ANIMATION.EASING}
+        animation={visible ? 'bounceInUp' : 'bounceOutDown'}
+        delay={visible ? DURATION / 2 : 0}
+        duration={DURATION}
         style={styles.content}
       >
         <View style={[STYLE.ROW, STYLE.CENTERED, styles.header]}>
           { title && <Text style={styles.title}>{title}</Text> }
-          <Button icon="close" onPress={onClose} style={styles.close} />
+          <Button icon="close" onPress={onClose} raised style={styles.buttonClose} />
         </View>
-        { children }
+        <View style={styles.children}>
+          { children }
+        </View>
       </Animatable>
     </Animatable>
   </ReactNativeModal>

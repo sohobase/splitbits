@@ -1,3 +1,3 @@
-import { Platform, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import { Platform, TouchableNativeFeedback, TouchableHighlight } from 'react-native';
 
-export default (Platform.OS === 'ios') ? TouchableOpacity : TouchableNativeFeedback;
+export default (Platform.OS === 'ios') ? TouchableHighlight : TouchableNativeFeedback;
