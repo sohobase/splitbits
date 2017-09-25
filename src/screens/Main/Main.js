@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper';
 import { Button } from '../../components';
 import { SHAPE, STYLE } from '../../config';
 import { TransactionService, WalletService } from '../../services';
-import { TransactionItem, FooterOption, Header, OperationModal, WalletItem } from './components';
+import { Header, FooterOption, TransactionItem, OperationModal, WalletItem } from './components';
 import styles from './Main.style';
 
 class Main extends Component {
@@ -60,7 +60,7 @@ class Main extends Component {
     return (
       <View style={[STYLE.SCREEN, styles.main]}>
         <View style={[STYLE.LAYOUT_TOP]}>
-          <Header />
+          <Header amount={1289.39} symbol="$" trend={-123} />
           <Swiper
             bounces
             loop={false}
