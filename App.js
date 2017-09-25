@@ -10,7 +10,6 @@ import {
   TransactionScreen,
   WalletScreen,
 } from './src/screens';
-import { initialize } from './src/store';
 
 const navigationOptions = {
   headerBackTitle: ' ',
@@ -32,10 +31,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { store: undefined };
+    this._onLoad = this._onLoad.bind(this);
   }
 
-  async componentWillMount() {
-    this.setState({ store: await initialize() });
+  _onLoad(state) {
+    this.setState({ ...state });
   }
 
   render() {
@@ -43,7 +43,7 @@ class App extends Component {
 
     return (
       !store ?
-        <LoadingScreen />
+        <LoadingScreen onLoad={this._onLoad} />
         :
         <Provider store={store}>
           <Navigation />
