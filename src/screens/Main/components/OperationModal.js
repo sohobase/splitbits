@@ -1,7 +1,7 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button, Modal, Option } from '../../../components';
+import { View } from 'react-native';
+import { Modal, Option } from '../../../components';
 import { STYLE } from '../../../config';
 import styles from './OperationModal.style';
 

@@ -5,7 +5,6 @@ import { View as Animatable } from 'react-native-animatable';
 import { Logo } from '../../components';
 import { STYLE } from '../../config';
 import { initialize } from '../../store';
-
 import styles from './Loading.style';
 
 class Loading extends Component {

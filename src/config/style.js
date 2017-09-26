@@ -34,10 +34,8 @@ export default StyleSheet.create({
 
   LAYOUT_BOTTOM: {
     flex: 0,
-    height: '50%',
-    // minHeight: '50%',
-    // maxHeight: '50%',
-    backgroundColor: COLOR.WHITE,
+    minHeight: '50%',
+    backgroundColor: COLOR.BACKGROUND,
   },
 
   ROW: {

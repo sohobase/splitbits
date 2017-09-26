@@ -1,16 +1,11 @@
+import DEFAULTS from './defaults';
 import {
   ADD_TOKEN,
   ADD_WALLET,
   REMOVE_WALLET,
 } from './actions';
 
-const initialState = {
-  token: undefined,
-  wallets: [],
-  transactions: [],
-};
-
-export default function(state = initialState, action) {
+export default function(state = DEFAULTS, action) {
   switch (action.type) {
     // -- token
     case ADD_TOKEN:

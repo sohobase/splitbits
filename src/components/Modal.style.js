@@ -23,7 +23,7 @@ export default StyleSheet.create({
 
   header: {
     paddingLeft: OFFSET,
-    paddingTop: UNIT,
+    paddingTop: OFFSET,
     paddingBottom: UNIT,
   },
 
