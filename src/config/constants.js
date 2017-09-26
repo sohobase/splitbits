@@ -1,4 +1,6 @@
 const add = require('../../assets/icon-add.png');
+const arrowBack = require('../../assets/icon-arrow-back.png');
+const arrowForward = require('../../assets/icon-arrow-forward.png');
 const close = require('../../assets/icon-close.png');
 const operations = require('../../assets/icon-operations.png');
 const profile = require('../../assets/icon-profile.png');
@@ -14,7 +16,7 @@ export default {
     TOKEN: 'sohobase-splitwallet-dev',
   },
 
-  ICONS: { add, close, operations, profile, search, settings, split, trendingDown, trendingUp },
+  ICONS: { add, arrowBack, arrowForward, close, operations, profile, search, settings, split, trendingDown, trendingUp },
 
   STORE_URL: {
     ANDROID: 'http://',
