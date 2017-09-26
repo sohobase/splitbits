@@ -1,14 +1,20 @@
 import { func } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import { Amount, Touchable } from '../../../components';
+import { Amount, Icon, Touchable } from '../../../components';
 import { SHAPE, STYLE } from '../../../config';
 import styles from './TransactionItem.style';
 
 const TransactionItem = ({ data: { wallet = {}, amount, symbol, createdAt }, onPress }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, styles.container]}>
-      <Image style={styles.image} />
+      <View>
+        <Image style={styles.image} source={{ uri: wallet.image }} />
+        <Icon
+          value={amount > 0 ? 'add' : 'arrowForward'}
+          style={[styles.iconArrow, (amount < 0 && styles.iconNegative)]}
+        />
+      </View>
       <View style={styles.info}>
         <Text style={[styles.name]}>{wallet.name}</Text>
         <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>

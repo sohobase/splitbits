@@ -19,6 +19,23 @@ export default StyleSheet.create({
     backgroundColor: COLOR.DIVIDER,
   },
 
+  iconArrow: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: FONT.SIZE.DEFAULT,
+    height: FONT.SIZE.DEFAULT,
+    backgroundColor: COLOR.PRIMARY,
+    tintColor: COLOR.WHITE,
+    borderRadius: UNIT,
+    borderWidth: 1,
+    borderColor: COLOR.TEXT_HIGHLIGHT_SECONDARY,
+  },
+
+  iconNegative: {
+    backgroundColor: COLOR.ACCENT,
+  },
+
   info: {
     flex: 1,
     marginRight: UNIT,
