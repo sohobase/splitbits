@@ -1,8 +1,8 @@
 import { func } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import { SHAPE, STYLE } from '../../../config';
 import { Amount, Touchable } from '../../../components';
+import { SHAPE, STYLE } from '../../../config';
 import styles from './TransactionItem.style';
 
 const TransactionItem = ({ data: { wallet = {}, amount, symbol, createdAt }, onPress }) => (

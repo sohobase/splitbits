@@ -1,13 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { THEME } from '../../../config';
+import { THEME } from '../config';
 
-const { COLOR, FONT, FOOTER_SIZE, UNIT } = THEME;
+const { COLOR, FONT, FOOTER_SIZE, UNIT, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    minWidth: '50%',
-    height: FOOTER_SIZE,
+  option: {
+    minHeight: FOOTER_SIZE,
     backgroundColor: COLOR.WHITE,
   },
 
@@ -18,8 +16,18 @@ export default StyleSheet.create({
     marginBottom: UNIT / 3,
   },
 
+  texts: {
+    paddingLeft: OFFSET,
+  },
+
   caption: {
-    color: COLOR.TEXT_SECONDARY,
+    color: COLOR.TEXT,
+    fontSize: FONT.SIZE.LARGE,
+  },
+
+  text: {
+    alignSelf: 'center',
     fontSize: FONT.SIZE.SMALL,
+    color: COLOR.TEXT_SECONDARY,
   },
 });

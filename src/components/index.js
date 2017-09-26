@@ -4,6 +4,7 @@ import Header from './Header';
 import Icon from './Icon';
 import Modal from './Modal';
 import Logo from './Logo';
+import Option from './Option';
 import Touchable from './Touchable';
 
 export {
@@ -13,5 +14,6 @@ export {
   Icon,
   Modal,
   Logo,
+  Option,
   Touchable,
 };

@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper';
 import { Button } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { TransactionService, WalletService } from '../../services';
-import { Header, FooterOption, TransactionItem, OperationModal, WalletItem } from './components';
+import { Header, Footer, OperationModal, TransactionItem, WalletItem } from './components';
 import styles from './Main.style';
 
 const { DURATION } = THEME.ANIMATION;
@@ -85,11 +85,7 @@ class Main extends Component {
           renderItem={this._renderTransaction}
           style={[STYLE.LAYOUT_BOTTOM, styles.activity]}
         />
-
-        <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
-          <FooterOption icon="profile" caption="Profile" onPress={() => navigate('Profile')} />
-          <FooterOption icon="settings" caption="Settings" onPress={() => navigate('Settings')} />
-        </View>
+        <Footer navigate={navigate} />
         <Button
           accent
           animation={modal ? 'bounceOutDown' : 'bounceInUp'}
@@ -100,7 +96,7 @@ class Main extends Component {
           onPress={_onModal}
           style={styles.button}
         />
-        <OperationModal visible={modal} onClose={_onModal} />
+        <OperationModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} />
       </View>
     );
   }

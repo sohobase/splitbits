@@ -46,6 +46,11 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  COL: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
   SCREEN: {
     flex: 1,
   },

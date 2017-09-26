@@ -12,15 +12,6 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND,
   },
 
-  footer: {
-    backgroundColor: COLOR.WHITE,
-    height: FOOTER_SIZE,
-    shadowColor: COLOR.BLACK,
-    shadowOffset: { height: 8 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
-  },
-
   button: {
     position: 'absolute',
     alignSelf: 'center',
