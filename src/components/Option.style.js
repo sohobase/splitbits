@@ -16,17 +16,20 @@ export default StyleSheet.create({
     marginBottom: UNIT / 3,
   },
 
+  iconAccent: {
+    tintColor: COLOR.ACCENT,
+  },
+
   texts: {
     paddingLeft: OFFSET,
   },
 
   caption: {
     color: COLOR.TEXT,
-    fontSize: FONT.SIZE.LARGE,
+    fontSize: FONT.SIZE.DEFAULT,
   },
 
   text: {
-    alignSelf: 'center',
     fontSize: FONT.SIZE.SMALL,
     color: COLOR.TEXT_SECONDARY,
   },

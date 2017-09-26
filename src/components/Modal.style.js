@@ -22,6 +22,7 @@ export default StyleSheet.create({
   },
 
   header: {
+    paddingLeft: OFFSET,
     paddingTop: UNIT,
     paddingBottom: UNIT,
   },
@@ -30,7 +31,6 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
-    textAlign: 'center',
   },
 
   buttonClose: {
@@ -40,6 +40,6 @@ export default StyleSheet.create({
   },
 
   children: {
-    padding: OFFSET,
+    paddingBottom: OFFSET,
   },
 });

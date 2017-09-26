@@ -7,16 +7,18 @@ import styles from './OperationModal.style';
 
 const OperationModal = ({ onClose, onRequest, onSend, visible }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
-    <View style={[STYLE.COL, styles.options]}>
+    <View style={[STYLE.COL]}>
       <Option
         caption="Send Money"
         hint="lorem ipsum..."
+        icon="arrowForward"
         onPress={onRequest}
         style={styles.option}
       />
       <Option
         caption="Request Money"
         hint="lorem ipsum..."
+        icon="arrowBack"
         onPress={onSend}
         style={styles.option}
       />
