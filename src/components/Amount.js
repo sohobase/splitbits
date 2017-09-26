@@ -12,16 +12,16 @@ const SYMBOLS = {
 };
 
 const renderSymbol = (value, style) => (
-  <Text style={[styles.symbol, style]}>
+  <Text style={[styles.amount, styles.symbol, style]}>
     {SYMBOLS[value.toUpperCase()] || value.toUpperCase()}
   </Text>
 );
 
 const Amount = ({ fixed, style, symbol, value }) => (
   <View style={STYLE.ROW}>
-    { value < 0 && <Text style={[styles.value, style]}>-</Text> }
+    { value < 0 && <Text style={[styles.amount, style]}>-</Text> }
     { symbol === 'USD' && renderSymbol(symbol, style) }
-    <Text style={[styles.value, style]}>
+    <Text style={[styles.amount, style]}>
       {parseFloat(Math.abs(value)).toFixed(fixed).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
     </Text>
     { symbol !== 'USD' && renderSymbol(symbol, style) }

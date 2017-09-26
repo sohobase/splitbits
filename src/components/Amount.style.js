@@ -4,12 +4,11 @@ import { THEME } from '../config';
 const { FONT } = THEME;
 
 export default StyleSheet.create({
-  symbol: {
-    fontSize: FONT.SIZE.SMALL,
-    opacity: 0.9,
+  amount: {
+    fontSize: FONT.SIZE.DEFAULT,
   },
 
-  value: {
-    fontSize: FONT.SIZE.DEFAULT,
+  symbol: {
+    fontWeight: FONT.WEIGHT.LIGHT,
   },
 });
