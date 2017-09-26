@@ -15,7 +15,7 @@ const TransactionItem = ({ data: { wallet = {}, amount, symbol, createdAt }, onP
       </View>
       <View style={styles.amounts}>
         <Amount fixed={4} symbol={symbol} value={amount} style={[styles.amount]} />
-        <Amount value={0.00} symbol="$" style={[styles.label, styles.fiat]} />
+        <Amount value={0.00} symbol="USD" style={[styles.label, styles.fiat]} />
       </View>
     </View>
   </Touchable>

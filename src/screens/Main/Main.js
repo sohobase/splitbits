@@ -62,7 +62,7 @@ class Main extends Component {
     return (
       <View style={[STYLE.SCREEN, styles.main]}>
         <View style={[STYLE.LAYOUT_TOP]}>
-          <Header amount={1289.39} symbol="$" trend={-123} />
+          <Header amount={1289.39} symbol="USD" trend={-123} />
           <Swiper
             bounces
             loop={false}

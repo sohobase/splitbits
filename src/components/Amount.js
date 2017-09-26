@@ -1,16 +1,30 @@
 import { array, number, oneOfType, string } from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { STYLE } from '../config';
 import styles from './Amount.style';
 
+const SYMBOLS = {
+  BTC: '฿',
+  EUR: 'T',
+  LTC: 'Ł',
+  USD: '$',
+};
+
+const renderSymbol = (value, style) => (
+  <Text style={[styles.symbol, style]}>
+    {SYMBOLS[value.toUpperCase()] || value.toUpperCase()}
+  </Text>
+);
+
 const Amount = ({ fixed, style, symbol, value }) => (
   <View style={STYLE.ROW}>
-    { symbol &&
-      <Text style={StyleSheet.flatten([styles.symbol, style])}>{symbol.toUpperCase()}</Text> }
-    <Text style={StyleSheet.flatten([styles.value, style])}>
-      {parseFloat(value).toFixed(fixed).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
+    { value < 0 && <Text style={[styles.value, style]}>-</Text> }
+    { symbol === 'USD' && renderSymbol(symbol, style) }
+    <Text style={[styles.value, style]}>
+      {parseFloat(Math.abs(value)).toFixed(fixed).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
     </Text>
+    { symbol !== 'USD' && renderSymbol(symbol, style) }
   </View>
 );
 
@@ -24,7 +38,7 @@ Amount.propTypes = {
 Amount.defaultProps = {
   fixed: 2,
   style: [],
-  symbol: undefined,
+  symbol: 'BTC',
   value: 0,
 };
 
