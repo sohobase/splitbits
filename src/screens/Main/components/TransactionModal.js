@@ -3,9 +3,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { Modal, Option } from '../../../components';
 import { STYLE } from '../../../config';
-import styles from './OperationModal.style';
+import styles from './TransactionModal.style';
 
-const OperationModal = ({ onClose, onRequest, onSend, visible }) => (
+const TransactionModal = ({ onClose, onRequest, onSend, visible }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
       <Option
@@ -26,18 +26,18 @@ const OperationModal = ({ onClose, onRequest, onSend, visible }) => (
   </Modal>
 );
 
-OperationModal.propTypes = {
+TransactionModal.propTypes = {
   onClose: func,
   onRequest: func,
   onSend: func,
   visible: bool,
 };
 
-OperationModal.defaultProps = {
+TransactionModal.defaultProps = {
   onClose: undefined,
   onRequest: undefined,
   onSend: undefined,
   visible: false,
 };
 
-export default OperationModal;
+export default TransactionModal;

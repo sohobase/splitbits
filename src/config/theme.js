@@ -39,7 +39,7 @@ export default {
     WEIGHT: {
       LIGHT: '200',
       DEFAULT: '400',
-      BOLD: '600',
+      BOLD: '800',
     },
   },
 

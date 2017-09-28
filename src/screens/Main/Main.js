@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper';
 import { Button } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { TransactionService, WalletService } from '../../services';
-import { Header, Footer, OperationModal, TransactionItem, WalletItem } from './components';
+import { Header, Footer, TransactionModal, TransactionItem, WalletItem } from './components';
 import styles from './Main.style';
 
 const { DURATION } = THEME.ANIMATION;
@@ -96,7 +96,7 @@ class Main extends Component {
           onPress={_onModal}
           style={styles.button}
         />
-        <OperationModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} />
+        <TransactionModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} />
       </View>
     );
   }

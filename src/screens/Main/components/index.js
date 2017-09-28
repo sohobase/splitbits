@@ -1,13 +1,13 @@
 import Header from './Header';
 import Footer from './Footer';
-import OperationModal from './OperationModal';
+import TransactionModal from './TransactionModal';
 import TransactionItem from './TransactionItem';
 import WalletItem from './WalletItem';
 
 export {
   Header,
   Footer,
-  OperationModal,
+  TransactionModal,
   TransactionItem,
   WalletItem,
 };
