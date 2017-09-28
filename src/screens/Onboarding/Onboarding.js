@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { STYLE, THEME } from '../../config';
+import { SHAPE, STYLE, THEME } from '../../config';
 import { Button } from '../../components';
 import { Slide } from './components';
 import styles from './Onboarding.style';
@@ -23,7 +23,11 @@ class Onboarding extends Component {
     swipper.scrollBy(1);
   }
 
-  _onSkip(event) {}
+  _onSkip(event) {
+    const { navigation: { navigate }} = this.props;
+
+    navigate('Main');
+  }
 
   _onSwipe(event, { index }) {
     this.setState({ index });
@@ -49,25 +53,33 @@ class Onboarding extends Component {
           <Slide />
         </Swiper>
 
-        { index < MAX_INDEX &&
-          <Button
-            caption="SKIP"
-            raised
-            style={[styles.button, styles.left]}
-            captionStyle={styles.buttonCaption}
-            onPress={_onSkip}
-          /> }
-        { index < MAX_INDEX &&
-          <Button
-            caption="NEXT"
-            raised
-            style={[styles.button, styles.right]}
-            captionStyle={styles.buttonCaption}
-            onPress={_onNext}
-          /> }
+        <Button
+          disabled={index >= MAX_INDEX}
+          captionStyle={styles.buttonCaption}
+          caption="SKIP"
+          onPress={_onSkip}
+          raised
+          style={[styles.button, styles.left]}
+        />
+        <Button
+          caption="NEXT"
+          captionStyle={styles.buttonCaption}
+          disabled={index >= MAX_INDEX}
+          onPress={_onNext}
+          raised
+          style={[styles.button, styles.right]}
+        />
       </View>
     );
   }
 }
+
+Onboarding.propTypes = {
+  navigation: SHAPE.NAVIGATION,
+};
+
+Onboarding.defaultProps = {
+  navigation: undefined,
+};
 
 export default Onboarding;

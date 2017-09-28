@@ -51,5 +51,6 @@ export default StyleSheet.create({
 
   SCREEN: {
     flex: 1,
+    backgroundColor: COLOR.PRIMARY,
   },
 });

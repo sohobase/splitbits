@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { COLOR, FONT, FOOTER_SIZE, OFFSET, UNIT } = THEME;
+const { COLOR, FOOTER_SIZE, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   loading: {
@@ -37,12 +37,12 @@ export default StyleSheet.create({
 
   dot: {
     zIndex: 1,
-    width: UNIT / 2,
-    height: UNIT / 2,
-    backgroundColor: COLOR.TEXT_HIGHLIGHT_DISABLED,
+    width: UNIT * 0.65,
+    height: UNIT * 0.65,
+    backgroundColor: COLOR.BACKGROUND_DARK,
   },
 
   dotActive: {
-    backgroundColor: COLOR.TEXT_HIGHLIGHT,
+    backgroundColor: COLOR.WHITE,
   },
 });
