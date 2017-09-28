@@ -23,9 +23,8 @@ class Onboarding extends Component {
     swipper.scrollBy(1);
   }
 
-  _onSkip(event) {
-    const { navigation: { navigate }} = this.props;
-
+  _onSkip() {
+    const { navigation: { navigate } } = this.props;
     navigate('Main');
   }
 
@@ -42,15 +41,19 @@ class Onboarding extends Component {
         <Swiper
           ref={(c) => { this.swipper = c; }}
           bounces
-          dotStyle={styles.dot}
-          activeDotStyle={styles.dotActive}
+          dotStyle={STYLE.SWIPER_DOT}
+          activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
           loop={false}
           onMomentumScrollEnd={_onSwipe}
         >
+          <Slide>
+            <Button accent caption="CREATE YOUR FIRST WALLET" style={styles.buttonWallet} />
+          </Slide>
+
           <Slide />
           <Slide backgroundColor={COLOR.ACCENT} />
           <Slide _backgroundColor={COLOR.TEXT_DEFAULT} />
-          <Slide />
+
         </Swiper>
 
         <Button
@@ -59,15 +62,15 @@ class Onboarding extends Component {
           caption="SKIP"
           onPress={_onSkip}
           raised
-          style={[styles.button, styles.left]}
+          style={[styles.option, styles.left]}
         />
         <Button
           caption="NEXT"
-          captionStyle={styles.buttonCaption}
+          captionStyle={styles.optionCaption}
           disabled={index >= MAX_INDEX}
           onPress={_onNext}
           raised
-          style={[styles.button, styles.right]}
+          style={[styles.option, styles.right]}
         />
       </View>
     );

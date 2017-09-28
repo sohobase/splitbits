@@ -3,8 +3,8 @@ import Color from 'color';
 const UNIT = 10;
 const WHITE = '#ffffff';
 const BLACK = '#000000';
-// const PRIMARY = '#3f51b5';
-const PRIMARY = '#333333';
+const PRIMARY = '#3f51b5';
+// const PRIMARY = '#333333';
 const ACCENT = '#e91e63';
 const DISABLED = 0.38;
 
@@ -50,7 +50,7 @@ export default {
     WEIGHT: {
       LIGHT: '200',
       DEFAULT: '400',
-      BOLD: '800',
+      BOLD: '700',
     },
   },
 

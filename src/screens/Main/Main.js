@@ -60,8 +60,8 @@ class Main extends Component {
     const { transactions = [], wallets = [], modal, refreshing } = this.state;
 
     return (
-      <View style={[STYLE.SCREEN, styles.main]}>
-        <View style={[STYLE.LAYOUT_TOP]}>
+      <View style={STYLE.SCREEN}>
+        <View style={STYLE.LAYOUT_TOP}>
           <Header amount={1289.39} symbol="USD" trend={-123} />
           <Swiper
             bounces
@@ -69,8 +69,9 @@ class Main extends Component {
             height={206}
             onMomentumScrollEnd={_onSwipeWallet}
             removeClippedSubviews={false}
-            showsPagination={false}
-            style={styles.wallets}
+            showsPagination
+            dotStyle={STYLE.SWIPER_DOT}
+            activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
           >
             { wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />)}
           </Swiper>

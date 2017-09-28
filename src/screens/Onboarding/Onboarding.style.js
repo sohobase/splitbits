@@ -1,29 +1,30 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { COLOR, FOOTER_SIZE, OFFSET, UNIT } = THEME;
+const { COLOR, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   loading: {
     backgroundColor: COLOR.PRIMARY,
   },
 
-  navigation: {
-    display: 'flex',
+  buttonWallet: {
+    // marginTop: OFFSET,
     position: 'absolute',
-    height: FOOTER_SIZE,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: COLOR.BACKGROUND_DISABLED,
+    alignSelf: 'flex-start',
+    // bottom: 0,
+    // width: '90%',
+    // position: 'absolute',
+    // left: 0,
+    // bottom: 0,
   },
 
-  button: {
+  option: {
     position: 'absolute',
     bottom: UNIT / 3,
   },
 
-  buttonCaption: {
+  optionCaption: {
     padding: OFFSET,
   },
 
@@ -33,16 +34,5 @@ export default StyleSheet.create({
 
   right: {
     alignSelf: 'flex-end',
-  },
-
-  dot: {
-    zIndex: 1,
-    width: UNIT * 0.65,
-    height: UNIT * 0.65,
-    backgroundColor: COLOR.BACKGROUND_DARK,
-  },
-
-  dotActive: {
-    backgroundColor: COLOR.WHITE,
   },
 });

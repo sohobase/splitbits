@@ -9,8 +9,8 @@ export default StyleSheet.create({
   },
 
   image: {
-    marginTop: OFFSET * 3,
-    marginBottom: OFFSET * 3,
+    // marginTop: OFFSET * 2,
+    marginBottom: OFFSET * 2,
     width: UNIT * 19.2,
     height: UNIT * 19.2,
     backgroundColor: COLOR.TEXT_HIGHLIGHT_DISABLED,

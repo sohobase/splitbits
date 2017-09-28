@@ -14,8 +14,9 @@ export default StyleSheet.create({
     maxHeight: UNIT * 20.8,
     backgroundColor: COLOR.WHITE,
     margin: OFFSET,
+    marginBottom: OFFSET * 3,
     // marginLeft: '-25%',
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     borderRadius: THEME.BORDER_RADIUS,
   },
 

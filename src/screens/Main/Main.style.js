@@ -4,10 +4,6 @@ import { THEME } from '../../config';
 const { COLOR, FOOTER_SIZE } = THEME;
 
 export default StyleSheet.create({
-  main: {},
-
-  wallets: {},
-
   activity: {
     backgroundColor: COLOR.BACKGROUND,
   },

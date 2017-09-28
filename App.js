@@ -4,8 +4,10 @@ import { Provider } from 'react-redux';
 import { STYLE, THEME } from './src/config';
 import {
   LoadingScreen,
+  OnboardingScreen,
   MainScreen,
   ProfileScreen,
+  FriendsScreen,
   SettingsScreen,
   TransactionScreen,
   WalletScreen,
@@ -19,10 +21,11 @@ const navigationOptions = {
 };
 
 const Navigation = StackNavigator({
+  // Onboarding: { screen: OnboardingScreen, navigationOptions: { header: null } },
   Main: { screen: MainScreen, navigationOptions: { header: null } },
-
   Transaction: { screen: TransactionScreen, navigationOptions },
-  Profile: { screen: ProfileScreen, navigationOptions },
+  Profile: { screen: ProfileScreen, navigationOptions: { header: null } },
+  Friends: { screen: FriendsScreen, navigationOptions },
   Settings: { screen: SettingsScreen, navigationOptions },
   Wallet: { screen: WalletScreen, navigationOptions },
 });

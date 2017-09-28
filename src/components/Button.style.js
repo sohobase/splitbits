@@ -36,4 +36,8 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
   },
+
+  icon: {
+    tintColor: COLOR.WHITE,
+  },
 });
