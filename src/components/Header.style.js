@@ -1,7 +1,7 @@
 import { Platform, StatusBar, StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT, HEADER_SIZE, OFFSET, UNIT } = THEME;
+const { COLOR, FONT, HEADER_SIZE, UNIT } = THEME;
 const HEIGHT = (Platform.OS !== 'ios') ? (HEADER_SIZE + StatusBar.currentHeight) : HEADER_SIZE;
 
 export default StyleSheet.create({
@@ -11,17 +11,9 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
   },
 
-  main: {
+  content: {
     flex: 1,
     alignItems: 'center',
-  },
-
-  button: {
-    paddingTop: UNIT / 2,
-    paddingBottom: UNIT / 2,
-    paddingLeft: OFFSET,
-    paddingRight: OFFSET,
-    opacity: 0.75,
   },
 
   title: {
@@ -30,5 +22,13 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
     marginBottom: UNIT,
+  },
+
+  button: {
+    paddingTop: UNIT / 2,
+    paddingBottom: UNIT / 2,
+    paddingLeft: UNIT,
+    paddingRight: UNIT,
+    opacity: 0.75,
   },
 });

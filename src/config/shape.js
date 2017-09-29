@@ -18,6 +18,11 @@ export default {
     wallet: WALLET,
     symbol: string,
   }),
+  BUTTON: shape({
+    delay: number,
+    icon: string,
+    onPress: func,
+  }),
   NAVIGATION: shape({
     navigate: func,
     setParams: func,
