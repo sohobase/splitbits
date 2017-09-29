@@ -22,7 +22,7 @@ const Button = ({ accent, caption, captionStyle, circle, disabled, icon, onPress
       ])}
     >
       { icon &&
-        <Icon value={icon} style={[styles.icon]} /> }
+        <Icon value={icon} style={[styles.icon, captionStyle]} /> }
       { caption &&
         <Text style={[styles.caption, captionStyle]}>{caption}</Text> }
     </Animatable>

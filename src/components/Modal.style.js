@@ -36,7 +36,10 @@ export default StyleSheet.create({
   buttonClose: {
     marginLeft: ICON_SIZE * -1,
     right: UNIT,
-    opacity: THEME.DISABLED,
+  },
+
+  buttonCloseCaption: {
+    tintColor: COLOR.TEXT_DISABLED,
   },
 
   children: {

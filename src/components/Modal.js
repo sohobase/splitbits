@@ -28,7 +28,13 @@ const Modal = ({ children, onClose, title, visible }) => (
       >
         <View style={[STYLE.ROW, STYLE.CENTERED, styles.header]}>
           { title && <Text style={styles.title}>{title}</Text> }
-          <Button icon="close" onPress={onClose} raised style={styles.buttonClose} />
+          <Button
+            icon="close"
+            onPress={onClose}
+            raised
+            style={styles.buttonClose}
+            captionStyle={styles.buttonCloseCaption}
+          />
         </View>
         <View style={styles.children}>
           { children }
