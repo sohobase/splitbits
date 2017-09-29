@@ -13,18 +13,20 @@ import {
   WalletScreen,
 } from './src/screens';
 
-const navigationOptions = {
-  headerBackTitle: ' ',
-  headerStyle: STYLE.HEADER,
-  headerTitleStyle: STYLE.HEADER_TITLE,
-  headerTintColor: THEME.COLOR.TEXT_HIGHLIGHT,
-};
+// const navigationOptions = {
+//   headerBackTitle: ' ',
+//   headerStyle: STYLE.HEADER,
+//   headerTitleStyle: STYLE.HEADER_TITLE,
+//   headerTintColor: THEME.COLOR.TEXT_HIGHLIGHT,
+// };
+
+const navigationOptions = { header: null };
 
 const Navigation = StackNavigator({
-  // Onboarding: { screen: OnboardingScreen, navigationOptions: { header: null } },
-  Main: { screen: MainScreen, navigationOptions: { header: null } },
+  // Onboarding: { screen: OnboardingScreen, navigationOptions },
+  Main: { screen: MainScreen, navigationOptions },
   Transaction: { screen: TransactionScreen, navigationOptions },
-  Profile: { screen: ProfileScreen, navigationOptions: { header: null } },
+  Profile: { screen: ProfileScreen, navigationOptions },
   Friends: { screen: FriendsScreen, navigationOptions },
   Settings: { screen: SettingsScreen, navigationOptions },
   Wallet: { screen: WalletScreen, navigationOptions },
