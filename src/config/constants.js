@@ -8,4 +8,6 @@ export default {
     ANDROID: 'http://',
     IOS: 'http://',
   },
+
+  SERVICE: 'http://localhost:3000/',
 };
