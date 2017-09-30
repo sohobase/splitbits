@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
-import { STYLE, THEME } from './src/config';
 import {
   LoadingScreen,
   OnboardingScreen,
@@ -22,15 +21,18 @@ import {
 
 const navigationOptions = { header: null };
 
-const Navigation = StackNavigator({
-  // Onboarding: { screen: OnboardingScreen, navigationOptions },
+const screens = {
+  Onboarding: { screen: OnboardingScreen, navigationOptions },
   Main: { screen: MainScreen, navigationOptions },
   Transaction: { screen: TransactionScreen, navigationOptions },
   Profile: { screen: ProfileScreen, navigationOptions },
   Friends: { screen: FriendsScreen, navigationOptions },
   Settings: { screen: SettingsScreen, navigationOptions },
   Wallet: { screen: WalletScreen, navigationOptions },
-});
+};
+
+const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Main' });
+const NavigationOnboarding = StackNavigator({ ...screens }, { initialRouteName: 'Onboarding' });
 
 class App extends Component {
   constructor(props) {
@@ -51,7 +53,11 @@ class App extends Component {
         <LoadingScreen onLoad={this._onLoad} />
         :
         <Provider store={store}>
-          <Navigation />
+          {
+            store.getState().wallets.length > 0
+              ? <NavigationMain initialRouteName="Transaction" />
+              : <NavigationOnboarding />
+          }
         </Provider>
     );
   }
