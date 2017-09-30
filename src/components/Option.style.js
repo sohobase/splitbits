@@ -16,6 +16,13 @@ export default StyleSheet.create({
     marginBottom: UNIT / 3,
   },
 
+  image: {
+    width: UNIT * 6.4,
+    height: UNIT * 6.4,
+    marginBottom: UNIT / 3,
+    resizeMode: 'cover',
+  },
+
   iconAccent: {
     tintColor: COLOR.ACCENT,
   },

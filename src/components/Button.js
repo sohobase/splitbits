@@ -18,7 +18,7 @@ const Button = ({ accent, caption, captionStyle, circle, disabled, icon, onPress
         (circle && styles.circle),
         (!circle && !raised && styles.square),
         (disabled && styles.disabled),
-        (accent && styles.accent),
+        (!disabled && accent && styles.accent),
       ])}
     >
       { icon &&

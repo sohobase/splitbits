@@ -57,8 +57,8 @@ export default StyleSheet.create({
 
   SWIPER_DOT: {
     zIndex: 1,
-    width: UNIT * 0.65,
-    height: UNIT * 0.65,
+    width: UNIT * 0.6,
+    height: UNIT * 0.6,
     backgroundColor: COLOR.BACKGROUND_DARK,
   },
 

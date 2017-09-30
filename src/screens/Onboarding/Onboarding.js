@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { Button } from '../../components';
-import { Slide } from './components';
+import { Slide, WalletModal } from './components';
 import styles from './Onboarding.style';
 
 const { COLOR } = THEME;
@@ -12,10 +12,11 @@ const MAX_INDEX = 3;
 class Onboarding extends Component {
   constructor(props) {
     super(props);
-    this.state = { index: 0 };
+    this.state = { index: 0, modal: true };
     this._onNext = this._onNext.bind(this);
     this._onSkip = this._onSkip.bind(this);
     this._onSwipe = this._onSwipe.bind(this);
+    this._onWallet = this._onWallet.bind(this);
   }
 
   _onNext() {
@@ -32,9 +33,12 @@ class Onboarding extends Component {
     this.setState({ index });
   }
 
+  _onWallet() {
+    this.setState({ modal: !this.state.modal });
+  }
+
   render() {
-    const { _onNext, _onSwipe, _onSkip } = this;
-    const { index } = this.state;
+    const { _onNext, _onSwipe, _onSkip, _onWallet, state: { index, modal } } = this;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -47,7 +51,12 @@ class Onboarding extends Component {
           onMomentumScrollEnd={_onSwipe}
         >
           <Slide>
-            <Button accent caption="CREATE YOUR FIRST WALLET" style={styles.buttonWallet} />
+            <Button
+              accent
+              caption="CREATE YOUR FIRST WALLET"
+              onPress={_onWallet}
+              style={styles.buttonWallet}
+            />
           </Slide>
 
           <Slide />
@@ -72,6 +81,8 @@ class Onboarding extends Component {
           raised
           style={[styles.option, styles.right]}
         />
+
+        <WalletModal visible={modal} onClose={_onWallet} />
       </View>
     );
   }

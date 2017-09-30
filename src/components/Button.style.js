@@ -22,13 +22,13 @@ export default StyleSheet.create({
     borderRadius: THEME.BUTTON_CIRCLE_SIZE / 2,
   },
 
-  disabled: {
-    backgroundColor: THEME.FONT_PRIMARY_COLOR,
-    opacity: 0.35,
-  },
-
   accent: {
     backgroundColor: COLOR.ACCENT,
+  },
+
+  disabled: {
+    backgroundColor: COLOR.TEXT_DISABLED,
+    opacity: 0.35,
   },
 
   caption: {
