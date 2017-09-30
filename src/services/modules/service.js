@@ -6,13 +6,11 @@ const headers = {
   'Content-Type': 'application/json',
   deviceId,
 };
+const onError = error => console.log('module/service', error);
 
 export default async(endpoint, props) => {
-  const response = await fetch(`${C.SERVICE}${endpoint}`, { // eslint-disable-line
-    headers,
-    ...props,
-  });
-  const json = await response.json();
+  const response = await fetch(`${C.SERVICE}${endpoint}`, { headers, ...props }).catch(onError); // eslint-disable-line 
+  const json = response ? await response.json() : undefined;
 
   return json;
 };

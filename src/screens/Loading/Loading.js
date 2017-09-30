@@ -2,7 +2,6 @@ import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
-import { connect } from 'react-redux';
 import { updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE } from '../../config';
@@ -18,7 +17,7 @@ class Loading extends Component {
 
     if (wallets.length > 0) {
       const response = await BalanceService.get(wallets.map(({ id }) => id));
-      response.balances.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
+      if (response) response.balances.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
     }
 
     onLoad({ store });
