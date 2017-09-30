@@ -17,3 +17,10 @@ export const removeAlertAction = wallet => ({
   type: REMOVE_WALLET,
   wallet,
 });
+
+// --
+export const UPDATE_WALLET = '@xCryptos/UPDATE_WALLET';
+export const updateWalletAction = wallet => ({
+  type: UPDATE_WALLET,
+  wallet,
+});

@@ -19,7 +19,7 @@ const WalletItem = ({ data, onPress, style }) => (
     <View style={styles.content}>
       <View style={styles.info}>
         <Text style={[styles.name, styles.label]}>{data.name.toUpperCase()}</Text>
-        <Amount fixed={4} symbol={data.coin} value={data.amount} style={[styles.text, styles.amount]} />
+        <Amount fixed={4} symbol={data.coin} value={data.balance} style={[styles.text, styles.amount]} />
         <Amount value={0.00} symbol="USD" style={[styles.label, styles.fiat]} />
       </View>
       <View style={STYLE.ROW}>

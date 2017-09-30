@@ -2,14 +2,26 @@ import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
+import { connect } from 'react-redux';
+import { updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE } from '../../config';
+import { BalanceService } from '../../services';
 import { initialize } from '../../store';
 import styles from './Loading.style';
 
 class Loading extends Component {
   async componentWillMount() {
-    this.props.onLoad({ store: await initialize() });
+    const { onLoad } = this.props;
+    const store = await initialize();
+    const { wallets } = store.getState();
+
+    if (wallets.length > 0) {
+      const response = await BalanceService.get(wallets.map(({ id }) => id));
+      response.balances.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
+    }
+
+    onLoad({ store });
   }
 
   render() {
@@ -28,7 +40,7 @@ Loading.propTypes = {
 };
 
 Loading.defaultProps = {
-  onLoad: undefined,
+  onLoad() {},
 };
 
 export default Loading;
