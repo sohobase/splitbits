@@ -1,6 +1,8 @@
 import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
+import { connect } from 'react-redux';
+import { addWalletAction } from '../../../store/actions';
 import { Button, Modal, Option } from '../../../components';
 import { STYLE } from '../../../config';
 import { WalletService } from '../../../services';
@@ -21,10 +23,13 @@ class WalletModal extends Component {
   }
 
   async _onSubmit() {
-    const { props: { onClose }, state } = this;
+    const { props: { addWallet, onSuccess }, state } = this;
     const wallet = await WalletService.create(state);
 
-    if (wallet) onClose();
+    if (wallet) {
+      addWallet(wallet);
+      onSuccess();
+    }
   }
 
   _onCoin(coin) {
@@ -72,13 +77,22 @@ class WalletModal extends Component {
 }
 
 WalletModal.propTypes = {
+  addWallet: func,
   onClose: func,
+  onSuccess: func,
   visible: bool,
 };
 
 WalletModal.defaultProps = {
-  onClose: undefined,
+  addWallet() {},
+  onClose() {},
+  onSuccess() {},
   visible: false,
 };
 
-export default WalletModal;
+const mapStateToProps = undefined;
+const mapDispatchToProps = dispatch => ({
+  addWallet: wallet => dispatch(addWalletAction(wallet)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletModal);

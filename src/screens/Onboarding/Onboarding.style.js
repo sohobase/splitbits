@@ -9,14 +9,7 @@ export default StyleSheet.create({
   },
 
   buttonWallet: {
-    // marginTop: OFFSET,
-    position: 'absolute',
-    alignSelf: 'flex-start',
-    // bottom: 0,
-    // width: '90%',
-    // position: 'absolute',
-    // left: 0,
-    // bottom: 0,
+    marginTop: OFFSET * 2,
   },
 
   option: {

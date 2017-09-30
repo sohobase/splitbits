@@ -7,7 +7,7 @@ export const addTokenAction = token => ({
 
 // -- Wallet
 export const ADD_WALLET = '@xCryptos/ADD_WALLET';
-export const addAlertAction = wallet => ({
+export const addWalletAction = wallet => ({
   type: ADD_WALLET,
   wallet,
 });

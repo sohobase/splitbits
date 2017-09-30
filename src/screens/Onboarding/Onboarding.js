@@ -12,11 +12,19 @@ const MAX_INDEX = 3;
 class Onboarding extends Component {
   constructor(props) {
     super(props);
-    this.state = { index: 0, modal: true };
+    this.state = {
+      index: 0,
+      modal: false,
+    };
     this._onNext = this._onNext.bind(this);
     this._onSkip = this._onSkip.bind(this);
+    this._onSuccess = this._onSuccess.bind(this);
     this._onSwipe = this._onSwipe.bind(this);
     this._onWallet = this._onWallet.bind(this);
+  }
+
+  componentWillMount() {
+    // this.props.navigation.navigate('Main');
   }
 
   _onNext() {
@@ -29,6 +37,13 @@ class Onboarding extends Component {
     navigate('Main');
   }
 
+  _onSuccess() {
+    const { _onWallet, props: { navigation } } = this;
+
+    _onWallet();
+    navigation.navigate('Main');
+  }
+
   _onSwipe(event, { index }) {
     this.setState({ index });
   }
@@ -38,7 +53,7 @@ class Onboarding extends Component {
   }
 
   render() {
-    const { _onNext, _onSwipe, _onSkip, _onWallet, state: { index, modal } } = this;
+    const { _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, state: { index, modal } } = this;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -82,7 +97,7 @@ class Onboarding extends Component {
           style={[styles.option, styles.right]}
         />
 
-        <WalletModal visible={modal} onClose={_onWallet} />
+        <WalletModal visible={modal} onClose={_onWallet} onSuccess={_onSuccess} />
       </View>
     );
   }

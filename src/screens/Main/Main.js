@@ -1,9 +1,11 @@
+import { arrayOf } from 'prop-types';
 import React, { Component } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import Swiper from 'react-native-swiper';
+import { connect } from 'react-redux';
 import { Button } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
-import { TransactionService, WalletService } from '../../services';
+import { TransactionService } from '../../services';
 import { Header, Footer, TransactionModal, TransactionItem, WalletItem } from './components';
 import styles from './Main.style';
 
@@ -27,7 +29,6 @@ class Main extends Component {
   async componentWillMount() {
     this.setState({
       transactions: await TransactionService.list(),
-      wallets: await WalletService.list(),
     });
   }
 
@@ -56,8 +57,8 @@ class Main extends Component {
 
   render() {
     const { _onModal, _onSwipeWallet } = this;
-    const { navigation: { navigate } } = this.props;
-    const { transactions = [], wallets = [], modal, refreshing } = this.state;
+    const { navigation: { navigate }, wallets } = this.props;
+    const { transactions = [], modal, refreshing } = this.state;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -105,10 +106,16 @@ class Main extends Component {
 
 Main.propTypes = {
   navigation: SHAPE.NAVIGATION,
+  wallets: arrayOf(SHAPE.WALLET),
 };
 
 Main.defaultProps = {
   navigation: undefined,
+  wallets: [],
 };
 
-export default Main;
+const mapStateToProps = ({ wallets }) => ({
+  wallets,
+});
+
+export default connect(mapStateToProps)(Main);
