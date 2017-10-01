@@ -20,6 +20,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.sohobase.splitwallet",
+      "buildNumber": "1",
       "supportsTablet": false
     },
     "android": {
