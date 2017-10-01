@@ -24,6 +24,7 @@
     },
     "android": {
       "package": "com.sohobase.splitwallet",
+      "permissions": [],
       "versionCode": 1
     }
    }
