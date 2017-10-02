@@ -2,14 +2,14 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
-import { addWalletAction } from '../../../store/actions';
-import { Button, Modal, Option } from '../../../components';
-import { STYLE } from '../../../config';
-import { WalletService } from '../../../services';
+import { addWalletAction } from '../store/actions';
+import { Button, Modal, Option } from '../components';
+import { STYLE } from '../config';
+import { WalletService } from '../services';
 import styles from './WalletModal.style';
 
-const imageBTC = require('../../../../assets/coin-bitcoin.png');
-const imageLTC = require('../../../../assets/coin-litecoin.png');
+const imageBTC = require('../../assets/coin-bitcoin.png');
+const imageLTC = require('../../assets/coin-litecoin.png');
 
 class WalletModal extends Component {
   constructor(props) {

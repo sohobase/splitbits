@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { Button } from '../../components';
-import { Slide, WalletModal } from './components';
+import { WalletModal } from '../../containers';
+import { Slide } from './components';
 import styles from './Onboarding.style';
 
 const { COLOR } = THEME;
