@@ -5,6 +5,7 @@ import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import { Button } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
+import { WalletModal } from '../../containers';
 import { TransactionService } from '../../services';
 import { Header, Footer, TransactionModal, TransactionItem, WalletItem } from './components';
 import styles from './Main.style';
@@ -16,7 +17,6 @@ class Main extends Component {
     super(props);
     this.state = {
       transactions: undefined,
-      wallets: undefined,
       modal: false,
       prefetch: false,
       refreshing: false,
@@ -27,9 +27,8 @@ class Main extends Component {
   }
 
   async componentWillMount() {
-    this.setState({
-      transactions: await TransactionService.list(),
-    });
+    const { wallets = [] } = this.props;
+    if (wallets.length > 0) this.setState({ transactions: await TransactionService.list(wallets[0].id) });
   }
 
   _renderTransaction({ item }) {
@@ -48,10 +47,10 @@ class Main extends Component {
   }
 
   async _onSwipeWallet(event, { index }) {
-    let transactions;
+    const { wallets = [] } = this.props;
 
     this.setState({ refreshing: true });
-    if (index === 0) transactions = await TransactionService.list();
+    const transactions = await TransactionService.list(wallets[index].id);
     this.setState({ refreshing: false, transactions });
   }
 
@@ -98,7 +97,9 @@ class Main extends Component {
           onPress={_onModal}
           style={styles.button}
         />
-        <TransactionModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} />
+        { 1 === 2 &&
+          <TransactionModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} /> }
+        <WalletModal visible={modal} onClose={_onModal} />
       </View>
     );
   }
