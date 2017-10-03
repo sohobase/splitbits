@@ -1,10 +1,8 @@
-const { Constants: { deviceId = 'unknown' } } = Expo || {};
-
 export default {
   currencies: {},
-  deviceId,
-  pushToken: undefined,
+  device: {},
   devices: [],
+  pushToken: undefined,
   transactions: [],
   wallets: [],
 };

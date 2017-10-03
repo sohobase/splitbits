@@ -2,6 +2,7 @@ import DEFAULTS from './defaults';
 import {
   ADD_TOKEN,
   UPDATE_CURRENCIES,
+  UPDATE_DEVICE,
   ADD_WALLET,
   REMOVE_WALLET,
   UPDATE_WALLET,
@@ -16,6 +17,10 @@ export default function(state = DEFAULTS, action) {
     // -- Currencies
     case UPDATE_CURRENCIES:
       return { ...state, currencies: action.currencies };
+
+    // -- Device
+    case UPDATE_DEVICE:
+      return { ...state, device: action.device };
 
     // -- Transaction
 

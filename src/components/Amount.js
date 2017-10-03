@@ -6,7 +6,7 @@ import styles from './Amount.style';
 
 const SYMBOLS = {
   BTC: '฿',
-  EUR: 'T',
+  EUR: '€',
   LTC: 'Ł',
   USD: '$',
 };

@@ -22,23 +22,23 @@ const getIcon = (amount, state) => {
   return 'arrowBack';
 };
 
-const TransactionItem = ({ currencies, data: { wallet = {}, amount, coin, createdAt, state }, onPress }) => (
+const TransactionItem = ({ currencies, data: { amount, coin, createdAt, state, walletFrom = {}, walletTo = {} }, device, onPress }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, styles.container]}>
       <View>
-        <Image style={styles.image} source={{ uri: wallet.image }} />
+        <Image style={styles.image} source={{ uri: walletFrom.image }} />
         <Icon
           value={getIcon(amount, state)}
           style={[styles.iconArrow, (amount < 0 && styles.iconNegative), (state === DELETED && styles.iconInactive)]}
         />
       </View>
       <View style={styles.info}>
-        <Text style={[styles.name]}>{wallet.name}</Text>
+        <Text style={[styles.name]}>{walletFrom.name}</Text>
         <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
       </View>
       <View style={styles.amounts}>
         <Amount fixed={4} symbol={coin} value={amount} style={[styles.amount]} />
-        <Amount value={amount / currencies[coin]} symbol="USD" style={[styles.label, styles.fiat]} />
+        <Amount value={amount / currencies[coin]} symbol={device.currency} style={[styles.label, styles.fiat]} />
       </View>
     </View>
   </Touchable>
@@ -46,18 +46,21 @@ const TransactionItem = ({ currencies, data: { wallet = {}, amount, coin, create
 
 TransactionItem.propTypes = {
   currencies: SHAPE.CURRENCIES,
-  data: SHAPE.ACTIVITY,
+  data: SHAPE.TRANSACTION,
+  device: SHAPE.DEVICE,
   onPress: func,
 };
 
 TransactionItem.defaultProps = {
   currencies: {},
   data: {},
+  device: {},
   onPress: undefined,
 };
 
-const mapStateToProps = ({ currencies }) => ({
+const mapStateToProps = ({ currencies, device }) => ({
   currencies,
+  device,
 });
 
 export default connect(mapStateToProps)(TransactionItem);

@@ -12,6 +12,13 @@ export const updateCurrenciesAction = currencies => ({
   currencies,
 });
 
+// -- Device
+export const UPDATE_DEVICE = '@xCryptos/UPDATE_DEVICE';
+export const updateDeviceAction = device => ({
+  type: UPDATE_DEVICE,
+  device,
+});
+
 // -- Transaction
 
 // -- Wallet

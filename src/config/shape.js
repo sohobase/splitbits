@@ -1,4 +1,4 @@
-import { date, func, number, shape, string } from 'prop-types';
+import { array, date, func, number, shape, string } from 'prop-types';
 
 const WALLET = shape({
   id: string,
@@ -12,13 +12,6 @@ const WALLET = shape({
 });
 
 export default {
-  ACTIVITY: shape({
-    id: string,
-    amount: number,
-    createdAt: date,
-    wallet: WALLET,
-    symbol: string,
-  }),
   BUTTON: shape({
     delay: number,
     icon: string,
@@ -28,9 +21,31 @@ export default {
     BTC: number,
     LTC: number,
   }),
+  DEVICE: shape({
+    id: string,
+    currency: string,
+    // devices: array,
+    // image: string,
+    // name: string,
+    // expo: string,
+    // private: { capture: string, passport: string, phone: string },
+    // state: string,
+    // token: string,
+    // createdAt: date,
+  }),
   NAVIGATION: shape({
     navigate: func,
     setParams: func,
+  }),
+  TRANSACTION: shape({
+    id: string,
+    amount: number,
+    charge: number,
+    coin: string,
+    createdAt: date,
+    fee: number,
+    walletFrom: string,
+    walletTo: string,
   }),
   WALLET,
 };

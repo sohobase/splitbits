@@ -10,7 +10,7 @@ import styles from './WalletItem.style';
 
 const { ANIMATION: { DURATION }, COLOR } = THEME;
 
-const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, trend = 0 }, onPress, style }) => (
+const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, trend = 0 }, device, onPress, style }) => (
   <Animatable
     animation="bounceIn"
     duration={DURATION}
@@ -23,7 +23,7 @@ const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, tren
         <Amount fixed={4} symbol={coin} value={balance} style={[styles.text, styles.amount]} />
         <Amount
           value={balance / currencies[coin]}
-          symbol="USD"
+          symbol={device.currency}
           style={[styles.label, styles.fiat]}
         />
       </View>
@@ -46,6 +46,7 @@ const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, tren
 WalletItem.propTypes = {
   currencies: SHAPE.CURRENCIES,
   data: SHAPE.WALLET,
+  device: SHAPE.DEVICE,
   onPress: func,
   style: oneOfType(array, number),
 };
@@ -53,12 +54,14 @@ WalletItem.propTypes = {
 WalletItem.defaultProps = {
   currencies: {},
   data: {},
+  device: {},
   onPress: undefined,
   style: [],
 };
 
-const mapStateToProps = ({ currencies }) => ({
+const mapStateToProps = ({ currencies, device }) => ({
   currencies,
+  device,
 });
 
 export default connect(mapStateToProps)(WalletItem);
