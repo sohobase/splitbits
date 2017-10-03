@@ -3,19 +3,19 @@ import { THEME } from '../../../config';
 
 const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
-const QR_SIZE = THEME.UNIT * 8;
+const CARD_SIZE = THEME.UNIT * 18;
+const QR_SIZE = THEME.UNIT * 6.4;
 
 export default StyleSheet.create({
   container: {
     zIndex: 1,
     flex: 1,
     width: '75%',
-    height: '100%',
-    maxHeight: UNIT * 20.8,
+    minHeight: CARD_SIZE,
+    maxHeight: CARD_SIZE,
     backgroundColor: COLOR.WHITE,
-    margin: OFFSET,
+    marginTop: OFFSET,
     marginBottom: OFFSET * 3,
-    // marginLeft: '-25%',
     alignSelf: 'center',
     borderRadius: THEME.BORDER_RADIUS,
   },
@@ -23,6 +23,8 @@ export default StyleSheet.create({
   content: {
     flex: 1,
     padding: OFFSET,
+    minHeight: CARD_SIZE,
+    maxHeight: CARD_SIZE,
   },
 
   info: {
@@ -57,8 +59,8 @@ export default StyleSheet.create({
 
   qr: {
     position: 'absolute',
-    right: 0,
-    bottom: 0,
+    right: OFFSET,
+    bottom: OFFSET,
     width: QR_SIZE,
     height: QR_SIZE,
   },

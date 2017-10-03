@@ -69,12 +69,12 @@ class Main extends Component {
           <Swiper
             bounces
             loop={false}
-            height={206}
             onMomentumScrollEnd={_onSwipeWallet}
             removeClippedSubviews={false}
             showsPagination
             dotStyle={STYLE.SWIPER_DOT}
             activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
+            style={styles.wallets}
           >
             { wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />)}
           </Swiper>
