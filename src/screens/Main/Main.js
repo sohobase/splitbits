@@ -96,9 +96,9 @@ class Main extends Component {
           onPress={_onModal}
           style={styles.button}
         />
+        <TransactionModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} />
         { 1 === 2 &&
-          <TransactionModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} /> }
-        <WalletModal visible={modal} onClose={_onModal} />
+          <WalletModal visible={modal} onClose={_onModal} /> }
       </View>
     );
   }

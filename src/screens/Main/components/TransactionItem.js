@@ -3,17 +3,33 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Icon, Touchable } from '../../../components';
-import { SHAPE, STYLE } from '../../../config';
+import { C, SHAPE, STYLE } from '../../../config';
 import styles from './TransactionItem.style';
 
-const TransactionItem = ({ currencies, data: { wallet = {}, amount, coin, createdAt }, onPress }) => (
+const { DELETED, PROCESSING, REQUESTED } = C.STATE;
+
+const getIcon = (amount, state) => {
+  if (amount < 0) {
+    return 'arrowForward';
+  } else if (state === REQUESTED) {
+    return 'operations';
+  } else if (state === PROCESSING) {
+    return 'settings';
+  } else if (state === DELETED) {
+    return 'close';
+  }
+
+  return 'arrowBack';
+};
+
+const TransactionItem = ({ currencies, data: { wallet = {}, amount, coin, createdAt, state }, onPress }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, styles.container]}>
       <View>
         <Image style={styles.image} source={{ uri: wallet.image }} />
         <Icon
-          value={amount > 0 ? 'add' : 'arrowForward'}
-          style={[styles.iconArrow, (amount < 0 && styles.iconNegative)]}
+          value={getIcon(amount, state)}
+          style={[styles.iconArrow, (amount < 0 && styles.iconNegative), (state === DELETED && styles.iconInactive)]}
         />
       </View>
       <View style={styles.info}>
