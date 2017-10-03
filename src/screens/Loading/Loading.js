@@ -19,9 +19,8 @@ class Loading extends Component {
       const response = await StateService.get(wallets.map(({ id }) => id));
 
       if (response) {
-        const { currencies = {}, balances = [] } = response;
-        balances.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
-        store.dispatch(updateCurrenciesAction(currencies));
+        response.wallets.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
+        store.dispatch(updateCurrenciesAction(response.currencies));
       }
     }
 

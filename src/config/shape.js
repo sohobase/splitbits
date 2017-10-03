@@ -2,12 +2,13 @@ import { date, func, number, shape, string } from 'prop-types';
 
 const WALLET = shape({
   id: string,
-  amount: number,
+  balance: number,
   image: string,
   name: string,
   progress: number,
   qr: string,
   symbol: string,
+  trend: number,
 });
 
 export default {

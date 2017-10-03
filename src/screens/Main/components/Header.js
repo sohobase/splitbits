@@ -1,25 +1,42 @@
-import { number, string } from 'prop-types';
+import { arrayOf, string } from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Amount, Header } from '../../../components';
+import { SHAPE } from '../../../config';
 import styles from './Header.style';
 
-const HeaderTitle = ({ amount, symbol, trend }) => (
-  <Header>
-    <Amount symbol={symbol} value={amount} style={styles.amount} />
-    <Amount symbol={symbol} value={trend} style={styles.trend} />
-  </Header>
-);
+const HeaderTitle = ({ currencies, symbol, wallets }) => {
+  let totalBalance = 0;
+  let totalTrend = 0;
+  wallets.forEach(({ balance, coin, trend }) => {
+    const total = balance / currencies[coin];
+    totalBalance += total;
+    totalTrend += total * (trend / 100);
+  });
+
+  return (
+    <Header>
+      <Amount symbol={symbol} value={totalBalance} style={styles.amount} />
+      <Amount symbol={symbol} value={totalTrend} style={styles.trend} />
+    </Header>
+  );
+};
 
 HeaderTitle.propTypes = {
-  amount: number,
+  currencies: SHAPE.CURRENCIES,
   symbol: string,
-  trend: number,
+  wallets: arrayOf(SHAPE.WALLET),
 };
 
 HeaderTitle.defaultProps = {
-  amount: undefined,
+  currencies: {},
   symbol: undefined,
-  trend: undefined,
+  wallets: [],
 };
 
-export default HeaderTitle;
+const mapStateToProps = ({ currencies, wallets }) => ({
+  currencies,
+  wallets,
+});
+
+export default connect(mapStateToProps)(HeaderTitle);

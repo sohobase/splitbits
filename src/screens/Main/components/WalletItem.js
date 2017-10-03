@@ -10,7 +10,7 @@ import styles from './WalletItem.style';
 
 const { ANIMATION: { DURATION }, COLOR } = THEME;
 
-const WalletItem = ({ currencies, data, onPress, style }) => (
+const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, trend = 0 }, onPress, style }) => (
   <Animatable
     animation="bounceIn"
     duration={DURATION}
@@ -19,21 +19,21 @@ const WalletItem = ({ currencies, data, onPress, style }) => (
   >
     <View style={styles.content}>
       <View style={styles.info}>
-        <Text style={[styles.name, styles.label]}>{data.name.toUpperCase()}</Text>
-        <Amount fixed={4} symbol={data.coin} value={data.balance} style={[styles.text, styles.amount]} />
+        <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
+        <Amount fixed={4} symbol={coin} value={balance} style={[styles.text, styles.amount]} />
         <Amount
-          value={data.balance / currencies[data.coin]}
+          value={balance / currencies[coin]}
           symbol="USD"
           style={[styles.label, styles.fiat]}
         />
       </View>
       <View style={STYLE.ROW}>
-        <Icon value="trendingUp" style={styles.trend} />
-        <Text style={[styles.label]}>0.56%</Text>
+        <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
+        <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
       </View>
       <View style={styles.qr}>
         <QRCode
-          value={data.address}
+          value={address}
           size={64}
           fgColor={COLOR.WHITE}
           bgColor={COLOR.BLACK}
