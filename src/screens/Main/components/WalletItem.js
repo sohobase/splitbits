@@ -3,13 +3,14 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
+import { connect } from 'react-redux';
 import { SHAPE, STYLE, THEME } from '../../../config';
 import { Amount, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
 const { ANIMATION: { DURATION }, COLOR } = THEME;
 
-const WalletItem = ({ data, onPress, style }) => (
+const WalletItem = ({ currencies, data, onPress, style }) => (
   <Animatable
     animation="bounceIn"
     duration={DURATION}
@@ -20,7 +21,11 @@ const WalletItem = ({ data, onPress, style }) => (
       <View style={styles.info}>
         <Text style={[styles.name, styles.label]}>{data.name.toUpperCase()}</Text>
         <Amount fixed={4} symbol={data.coin} value={data.balance} style={[styles.text, styles.amount]} />
-        <Amount value={0.00} symbol="USD" style={[styles.label, styles.fiat]} />
+        <Amount
+          value={data.balance / currencies[data.coin]}
+          symbol="USD"
+          style={[styles.label, styles.fiat]}
+        />
       </View>
       <View style={STYLE.ROW}>
         <Icon value="trendingUp" style={styles.trend} />
@@ -39,15 +44,21 @@ const WalletItem = ({ data, onPress, style }) => (
 );
 
 WalletItem.propTypes = {
+  currencies: SHAPE.CURRENCIES,
   data: SHAPE.WALLET,
   onPress: func,
   style: oneOfType(array, number),
 };
 
 WalletItem.defaultProps = {
+  currencies: {},
   data: {},
   onPress: undefined,
   style: [],
 };
 
-export default WalletItem;
+const mapStateToProps = ({ currencies }) => ({
+  currencies,
+});
+
+export default connect(mapStateToProps)(WalletItem);

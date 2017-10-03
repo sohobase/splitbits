@@ -5,6 +5,15 @@ export const addTokenAction = token => ({
   token,
 });
 
+// -- Currencies
+export const UPDATE_CURRENCIES = '@xCryptos/UPDATE_CURRENCIES';
+export const updateCurrenciesAction = currencies => ({
+  type: UPDATE_CURRENCIES,
+  currencies,
+});
+
+// -- Transaction
+
 // -- Wallet
 export const ADD_WALLET = '@xCryptos/ADD_WALLET';
 export const addWalletAction = wallet => ({

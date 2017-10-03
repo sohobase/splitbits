@@ -1,11 +1,11 @@
-import BalanceService from './balance';
+import StateService from './state';
 import ProfileService from './profile';
 import SettingsService from './settings';
 import TransactionService from './transaction';
 import WalletService from './wallet';
 
 export {
-  BalanceService,
+  StateService,
   ProfileService,
   SettingsService,
   TransactionService,

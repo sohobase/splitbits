@@ -1,11 +1,12 @@
 import { func } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
+import { connect } from 'react-redux';
 import { Amount, Icon, Touchable } from '../../../components';
 import { SHAPE, STYLE } from '../../../config';
 import styles from './TransactionItem.style';
 
-const TransactionItem = ({ data: { wallet = {}, amount, coin, createdAt }, onPress }) => (
+const TransactionItem = ({ currencies, data: { wallet = {}, amount, coin, createdAt }, onPress }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, styles.container]}>
       <View>
@@ -21,20 +22,26 @@ const TransactionItem = ({ data: { wallet = {}, amount, coin, createdAt }, onPre
       </View>
       <View style={styles.amounts}>
         <Amount fixed={4} symbol={coin} value={amount} style={[styles.amount]} />
-        <Amount value={0.00} symbol="USD" style={[styles.label, styles.fiat]} />
+        <Amount value={amount / currencies[coin]} symbol="USD" style={[styles.label, styles.fiat]} />
       </View>
     </View>
   </Touchable>
 );
 
 TransactionItem.propTypes = {
+  currencies: SHAPE.CURRENCIES,
   data: SHAPE.ACTIVITY,
   onPress: func,
 };
 
 TransactionItem.defaultProps = {
+  currencies: {},
   data: {},
   onPress: undefined,
 };
 
-export default TransactionItem;
+const mapStateToProps = ({ currencies }) => ({
+  currencies,
+});
+
+export default connect(mapStateToProps)(TransactionItem);

@@ -56,13 +56,16 @@ class Main extends Component {
 
   render() {
     const { _onModal, _onSwipeWallet } = this;
-    const { navigation: { navigate }, wallets } = this.props;
+    const { currencies, navigation: { navigate }, wallets } = this.props;
     const { transactions = [], modal, refreshing } = this.state;
+
+    let totalBalance = 0;
+    wallets.forEach(({ balance, coin }) => { totalBalance += balance / currencies[coin]; });
 
     return (
       <View style={STYLE.SCREEN}>
         <View style={STYLE.LAYOUT_TOP}>
-          <Header amount={1289.39} symbol="USD" trend={-123} />
+          <Header amount={totalBalance} symbol="USD" trend={-123} />
           <Swiper
             bounces
             loop={false}
@@ -79,7 +82,6 @@ class Main extends Component {
 
         <FlatList
           data={transactions}
-          extraData={this.state}
           keyExtractor={item => item.id}
           refreshControl={
             <RefreshControl refreshing={refreshing} />}
@@ -106,16 +108,19 @@ class Main extends Component {
 }
 
 Main.propTypes = {
+  currencies: SHAPE.CURRENCIES,
   navigation: SHAPE.NAVIGATION,
   wallets: arrayOf(SHAPE.WALLET),
 };
 
 Main.defaultProps = {
+  currencies: {},
   navigation: undefined,
   wallets: [],
 };
 
-const mapStateToProps = ({ wallets }) => ({
+const mapStateToProps = ({ currencies, wallets }) => ({
+  currencies,
   wallets,
 });
 

@@ -2,10 +2,10 @@ import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
-import { updateWalletAction } from '../../store/actions';
+import { updateCurrenciesAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE } from '../../config';
-import { BalanceService } from '../../services';
+import { StateService } from '../../services';
 import { initialize } from '../../store';
 import styles from './Loading.style';
 
@@ -16,8 +16,13 @@ class Loading extends Component {
     const { wallets } = store.getState();
 
     if (wallets.length > 0) {
-      const response = await BalanceService.get(wallets.map(({ id }) => id));
-      if (response) response.balances.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
+      const response = await StateService.get(wallets.map(({ id }) => id));
+
+      if (response) {
+        const { currencies = {}, balances = [] } = response;
+        balances.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
+        store.dispatch(updateCurrenciesAction(currencies));
+      }
     }
 
     onLoad({ store });

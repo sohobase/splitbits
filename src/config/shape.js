@@ -23,6 +23,10 @@ export default {
     icon: string,
     onPress: func,
   }),
+  CURRENCIES: shape({
+    BTC: number,
+    LTC: number,
+  }),
   NAVIGATION: shape({
     navigate: func,
     setParams: func,

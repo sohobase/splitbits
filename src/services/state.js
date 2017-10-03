@@ -2,8 +2,8 @@ import { service } from './modules';
 
 export default {
 
-  async get(wallets) {
-    return service(`balance?wallets=${wallets}`, {
+  get(wallets) {
+    return service(`state?wallets=${wallets}`, {
       method: 'GET',
     });
   },
