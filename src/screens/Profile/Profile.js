@@ -1,6 +1,6 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { Flatlist, Image, Text, TextInput, View } from 'react-native';
+import { FlatList, Image, Text, TextInput, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { updateDeviceAction } from '../../store/actions';
 import { Button, Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
+import { DeviceItem } from './components';
 import styles from './Profile.style';
 
 const { COLOR } = THEME;
@@ -43,8 +44,9 @@ class Profile extends Component {
   }
 
   render() {
-    const { _onImage, _onName, _onSave, props: { device, navigation }, state: { name } } = this;
+    const { _onImage, _onName, _onSave, props: { device: { id, image, devices }, navigation }, state: { name } } = this;
 
+    console.log('?', devices);
     return (
       <View style={STYLE.SCREEN}>
         <View style={STYLE.LAYOUT_TOP}>
@@ -56,11 +58,11 @@ class Profile extends Component {
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
               <View>
-                <Image source={{ url: device.image }} style={styles.image} />
+                <Image source={{ url: image }} style={styles.image} />
                 <Button accent circle icon="camera" onPress={_onImage} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
-                <QRCode value={device.id} size={THEME.AVATAR_SIZE / 3} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+                <QRCode value={id} size={THEME.AVATAR_SIZE / 3} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
               </View>
               <TextInput
                 autoFocus={!name || name.length === 0}
@@ -73,11 +75,14 @@ class Profile extends Component {
           </Animatable>
         </View>
 
-        <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
-          <Animatable animation="bounceInUp" delay={600}>
-            { (1 === 2) && <Flatlist /> }
-          </Animatable>
-        </View>
+        <FlatList
+          data={devices}
+          keyExtractor={item => item.id}
+          renderItem={item => <DeviceItem data={item} />}
+          style={[STYLE.LAYOUT_BOTTOM, styles.activity]}
+        />
+
+
       </View>
     );
   }
