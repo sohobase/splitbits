@@ -1,4 +1,4 @@
-import { NotidicationsService } from './';
+import { PushService } from './';
 import { service } from './modules';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   async create(props) {
     const params = {
       ...props,
-      push: await NotidicationsService.getToken(),
+      push: await PushService.getToken(),
     };
 
     return service('wallet', {
