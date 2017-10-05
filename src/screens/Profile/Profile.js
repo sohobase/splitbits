@@ -1,15 +1,14 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { Flatlist, Image, TextInput, View } from 'react-native';
+import { FlatList, Image, TextInput, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { updateDeviceAction } from '../../store/actions';
 import { Button, Header } from '../../components';
-import { CameraModal } from './components';
+import { CameraModal, DeviceItem } from './components';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
-import { DeviceItem } from './components';
 import styles from './Profile.style';
 
 const { COLOR } = THEME;
@@ -67,7 +66,7 @@ class Profile extends Component {
       _onModal,
       _onName,
       _onSave,
-      props: { device, navigation },
+      props: { device: { id, devices }, navigation },
       state: { image, modal, name },
     } = this;
     const imageUrl = image.startsWith('file:') ? image : `${SERVICE}public/${image}`;
