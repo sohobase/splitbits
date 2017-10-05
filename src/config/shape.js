@@ -29,6 +29,7 @@ export default {
     name: string,
     push: string,
     private: object, // { capture: string, passport: string, phone: string },
+    requests: array,
     state: string,
     token: string,
     createdAt: date,

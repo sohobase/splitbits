@@ -114,7 +114,7 @@ Main.defaultProps = {
   wallets: [],
 };
 
-const mapStateToProps = ({ currencies, wallets }) => ({
+const mapStateToProps = ({ wallets }) => ({
   wallets,
 });
 

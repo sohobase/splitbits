@@ -34,6 +34,8 @@ export default {
     TEXT_HIGHLIGHT_SECONDARY: Color(WHITE).alpha(0.7),
     TEXT_HIGHLIGHT_DISABLED: Color(WHITE).alpha(0.45),
 
+    ACCEPT: '#4CAF50',
+    CANCEL: '#F44336',
     WHITE,
     BLACK,
   },

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { THEME } from '../../../config';
+import { THEME } from '../../config';
 
 const { AVATAR_SIZE, COLOR, FONT, OFFSET } = THEME;
 
@@ -23,9 +23,15 @@ export default StyleSheet.create({
   name: {
     fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
+    lineHeight: FONT.SIZE.LARGE,
   },
 
   private: {
+    color: COLOR.TEXT_SECONDARY,
+  },
+
+  hint: {
+    fontSize: FONT.SIZE.SMALL,
     color: COLOR.TEXT_SECONDARY,
   },
 });

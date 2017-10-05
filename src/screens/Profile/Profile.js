@@ -1,14 +1,14 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { FlatList, Image, Text, TextInput, View } from 'react-native';
+import { Image, TextInput, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { updateDeviceAction } from '../../store/actions';
 import { Button, Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
+import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
-import { DeviceItem } from './components';
 import styles from './Profile.style';
 
 const { COLOR } = THEME;
@@ -77,15 +77,9 @@ class Profile extends Component {
 
         <View style={STYLE.LAYOUT_BOTTOM}>
           <Animatable animation="bounceInUp" delay={600} style={styles.preview}>
-            <FlatList
-              data={devices}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => <DeviceItem data={item} />}
-            />
+            <DevicesList />
           </Animatable>
         </View>
-
-
       </View>
     );
   }
