@@ -11,6 +11,7 @@ const CameraModal = ({ onClose, onFile, visible }) => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
+      quality: 0.5,
     });
 
     if (!result.cancelled) {
@@ -23,6 +24,7 @@ const CameraModal = ({ onClose, onFile, visible }) => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [1, 1],
+      quality: 0.5,
     });
 
     if (!result.cancelled) {
