@@ -1,28 +1,42 @@
+import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Flatlist, Image, Text, TextInput, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
+import { connect } from 'react-redux';
+import { updateDeviceAction } from '../../store/actions';
 import { Button, Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
+import { DeviceService } from '../../services';
 import styles from './Profile.style';
 
 const { COLOR } = THEME;
+let timeout;
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { name: props.device.name };
+    this._onChangeName = this._onChangeName.bind(this);
     this._onSave = this._onSave.bind(this);
   }
 
   _onSave() {
     const { navigation: { goBack } } = this.props;
+    DeviceService.update();
     goBack();
   }
 
+  _onChangeName(name) {
+    const { updateDevice } = this.props;
+    this.setState({ name });
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => { DeviceService.update({ name }, updateDevice); }, 1000);
+  }
+
   render() {
-    const { _onSave } = this;
-    const { navigation } = this.props;
+    const { _onSave, _onChangeName, props: { device, navigation }, state: { name } } = this;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -34,19 +48,25 @@ class Profile extends Component {
           />
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
-              <QRCode
-                value={'http://sohobase.co'}
-                size={128}
-                fgColor={COLOR.WHITE}
-                bgColor={COLOR.PRIMARY}
+              <Image source={{ url: device.image }} style={styles.image} />
+              <View style={styles.qr}>
+                <QRCode value={device.id} size={THEME.AVATAR_SIZE / 3} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+              </View>
+              <TextInput
+                autoFocus={!name || name.length === 0}
+                onChangeText={_onChangeName}
+                placeholder="Choose a name..."
+                style={[STYLE.INPUT_HIGHLIGHT, styles.input]}
+                value={name}
               />
-              <Text style={styles.name}>Name Surname</Text>
             </View>
           </Animatable>
         </View>
 
         <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
-          <Button accent caption="Save changes" onPress={_onSave} />
+          <Animatable animation="bounceInUp" delay={600}>
+            { (1 === 2) && <Flatlist /> }
+          </Animatable>
         </View>
       </View>
     );
@@ -54,11 +74,23 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
+  device: SHAPE.DEVICE,
   navigation: SHAPE.NAVIGATION,
+  updateDevice: func,
 };
 
 Profile.defaultProps = {
+  device: {},
   navigation: undefined,
+  updateDevice() {},
 };
 
-export default Profile;
+const mapStateToProps = ({ device }) => ({
+  device,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateDevice: device => dispatch(updateDeviceAction(device)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

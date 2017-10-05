@@ -61,4 +61,5 @@ export default {
   ICON_SIZE: UNIT * 3.2,
   OFFSET: UNIT * 1.6,
   UNIT,
+  AVATAR_SIZE: UNIT * 12.8,
 };

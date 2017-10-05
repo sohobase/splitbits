@@ -20,7 +20,7 @@ export default function(state = DEFAULTS, action) {
 
     // -- Device
     case UPDATE_DEVICE:
-      return { ...state, device: action.device };
+      return { ...state, device: { ...state.device, ...action.device } };
 
     // -- Transaction
 

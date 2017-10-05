@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { COLOR, FONT, OFFSET } = THEME;
+const { AVATAR_SIZE, COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   preview: {
@@ -9,21 +9,28 @@ export default StyleSheet.create({
   },
 
   qr: {
-
+    position: 'absolute',
+    bottom: UNIT,
+    right: UNIT,
+    alignSelf: 'center',
+    backgroundColor: 'orange',
   },
 
   image: {
-
-  },
-
-  name: {
-    marginTop: OFFSET,
-    fontSize: FONT.SIZE.DEFAULT,
-    fontWeight: FONT.WEIGHT.BOLD,
-    color: COLOR.TEXT_HIGHLIGHT,
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    backgroundColor: COLOR.WHITE,
+    borderRadius: AVATAR_SIZE / 2,
+    borderWidth: 4,
+    borderColor: COLOR.WHITE,
   },
 
   content: {
     padding: OFFSET,
+  },
+
+  input: {
+    marginTop: UNIT,
+    textAlign: 'center',
   },
 });
