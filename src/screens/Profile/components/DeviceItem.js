@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { SHAPE, STYLE } from '../../../config';
 import styles from './DeviceItem.style';
 
-const DeviceItem = ({ data: { id, image, name } }) => (
+const DeviceItem = ({ data: { image, name } }) => (
   <View style={[STYLE.ROW, styles.container]}>
     <Image style={styles.image} source={{ uri: image }} />
-    <Text style={styles.name}>{name}</Text>
-    <Text style={styles.name}>{id}</Text>
+    <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
   </View>
 );
 

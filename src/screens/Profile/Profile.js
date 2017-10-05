@@ -46,7 +46,6 @@ class Profile extends Component {
   render() {
     const { _onImage, _onName, _onSave, props: { device: { id, image, devices }, navigation }, state: { name } } = this;
 
-    console.log('?', devices);
     return (
       <View style={STYLE.SCREEN}>
         <View style={STYLE.LAYOUT_TOP}>
@@ -62,7 +61,7 @@ class Profile extends Component {
                 <Button accent circle icon="camera" onPress={_onImage} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
-                <QRCode value={id} size={THEME.AVATAR_SIZE / 3} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+                <QRCode value={id} size={THEME.AVATAR_SIZE / 2} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
               </View>
               <TextInput
                 autoFocus={!name || name.length === 0}
@@ -75,12 +74,16 @@ class Profile extends Component {
           </Animatable>
         </View>
 
-        <FlatList
-          data={devices}
-          keyExtractor={item => item.id}
-          renderItem={item => <DeviceItem data={item} />}
-          style={[STYLE.LAYOUT_BOTTOM, styles.activity]}
-        />
+
+        <View style={STYLE.LAYOUT_BOTTOM}>
+          <Animatable animation="bounceInUp" delay={600} style={styles.preview}>
+            <FlatList
+              data={devices}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => <DeviceItem data={item} />}
+            />
+          </Animatable>
+        </View>
 
 
       </View>

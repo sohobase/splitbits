@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { AVATAR_SIZE, COLOR, FONT, OFFSET, UNIT } = THEME;
+const { AVATAR_SIZE, COLOR, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   preview: {
@@ -10,8 +10,8 @@ export default StyleSheet.create({
 
   qr: {
     position: 'absolute',
-    bottom: UNIT,
-    right: UNIT,
+    bottom: OFFSET,
+    right: OFFSET,
     alignSelf: 'center',
     backgroundColor: 'orange',
   },
@@ -32,9 +32,6 @@ export default StyleSheet.create({
     transform: [{ scale: 0.6 }],
   },
 
-  content: {
-    padding: OFFSET,
-  },
 
   input: {
     marginTop: UNIT,
