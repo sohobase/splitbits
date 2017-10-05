@@ -7,7 +7,7 @@ import styles from './Footer.style';
 
 const Footer = ({ navigate }) => (
   <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
-    <Option centered icon="profile" caption="Profile" onPress={() => navigate('Profile')} style={styles.option} />
+    <Option activity centered icon="profile" caption="Profile" onPress={() => navigate('Profile')} style={styles.option} />
     <Option centered icon="settings" caption="Settings" onPress={() => navigate('Settings')} style={styles.option} />
   </View>
 );

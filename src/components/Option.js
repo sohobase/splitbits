@@ -6,11 +6,12 @@ import Icon from './Icon';
 import Touchable from './Touchable';
 import styles from './Option.style';
 
-const Option = ({ caption, centered, icon, image, onPress, style, hint }) => (
+const Option = ({ activity, caption, centered, icon, image, onPress, style, hint }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[styles.option, (centered ? STYLE.CENTERED : STYLE.ROW), style]}>
       { image && <Image source={image} style={styles.image} /> }
       { icon && <Icon value={icon} style={[styles.icon, (!centered && styles.iconAccent)]} /> }
+      { activity && <View style={styles.activity} />}
       <View style={!centered && icon && styles.texts}>
         <Text style={[centered ? styles.text : styles.caption]}>{caption}</Text>
         { hint && <Text style={styles.text}>{hint}</Text> }
@@ -20,6 +21,7 @@ const Option = ({ caption, centered, icon, image, onPress, style, hint }) => (
 );
 
 Option.propTypes = {
+  activity: bool,
   caption: string,
   centered: bool,
   hint: string,
@@ -30,6 +32,7 @@ Option.propTypes = {
 };
 
 Option.defaultProps = {
+  activity: false,
   caption: undefined,
   centered: false,
   hint: undefined,

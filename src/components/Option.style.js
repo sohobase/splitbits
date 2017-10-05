@@ -16,6 +16,17 @@ export default StyleSheet.create({
     marginBottom: UNIT / 3,
   },
 
+  activity: {
+    position: 'absolute',
+    alignSelf: 'center',
+    left: '57.5%',
+    bottom: '65%',
+    width: UNIT,
+    height: UNIT,
+    backgroundColor: COLOR.ACCENT,
+    borderRadius: UNIT,
+  },
+
   image: {
     width: UNIT * 6.4,
     height: UNIT * 6.4,
