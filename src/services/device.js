@@ -1,10 +1,18 @@
 import { service } from './modules';
 
+const relationship = async(endpoint, props, action) => {
+  const response = await service(endpoint, { method: 'POST', body: JSON.stringify(props) });
+  if (response && action) action(response);
+
+  return response;
+};
+
 export default {
 
   async update(props = {}, action) {
     const { image, name } = props;
-    const body = new FormData() // eslint-disable-line
+    const body = new FormData(); // eslint-disable-line
+
     if (image) {
       const uri = image.uri.split('.');
       const fileType = uri[uri.length - 1];
@@ -15,19 +23,26 @@ export default {
       });
     }
     if (name) body.append('name', name);
+
     const response = await service('device', { method: 'PUT', body }, true);
-    if (response) action(response);
+    if (response && action) action(response);
+
+    return response;
   },
 
-  add(data) {
-
+  async request(props = {}, action) {
+    return relationship('device/request', props, action);
   },
 
-  remove(data) {
-
+  async accept(props = {}, action) {
+    return relationship('device/accept', props, action);
   },
 
-  settings(data) {
+  async cancel(props = {}, action) {
+    return relationship('device/cancel', props, action);
+  },
+
+  settings(props = {}, action) {
 
   },
 };

@@ -5,11 +5,13 @@ const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
   deviceId,
+  token: deviceId,
 };
 const onError = error => console.log('module/service', error);
 
 export default async(endpoint, props = {}, multipart) => {
   const { method = 'GET' } = props;
+
   if (multipart) headers['Content-Type'] = 'multipart/form-data';
 
   const response = await fetch(`${C.SERVICE}${endpoint}`, { headers, ...props, method }).catch(onError); // eslint-disable-line

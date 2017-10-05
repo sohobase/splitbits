@@ -4,6 +4,7 @@ import { Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
 import { SHAPE, STYLE, THEME } from '../../config';
+import { DeviceService } from '../../services';
 import styles from './DeviceItem.style';
 
 const { COLOR: { ACCEPT, CANCEL, WHITE } } = THEME;
@@ -11,9 +12,7 @@ const { COLOR: { ACCEPT, CANCEL, WHITE } } = THEME;
 const BUTTON_ACCEPT = { backgroundColor: ACCEPT, underlayColor: Color(ACCEPT).darken(0.1).string(), type: 'delete' };
 const BUTTON_CANCEL = { backgroundColor: CANCEL, underlayColor: Color(CANCEL).darken(0.1).string() };
 
-
 class DeviceItem extends Component {
-
   constructor(props) {
     super(props);
     this.state = { name: props.device.name };
@@ -22,11 +21,11 @@ class DeviceItem extends Component {
   }
 
   _onAccept() {
-    console.log('accept');
+    DeviceService.accept({ id: this.props.data.id });
   }
 
   _onCancel() {
-    console.log('cancel');
+    DeviceService.cancel({ id: this.props.data.id });
   }
 
   render() {
@@ -37,7 +36,7 @@ class DeviceItem extends Component {
       <Swipeout
         right={
           (!isRequest)
-            ? [{ ...BUTTON_CANCEL, text: 'Remove', onPress: _onCancel }]
+            ? [{ ...BUTTON_CANCEL, text: 'Remove' }]
             : [
               { ...BUTTON_ACCEPT, text: 'Accept', onPress: _onAccept },
               { ...BUTTON_CANCEL, text: 'Cancel', onPress: _onCancel },
