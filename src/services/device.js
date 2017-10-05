@@ -15,7 +15,7 @@ export default {
       });
     }
     if (name) body.append('name', name);
-    const response = await service('device', { method: 'PUT', body });
+    const response = await service('device', { method: 'PUT', body }, true);
     if (response) action(response);
   },
 

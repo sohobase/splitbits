@@ -18,7 +18,9 @@ export default StyleSheet.create({
 
   image: {
     width: AVATAR_SIZE,
+    minWidth: AVATAR_SIZE,
     height: AVATAR_SIZE,
+    minHeight: AVATAR_SIZE,
     backgroundColor: COLOR.WHITE,
     borderRadius: AVATAR_SIZE / 2,
     borderWidth: 4,

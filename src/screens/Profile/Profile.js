@@ -69,7 +69,9 @@ class Profile extends Component {
       props: { device: { id, devices }, navigation },
       state: { image, modal, name },
     } = this;
-    const imageUrl = image.startsWith('file:') ? image : `${SERVICE}public/${image}`;
+    const imageUrl = image && !image.startsWith('file:')
+      ? `${SERVICE}public/${image}?timestamp=${new Date().getTime()}`
+      : image;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -82,7 +84,7 @@ class Profile extends Component {
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
               <View>
-                <Image source={{ url: imageUrl }} style={styles.image} />
+                <Image source={{ uri: imageUrl }} style={styles.image} />
                 <Button accent circle icon="camera" onPress={_onImage} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
