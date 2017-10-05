@@ -1,4 +1,4 @@
-import { array, date, func, number, shape, string } from 'prop-types';
+import { array, date, func, number, object, shape, string } from 'prop-types';
 
 const WALLET = shape({
   id: string,
@@ -24,14 +24,14 @@ export default {
   DEVICE: shape({
     id: string,
     currency: string,
-    // devices: array,
-    // image: string,
-    // name: string,
-    // expo: string,
-    // private: { capture: string, passport: string, phone: string },
-    // state: string,
-    // token: string,
-    // createdAt: date,
+    devices: array,
+    image: string,
+    name: string,
+    push: string,
+    private: object, // { capture: string, passport: string, phone: string },
+    state: string,
+    token: string,
+    createdAt: date,
   }),
   NAVIGATION: shape({
     navigate: func,

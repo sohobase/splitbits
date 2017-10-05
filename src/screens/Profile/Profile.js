@@ -17,7 +17,8 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = { name: props.device.name };
-    this._onChangeName = this._onChangeName.bind(this);
+    this._onImage = this._onImage.bind(this);
+    this._onName = this._onName.bind(this);
     this._onSave = this._onSave.bind(this);
   }
 
@@ -27,7 +28,13 @@ class Profile extends Component {
     goBack();
   }
 
-  _onChangeName(name) {
+  _onImage(image) {
+    const { updateDevice } = this.props;
+
+    console.log('@TODO: Upload image');
+  }
+
+  _onName(name) {
     const { updateDevice } = this.props;
     this.setState({ name });
 
@@ -36,7 +43,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { _onSave, _onChangeName, props: { device, navigation }, state: { name } } = this;
+    const { _onImage, _onName, _onSave, props: { device, navigation }, state: { name } } = this;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -48,13 +55,16 @@ class Profile extends Component {
           />
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
-              <Image source={{ url: device.image }} style={styles.image} />
+              <View>
+                <Image source={{ url: device.image }} style={styles.image} />
+                <Button accent circle icon="camera" onPress={_onImage} style={styles.buttonCamera} />
+              </View>
               <View style={styles.qr}>
                 <QRCode value={device.id} size={THEME.AVATAR_SIZE / 3} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
               </View>
               <TextInput
                 autoFocus={!name || name.length === 0}
-                onChangeText={_onChangeName}
+                onChangeText={_onName}
                 placeholder="Choose a name..."
                 style={[STYLE.INPUT_HIGHLIGHT, styles.input]}
                 value={name}

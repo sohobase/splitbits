@@ -34,7 +34,7 @@ const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, tren
       <View style={styles.qr}>
         <QRCode
           value={address}
-          size={64}
+          size={THEME.AVATAR_SIZE / 2}
           fgColor={COLOR.WHITE}
           bgColor={COLOR.BLACK}
         />

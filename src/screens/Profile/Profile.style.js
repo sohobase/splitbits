@@ -25,6 +25,13 @@ export default StyleSheet.create({
     borderColor: COLOR.WHITE,
   },
 
+  buttonCamera: {
+    position: 'absolute',
+    right: -OFFSET,
+    bottom: -OFFSET,
+    transform: [{ scale: 0.6 }],
+  },
+
   content: {
     padding: OFFSET,
   },
