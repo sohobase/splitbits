@@ -1,24 +1,32 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { FlatList, Image, Text, TextInput, View } from 'react-native';
+import { Flatlist, Image, TextInput, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { updateDeviceAction } from '../../store/actions';
 import { Button, Header } from '../../components';
-import { SHAPE, STYLE, THEME } from '../../config';
+import { CameraModal } from './components';
+import { C, SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { DeviceItem } from './components';
 import styles from './Profile.style';
 
 const { COLOR } = THEME;
+const { SERVICE } = C;
 let timeout;
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: props.device.name };
+    this.state = {
+      name: props.device.name,
+      image: props.device.image,
+      modal: false,
+    };
+    this._onFile = this._onFile.bind(this);
     this._onImage = this._onImage.bind(this);
+    this._onModal = this._onModal.bind(this);
     this._onName = this._onName.bind(this);
     this._onSave = this._onSave.bind(this);
   }
@@ -29,10 +37,19 @@ class Profile extends Component {
     goBack();
   }
 
-  _onImage(image) {
+  _onFile(image) {
     const { updateDevice } = this.props;
+    this.setState({ image: image.uri, modal: false });
 
-    console.log('@TODO: Upload image');
+    DeviceService.update({ image }, updateDevice);
+  }
+
+  _onImage() {
+    this.setState({ modal: true });
+  }
+
+  _onModal() {
+    this.setState({ modal: !this.state.modal });
   }
 
   _onName(name) {
@@ -44,7 +61,16 @@ class Profile extends Component {
   }
 
   render() {
-    const { _onImage, _onName, _onSave, props: { device: { id, image, devices }, navigation }, state: { name } } = this;
+    const {
+      _onFile,
+      _onImage,
+      _onModal,
+      _onName,
+      _onSave,
+      props: { device, navigation },
+      state: { image, modal, name },
+    } = this;
+    const imageUrl = image.startsWith('file:') ? image : `${SERVICE}public/${image}`;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -57,7 +83,7 @@ class Profile extends Component {
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
               <View>
-                <Image source={{ url: image }} style={styles.image} />
+                <Image source={{ url: imageUrl }} style={styles.image} />
                 <Button accent circle icon="camera" onPress={_onImage} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
@@ -84,8 +110,7 @@ class Profile extends Component {
             />
           </Animatable>
         </View>
-
-
+        <CameraModal visible={modal} onClose={_onModal} onFile={_onFile} />
       </View>
     );
   }
