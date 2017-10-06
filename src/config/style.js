@@ -24,6 +24,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
 
+  HEADER_HIGHLIGHT: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR.DIVIDER,
+  },
+
   LAYOUT_TOP: {
     flex: 0,
     // minHeight: '45%',
@@ -34,15 +39,18 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
-  INPUT_HIGHLIGHT: {
-    color: COLOR.WHITE,
-    fontWeight: FONT.WEIGHT.BOLD,
+  INPUT: {
     fontSize: FONT.SIZE.LARGE,
     paddingTop: UNIT,
     paddingBottom: UNIT,
     paddingLeft: UNIT / 4,
     paddingRight: UNIT / 4,
     width: '100%',
+  },
+
+  INPUT_HIGHLIGHT: {
+    color: COLOR.WHITE,
+    fontWeight: FONT.WEIGHT.BOLD,
   },
 
   LAYOUT_BOTTOM: {

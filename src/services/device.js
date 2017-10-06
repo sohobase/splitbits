@@ -30,6 +30,10 @@ export default {
     return response;
   },
 
+  search(query) {
+    service(`device/search?query=${query}`);
+  },
+
   async request(props = {}, action) {
     return relationship('device/request', props, action);
   },

@@ -25,16 +25,8 @@ class Profile extends Component {
       modal: false,
     };
     this._onFile = this._onFile.bind(this);
-    this._onImage = this._onImage.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onName = this._onName.bind(this);
-    this._onSave = this._onSave.bind(this);
-  }
-
-  _onSave() {
-    const { navigation: { goBack } } = this.props;
-    DeviceService.update();
-    goBack();
   }
 
   _onFile(image) {
@@ -42,10 +34,6 @@ class Profile extends Component {
     this.setState({ image: image.uri, modal: false });
 
     DeviceService.update({ image }, updateDevice);
-  }
-
-  _onImage() {
-    this.setState({ modal: true });
   }
 
   _onModal() {
@@ -63,13 +51,12 @@ class Profile extends Component {
   render() {
     const {
       _onFile,
-      _onImage,
       _onModal,
       _onName,
-      _onSave,
       props: { device: { id }, navigation },
       state: { image, modal, name },
     } = this;
+
     const imageUrl = image && !image.startsWith('file:')
       ? `${SERVICE}public/${image}?timestamp=${new Date().getTime()}`
       : image;
@@ -80,13 +67,13 @@ class Profile extends Component {
           <Header
             title="Profile"
             navigation={navigation}
-            buttonRight={{ icon: 'add', onPress: _onSave }}
+            buttonRight={{ icon: 'add', onPress: () => navigation.navigate('Friends') }}
           />
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
               <View>
                 <Image source={{ uri: imageUrl }} style={styles.image} />
-                <Button accent circle icon="camera" onPress={_onImage} style={styles.buttonCamera} />
+                <Button accent circle icon="camera" onPress={_onModal} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
                 <QRCode value={id} size={THEME.AVATAR_SIZE / 2} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
@@ -95,13 +82,12 @@ class Profile extends Component {
                 autoFocus={!name || name.length === 0}
                 onChangeText={_onName}
                 placeholder="Choose a name..."
-                style={[STYLE.INPUT_HIGHLIGHT, styles.input]}
+                style={[STYLE.INPUT, STYLE.INPUT_HIGHLIGHT, styles.input]}
                 value={name}
               />
             </View>
           </Animatable>
         </View>
-
 
         <View style={STYLE.LAYOUT_BOTTOM}>
           <Animatable animation="bounceInUp" delay={600} style={styles.preview}>
