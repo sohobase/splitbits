@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList, RefreshControl, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
+import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
 import styles from './Friends.style';
 
@@ -23,20 +24,24 @@ class Friends extends Component {
 
   }
 
-  _onQuery(query) {
-    this.setState({ query });
-    DeviceService
+  async _onQuery(query) {
+    this.setState({ refreshing: true, query });
+    this.setState({
+      data: await DeviceService.search(query),
+      refreshing: false,
+    });
   }
 
   render() {
-    const { _onCamera, _onQuery, props: { navigation }, state: { data, query, refreshing } } = this;
+    const { _onCamera, _onQuery, props: { navigation }, state: { query, ...state } } = this;
 
     return (
       <View style={[STYLE.SCREEN, styles.screen]}>
         <Header
-          tintColor={COLOR.TEXT_DEFAULT}
-          navigation={navigation}
           buttonRight={{ icon: 'camera', onPress: _onCamera }}
+          navigation={navigation}
+          style={STYLE.HEADER_HIGHLIGHT}
+          tintColor={COLOR.TEXT_DEFAULT}
         >
           <TextInput
             autoFocus
@@ -46,13 +51,7 @@ class Friends extends Component {
             value={query}
           />
         </Header>
-        <FlatList
-          data={data}
-          keyExtractor={item => item.id}
-          refreshControl={<RefreshControl refreshing={refreshing} />}
-          renderItem={this._renderTransaction}
-          style={[STYLE.LAYOUT_BOTTOM, styles.activity]}
-        />
+        <DevicesList request {...state} />
       </View>
     );
   }

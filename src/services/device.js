@@ -31,7 +31,7 @@ export default {
   },
 
   search(query) {
-    service(`device/search?query=${query}`);
+    return service(`device/search?query=${query}`);
   },
 
   async request(props = {}, action) {

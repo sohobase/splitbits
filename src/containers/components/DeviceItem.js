@@ -1,4 +1,6 @@
 import Color from 'color';
+import Identicon from 'identicon.js';
+import { bool } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -29,21 +31,31 @@ class DeviceItem extends Component {
   }
 
   render() {
-    const { _onAccept, _onCancel, props: { data: { id, image, name }, device: { requests } } } = this;
+    const { _onAccept, _onCancel, props: { data: { id, name }, device: { requests }, request } } = this;
+    let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
+    let options;
+
+    if (!image || image.length === 0) {
+      const identicon = new Identicon(`${id}${this.props.device.id}`, {
+        background: [255, 255, 255, 255],
+        margin: 0,
+        size: 256,
+      }).toString();
+      image = `data:image/png;base64,${identicon}`;
+    }
+
+    if (!request) {
+      options = (!isRequest)
+        ? [{ ...BUTTON_CANCEL, text: 'Remove' }]
+        : [
+          { ...BUTTON_ACCEPT, text: 'Accept', onPress: _onAccept },
+          { ...BUTTON_CANCEL, text: 'Cancel', onPress: _onCancel },
+        ];
+    }
 
     return (
-      <Swipeout
-        right={
-          (!isRequest)
-            ? [{ ...BUTTON_CANCEL, text: 'Remove' }]
-            : [
-              { ...BUTTON_ACCEPT, text: 'Accept', onPress: _onAccept },
-              { ...BUTTON_CANCEL, text: 'Cancel', onPress: _onCancel },
-            ]
-        }
-        backgroundColor={WHITE}
-      >
+      <Swipeout right={options} backgroundColor={WHITE} >
         <View style={[STYLE.ROW, styles.container]}>
           <Image style={styles.image} source={{ uri: image }} />
           <View>
@@ -59,11 +71,13 @@ class DeviceItem extends Component {
 DeviceItem.propTypes = {
   data: SHAPE.DEVICE,
   device: SHAPE.DEVICE,
+  request: bool,
 };
 
 DeviceItem.defaultProps = {
   data: {},
   device: {},
+  request: false,
 };
 
 const mapStateToProps = ({ device }) => ({
