@@ -13,12 +13,12 @@ const consolidate = (a = [], b = []) => {
   return dataSource;
 };
 
-const DevicesList = ({ data, device: { devices, requests }, refreshing, request, style }) => (
+const DevicesList = ({ data, device: { devices, requests }, navigation, refreshing, request, style }) => (
   <FlatList
-    data={data || consolidate(requests, devices)}
+    data={request ? data : consolidate(requests, devices)}
     keyExtractor={item => item.id}
     refreshControl={<RefreshControl refreshing={refreshing} />}
-    renderItem={({ item }) => <DeviceItem data={item} request={request} />}
+    renderItem={({ item }) => <DeviceItem data={item} onRequest={() => navigation.goBack()} request={request} />}
     style={[styles.devices, style]}
   />
 );
@@ -26,6 +26,7 @@ const DevicesList = ({ data, device: { devices, requests }, refreshing, request,
 DevicesList.propTypes = {
   data: arrayOf(SHAPE.DEVICE),
   device: SHAPE.DEVICE,
+  navigation: SHAPE.NAVIGATION,
   refreshing: bool,
   request: bool,
   style: oneOfType(array, number),
@@ -34,6 +35,7 @@ DevicesList.propTypes = {
 DevicesList.defaultProps = {
   data: undefined,
   device: {},
+  navigation: undefined,
   refreshing: false,
   request: false,
   style: undefined,

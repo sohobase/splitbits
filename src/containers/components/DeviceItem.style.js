@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { AVATAR_SIZE, COLOR, FONT, OFFSET } = THEME;
+const { AVATAR_SIZE, COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -20,6 +20,10 @@ export default StyleSheet.create({
     marginRight: OFFSET,
   },
 
+  content: {
+    flex: 1,
+  },
+
   name: {
     fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
@@ -33,5 +37,14 @@ export default StyleSheet.create({
   hint: {
     fontSize: FONT.SIZE.SMALL,
     color: COLOR.TEXT_SECONDARY,
+  },
+
+  button: {
+    marginLeft: OFFSET,
+    padding: UNIT,
+  },
+
+  buttonCaption: {
+    fontSize: FONT.SIZE.SMALL,
   },
 });

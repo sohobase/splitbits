@@ -51,7 +51,7 @@ class Friends extends Component {
             value={query}
           />
         </Header>
-        <DevicesList request {...state} />
+        <DevicesList navigation={navigation} request {...state} />
       </View>
     );
   }

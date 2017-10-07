@@ -1,10 +1,11 @@
 import Color from 'color';
 import Identicon from 'identicon.js';
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
+import { Button } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import styles from './DeviceItem.style';
@@ -20,6 +21,7 @@ class DeviceItem extends Component {
     this.state = { name: props.device.name };
     this._onAccept = this._onAccept.bind(this);
     this._onCancel = this._onCancel.bind(this);
+    this._onRequest = this._onRequest.bind(this);
   }
 
   _onAccept() {
@@ -30,14 +32,20 @@ class DeviceItem extends Component {
     DeviceService.cancel({ id: this.props.data.id });
   }
 
+  async _onRequest() {
+    const { data: { id }, onRequest } = this.props;
+    DeviceService.request({ id });
+    onRequest();
+  }
+
   render() {
-    const { _onAccept, _onCancel, props: { data: { id, name }, device: { requests }, request } } = this;
+    const { _onAccept, _onCancel, _onRequest, props: { data: { id, name }, device: { requests }, request } } = this;
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
 
     if (!image || image.length === 0) {
-      const identicon = new Identicon(`${id}${this.props.device.id}`, {
+      const identicon = new Identicon(`${id}${new Date().toString()}`, {
         background: [255, 255, 255, 255],
         margin: 0,
         size: 256,
@@ -58,10 +66,18 @@ class DeviceItem extends Component {
       <Swipeout right={options} backgroundColor={WHITE} >
         <View style={[STYLE.ROW, styles.container]}>
           <Image style={styles.image} source={{ uri: image }} />
-          <View>
+          <View style={styles.content}>
             <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
-            { isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
+            { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
           </View>
+          { request &&
+            <Button
+              accent
+              caption="Request"
+              style={styles.button}
+              captionStyle={styles.buttonCaption}
+              onPress={_onRequest}
+            /> }
         </View>
       </Swipeout>
     );
@@ -71,12 +87,14 @@ class DeviceItem extends Component {
 DeviceItem.propTypes = {
   data: SHAPE.DEVICE,
   device: SHAPE.DEVICE,
+  onRequest: func,
   request: bool,
 };
 
 DeviceItem.defaultProps = {
   data: {},
   device: {},
+  onRequest() {},
   request: false,
 };
 
