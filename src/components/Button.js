@@ -13,12 +13,12 @@ const Button = ({ accent, caption, captionStyle, circle, disabled, icon, onPress
       {...animation}
       style={StyleSheet.flatten([
         styles.container,
-        style,
         STYLE.CENTERED,
         (circle && styles.circle),
         (!circle && !raised && styles.square),
         (disabled && styles.disabled),
         (!disabled && accent && styles.accent),
+        style,
       ])}
     >
       { icon &&
