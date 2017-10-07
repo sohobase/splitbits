@@ -5,6 +5,7 @@ import Icon from './Icon';
 import Modal from './Modal';
 import Logo from './Logo';
 import Option from './Option';
+import ScanQR from './ScanQR';
 import Touchable from './Touchable';
 
 export {
@@ -15,5 +16,6 @@ export {
   Modal,
   Logo,
   Option,
+  ScanQR,
   Touchable,
 };

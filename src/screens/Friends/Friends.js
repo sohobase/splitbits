@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
-import { Header } from '../../components';
+import { Header, ScanQR } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
@@ -15,13 +15,15 @@ class Friends extends Component {
       data: [],
       query: undefined,
       refreshing: false,
+      scanner: false,
     };
     this._onCamera = this._onCamera.bind(this);
     this._onQuery = this._onQuery.bind(this);
+    this._onScanQR = this._onScanQR.bind(this);
   }
 
   _onCamera() {
-
+    this.setState(({ scanner }) => ({ scanner: !scanner }));
   }
 
   async _onQuery(query) {
@@ -32,8 +34,12 @@ class Friends extends Component {
     });
   }
 
+  async _onScanQR(data) { // eslint-disable-line
+    console.log('data', data);
+  }
+
   render() {
-    const { _onCamera, _onQuery, props: { navigation }, state: { query, ...state } } = this;
+    const { _onCamera, _onQuery, _onScanQR, props: { navigation }, state: { query, scanner, ...state } } = this;
 
     return (
       <View style={[STYLE.SCREEN, styles.screen]}>
@@ -52,6 +58,7 @@ class Friends extends Component {
           />
         </Header>
         <DevicesList navigation={navigation} request {...state} />
+        <ScanQR active={scanner} onClose={_onCamera} onScan={_onScanQR} />
       </View>
     );
   }
