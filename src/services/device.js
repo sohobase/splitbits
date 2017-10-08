@@ -1,7 +1,7 @@
 import { service } from './modules';
 
-const relationship = async(endpoint, props, action) => {
-  const response = await service(endpoint, { method: 'POST', body: JSON.stringify(props) });
+const relationship = async(endpoint, props, action, method = 'POST') => {
+  const response = await service(endpoint, { method, body: JSON.stringify(props) });
   if (response && action) action(response);
 
   return response;
@@ -34,16 +34,20 @@ export default {
     return service(`device/search?query=${query}`);
   },
 
-  async request(props = {}, action) {
+  request(props = {}, action) {
     return relationship('device/request', props, action);
   },
 
-  async accept(props = {}, action) {
+  accept(props = {}, action) {
     return relationship('device/accept', props, action);
   },
 
-  async cancel(props = {}, action) {
+  cancel(props = {}, action) {
     return relationship('device/cancel', props, action);
+  },
+
+  remove(props = {}, action) {
+    return relationship('device/remove', props, action, 'DELETE');
   },
 
   settings(props = {}, action) {

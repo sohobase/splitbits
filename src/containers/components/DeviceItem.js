@@ -8,6 +8,7 @@ import Swipeout from 'react-native-swipeout';
 import { Button } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
+import { updateDeviceAction } from '../../store/actions';
 import styles from './DeviceItem.style';
 
 const { COLOR: { ACCEPT, CANCEL, WHITE } } = THEME;
@@ -19,27 +20,23 @@ class DeviceItem extends Component {
   constructor(props) {
     super(props);
     this.state = { name: props.device.name };
-    this._onAccept = this._onAccept.bind(this);
-    this._onCancel = this._onCancel.bind(this);
     this._onRequest = this._onRequest.bind(this);
+    this._onRelation = this._onRelation.bind(this);
   }
 
-  _onAccept() {
-    DeviceService.accept({ id: this.props.data.id });
-  }
-
-  _onCancel() {
-    DeviceService.cancel({ id: this.props.data.id });
+  _onRelation(method) {
+    const { data: { id }, updateDevice } = this.props;
+    DeviceService[method]({ id }, updateDevice);
   }
 
   async _onRequest() {
     const { data: { id }, onRequest } = this.props;
-    DeviceService.request({ id });
+    await DeviceService.request({ id });
     onRequest();
   }
 
   render() {
-    const { _onAccept, _onCancel, _onRequest, props: { data: { id, name }, device: { requests }, request } } = this;
+    const { _onRelation, _onRequest, props: { data: { id, name }, device: { requests }, request } } = this;
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
@@ -55,10 +52,10 @@ class DeviceItem extends Component {
 
     if (!request) {
       options = (!isRequest)
-        ? [{ ...BUTTON_CANCEL, text: 'Remove' }]
+        ? [{ ...BUTTON_CANCEL, text: 'Remove', onPress: () => _onRelation('remove') }]
         : [
-          { ...BUTTON_ACCEPT, text: 'Accept', onPress: _onAccept },
-          { ...BUTTON_CANCEL, text: 'Cancel', onPress: _onCancel },
+          { ...BUTTON_ACCEPT, text: 'Accept', onPress: () => _onRelation('accept') },
+          { ...BUTTON_CANCEL, text: 'Cancel', onPress: () => _onRelation('cancel') },
         ];
     }
 
@@ -89,6 +86,7 @@ DeviceItem.propTypes = {
   device: SHAPE.DEVICE,
   onRequest: func,
   request: bool,
+  updateDevice: func,
 };
 
 DeviceItem.defaultProps = {
@@ -96,10 +94,15 @@ DeviceItem.defaultProps = {
   device: {},
   onRequest() {},
   request: false,
+  updateDevice() {},
 };
 
 const mapStateToProps = ({ device }) => ({
   device,
 });
 
-export default connect(mapStateToProps)(DeviceItem);
+const mapDispatchToProps = dispatch => ({
+  updateDevice: wallet => dispatch(updateDeviceAction(wallet)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceItem);
