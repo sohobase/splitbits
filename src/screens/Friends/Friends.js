@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
-import { Header, ScanQR } from '../../components';
+import { Header } from '../../components';
+import { ScanQR } from './components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
