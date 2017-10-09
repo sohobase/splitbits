@@ -1,5 +1,5 @@
-import ScanQR from './ScanQR';
+import QRreader from './QRreader';
 
 export {
-  ScanQR,
+  QRreader,
 };

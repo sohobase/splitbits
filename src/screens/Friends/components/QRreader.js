@@ -2,9 +2,9 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import styles from './ScanQR.style';
+import styles from './QRreader.style';
 
-class ScanQR extends Component {
+class QRreader extends Component {
   constructor(props) {
     super(props);
 
@@ -52,16 +52,16 @@ class ScanQR extends Component {
   }
 }
 
-ScanQR.propTypes = {
+QRreader.propTypes = {
   active: bool,
   onClose: func,
   onScan: func,
 };
 
-ScanQR.defaultProps = {
+QRreader.defaultProps = {
   active: false,
   onClose() {},
   onScan() {},
 };
 
-export default ScanQR;
+export default QRreader;
