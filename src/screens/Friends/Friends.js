@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
 import { Keyboard, TextInput, View } from 'react-native';
 import { Header } from '../../components';
 import { QRreader } from './components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
+import { updateDeviceAction } from '../../store/actions';
 import styles from './Friends.style';
 
 const { COLOR } = THEME;
@@ -37,8 +40,9 @@ class Friends extends Component {
   }
 
   async _onQRreader(id) {
-    await DeviceService.request({ id, direct: true });
-    this.props.navigation.goBack();
+    const { navigation, updateDevice } = this.props;
+    updateDevice(await DeviceService.request({ id, direct: true }));
+    navigation.goBack();
   }
 
   render() {
@@ -69,10 +73,15 @@ class Friends extends Component {
 
 Friends.propTypes = {
   navigation: SHAPE.NAVIGATION,
+  updateDevice: func.isRequired,
 };
 
 Friends.defaultProps = {
   navigation: undefined,
 };
 
-export default Friends;
+const mapDispatchToProps = dispatch => ({
+  updateDevice: device => dispatch(updateDeviceAction(device)),
+});
+
+export default connect(undefined, mapDispatchToProps)(Friends);
