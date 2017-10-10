@@ -20,9 +20,9 @@ class QRreader extends Component {
   }
 
   _onBarCodeRead = ({ data }) => {
-    const { onClose, onScan } = this.props;
+    const { onClose, onRead } = this.props;
     onClose();
-    onScan(data);
+    onRead(data);
   }
 
   render() {
@@ -55,13 +55,13 @@ class QRreader extends Component {
 QRreader.propTypes = {
   active: bool,
   onClose: func,
-  onScan: func,
+  onRead: func,
 };
 
 QRreader.defaultProps = {
   active: false,
   onClose() {},
-  onScan() {},
+  onRead() {},
 };
 
 export default QRreader;

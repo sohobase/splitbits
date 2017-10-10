@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View } from 'react-native';
+import { Keyboard, TextInput, View } from 'react-native';
 import { Header } from '../../components';
 import { QRreader } from './components';
 import { SHAPE, STYLE, THEME } from '../../config';
@@ -24,6 +24,7 @@ class Friends extends Component {
   }
 
   _onCamera() {
+    Keyboard.dismiss();
     this.setState(({ scanner }) => ({ scanner: !scanner }));
   }
 
@@ -35,8 +36,9 @@ class Friends extends Component {
     });
   }
 
-  async _onQRreader(data) { // eslint-disable-line
-    console.log('data', data);
+  async _onQRreader(id) {
+    await DeviceService.request({ id, direct: true });
+    this.props.navigation.goBack();
   }
 
   render() {
@@ -59,7 +61,7 @@ class Friends extends Component {
           />
         </Header>
         <DevicesList navigation={navigation} request {...state} />
-        <QRreader active={scanner} onClose={_onCamera} onScan={_onQRreader} />
+        <QRreader active={scanner} onClose={_onCamera} onRead={_onQRreader} />
       </View>
     );
   }
