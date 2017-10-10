@@ -11,6 +11,7 @@ const search = require('../../assets/icon-search.png');
 const security = require('../../assets/icon-security.png');
 const settings = require('../../assets/icon-settings.png');
 const split = require('../../assets/icon-split.png');
+const swap = require('../../assets/icon-swap.png');
 const trendingDown = require('../../assets/icon-trending-down.png');
 const trendingUp = require('../../assets/icon-trending-up.png');
 
@@ -28,6 +29,7 @@ export default {
   security,
   settings,
   split,
+  swap,
   trendingDown,
   trendingUp,
 };
