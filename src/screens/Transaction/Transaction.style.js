@@ -4,7 +4,9 @@ import { THEME } from '../../config';
 const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
-  screen: {},
+  content: {
+    backgroundColor: 'white',
+  },
 
   preview: {
     flex: 1,
@@ -15,6 +17,8 @@ export default StyleSheet.create({
 
   amount: {
     fontSize: UNIT * 4.8,
+    paddingBottom: 0,
+    paddingTop: 0,
     fontWeight: FONT.WEIGHT.LIGHT,
     textAlign: 'center',
   },

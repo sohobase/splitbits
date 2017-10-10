@@ -48,6 +48,13 @@ export default StyleSheet.create({
     width: '100%',
   },
 
+  FIELDSET: {
+    padding: OFFSET,
+    backgroundColor: COLOR.BACKGROUND,
+    borderBottomColor: COLOR.DIVIDER,
+    borderBottomWidth: 1,
+  },
+
   INPUT_HIGHLIGHT: {
     color: COLOR.WHITE,
     fontWeight: FONT.WEIGHT.BOLD,

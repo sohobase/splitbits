@@ -21,6 +21,7 @@ class Main extends Component {
       prefetch: false,
       refreshing: false,
     };
+    this._onCreateTransaction = this._onCreateTransaction.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
     this._renderTransaction = this._renderTransaction.bind(this);
@@ -37,9 +38,19 @@ class Main extends Component {
     return (
       <TransactionItem
         data={item}
-        onPress={() => navigate('Transaction', { activity: item })}
+        onPress={() => navigate('Transaction', { item })}
       />
     );
+  }
+
+  _onCreateTransaction(type) {
+    const {
+      props: { navigation: { navigate }, wallets },
+      state: { index = 0, modal },
+    } = this;
+
+    this.setState({ modal: !modal });
+    navigate('Transaction', { type, wallet: wallets[index] });
   }
 
   _onModal() {
@@ -55,7 +66,7 @@ class Main extends Component {
   }
 
   render() {
-    const { _onModal, _onSwipeWallet } = this;
+    const { _onCreateTransaction, _onModal, _onSwipeWallet } = this;
     const { navigation: { navigate }, wallets } = this.props;
     const { transactions = [], modal, refreshing } = this.state;
 
@@ -96,7 +107,12 @@ class Main extends Component {
           onPress={_onModal}
           style={styles.button}
         />
-        <TransactionModal visible={modal} onClose={_onModal} onRequest={_onModal} onSend={_onModal} />
+        <TransactionModal
+          visible={modal}
+          onClose={_onModal}
+          onRequest={() => _onCreateTransaction('request')}
+          onSend={() => _onCreateTransaction('send')}
+        />
         { 1 === 2 &&
           <WalletModal visible={modal} onClose={_onModal} /> }
       </View>
