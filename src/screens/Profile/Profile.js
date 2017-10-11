@@ -12,7 +12,7 @@ import { DeviceService } from '../../services';
 import { CameraModal } from './components';
 import styles from './Profile.style';
 
-const { COLOR } = THEME;
+const { COLOR, QR_SIZE } = THEME;
 const { SERVICE } = C;
 let timeout;
 
@@ -76,7 +76,7 @@ class Profile extends Component {
                 <Button accent circle icon="camera" onPress={_onModal} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
-                <QRCode value={id} size={THEME.AVATAR_SIZE / 2} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+                <QRCode value={id} size={QR_SIZE} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
               </View>
               <TextInput
                 autoFocus={!name || name.length === 0}

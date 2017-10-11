@@ -8,7 +8,7 @@ import { SHAPE, STYLE, THEME } from '../../../config';
 import { Amount, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
-const { ANIMATION: { DURATION }, COLOR } = THEME;
+const { ANIMATION: { DURATION }, COLOR, QR_SIZE } = THEME;
 
 const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, trend = 0 }, device, onPress, style }) => (
   <Animatable
@@ -34,7 +34,7 @@ const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, tren
       <View style={styles.qr}>
         <QRCode
           value={address}
-          size={THEME.AVATAR_SIZE / 2}
+          size={QR_SIZE}
           fgColor={COLOR.WHITE}
           bgColor={COLOR.BLACK}
         />

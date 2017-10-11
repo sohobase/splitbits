@@ -9,6 +9,7 @@ const WALLET = shape({
   qr: string,
   symbol: string,
   trend: number,
+  type: string,
 });
 
 export default {

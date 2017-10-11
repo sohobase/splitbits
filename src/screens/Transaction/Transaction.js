@@ -4,7 +4,7 @@ import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Button, Header } from '../../components';
 import { SHAPE, STYLE } from '../../config';
-import { Devices, Info } from './components';
+import { Recipient, Info } from './components';
 import styles from './Transaction.style';
 
 class Transaction extends Component {
@@ -12,27 +12,40 @@ class Transaction extends Component {
     super(props);
     this.state = {
       amount: props.item.amount,
+      address: undefined,
+      deviceId: undefined,
       fee: 22000 / 100000000,
       swap: false,
     };
     this._onAmount = this._onAmount.bind(this);
+    this._onDevice = this._onDevice.bind(this);
     this._onSwap = this._onSwap.bind(this);
+  }
+
+  _onAddress(address) {
+    this.setState({ address, deviceId: undefined });
   }
 
   _onAmount(amount) {
     this.setState({ amount });
   }
 
+  _onDevice(deviceId) {
+    this.setState({ address: undefined, deviceId });
+  }
+
   _onSwap() {
-    this.setState({ swap: !this.state.swap });
+    this.setState({ amount: undefined, swap: !this.state.swap });
   }
 
   render() {
     const {
+      _onAddress,
       _onAmount,
+      _onDevice,
       _onSwap,
       props: { currencies, device: { currency }, item, navigation, wallet },
-      state: { amount, fee, swap },
+      state: { amount, deviceId, fee, swap },
     } = this;
     const coin = item.coin || wallet.coin;
     const from = swap ? currency : coin;
@@ -69,11 +82,14 @@ class Transaction extends Component {
           </Animatable>
         </View>
         <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
-          { editable ? <Devices /> : <Info item={item} /> }
+          { editable
+            ? <Recipient onItem={_onDevice} onAdress={_onAddress} selected={deviceId} />
+            : <Info item={item} />
+          }
           <Button
             accent
-            caption="Request $0.00"
-            disabled={amount > wallet.balance}
+            caption={`Request ${amount || 0}`}
+            disabled={amount <= 0 || amount > wallet.balance || !deviceId}
             style={styles.button}
           />
         </View>
@@ -100,6 +116,9 @@ Transaction.defaultProps = {
 
 const mapStateToProps = ({ currencies, device }, props) => {
   const { item = {}, wallet = {} } = props.navigation.state.params;
+
+  // const item = undefined;
+  // const wallet = { balance: 5, coin: 'BTC' };
 
   return { currencies, device, item, wallet };
 };

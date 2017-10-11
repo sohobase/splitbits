@@ -1,7 +1,7 @@
-import Devices from './Devices';
+import Recipient from './Recipient';
 import Info from './Info';
 
 export {
-  Devices,
+  Recipient,
   Info,
 };

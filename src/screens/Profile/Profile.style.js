@@ -17,12 +17,12 @@ export default StyleSheet.create({
   },
 
   image: {
-    width: AVATAR_SIZE,
-    minWidth: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    minHeight: AVATAR_SIZE,
+    width: AVATAR_SIZE * 3,
+    // minWidth: AVATAR_SIZE,
+    height: AVATAR_SIZE * 3,
+    // minHeight: AVATAR_SIZE,
     backgroundColor: COLOR.WHITE,
-    borderRadius: AVATAR_SIZE / 2,
+    borderRadius: AVATAR_SIZE * 1.5,
     borderWidth: 4,
     borderColor: COLOR.WHITE,
   },
@@ -33,7 +33,6 @@ export default StyleSheet.create({
     bottom: -OFFSET,
     transform: [{ scale: 0.6 }],
   },
-
 
   input: {
     marginTop: UNIT,
