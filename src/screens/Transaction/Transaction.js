@@ -4,6 +4,7 @@ import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Button, Header } from '../../components';
 import { SHAPE, STYLE } from '../../config';
+import { TransactionService } from '../../services';
 import { Recipient, Info } from './components';
 import styles from './Transaction.style';
 
@@ -19,6 +20,7 @@ class Transaction extends Component {
     };
     this._onAmount = this._onAmount.bind(this);
     this._onDevice = this._onDevice.bind(this);
+    this._onSubmit = this._onSubmit.bind(this);
     this._onSwap = this._onSwap.bind(this);
   }
 
@@ -34,18 +36,26 @@ class Transaction extends Component {
     this.setState({ address: undefined, deviceId });
   }
 
+  async _onSubmit() {
+    const {
+      props: { navigation, wallet: { id: from, coin, wif } },
+      state: { amount, deviceId: to, address },
+    } = this;
+    const concept = 'Request';
+
+    await TransactionService.request({ amount, coin, concept, from, to, address });
+    navigation.goBack();
+  }
+
   _onSwap() {
     this.setState({ amount: undefined, swap: !this.state.swap });
   }
 
   render() {
     const {
-      _onAddress,
-      _onAmount,
-      _onDevice,
-      _onSwap,
+      _onAddress, _onAmount, _onDevice, _onSubmit, _onSwap,
       props: { currencies, device: { currency }, item, navigation, wallet },
-      state: { amount, deviceId, fee, swap },
+      state: { address, amount, deviceId, fee, swap },
     } = this;
     const coin = item.coin || wallet.coin;
     const from = swap ? currency : coin;
@@ -89,7 +99,8 @@ class Transaction extends Component {
           <Button
             accent
             caption={`Request ${amount || 0}`}
-            disabled={amount <= 0 || amount > wallet.balance || !deviceId}
+            disabled={!(amount > 0 && amount <= wallet.balance && (deviceId || address))}
+            onPress={_onSubmit}
             style={styles.button}
           />
         </View>
