@@ -24,4 +24,9 @@ export default {
 
   SERVICE: 'http://localhost:3000/',
   // SERVICE: 'http://172.17.164.83:3000/',
+
+  TYPE: {
+    REQUEST: 'request',
+    SEND: 'send',
+  },
 };

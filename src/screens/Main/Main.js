@@ -4,13 +4,14 @@ import { FlatList, RefreshControl, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import { Button } from '../../components';
-import { SHAPE, STYLE, THEME } from '../../config';
+import { C, SHAPE, STYLE, THEME } from '../../config';
 import { WalletModal } from '../../containers';
 import { TransactionService } from '../../services';
 import { Header, Footer, TransactionModal, TransactionItem, WalletItem } from './components';
 import styles from './Main.style';
 
 const { DURATION } = THEME.ANIMATION;
+const { REQUEST, SEND } = C.TYPE;
 
 class Main extends Component {
   constructor(props) {
@@ -110,8 +111,8 @@ class Main extends Component {
         <TransactionModal
           visible={modal}
           onClose={_onModal}
-          onRequest={() => _onCreateTransaction('request')}
-          onSend={() => _onCreateTransaction('send')}
+          onRequest={() => _onCreateTransaction(REQUEST)}
+          onSend={() => _onCreateTransaction(SEND)}
         />
         { 1 === 2 &&
           <WalletModal visible={modal} onClose={_onModal} /> }

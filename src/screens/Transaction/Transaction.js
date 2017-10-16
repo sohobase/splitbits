@@ -1,12 +1,15 @@
+import { string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Button, Header } from '../../components';
-import { SHAPE, STYLE } from '../../config';
+import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
 import { Recipient, Info } from './components';
 import styles from './Transaction.style';
+
+const { REQUEST, SEND } = C.TYPE;
 
 class Transaction extends Component {
   constructor(props) {
@@ -14,6 +17,7 @@ class Transaction extends Component {
     this.state = {
       amount: props.item.amount,
       address: undefined,
+      concept: props.type,
       deviceId: undefined,
       fee: 22000 / 100000000,
       swap: false,
@@ -37,13 +41,11 @@ class Transaction extends Component {
   }
 
   async _onSubmit() {
-    const {
-      props: { navigation, wallet: { id: walletId, coin, wif } },
-      state: { amount, deviceId, address },
-    } = this;
-    const concept = 'Request';
+    const { props: { item: { id }, navigation, wallet: { coin, id: walletId, wif } }, state: { type } } = this;
+    const isRequest = type === REQUEST;
+    const method = isRequest ? 'request' : 'send';
 
-    await TransactionService.request({ address, amount, coin, concept, deviceId, walletId });
+    await TransactionService[method]({ ...this.state, id, coin, walletId, wif: (!isRequest ? wif : undefined) });
     navigation.goBack();
   }
 
@@ -54,7 +56,7 @@ class Transaction extends Component {
   render() {
     const {
       _onAddress, _onAmount, _onDevice, _onSubmit, _onSwap,
-      props: { currencies, device: { currency }, item, navigation, wallet },
+      props: { currencies, device: { currency }, item, navigation, type, wallet },
       state: { address, amount, deviceId, fee, swap },
     } = this;
     const coin = item.coin || wallet.coin;
@@ -96,13 +98,16 @@ class Transaction extends Component {
             ? <Recipient onItem={_onDevice} onAdress={_onAddress} selected={deviceId} />
             : <Info item={item} />
           }
-          <Button
-            accent
-            caption={`Request ${amount || 0}`}
-            disabled={!(amount > 0 && amount <= wallet.balance && (deviceId || address))}
-            onPress={_onSubmit}
-            style={styles.button}
-          />
+          {
+            (type === REQUEST || type === SEND) &&
+            <Button
+              accent
+              caption={`${type} ${amount || 0}`}
+              disabled={!(amount > 0 && amount <= wallet.balance && (deviceId || address))}
+              onPress={_onSubmit}
+              style={styles.button}
+            />
+          }
         </View>
       </View>
     );
@@ -114,6 +119,7 @@ Transaction.propTypes = {
   device: SHAPE.DEVICE,
   item: SHAPE.TRANSACTION,
   navigation: SHAPE.NAVIGATION,
+  type: string,
   wallet: SHAPE.WALLET,
 };
 
@@ -122,6 +128,7 @@ Transaction.defaultProps = {
   device: {},
   item: {},
   navigation: undefined,
+  type: REQUEST,
   wallet: {},
 };
 
