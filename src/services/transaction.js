@@ -3,7 +3,7 @@ import { service } from './modules';
 export default {
 
   list(walletId) {
-    return service(`transaction/list?wallet=${walletId}`);
+    return service(`transaction/list?walletId=${walletId}`);
   },
 
   request(props) {

@@ -38,12 +38,12 @@ class Transaction extends Component {
 
   async _onSubmit() {
     const {
-      props: { navigation, wallet: { id: from, coin, wif } },
-      state: { amount, deviceId: to, address },
+      props: { navigation, wallet: { id: walletId, coin, wif } },
+      state: { amount, deviceId, address },
     } = this;
     const concept = 'Request';
 
-    await TransactionService.request({ amount, coin, concept, from, to, address });
+    await TransactionService.request({ address, amount, coin, concept, deviceId, walletId });
     navigation.goBack();
   }
 
