@@ -10,6 +10,7 @@ import { Recipient, Info } from './components';
 import styles from './Transaction.style';
 
 const { SATOSHI, TYPE: { REQUEST, SEND } } = C;
+let timeout;
 
 class Transaction extends Component {
   constructor(props) {
@@ -34,12 +35,15 @@ class Transaction extends Component {
     this.setState({ address, deviceId: undefined });
   }
 
-  async _onAmount(amount) {
-    this.setState({ amount });
+  _onAmount(amount) {
+    this.setState({ amount, fee: undefined });
     if (amount > 0) {
-      const { wallet: { coin } } = this.props;
-      const fees = await TransactionService.fee(coin, amount / SATOSHI);
-      if (fees) this.setState({ fee: (fees.default + fees.charge) * SATOSHI });
+      const { currencies, wallet: { coin } } = this.props;
+      clearTimeout(timeout);
+      timeout = setTimeout(async() => {
+        const fees = await TransactionService.fee(coin, amount / SATOSHI);
+        if (fees) this.setState({ fee: ((fees.default + fees.charge) * SATOSHI) / currencies[coin] });
+      }, 1000);
     }
   }
 
@@ -94,9 +98,9 @@ class Transaction extends Component {
               />
               <Amount fixed={swap && to === 'BTC' ? 6 : 2} symbol={to} value={conversion} style={[styles.label]} />
               { fee &&
-                <View style={styles.fee}>
-                  <Amount caption="Fee is " symbol={currency} value={fee / currencies[coin]} style={[styles.label, styles.small]} />
-                </View>
+                <Animatable animation="bounceIn" style={styles.fee}>
+                  <Amount caption="Fee is " symbol={currency} value={fee} style={[styles.label, styles.small]} />
+                </Animatable>
               }
             </View>
           </Animatable>
