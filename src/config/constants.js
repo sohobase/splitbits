@@ -4,6 +4,8 @@ export default {
     TOKEN: 'sohobase-splitwallet-dev',
   },
 
+  SATOSHI: 0.00000001,
+
   STATE: {
     // -- Transactions
     REQUESTED: 'requested',

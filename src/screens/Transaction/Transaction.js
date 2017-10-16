@@ -9,17 +9,19 @@ import { TransactionService } from '../../services';
 import { Recipient, Info } from './components';
 import styles from './Transaction.style';
 
-const { REQUEST, SEND } = C.TYPE;
+const { SATOSHI, TYPE: { REQUEST, SEND } } = C;
 
 class Transaction extends Component {
   constructor(props) {
     super(props);
+    const { item: { amount, fee }, type } = props;
+
     this.state = {
-      amount: props.item.amount,
+      amount,
       address: undefined,
-      concept: props.type,
+      concept: type,
       deviceId: undefined,
-      fee: 22000 / 100000000,
+      fee,
       swap: false,
     };
     this._onAmount = this._onAmount.bind(this);
@@ -32,8 +34,13 @@ class Transaction extends Component {
     this.setState({ address, deviceId: undefined });
   }
 
-  _onAmount(amount) {
+  async _onAmount(amount) {
     this.setState({ amount });
+    if (amount > 0) {
+      const { wallet: { coin } } = this.props;
+      const fees = await TransactionService.fee(coin, amount / SATOSHI);
+      if (fees) this.setState({ fee: (fees.default + fees.charge) * SATOSHI });
+    }
   }
 
   _onDevice(deviceId) {
@@ -86,10 +93,11 @@ class Transaction extends Component {
                 value={amount && amount.toString()}
               />
               <Amount fixed={swap && to === 'BTC' ? 6 : 2} symbol={to} value={conversion} style={[styles.label]} />
-
-              <View style={styles.fee}>
-                <Amount caption="Fee is " symbol={currency} value={fee / currencies[coin]} style={[styles.label, styles.small]} />
-              </View>
+              { fee &&
+                <View style={styles.fee}>
+                  <Amount caption="Fee is " symbol={currency} value={fee / currencies[coin]} style={[styles.label, styles.small]} />
+                </View>
+              }
             </View>
           </Animatable>
         </View>
@@ -98,8 +106,7 @@ class Transaction extends Component {
             ? <Recipient onItem={_onDevice} onAdress={_onAddress} selected={deviceId} />
             : <Info item={item} />
           }
-          {
-            (type === REQUEST || type === SEND) &&
+          { (type === REQUEST || type === SEND) &&
             <Button
               accent
               caption={`${type} ${amount || 0}`}
@@ -134,9 +141,6 @@ Transaction.defaultProps = {
 
 const mapStateToProps = ({ currencies, device }, props) => {
   const { item = {}, wallet = {} } = props.navigation.state.params;
-
-  // const item = undefined;
-  // const wallet = { balance: 5, coin: 'BTC' };
 
   return { currencies, device, item, wallet };
 };
