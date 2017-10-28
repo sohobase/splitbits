@@ -44,6 +44,7 @@ export default {
 
   FONT: {
     SIZE: {
+      TINY: UNIT * 1,
       SMALL: UNIT * 1.2,
       DEFAULT: UNIT * 1.6,
       LARGE: UNIT * 2,

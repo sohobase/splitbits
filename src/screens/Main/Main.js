@@ -18,12 +18,14 @@ class Main extends Component {
     super(props);
     this.state = {
       transactions: undefined,
-      modal: false,
+      modalTransaction: false,
+      modalWallet: false,
       prefetch: false,
       refreshing: false,
     };
     this._onCreateTransaction = this._onCreateTransaction.bind(this);
     this._onModal = this._onModal.bind(this);
+    this._onModalWallet = this._onModalWallet.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
     this._renderTransaction = this._renderTransaction.bind(this);
   }
@@ -47,15 +49,19 @@ class Main extends Component {
   _onCreateTransaction(type) {
     const {
       props: { navigation: { navigate }, wallets },
-      state: { index = 0, modal },
+      state: { index = 0, modalTransaction },
     } = this;
 
-    this.setState({ modal: !modal });
+    this.setState({ modalTransaction: !modalTransaction });
     navigate('Transaction', { type, wallet: wallets[index] });
   }
 
   _onModal() {
-    this.setState({ modal: !this.state.modal });
+    this.setState({ modalTransaction: !this.state.modalTransaction });
+  }
+
+  _onModalWallet() {
+    this.setState({ modalWallet: !this.state.modalWallet });
   }
 
   async _onSwipeWallet(event, { index }) {
@@ -67,9 +73,9 @@ class Main extends Component {
   }
 
   render() {
-    const { _onCreateTransaction, _onModal, _onSwipeWallet } = this;
+    const { _onCreateTransaction, _onModal, _onModalWallet, _onSwipeWallet } = this;
     const { navigation: { navigate }, wallets } = this.props;
-    const { transactions = [], modal, refreshing } = this.state;
+    const { transactions = [], modalTransaction, modalWallet, refreshing } = this.state;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -87,6 +93,7 @@ class Main extends Component {
           >
             { wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />)}
           </Swiper>
+          <Button caption="Create wallet" onPress={_onModalWallet} />
         </View>
 
         <FlatList
@@ -100,8 +107,8 @@ class Main extends Component {
         <Footer navigate={navigate} />
         <Button
           accent
-          animation={modal ? 'bounceOutDown' : 'bounceInUp'}
-          delay={modal ? 0 : DURATION / 2}
+          animation={modalTransaction ? 'bounceOutDown' : 'bounceInUp'}
+          delay={modalTransaction ? 0 : DURATION / 2}
           duration={DURATION}
           circle
           icon="operations"
@@ -109,13 +116,16 @@ class Main extends Component {
           style={styles.button}
         />
         <TransactionModal
-          visible={modal}
+          visible={modalTransaction}
           onClose={_onModal}
           onRequest={() => _onCreateTransaction(REQUEST)}
           onSend={() => _onCreateTransaction(SEND)}
         />
-        { 1 === 2 &&
-          <WalletModal visible={modal} onClose={_onModal} /> }
+        <WalletModal
+          camera
+          visible={modalWallet}
+          onClose={_onModalWallet}
+        />
       </View>
     );
   }

@@ -2,6 +2,7 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
+import Button from './Button';
 import styles from './QRreader.style';
 
 class QRreader extends Component {
@@ -32,21 +33,23 @@ class QRreader extends Component {
     if (!active || !hasCameraPermission) return <View />;
 
     return (
-      <View style={StyleSheet.absoluteFill}>
+      <View style={styles.QRreader}>
         <BarCodeScanner
           barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
           onBarCodeRead={this._onBarCodeRead}
           style={StyleSheet.absoluteFill}
         />
-        <Text style={styles.title}>Scan QR Code</Text>
-        <Text onPress={onClose} style={styles.cancel}>Cancel</Text>
-        <View style={styles.topBotton} />
-        <View style={{ flexDirection: 'row' }} >
-          <View style={styles.rightLeft} />
-          <View style={styles.container} />
-          <View style={styles.rightLeft} />
+        <View style={styles.border}>
+          <Text style={styles.hint}>Place the code inside the frame</Text>
         </View>
-        <View style={styles.topBotton} />
+        <View style={styles.content} >
+          <View style={styles.border} />
+          <View style={styles.area} />
+          <View style={styles.border} />
+        </View>
+        <View style={styles.border}>
+          <Button caption="Cancel" onPress={onClose} accent />
+        </View>
       </View>
     );
   }

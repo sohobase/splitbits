@@ -4,6 +4,14 @@ import { THEME } from '../config';
 const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
   coins: {
     borderBottomColor: COLOR.DIVIDER,
     borderBottomWidth: 1,
@@ -36,6 +44,10 @@ export default StyleSheet.create({
   inputActive: {
     borderBottomColor: COLOR.ACCENT,
     borderBottomWidth: 2,
+  },
+
+  inputAddress: {
+    fontSize: FONT.SIZE.TINY,
   },
 
   button: {

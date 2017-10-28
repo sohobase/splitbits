@@ -2,9 +2,9 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Modal, Option } from '../components';
+import { Button, Modal, Option, QRreader } from '../components';
 import { STYLE } from '../config';
-import { StateService,  WalletService } from '../services';
+import { StateService, WalletService } from '../services';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
 import styles from './WalletModal.style';
 
@@ -15,16 +15,32 @@ class WalletModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      wif: undefined,
+      cameraActive: false,
       coin: 'BTC',
       name: undefined,
     };
     this._onCoin = this._onCoin.bind(this);
+    this._onCamera = this._onCamera.bind(this);
+    this._onQR = this._onQR.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
+  }
+
+  _onCoin(coin) {
+    this.setState({ coin });
+  }
+
+  _onCamera() {
+    this.setState({ cameraActive: !this.state.cameraActive });
+  }
+
+  _onQR(value) {
+    this.setState({ wif: value });
   }
 
   async _onSubmit() {
     const { props: { addWallet, onSuccess, updateCurrencies, updateDevice, updateWallet }, state } = this;
-    const wallet = await WalletService.create(state);
+    const wallet = await WalletService[state.wif ? 'import' : 'create'](state);
 
     if (wallet) {
       addWallet(wallet);
@@ -40,52 +56,66 @@ class WalletModal extends Component {
     }
   }
 
-  _onCoin(coin) {
-    this.setState({ coin });
-  }
-
   render() {
-    const { _onCoin, _onSubmit, props: { onClose, visible }, state: { coin, name } } = this;
+    const {
+      _onCoin, _onCamera, _onQR, _onSubmit,
+      props: { camera, onClose, visible },
+      state: { wif, cameraActive, coin, name },
+    } = this;
 
     return (
-      <Modal title="Type of wallet" visible={visible} onClose={onClose} style={STYLE.CENTERED}>
-        <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
-          <Option
-            centered
-            image={imageBTC}
-            caption="Bitcoin"
-            onPress={() => _onCoin('BTC')}
-            style={[styles.coin, coin === 'BTC' && styles.coinActive]}
+      <View style={styles.container} pointerEvents={visible ? 'auto' : 'none'}>
+        <QRreader active={cameraActive} onClose={_onCamera} onRead={_onQR} />
+        <Modal title="Type of wallet" visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
+          <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
+            <Option
+              centered
+              image={imageBTC}
+              caption="Bitcoin"
+              onPress={() => _onCoin('BTC')}
+              style={[styles.coin, coin === 'BTC' && styles.coinActive]}
+            />
+            <Option
+              centered
+              image={imageLTC}
+              caption="Litecoin"
+              onPress={() => _onCoin('LTC')}
+              style={[styles.coin, coin === 'LTC' && styles.coinActive]}
+            />
+          </View>
+          <TextInput
+            _autoFocus
+            onChangeText={text => this.setState({ name: text })}
+            placeholder="Choose a name..."
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            value={name}
           />
-          <Option
-            centered
-            image={imageLTC}
-            caption="Litecoin"
-            onPress={() => _onCoin('LTC')}
-            style={[styles.coin, coin === 'LTC' && styles.coinActive]}
-          />
-        </View>
-        <TextInput
-          autoFocus
-          onChangeText={text => this.setState({ name: text })}
-          placeholder="Choose a name..."
-          style={styles.input}
-          value={name}
-        />
-        <Button
-          accent
-          caption="Create wallet"
-          disabled={!coin || !name}
-          onPress={_onSubmit}
-          style={styles.button}
-        />
-      </Modal>
+          { wif &&
+            <TextInput
+              editable={false}
+              style={[styles.input, styles.inputAddress]}
+              value={wif}
+            /> }
+          <View style={STYLE.ROW}>
+            { camera && <Button accent caption="Import" onPress={_onCamera} style={styles.button} /> }
+            <Button
+              accent
+              caption="Create"
+              disabled={!coin || !name}
+              onPress={_onSubmit}
+              style={styles.button}
+            />
+          </View>
+        </Modal>
+      </View>
     );
   }
 }
 
 WalletModal.propTypes = {
   addWallet: func,
+  camera: bool,
   onClose: func,
   onSuccess: func,
   visible: bool,
@@ -96,6 +126,7 @@ WalletModal.propTypes = {
 
 WalletModal.defaultProps = {
   addWallet() {},
+  camera: false,
   onClose() {},
   onSuccess() {},
   visible: false,
