@@ -15,7 +15,13 @@ export default async(endpoint, props = {}, multipart) => {
   if (multipart) headers['Content-Type'] = 'multipart/form-data';
 
   const response = await fetch(`${C.SERVICE}${endpoint}`, { headers, ...props, method }).catch(onError); // eslint-disable-line
-  const json = response ? await response.json() : undefined;
+  if (!response) return undefined;
+
+  const json = await response.json();
+  if (response.status >= 400) {
+    console.log('@TODO', json); // @TODO: Send to redux an error
+    return undefined;
+  }
 
   return json;
 };
