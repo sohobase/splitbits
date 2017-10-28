@@ -1,23 +1,32 @@
+import Color from 'color';
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
 const { AVATAR_SIZE, COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    padding: OFFSET,
-    width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: COLOR.DIVIDER,
+  selected: {
+    backgroundColor: Color(COLOR.PRIMARY).lighten(0.9),
+  },
+
+  avatar: {
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: AVATAR_SIZE / 2,
+    backgroundColor: COLOR.DIVIDER,
+    marginRight: OFFSET,
+  },
+
+  avatarSelected: {
+    backgroundColor: COLOR.PRIMARY,
   },
 
   image: {
-    width: AVATAR_SIZE / 2,
-    height: AVATAR_SIZE / 2,
     resizeMode: 'cover',
-    backgroundColor: COLOR.DIVIDER,
-    borderRadius: AVATAR_SIZE / 4,
-    marginRight: OFFSET,
+  },
+
+  icon: {
+    tintColor: COLOR.WHITE,
   },
 
   content: {

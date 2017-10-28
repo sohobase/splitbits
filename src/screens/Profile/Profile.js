@@ -12,7 +12,7 @@ import { DeviceService } from '../../services';
 import { CameraModal } from './components';
 import styles from './Profile.style';
 
-const { COLOR } = THEME;
+const { COLOR, QR_SIZE } = THEME;
 const { SERVICE } = C;
 let timeout;
 

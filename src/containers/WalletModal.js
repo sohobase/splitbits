@@ -2,10 +2,10 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
-import { addWalletAction } from '../store/actions';
 import { Button, Modal, Option } from '../components';
 import { STYLE } from '../config';
-import { WalletService } from '../services';
+import { StateService,  WalletService } from '../services';
+import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
 import styles from './WalletModal.style';
 
 const imageBTC = require('../../assets/coin-bitcoin.png');
@@ -23,11 +23,19 @@ class WalletModal extends Component {
   }
 
   async _onSubmit() {
-    const { props: { addWallet, onSuccess }, state } = this;
+    const { props: { addWallet, onSuccess, updateCurrencies, updateDevice, updateWallet }, state } = this;
     const wallet = await WalletService.create(state);
 
     if (wallet) {
       addWallet(wallet);
+      const response = await StateService.get([wallet.id]);
+      if (response) {
+        const { currencies = {}, device = {}, wallets = [] } = response;
+        updateCurrencies(currencies);
+        updateDevice(device);
+        wallets.forEach(item => updateWallet(item));
+      }
+
       onSuccess();
     }
   }
@@ -81,6 +89,9 @@ WalletModal.propTypes = {
   onClose: func,
   onSuccess: func,
   visible: bool,
+  updateCurrencies: func,
+  updateDevice: func,
+  updateWallet: func,
 };
 
 WalletModal.defaultProps = {
@@ -88,11 +99,17 @@ WalletModal.defaultProps = {
   onClose() {},
   onSuccess() {},
   visible: false,
+  updateCurrencies() {},
+  updateDevice() {},
+  updateWallet() {},
 };
 
 const mapStateToProps = undefined;
 const mapDispatchToProps = dispatch => ({
   addWallet: wallet => dispatch(addWalletAction(wallet)),
+  updateCurrencies: wallet => dispatch(updateCurrenciesAction(wallet)),
+  updateDevice: wallet => dispatch(updateDeviceAction(wallet)),
+  updateWallet: wallet => dispatch(updateWalletAction(wallet)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletModal);

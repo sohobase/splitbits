@@ -2,10 +2,10 @@ import Color from 'color';
 import Identicon from 'identicon.js';
 import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
-import { Button } from '../../components';
+import { Button, Icon } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
@@ -36,12 +36,12 @@ class DeviceItem extends Component {
   }
 
   render() {
-    const { _onRelation, _onRequest, props: { data: { id, name }, device: { requests }, request } } = this;
+    const { _onRelation, _onRequest, props: { data: { id, name }, device: { requests }, onPress, request, selected } } = this;
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
 
-    if (!image || image.length === 0) {
+    if (!selected && (!image || image.length === 0)) {
       const identicon = new Identicon(`${id}${new Date().toString()}`, {
         background: [255, 255, 255, 255],
         margin: 0,
@@ -50,7 +50,7 @@ class DeviceItem extends Component {
       image = `data:image/png;base64,${identicon}`;
     }
 
-    if (!request) {
+    if (!request && !onPress) {
       options = (!isRequest)
         ? [{ ...BUTTON_CANCEL, text: 'Remove', onPress: () => _onRelation('remove') }]
         : [
@@ -61,21 +61,27 @@ class DeviceItem extends Component {
 
     return (
       <Swipeout right={options} backgroundColor={WHITE} >
-        <View style={[STYLE.ROW, styles.container]}>
-          <Image style={styles.image} source={{ uri: image }} />
-          <View style={styles.content}>
-            <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
-            { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
+        <TouchableWithoutFeedback onPress={() => onPress(id)}>
+          <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected)]}>
+            {
+              selected
+                ? <View style={[STYLE.CENTERED, styles.avatar, styles.avatarSelected]}><Icon value="check" style={styles.icon}/></View>
+                : <Image style={[styles.avatar, styles.image]} source={{ uri: image }} />
+            }
+            <View style={styles.content}>
+              <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
+              { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
+            </View>
+            { request &&
+              <Button
+                accent
+                caption="Request"
+                style={styles.button}
+                captionStyle={styles.buttonCaption}
+                onPress={_onRequest}
+              /> }
           </View>
-          { request &&
-            <Button
-              accent
-              caption="Request"
-              style={styles.button}
-              captionStyle={styles.buttonCaption}
-              onPress={_onRequest}
-            /> }
-        </View>
+        </TouchableWithoutFeedback>
       </Swipeout>
     );
   }
@@ -84,16 +90,20 @@ class DeviceItem extends Component {
 DeviceItem.propTypes = {
   data: SHAPE.DEVICE,
   device: SHAPE.DEVICE,
+  onPress: func,
   onRequest: func,
   request: bool,
+  selected: bool,
   updateDevice: func,
 };
 
 DeviceItem.defaultProps = {
   data: {},
   device: {},
+  onPress() {},
   onRequest() {},
   request: false,
+  selected: false,
   updateDevice() {},
 };
 

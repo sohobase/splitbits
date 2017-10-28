@@ -24,7 +24,7 @@ const getIcon = (amount, state) => {
 
 const TransactionItem = ({ currencies, data: { amount, coin, createdAt, state, walletFrom = {}, walletTo = {} }, device, onPress }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
-    <View style={[STYLE.ROW, styles.container]}>
+    <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
       <View>
         <Image style={styles.image} source={{ uri: walletFrom.image }} />
         <Icon

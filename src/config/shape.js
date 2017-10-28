@@ -2,13 +2,14 @@ import { array, date, func, number, object, shape, string } from 'prop-types';
 
 const WALLET = shape({
   id: string,
+  address: string,
   balance: number,
-  image: string,
+  coin: string,
   name: string,
   progress: number,
-  qr: string,
-  symbol: string,
   trend: number,
+  type: string,
+  wif: string,
 });
 
 export default {
@@ -43,8 +44,10 @@ export default {
     amount: number,
     charge: number,
     coin: string,
+    confirmations: number,
     createdAt: date,
     fee: number,
+    state: string,
     walletFrom: string,
     walletTo: string,
   }),

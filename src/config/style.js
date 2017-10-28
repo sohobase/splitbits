@@ -39,6 +39,15 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
+  LIST_ITEM: {
+    borderBottomColor: COLOR.DIVIDER,
+    borderBottomWidth: 1,
+    paddingTop: UNIT * 1.2,
+    paddingBottom: UNIT * 1.2,
+    paddingLeft: OFFSET,
+    paddingRight: OFFSET,
+  },
+
   INPUT: {
     fontSize: FONT.SIZE.LARGE,
     paddingTop: UNIT,

@@ -12,14 +12,14 @@ const TransactionModal = ({ onClose, onRequest, onSend, visible }) => (
         caption="Send Money"
         hint="lorem ipsum..."
         icon="arrowForward"
-        onPress={onRequest}
+        onPress={onSend}
         style={styles.option}
       />
       <Option
         caption="Request Money"
         hint="lorem ipsum..."
         icon="arrowBack"
-        onPress={onSend}
+        onPress={onRequest}
         style={styles.option}
       />
     </View>

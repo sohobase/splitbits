@@ -17,8 +17,9 @@ const renderSymbol = (value, style) => (
   </Text>
 );
 
-const Amount = ({ fixed, style, symbol, value }) => (
+const Amount = ({ caption, fixed, style, symbol, value }) => (
   <View style={STYLE.ROW}>
+    { caption && <Text style={[styles.amount, style]}>{caption}</Text> }
     { value < 0 && <Text style={[styles.amount, style]}>-</Text> }
     { symbol === 'USD' && renderSymbol(symbol, style) }
     <Text style={[styles.amount, style]}>
@@ -29,6 +30,7 @@ const Amount = ({ fixed, style, symbol, value }) => (
 );
 
 Amount.propTypes = {
+  caption: string,
   fixed: number,
   symbol: string,
   style: oneOfType(array, number),
@@ -36,6 +38,7 @@ Amount.propTypes = {
 };
 
 Amount.defaultProps = {
+  caption: undefined,
   fixed: 2,
   style: [],
   symbol: 'BTC',
