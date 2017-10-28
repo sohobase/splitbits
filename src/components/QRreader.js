@@ -48,7 +48,7 @@ class QRreader extends Component {
           <View style={styles.border} />
         </View>
         <View style={styles.border}>
-          <Button caption="Cancel" onPress={onClose} accent />
+          <Button circle icon="close" onPress={onClose} accent />
         </View>
       </View>
     );
