@@ -76,7 +76,7 @@ class Profile extends Component {
                 <Button accent circle icon="camera" onPress={_onModal} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
-                <QRCode value={session} size={THEME.AVATAR_SIZE / 2} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+                <QRCode value={session} size={QR_SIZE} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
               </View>
               <TextInput
                 autoFocus={!name || name.length === 0}
