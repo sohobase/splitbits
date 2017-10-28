@@ -14,4 +14,8 @@ export default {
       body: JSON.stringify(params),
     });
   },
+
+  import(props) {
+    return service('wallet/import', { method: 'POST', body: JSON.stringify(props) });
+  },
 };
