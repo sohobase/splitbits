@@ -8,5 +8,7 @@ export default StyleSheet.create({
 
   input: {
     textAlign: 'left',
+    paddingTop: 0,
+    minWidth: '100%',
   },
 });

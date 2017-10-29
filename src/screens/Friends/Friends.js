@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 import { Keyboard, TextInput, View } from 'react-native';
-import { Header, QRreader } from '../../components';
+import { Header, Input, QRreader } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
@@ -55,11 +55,11 @@ class Friends extends Component {
           style={STYLE.HEADER_HIGHLIGHT}
           tintColor={COLOR.TEXT_DEFAULT}
         >
-          <TextInput
+          <Input
             autoFocus
             onChangeText={_onQuery}
             placeholder="Search friends..."
-            style={[STYLE.INPUT, styles.input]}
+            style={styles.input}
             value={query}
           />
         </Header>

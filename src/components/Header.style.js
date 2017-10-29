@@ -13,11 +13,11 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 
   title: {
-    alignSelf: 'center',
     color: COLOR.TEXT_HIGHLIGHT,
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,

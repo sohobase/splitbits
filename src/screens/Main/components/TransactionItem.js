@@ -6,14 +6,14 @@ import { Amount, Icon, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
 import styles from './TransactionItem.style';
 
-const { DELETED, PROCESSING, REQUESTED } = C.STATE;
+const { DELETED, UNCONFIRMED, REQUESTED } = C.STATE;
 
 const getIcon = (amount, state) => {
   if (amount < 0) {
     return 'arrowForward';
   } else if (state === REQUESTED) {
     return 'operations';
-  } else if (state === PROCESSING) {
+  } else if (state === UNCONFIRMED) {
     return 'settings';
   } else if (state === DELETED) {
     return 'close';

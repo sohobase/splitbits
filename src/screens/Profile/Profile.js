@@ -5,7 +5,7 @@ import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { updateDeviceAction } from '../../store/actions';
-import { Button, Header } from '../../components';
+import { Button, Header, Input } from '../../components';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
@@ -78,11 +78,12 @@ class Profile extends Component {
               <View style={styles.qr}>
                 <QRCode value={session} size={QR_SIZE} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
               </View>
-              <TextInput
+              <Input
                 autoFocus={!name || name.length === 0}
+                highlight
                 onChangeText={_onName}
                 placeholder="Choose a name..."
-                style={[STYLE.INPUT, STYLE.INPUT_HIGHLIGHT, styles.input]}
+                style={styles.input}
                 value={name}
               />
             </View>

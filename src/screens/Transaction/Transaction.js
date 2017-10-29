@@ -1,9 +1,9 @@
 import { string } from 'prop-types';
 import React, { Component } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { Amount, Button, Header } from '../../components';
+import { Amount, Button, Header, Input } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
 import { Recipient, Info } from './components';
@@ -42,7 +42,7 @@ class Transaction extends Component {
       clearTimeout(timeout);
       timeout = setTimeout(async() => {
         const fees = await TransactionService.fee(coin, amount / SATOSHI);
-        if (fees) this.setState({ fee: ((fees.default + fees.charge) * SATOSHI) / currencies[coin] });
+        if (fees && fees.default > 0) this.setState({ fee: ((fees.default + fees.charge) * SATOSHI) / currencies[coin] });
       }, 1000);
     }
   }
@@ -52,7 +52,7 @@ class Transaction extends Component {
   }
 
   async _onSubmit() {
-    const { props: { item: { id }, navigation, wallet: { coin, id: walletId, wif } }, state: { type } } = this;
+    const { item: { id }, navigation, type, wallet: { coin, id: walletId, wif } } = this.props;
     const isRequest = type === REQUEST;
     const method = isRequest ? 'request' : 'send';
 
@@ -76,6 +76,7 @@ class Transaction extends Component {
     const conversion = swap ? (amount || 0) * currencies[coin] : (amount || 0) / currencies[coin];
     const editable = !item || !item.id;
 
+    console.log('fee', fee);
     return (
       <View style={STYLE.SCREEN}>
         <View style={STYLE.LAYOUT_TOP}>
@@ -87,13 +88,14 @@ class Transaction extends Component {
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
               <Text style={[styles.label]}>{from}</Text>
-              <TextInput
+              <Input
                 autoFocus={!amount}
                 editable={editable}
+                highlight
                 keyboardType="numeric"
                 onChangeText={(_onAmount)}
                 placeholder="0.00"
-                style={[STYLE.INPUT, STYLE.INPUT_HIGHLIGHT, styles.amount]}
+                style={styles.input}
                 value={amount && amount.toString()}
               />
               <Amount fixed={swap && to === 'BTC' ? 6 : 2} symbol={to} value={conversion} style={[styles.label]} />
@@ -144,9 +146,10 @@ Transaction.defaultProps = {
 };
 
 const mapStateToProps = ({ currencies, device }, props) => {
-  const { item = {}, wallet = {} } = props.navigation.state.params;
+  const { item = {}, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
-  return { currencies, device, item, wallet };
+  console.log('type', type);
+  return { currencies, device, item, type, wallet };
 };
 
 // const mapDispatchToProps = dispatch => ({

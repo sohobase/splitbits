@@ -15,7 +15,7 @@ export default StyleSheet.create({
     marginBottom: OFFSET,
   },
 
-  amount: {
+  input: {
     fontSize: UNIT * 4.8,
     paddingBottom: 0,
     paddingTop: 0,
