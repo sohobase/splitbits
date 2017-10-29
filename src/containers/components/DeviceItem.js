@@ -6,11 +6,12 @@ import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
 import { Button, Icon } from '../../components';
-import { SHAPE, STYLE, THEME } from '../../config';
+import { C, SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import styles from './DeviceItem.style';
 
+const { SERVICE } = C;
 const { COLOR: { ACCEPT, CANCEL, WHITE } } = THEME;
 
 const BUTTON_ACCEPT = { backgroundColor: ACCEPT, underlayColor: Color(ACCEPT).darken(0.1).string(), type: 'delete' };
@@ -48,6 +49,8 @@ class DeviceItem extends Component {
         size: 256,
       }).toString();
       image = `data:image/png;base64,${identicon}`;
+    } else {
+      image = `${SERVICE}public/${image}?timestamp=${new Date().getTime()}`;
     }
 
     if (!request && !onPress) {
@@ -65,7 +68,7 @@ class DeviceItem extends Component {
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected)]}>
             {
               selected
-                ? <View style={[STYLE.CENTERED, styles.avatar, styles.avatarSelected]}><Icon value="check" style={styles.icon}/></View>
+                ? <View style={[STYLE.CENTERED, styles.avatar, styles.avatarSelected]}><Icon value="check" style={styles.icon} /></View>
                 : <Image style={[styles.avatar, styles.image]} source={{ uri: image }} />
             }
             <View style={styles.content}>
