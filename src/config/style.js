@@ -1,7 +1,7 @@
 import { Platform, StatusBar, StyleSheet } from 'react-native';
 import THEME from './theme';
 
-const { COLOR, FONT, UNIT, OFFSET } = THEME;
+const { COLOR, UNIT, OFFSET } = THEME;
 let androidHeader = {};
 if (Platform.OS !== 'ios') androidHeader = { paddingTop: StatusBar.currentHeight, height: 80 };
 
@@ -46,20 +46,6 @@ export default StyleSheet.create({
     paddingBottom: UNIT * 1.2,
     paddingLeft: OFFSET,
     paddingRight: OFFSET,
-  },
-
-  INPUT: {
-    fontSize: FONT.SIZE.LARGE,
-    paddingTop: UNIT,
-    paddingBottom: UNIT,
-    paddingLeft: UNIT / 4,
-    paddingRight: UNIT / 4,
-    width: '100%',
-  },
-
-  INPUT_HIGHLIGHT: {
-    color: COLOR.WHITE,
-    fontWeight: FONT.WEIGHT.BOLD,
   },
 
   LAYOUT_BOTTOM: {
