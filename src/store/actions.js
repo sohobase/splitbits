@@ -19,6 +19,12 @@ export const updateDeviceAction = device => ({
   device,
 });
 
+export const SELECT_DEVICE = '@xCryptos/SELECT_DEVICE';
+export const selectDeviceAction = deviceId => ({
+  type: SELECT_DEVICE,
+  deviceId,
+});
+
 // -- Transaction
 
 // -- Wallet

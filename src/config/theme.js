@@ -64,6 +64,7 @@ export default {
   HEADER_SIZE: UNIT * 6,
   ICON_SIZE: UNIT * 3.2,
   OFFSET: UNIT * 1.6,
+  ROW_MIN_HEIGHT: UNIT * 6.4,
   QR_SIZE: 6.4 * UNIT,
   UNIT,
 };

@@ -3,6 +3,7 @@ import {
   ADD_TOKEN,
   UPDATE_CURRENCIES,
   UPDATE_DEVICE,
+  SELECT_DEVICE,
   ADD_WALLET,
   REMOVE_WALLET,
   UPDATE_WALLET,
@@ -21,6 +22,9 @@ export default function(state = DEFAULTS, action) {
     // -- Device
     case UPDATE_DEVICE:
       return { ...state, device: { ...state.device, ...action.device } };
+
+    case SELECT_DEVICE:
+      return { ...state, selectedDevice: action.deviceId };
 
     // -- Transaction
 

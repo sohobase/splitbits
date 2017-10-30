@@ -34,11 +34,6 @@ class QRreader extends Component {
 
     return (
       <View style={styles.QRreader}>
-        <BarCodeScanner
-          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-          onBarCodeRead={this._onBarCodeRead}
-          style={StyleSheet.absoluteFill}
-        />
         <View style={styles.border}>
           <Text style={styles.hint}>Place the code inside the frame</Text>
         </View>

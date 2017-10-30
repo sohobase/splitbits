@@ -3,6 +3,7 @@ export default {
   device: {},
   devices: [],
   pushToken: undefined,
+  selectedDevice: undefined,
   transactions: [],
   wallets: [],
 };

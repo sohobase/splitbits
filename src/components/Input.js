@@ -7,6 +7,7 @@ import styles from './Input.style';
 const Input = ({ highlight, style, ...inherit }) => (
   <TextInput
     {...inherit}
+    autoCorrect={false}
     underlineColorAndroid="transparent"
     style={[
       styles.input,

@@ -10,7 +10,6 @@ export default {
     // -- Transactions
     REQUESTED: 'requested',
     UNCONFIRMED: 'unconfirmed',
-    PROCESSING: 'processing',
     CONFIRMED: 'confirmed',
     // -- Devices
     ACTIVE: 'active',
@@ -25,6 +24,7 @@ export default {
   },
 
   SERVICE: 'http://localhost:3000/',
+  // SERVICE: 'http://100.76.165.45:3000/',
   // SERVICE: 'http://172.17.164.83:3000/',
 
   TYPE: {

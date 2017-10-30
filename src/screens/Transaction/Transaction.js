@@ -1,54 +1,47 @@
-import { string } from 'prop-types';
+import { func, string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { Amount, Button, Header, Input } from '../../components';
+import { Amount, Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
-import { Recipient, Info } from './components';
+import { selectDeviceAction } from '../../store/actions';
+import { AmountTransaction, Recipient, Info } from './components';
 import styles from './Transaction.style';
 
-const { SATOSHI, TYPE: { REQUEST, SEND } } = C;
-let timeout;
+const { TYPE: { REQUEST, SEND } } = C;
 
 class Transaction extends Component {
   constructor(props) {
     super(props);
-    const { item: { amount, fee }, type } = props;
+    const { item: { amount, fee } } = props;
 
     this.state = {
       amount,
       address: undefined,
-      concept: type,
-      deviceId: undefined,
+      camera: false,
+      concept: undefined,
       fee,
       swap: false,
     };
-    this._onAmount = this._onAmount.bind(this);
-    this._onDevice = this._onDevice.bind(this);
+    this._onAddress = this._onAddress.bind(this);
+    this._onCamera = this._onCamera.bind(this);
+    this._onConcept = this._onConcept.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
-    this._onSwap = this._onSwap.bind(this);
   }
 
   _onAddress(address) {
-    this.setState({ address, deviceId: undefined });
+    this.props.selectDevice(undefined);
+    this.setState({ address });
   }
 
-  _onAmount(amount) {
-    this.setState({ amount, fee: undefined });
-    if (amount > 0) {
-      const { currencies, wallet: { coin } } = this.props;
-      clearTimeout(timeout);
-      timeout = setTimeout(async() => {
-        const fees = await TransactionService.fee(coin, amount / SATOSHI);
-        if (fees && fees.default > 0) this.setState({ fee: ((fees.default + fees.charge) * SATOSHI) / currencies[coin] });
-      }, 1000);
-    }
+  _onCamera() {
+    this.props.selectDevice(undefined);
+    this.setState({ camera: !this.state.camera });
   }
 
-  _onDevice(deviceId) {
-    this.setState({ address: undefined, deviceId });
+  _onConcept(concept) {
+    this.setState({ concept });
   }
 
   async _onSubmit() {
@@ -60,100 +53,77 @@ class Transaction extends Component {
     navigation.goBack();
   }
 
-  _onSwap() {
-    this.setState({ amount: undefined, swap: !this.state.swap });
-  }
-
   render() {
     const {
-      _onAddress, _onAmount, _onDevice, _onSubmit, _onSwap,
-      props: { currencies, device: { currency }, item, navigation, type, wallet },
-      state: { address, amount, deviceId, fee, swap },
+      _onAddress, _onCamera, _onConcept, _onSubmit,
+      props: { deviceId, item, navigation, type, wallet },
+      state: { address, amount = 0, camera, concept },
     } = this;
     const coin = item.coin || wallet.coin;
-    const from = swap ? currency : coin;
-    const to = swap ? coin : currency;
-    const conversion = swap ? (amount || 0) * currencies[coin] : (amount || 0) / currencies[coin];
     const editable = !item || !item.id;
+    const checked = amount > 0 && amount <= wallet.balance && concept && (deviceId || address);
 
-    console.log('fee', fee);
     return (
       <View style={STYLE.SCREEN}>
-        <View style={STYLE.LAYOUT_TOP}>
-          <Header
-            title="Transaction"
-            navigation={navigation}
-            buttonRight={editable ? { icon: 'swap', onPress: _onSwap } : undefined}
-          />
-          <Animatable animation="bounceIn" delay={600} style={styles.preview}>
-            <View style={[STYLE.CENTERED, styles.preview]}>
-              <Text style={[styles.label]}>{from}</Text>
-              <Input
-                autoFocus={!amount}
-                editable={editable}
-                highlight
-                keyboardType="numeric"
-                onChangeText={(_onAmount)}
-                placeholder="0.00"
-                style={styles.input}
-                value={amount && amount.toString()}
-              />
-              <Amount fixed={swap && to === 'BTC' ? 6 : 2} symbol={to} value={conversion} style={[styles.label]} />
-              { fee &&
-                <Animatable animation="bounceIn" style={styles.fee}>
-                  <Amount caption="Fee is " symbol={currency} value={fee} style={[styles.label, styles.small]} />
-                </Animatable>
-              }
-            </View>
-          </Animatable>
-        </View>
+        <AmountTransaction
+          coin={coin}
+          navigation={navigation}
+          onAmount={value => this.setState({ amount: value })}
+          wallet={wallet}
+        />
         <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
           { editable
-            ? <Recipient onItem={_onDevice} onAdress={_onAddress} selected={deviceId} />
-            : <Info item={item} />
-          }
-          { (type === REQUEST || type === SEND) &&
-            <Button
-              accent
-              caption={`${type} ${amount || 0}`}
-              disabled={!(amount > 0 && amount <= wallet.balance && (deviceId || address))}
-              onPress={_onSubmit}
-              style={styles.button}
+            ? <Recipient
+              concept={concept}
+              deviceId={deviceId}
+              navigation={navigation}
+              onCamera={_onCamera}
+              onConcept={type === REQUEST ? _onConcept : undefined}
             />
+            : <Info item={item} /> }
+          { (type === REQUEST || type === SEND) &&
+            <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
+              <Amount symbol={coin} caption={`${type} `} value={parseFloat(amount)} />
+            </Button>
           }
+          <Text>Fee is skskslk</Text>
         </View>
+        <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
       </View>
     );
   }
 }
 
 Transaction.propTypes = {
-  currencies: SHAPE.CURRENCIES,
-  device: SHAPE.DEVICE,
+  deviceId: string,
   item: SHAPE.TRANSACTION,
   navigation: SHAPE.NAVIGATION,
+  selectDevice: func,
   type: string,
   wallet: SHAPE.WALLET,
 };
 
 Transaction.defaultProps = {
-  currencies: {},
-  device: {},
+  deviceId: undefined,
   item: {},
   navigation: undefined,
+  selectDevice() {},
   type: REQUEST,
   wallet: {},
 };
 
-const mapStateToProps = ({ currencies, device }, props) => {
-  const { item = {}, type = REQUEST, wallet = {} } = props.navigation.state.params;
+const mapStateToProps = ({ selectedDevice }, props) => {
+  // const { item = {}, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
-  console.log('type', type);
-  return { currencies, device, item, type, wallet };
+  const item = { };
+  const type = REQUEST;
+  const wallet = { balance: 3.3, coin: 'BTC' };
+
+  return { deviceId: selectedDevice, item, type, wallet };
 };
 
-// const mapDispatchToProps = dispatch => ({
-//   updateDevice: device => dispatch(updateDeviceAction(device)),
-// });
+const mapDispatchToProps = dispatch => ({
+  selectDevice: deviceId => dispatch(selectDeviceAction(deviceId)),
+});
 
-export default connect(mapStateToProps)(Transaction);
+export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

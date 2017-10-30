@@ -6,6 +6,7 @@ const WALLET = shape({
   balance: number,
   coin: string,
   name: string,
+  lastBlockheight: string,
   progress: number,
   trend: number,
   type: string,
