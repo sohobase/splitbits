@@ -1,6 +1,6 @@
 import Color from 'color';
 import Identicon from 'identicon.js';
-import { bool, func } from 'prop-types';
+import { array, bool, func, number, oneOfType } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -37,7 +37,7 @@ class DeviceItem extends Component {
   }
 
   render() {
-    const { _onRelation, _onRequest, props: { data: { id, name }, device: { requests }, onPress, request, selected } } = this;
+    const { _onRelation, _onRequest, props: { data: { id, name }, device: { requests }, onPress, request, selected, style } } = this;
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
@@ -65,10 +65,12 @@ class DeviceItem extends Component {
     return (
       <Swipeout right={options} backgroundColor={WHITE} >
         <TouchableWithoutFeedback onPress={() => onPress(id)}>
-          <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected)]}>
+          <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
             {
               selected
-                ? <View style={[STYLE.CENTERED, styles.avatar, styles.avatarSelected]}><Icon value="check" style={styles.icon} /></View>
+                ? <View style={[STYLE.CENTERED, styles.avatar, styles.avatarSelected]}>
+                  <Icon value="check" style={styles.icon} />
+                </View>
                 : <Image style={[styles.avatar, styles.image]} source={{ uri: image }} />
             }
             <View style={styles.content}>
@@ -98,6 +100,7 @@ DeviceItem.propTypes = {
   request: bool,
   selected: bool,
   updateDevice: func,
+  style: oneOfType(array, number),
 };
 
 DeviceItem.defaultProps = {
@@ -108,6 +111,7 @@ DeviceItem.defaultProps = {
   request: false,
   selected: false,
   updateDevice() {},
+  style: []
 };
 
 const mapStateToProps = ({ device }) => ({

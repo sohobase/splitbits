@@ -1,5 +1,6 @@
 import { func, string } from 'prop-types';
 import React, { Component } from 'react';
+import { View as Animatable } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Button, QRreader } from '../../components';
@@ -99,9 +100,9 @@ class Transaction extends Component {
             </Button>
           }
           { fee > 0 &&
-            <View style={styles.fee}>
+            <Animatable animation="bounceIn" style={styles.fee}>
               <Amount caption="Included fee " value={fee * currencies[coin]} style={styles.feeCaption} />
-            </View>
+            </Animatable>
           }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />

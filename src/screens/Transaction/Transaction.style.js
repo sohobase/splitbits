@@ -18,6 +18,6 @@ export default StyleSheet.create({
 
   feeCaption: {
     fontSize: FONT.SIZE.SMALL,
-    color: COLOR.TEXT_SECONDARY,
+    color: COLOR.TEXT_DISABLED,
   },
 });

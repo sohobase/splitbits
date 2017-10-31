@@ -7,11 +7,11 @@ import { SHAPE, STYLE } from '../../../config';
 import { DeviceItem } from '../../../containers/components';
 import styles from './Recipient.style';
 
-const Recipient = ({ address, concept, deviceId, navigation: { navigate }, onCamera, onConcept, selectedDevice }) => (
+const Recipient = ({ address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept }) => (
   <View>
     <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
       { deviceId
-        ? <DeviceItem data={selectedDevice} />
+        ? <DeviceItem data={device} style={styles.device} />
         : <Text style={styles.hint}>Choose a recipient...</Text>
       }
       <Button
@@ -43,27 +43,27 @@ const Recipient = ({ address, concept, deviceId, navigation: { navigate }, onCam
 Recipient.propTypes = {
   address: string,
   concept: string,
+  device: SHAPE.DEVICE,
   deviceId: string,
   navigation: SHAPE.NAVIGATION,
   onCamera: func,
   onConcept: func,
-  selectDevice: SHAPE.DEVICE,
 };
 
 Recipient.defaultProps = {
   address: undefined,
   concept: undefined,
+  device: undefined,
   deviceId: undefined,
   navigation: undefined,
   onCamera() {},
   onConcept: undefined,
-  selectedDevice: undefined,
 };
 
 const mapStateToProps = ({ device: { devices } }, { deviceId }) => {
-  const selectedDevice = devices.find(({ id }) => id === deviceId);
+  const device = devices.find(({ id }) => id === deviceId);
 
-  return { devices, selectedDevice };
+  return { devices, device };
 };
 
 
