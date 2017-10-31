@@ -2,7 +2,7 @@ import { service } from './modules';
 
 export default {
 
-  fee(coin, amount) {
+  fees(coin, amount) {
     return service(`transaction/fee?coin=${coin}&amount=${amount}`);
   },
 
@@ -12,5 +12,9 @@ export default {
 
   request(props) {
     return service('transaction/request', { method: 'POST', body: JSON.stringify(props) });
+  },
+
+  send(props, wif) {
+    return service('transaction/send', { method: 'POST', body: JSON.stringify(props) });
   },
 };

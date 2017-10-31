@@ -28,6 +28,8 @@ export default {
   // SERVICE: 'http://172.17.164.83:3000/',
 
   TYPE: {
+    DEFAULT: 'default',
+    PRO: 'pro',
     REQUEST: 'request',
     SEND: 'send',
   },
