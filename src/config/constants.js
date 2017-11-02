@@ -4,6 +4,11 @@ export default {
     TOKEN: 'sohobase-splitwallet-dev',
   },
 
+  FIAT: {
+    EUR: 'EUR',
+    USD: 'USD',
+  },
+
   SATOSHI: 0.00000001,
 
   STATE: {
