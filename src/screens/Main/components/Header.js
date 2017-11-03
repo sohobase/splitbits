@@ -16,8 +16,8 @@ const HeaderTitle = ({ currencies, symbol, wallets }) => {
 
   return (
     <Header>
-      <Amount symbol={symbol} value={totalBalance} style={styles.amount} />
-      <Amount symbol={symbol} value={totalTrend} style={styles.trend} />
+      <Amount coin={symbol} value={totalBalance} style={styles.amount} />
+      <Amount coin={symbol} value={totalTrend} style={styles.trend} />
     </Header>
   );
 };

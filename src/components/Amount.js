@@ -31,7 +31,7 @@ const renderSymbol = ({ coin, style }, SYMBOLS = SYMBOL) => (
 
 const Amount = (props) => {
   const { caption, coin, style } = props;
-  let { value = 0 } = props;
+  let { value } = props;
   let fixed = 0;
   let symbols;
 
@@ -39,7 +39,7 @@ const Amount = (props) => {
     fixed = 2;
   } else {
     const satoshis = value * SATOSHI;
-    if (satoshis < 0.1) {
+    if (satoshis > 0 && satoshis < 0.1) {
       value = parseInt(satoshis / COIN_FRIENDLY[coin], 10);
       symbols = SYMBOL_FRIENDLY;
     } else {
@@ -50,7 +50,7 @@ const Amount = (props) => {
 
   return (
     <View style={STYLE.ROW}>
-      { caption && <Text style={[styles.amount, style]}>{caption}</Text> }
+      { caption && <Text style={[styles.amount, style]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
       { value < 0 && <Text style={[styles.amount, style]}>-</Text> }
       { coin === USD && renderSymbol(props, symbols) }
       <Text style={[styles.amount, style]}>

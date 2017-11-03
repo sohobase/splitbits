@@ -10,7 +10,7 @@ import styles from './WalletItem.style';
 
 const { ANIMATION: { DURATION }, COLOR, QR_SIZE } = THEME;
 
-const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, trend = 0 }, device, onPress, style }) => (
+const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, trend = 0 }, device: { currency }, onPress, style }) => (
   <Animatable
     animation="bounceIn"
     duration={DURATION}
@@ -20,12 +20,8 @@ const WalletItem = ({ currencies, data: { address, balance = 0, coin, name, tren
     <View style={styles.content}>
       <View style={styles.info}>
         <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
-        <Amount fixed={4} symbol={coin} value={balance} style={[styles.text, styles.amount]} />
-        <Amount
-          value={balance / currencies[coin]}
-          symbol={device.currency}
-          style={[styles.label, styles.fiat]}
-        />
+        <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
+        <Amount coin={currency} value={balance / currencies[coin]} style={[styles.label, styles.fiat]} />
       </View>
       <View style={STYLE.ROW}>
         <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />

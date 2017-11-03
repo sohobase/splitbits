@@ -33,6 +33,10 @@ class Transaction extends Component {
     this._onSubmit = this._onSubmit.bind(this);
   }
 
+  componentWillMount() {
+    this.props.selectDevice(undefined);
+  }
+
   _onAddress(address) {
     this.props.selectDevice(undefined);
     this.setState({ address });
@@ -62,11 +66,14 @@ class Transaction extends Component {
   }
 
   async _onSubmit() {
-    const { item: { id }, navigation, type, wallet: { coin, id: walletId, wif } } = this.props;
+    const {
+      props: { deviceId, item: { id }, navigation, type, wallet: { coin, id: walletId, wif } },
+      state: { address, amount, concept },
+    } = this;
     const isRequest = type === REQUEST;
-    const method = isRequest ? 'request' : 'send';
+    const params = { address, amount, coin, concept, deviceId, id, walletId };
 
-    await TransactionService[method]({ ...this.state, id, coin, walletId, wif: (!isRequest ? wif : undefined) });
+    await TransactionService[isRequest ? 'request' : 'send']({ ...params, wif: (!isRequest ? wif : undefined) });
     navigation.goBack();
   }
 
@@ -96,12 +103,12 @@ class Transaction extends Component {
             : <Info item={item} /> }
           { (type === REQUEST || type === SEND) &&
             <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
-              <Amount symbol={coin} caption={`${type} `} value={parseFloat(amount)} />
+              <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={parseFloat(amount / SATOSHI)} />
             </Button>
           }
           { fee > 0 &&
             <Animatable animation="bounceIn" style={styles.fee}>
-              <Amount caption="Included fee " value={fee * currencies[coin]} style={styles.feeCaption} />
+              <Amount caption="Included fee " coin='USD' value={fee * currencies[coin]} style={styles.feeCaption} />
             </Animatable>
           }
         </View>
@@ -136,7 +143,7 @@ const mapStateToProps = ({ currencies, selectedDevice }, props) => {
 
   const item = { };
   const type = REQUEST;
-  const wallet = { balance: 3.3, coin: 'BTC' };
+  const wallet = { balance: 5 / SATOSHI, coin: 'BTC', id: 'wallet-id', wif: 'wif-secret' };
 
   return { currencies, deviceId: selectedDevice, item, type, wallet };
 };

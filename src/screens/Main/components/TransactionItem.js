@@ -37,8 +37,8 @@ const TransactionItem = ({ currencies, data: { amount, coin, createdAt, state, w
         <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
       </View>
       <View style={styles.amounts}>
-        <Amount fixed={4} symbol={coin} value={amount} style={[styles.amount]} />
-        <Amount value={amount / currencies[coin]} symbol={device.currency} style={[styles.label, styles.fiat]} />
+        <Amount coin={coin} value={amount} style={[styles.amount]} />
+        <Amount coin={device.currency} value={amount / currencies[coin]} style={[styles.label, styles.fiat]} />
       </View>
     </View>
   </Touchable>

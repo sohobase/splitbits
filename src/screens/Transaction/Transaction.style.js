@@ -12,6 +12,10 @@ export default StyleSheet.create({
     margin: OFFSET,
   },
 
+  buttonCaption: {
+    color: COLOR.WHITE,
+  },
+
   fee: {
     alignSelf: 'center',
   },

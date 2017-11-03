@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { COLOR, FONT, OFFSET } = THEME;
+const { COLOR, FONT } = THEME;
 
 export default StyleSheet.create({
 
@@ -20,6 +20,7 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.LARGE,
     color: COLOR.TEXT_DISABLED,
     opacity: 0.7,
+    flex: 1,
   },
 
   input: {

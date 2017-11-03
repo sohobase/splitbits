@@ -7,7 +7,7 @@ import { Amount, Header, Input } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
 import styles from './AmountTransaction.style';
 
-const { TYPE: { REQUEST } } = C;
+const { SATOSHI, TYPE: { REQUEST } } = C;
 
 class AmountTransaction extends Component {
   constructor(props) {
@@ -64,14 +64,9 @@ class AmountTransaction extends Component {
               style={styles.input}
               value={amount && amount.toString()}
             />
-            <Amount fixed={swap && to === 'BTC' ? 6 : 2} symbol={to} value={conversion} style={[styles.label]} />
+            <Amount coin={to} value={conversion} style={[styles.label]} />
             <View style={styles.balance}>
-              <Amount
-                caption="Balance "
-                symbol={coin}
-                style={[styles.label, styles.small]}
-                value={balance}
-              />
+              <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
             </View>
           </View>
         </Animatable>
