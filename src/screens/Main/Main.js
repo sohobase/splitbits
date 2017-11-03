@@ -17,6 +17,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      index: undefined,
       transactions: undefined,
       modalTransaction: false,
       modalWallet: false,
@@ -67,7 +68,7 @@ class Main extends Component {
   async _onSwipeWallet(event, { index }) {
     const { wallets = [] } = this.props;
 
-    this.setState({ refreshing: true });
+    this.setState({ index, refreshing: true });
     const transactions = await TransactionService.list(wallets[index].id);
     this.setState({ refreshing: false, transactions });
   }
