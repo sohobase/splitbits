@@ -41,7 +41,7 @@ class AmountTransaction extends Component {
     } = this;
     const from = swap ? currency : coin;
     const to = swap ? coin : currency;
-    const conversion = swap ? (amount || 0) * currencies[coin] : (amount || 0) / currencies[coin];
+    const conversion = swap ? ((amount || 0) / SATOSHI) * currencies[coin] : (amount || 0) / currencies[coin];
     const editable = !item || !item.id;
 
     return (

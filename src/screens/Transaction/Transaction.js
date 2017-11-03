@@ -98,12 +98,12 @@ class Transaction extends Component {
               deviceId={deviceId}
               navigation={navigation}
               onCamera={_onCamera}
-              onConcept={type === REQUEST ? _onConcept : undefined}
+              onConcept={_onConcept}
             />
             : <Info item={item} /> }
           { (type === REQUEST || type === SEND) &&
             <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
-              <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={parseFloat(amount / SATOSHI)} />
+              <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
             </Button>
           }
           { fee > 0 &&
@@ -139,11 +139,10 @@ Transaction.defaultProps = {
 };
 
 const mapStateToProps = ({ currencies, selectedDevice }, props) => {
-  // const { item = {}, type = REQUEST, wallet = {} } = props.navigation.state.params;
-
-  const item = { };
-  const type = REQUEST;
-  const wallet = { balance: 5 / SATOSHI, coin: 'BTC', id: 'wallet-id', wif: 'wif-secret' };
+  const { item = {}, type = REQUEST, wallet = {} } = props.navigation.state.params;
+  // const item = { };
+  // const type = REQUEST;
+  // const wallet = { balance: 5 / SATOSHI, coin: 'BTC', id: 'wallet-id', wif: 'wif-secret' };
 
   return { currencies, deviceId: selectedDevice, item, type, wallet };
 };
