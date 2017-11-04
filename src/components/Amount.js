@@ -1,4 +1,4 @@
-import { array, bool, number, oneOfType, string } from 'prop-types';
+import { array, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { C, STYLE } from '../config';

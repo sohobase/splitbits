@@ -22,7 +22,6 @@ const Modal = ({ children, onClose, title, visible }) => (
     >
       <Animatable
         animation={visible ? 'bounceInUp' : 'bounceOutDown'}
-        delay={visible ? DURATION / 2 : 0}
         duration={DURATION}
         style={styles.content}
       >
