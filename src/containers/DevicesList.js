@@ -46,7 +46,7 @@ DevicesList.defaultProps = {
   data: undefined,
   device: {},
   navigation: undefined,
-  onItem() {},
+  onItem: undefined,
   refreshing: false,
   request: false,
   selected: undefined,

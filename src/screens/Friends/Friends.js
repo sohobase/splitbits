@@ -103,7 +103,8 @@ Friends.defaultProps = {
 };
 
 const mapStateToProps = ({ device: { devices = [] } }, props) => {
-  const { selectMode } = props.navigation.state.params;
+  const { selectMode = false } = props.navigation.state.params || {};
+
   return { devices, selectMode };
 };
 

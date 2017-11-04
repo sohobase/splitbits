@@ -64,7 +64,7 @@ class DeviceItem extends Component {
 
     return (
       <Swipeout right={options} backgroundColor={WHITE} >
-        <TouchableWithoutFeedback onPress={() => onPress(id)}>
+        <TouchableWithoutFeedback onPress={onPress ? () => onPress(id) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
             {
               selected
@@ -106,11 +106,11 @@ DeviceItem.propTypes = {
 DeviceItem.defaultProps = {
   data: {},
   device: {},
-  onPress() {},
-  onRequest() {},
+  onPress: undefined,
+  onRequest: undefined,
   request: false,
   selected: false,
-  updateDevice() {},
+  updateDevice: undefined,
   style: []
 };
 
