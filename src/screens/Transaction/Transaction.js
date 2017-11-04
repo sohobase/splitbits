@@ -81,7 +81,7 @@ class Transaction extends Component {
     const {
       _onAddress, _onAmount, _onCamera, _onConcept, _onSubmit,
       props: { currencies, deviceId, item, navigation, type, wallet },
-      state: { address, amount = 0, camera, concept, fees },
+      state: { address, amount = 0, camera, concept, fees = {} },
     } = this;
     const { balance, coin } = wallet;
     const editable = !item || !item.id;
@@ -99,6 +99,7 @@ class Transaction extends Component {
               navigation={navigation}
               onCamera={_onCamera}
               onConcept={_onConcept}
+              type={type}
             />
             : <Info item={item} /> }
           { (type === REQUEST || type === SEND) &&

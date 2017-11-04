@@ -3,11 +3,13 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input } from '../../../components';
-import { SHAPE, STYLE } from '../../../config';
+import { C, SHAPE, STYLE } from '../../../config';
 import { DeviceItem } from '../../../containers/components';
 import styles from './Recipient.style';
 
-const Recipient = ({ address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept }) => (
+const { TYPE: { SEND } } = C;
+
+const Recipient = ({ address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept, type }) => (
   <View>
     <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
       { deviceId
@@ -21,15 +23,17 @@ const Recipient = ({ address, concept, device, deviceId, navigation: { navigate 
         raised
       />
     </View>
-    <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
-      <Input
-        editable={false}
-        placeholder="... or use a public address"
-        style={styles.input}
-        value={address}
-      />
-      <Button icon="camera" raised onPress={onCamera} captionStyle={styles.icon} />
-    </View>
+    { type === SEND &&
+      <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
+        <Input
+          editable={false}
+          placeholder="... or use a public address"
+          style={styles.input}
+          value={address}
+        />
+        <Button icon="camera" raised onPress={onCamera} captionStyle={styles.icon} />
+      </View>
+    }
     <Input
       editable={onConcept !== undefined}
       onChangeText={onConcept}
@@ -48,6 +52,7 @@ Recipient.propTypes = {
   navigation: SHAPE.NAVIGATION,
   onCamera: func,
   onConcept: func,
+  type: string,
 };
 
 Recipient.defaultProps = {
@@ -58,6 +63,7 @@ Recipient.defaultProps = {
   navigation: undefined,
   onCamera() {},
   onConcept: undefined,
+  type: undefined,
 };
 
 const mapStateToProps = ({ device: { devices } }, { deviceId }) => {
