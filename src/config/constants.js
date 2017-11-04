@@ -38,4 +38,9 @@ export default {
     REQUEST: 'request',
     SEND: 'send',
   },
+
+  VERB: {
+    CREATE: 'create',
+    IMPORT: 'import',
+  },
 };

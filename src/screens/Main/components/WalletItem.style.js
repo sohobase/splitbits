@@ -20,6 +20,10 @@ export default StyleSheet.create({
     borderRadius: THEME.BORDER_RADIUS,
   },
 
+  empty: {
+    backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
+  },
+
   content: {
     flex: 1,
     padding: OFFSET,
@@ -63,5 +67,29 @@ export default StyleSheet.create({
     bottom: OFFSET,
     width: QR_SIZE,
     height: QR_SIZE,
+  },
+
+  options: {
+    marginTop: OFFSET * 2,
+    alignSelf: 'center',
+  },
+
+  option: {
+    paddingLeft: OFFSET * 2,
+    paddingRight: OFFSET * 2,
+    paddingTop: OFFSET * 2,
+  },
+
+  button: {
+    backgroundColor: COLOR.WHITE,
+    marginBottom: UNIT / 2,
+  },
+
+  caption: {
+    tintColor: COLOR.PRIMARY,
+  },
+
+  highlight: {
+    color: COLOR.WHITE,
   },
 });

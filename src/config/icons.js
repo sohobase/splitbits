@@ -4,6 +4,7 @@ const arrowForward = require('../../assets/icon-arrow-forward.png');
 const camera = require('../../assets/icon-camera.png');
 const check = require('../../assets/icon-check.png');
 const close = require('../../assets/icon-close.png');
+const create = require('../../assets/icon-create.png');
 const fingerprint = require('../../assets/icon-fingerprint.png');
 const gallery = require('../../assets/icon-gallery.png');
 const operations = require('../../assets/icon-operations.png');
@@ -23,8 +24,10 @@ export default {
   camera,
   check,
   close,
+  create,
   fingerprint,
   gallery,
+  import: add,
   operations,
   profile,
   search,
