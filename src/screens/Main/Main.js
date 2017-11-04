@@ -11,20 +11,21 @@ import { Header, Footer, TransactionModal, TransactionItem, WalletItem } from '.
 import styles from './Main.style';
 
 const { DURATION } = THEME.ANIMATION;
-const { REQUEST, SEND } = C.TYPE;
+const { TYPE: { REQUEST, SEND }, VERB: { IMPORT } } = C;
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      importWallet: false,
       index: undefined,
-      transactions: undefined,
       modalTransaction: false,
       modalWallet: false,
       prefetch: false,
       refreshing: false,
+      transactions: undefined,
     };
-    this._onCreateTransaction = this._onCreateTransaction.bind(this);
+    this._onNewTransaction = this._onNewTransaction.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onModalWallet = this._onModalWallet.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
@@ -38,16 +39,10 @@ class Main extends Component {
 
   _renderTransaction({ item }) {
     const { navigation: { navigate } } = this.props;
-
-    return (
-      <TransactionItem
-        data={item}
-        onPress={() => navigate('Transaction', { item })}
-      />
-    );
+    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item })} />;
   }
 
-  _onCreateTransaction(type) {
+  _onNewTransaction(type) {
     const {
       props: { navigation: { navigate }, wallets },
       state: { index = 0, modalTransaction },
@@ -61,22 +56,25 @@ class Main extends Component {
     this.setState({ modalTransaction: !this.state.modalTransaction });
   }
 
-  _onModalWallet() {
-    this.setState({ modalWallet: !this.state.modalWallet });
+  _onModalWallet(context) {
+    this.setState({ importWallet: context === IMPORT, modalWallet: !this.state.modalWallet });
   }
 
   async _onSwipeWallet(event, { index }) {
     const { wallets = [] } = this.props;
+    const wallet = wallets[index];
 
-    this.setState({ index, refreshing: true });
-    const transactions = await TransactionService.list(wallets[index].id);
-    this.setState({ refreshing: false, transactions });
+    this.setState({ index, refreshing: wallet !== undefined, transactions: [] });
+    if (wallet) {
+      const transactions = await TransactionService.list(wallets[index].id);
+      this.setState({ refreshing: false, transactions });
+    }
   }
 
   render() {
-    const { _onCreateTransaction, _onModal, _onModalWallet, _onSwipeWallet } = this;
+    const { _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet } = this;
     const { navigation: { navigate }, wallets } = this.props;
-    const { transactions = [], modalTransaction, modalWallet, refreshing } = this.state;
+    const { importWallet, modalTransaction, modalWallet, refreshing, transactions = [] } = this.state;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -92,16 +90,17 @@ class Main extends Component {
             activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
             style={styles.wallets}
           >
-            { wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />)}
+            {[
+              ...wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />),
+              <WalletItem key="new" onOption={_onModalWallet} />,
+            ]}
           </Swiper>
-          <Button caption="Create wallet" onPress={_onModalWallet} />
         </View>
 
         <FlatList
           data={transactions}
           keyExtractor={item => item.id}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} />}
+          refreshControl={<RefreshControl refreshing={refreshing} />}
           renderItem={this._renderTransaction}
           style={[STYLE.LAYOUT_BOTTOM, styles.activity]}
         />
@@ -119,14 +118,10 @@ class Main extends Component {
         <TransactionModal
           visible={modalTransaction}
           onClose={_onModal}
-          onRequest={() => _onCreateTransaction(REQUEST)}
-          onSend={() => _onCreateTransaction(SEND)}
+          onRequest={() => _onNewTransaction(REQUEST)}
+          onSend={() => _onNewTransaction(SEND)}
         />
-        <WalletModal
-          camera
-          visible={modalWallet}
-          onClose={_onModalWallet}
-        />
+        <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} />
       </View>
     );
   }

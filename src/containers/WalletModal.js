@@ -1,9 +1,9 @@
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Modal, Option, QRreader } from '../components';
-import { STYLE } from '../config';
+import { C, STYLE } from '../config';
 import { StateService, WalletService } from '../services';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
 import styles from './WalletModal.style';
@@ -11,27 +11,29 @@ import styles from './WalletModal.style';
 const imageBTC = require('../../assets/coin-bitcoin.png');
 const imageLTC = require('../../assets/coin-litecoin.png');
 
+const { VERB: { CREATE, IMPORT } } = C;
+
 class WalletModal extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       wif: undefined,
-      cameraActive: false,
+      cameraActive: props.camera,
       coin: 'BTC',
       name: undefined,
     };
     this._onCoin = this._onCoin.bind(this);
-    this._onCamera = this._onCamera.bind(this);
     this._onQR = this._onQR.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
   }
 
-  _onCoin(coin) {
-    this.setState({ coin });
+  componentWillReceiveProps({ camera }) {
+    this.setState({ cameraActive: camera });
   }
 
-  _onCamera() {
-    this.setState({ cameraActive: !this.state.cameraActive });
+  _onCoin(coin) {
+    this.setState({ coin });
   }
 
   _onQR(value) {
@@ -58,14 +60,14 @@ class WalletModal extends Component {
 
   render() {
     const {
-      _onCoin, _onCamera, _onQR, _onSubmit,
+      _onCoin, _onQR, _onSubmit,
       props: { camera, onClose, visible },
       state: { wif, cameraActive, coin, name },
     } = this;
 
     return (
       <View style={styles.container} pointerEvents={visible ? 'auto' : 'none'}>
-        <QRreader active={cameraActive} onClose={_onCamera} onRead={_onQR} />
+        <QRreader active={cameraActive} onClose={onClose} onRead={_onQR} />
         <Modal title="Type of wallet" visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
           <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
             <Option
@@ -91,22 +93,19 @@ class WalletModal extends Component {
             underlineColorAndroid="transparent"
             value={name}
           />
-          { wif &&
+          { camera &&
             <TextInput
               editable={false}
               style={[styles.input, styles.inputAddress]}
               value={wif}
             /> }
-          <View style={STYLE.ROW}>
-            { camera && <Button accent caption="Import" onPress={_onCamera} style={styles.button} /> }
-            <Button
-              accent
-              caption="Create"
-              disabled={!coin || !name}
-              onPress={_onSubmit}
-              style={styles.button}
-            />
-          </View>
+          <Button
+            accent
+            caption={camera ? IMPORT : CREATE}
+            disabled={!coin || !name}
+            onPress={_onSubmit}
+            style={styles.button}
+          />
         </Modal>
       </View>
     );
@@ -118,10 +117,10 @@ WalletModal.propTypes = {
   camera: bool,
   onClose: func,
   onSuccess: func,
-  visible: bool,
   updateCurrencies: func,
   updateDevice: func,
   updateWallet: func,
+  visible: bool,
 };
 
 WalletModal.defaultProps = {
