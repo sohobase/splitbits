@@ -24,7 +24,7 @@ const Button = ({ accent, caption, captionStyle, children, circle, disabled, ico
       { icon &&
         <Icon value={icon} style={[styles.icon, captionStyle]} /> }
       { caption &&
-        <Text style={[styles.caption, captionStyle]}>{caption}</Text> }
+        <Text style={[styles.caption, captionStyle]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
       { !icon && !caption && children }
     </Animatable>
   </Touchable>
