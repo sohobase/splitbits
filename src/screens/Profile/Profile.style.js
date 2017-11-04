@@ -18,11 +18,12 @@ export default StyleSheet.create({
 
   image: {
     width: AVATAR_SIZE * 3,
-    // minWidth: AVATAR_SIZE,
     height: AVATAR_SIZE * 3,
-    // minHeight: AVATAR_SIZE,
-    backgroundColor: COLOR.WHITE,
     borderRadius: AVATAR_SIZE * 1.5,
+    overflow: 'hidden',
+  },
+
+  imageBorder: {
     borderWidth: 4,
     borderColor: COLOR.WHITE,
   },

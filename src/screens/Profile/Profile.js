@@ -72,7 +72,9 @@ class Profile extends Component {
           <Animatable animation="bounceIn" delay={600} style={styles.preview}>
             <View style={[STYLE.CENTERED, styles.preview]}>
               <View>
-                <Image source={{ uri: imageUrl }} style={styles.image} />
+                <View style={styles.image}>
+                  <Image source={{ uri: imageUrl }} style={[styles.image, styles.imageBorder]} />
+                </View>
                 <Button accent circle icon="camera" onPress={_onModal} style={styles.buttonCamera} />
               </View>
               <View style={styles.qr}>
