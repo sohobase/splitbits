@@ -14,7 +14,8 @@ export default StyleSheet.create({
     height: AVATAR_SIZE,
     borderRadius: AVATAR_SIZE / 2,
     backgroundColor: COLOR.DIVIDER,
-    marginRight: OFFSET,
+    overflow: 'hidden',
+    justifyContent: 'center',
   },
 
   avatarSelected: {
@@ -30,6 +31,7 @@ export default StyleSheet.create({
   },
 
   content: {
+    marginLeft: OFFSET,
     flex: 1,
   },
 

@@ -37,20 +37,24 @@ class DeviceItem extends Component {
   }
 
   render() {
-    const { _onRelation, _onRequest, props: { data: { id, name }, device: { requests }, onPress, request, selected, style } } = this;
+    const {
+      _onRelation, _onRequest,
+      props: { data: { id, name }, device: { requests }, onPress, request, selected, style },
+    } = this;
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
+    const timestamp = new Date().getTime().toString();
 
     if (!selected && (!image || image.length === 0)) {
-      const identicon = new Identicon(`${id}${new Date().toString()}`, {
+      const identicon = new Identicon(`${id}${timestamp}`, {
         background: [255, 255, 255, 255],
         margin: 0,
         size: 256,
       }).toString();
       image = `data:image/png;base64,${identicon}`;
     } else {
-      image = `${SERVICE}public/${image}?timestamp=${new Date().getTime()}`;
+      image = `${SERVICE}public/${image}?timestamp=${timestamp}}`;
     }
 
     if (!request && !onPress) {
@@ -66,13 +70,11 @@ class DeviceItem extends Component {
       <Swipeout right={options} backgroundColor={WHITE} >
         <TouchableWithoutFeedback onPress={onPress ? () => onPress(id) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
-            {
-              selected
-                ? <View style={[STYLE.CENTERED, styles.avatar, styles.avatarSelected]}>
-                  <Icon value="check" style={styles.icon} />
-                </View>
-                : <Image style={[styles.avatar, styles.image]} source={{ uri: image }} />
-            }
+            <View style={[styles.avatar, selected ? styles.avatarSelected : undefined]}>
+              { selected
+                ? <Icon value="check" style={styles.icon} />
+                : <Image source={{ uri: image }} style={[styles.avatar, styles.image]} /> }
+            </View>
             <View style={styles.content}>
               <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
               { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
