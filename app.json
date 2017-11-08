@@ -1,8 +1,8 @@
 {
    "expo": {
-    "name": "Splitwallet",
+    "name": "Splitbits",
     "description": "...",
-    "slug": "sohobase-splitwallet",
+    "slug": "sohobase-splitbits",
     "privacy": "public",
     "sdkVersion": "20.0.0",
     "version": "0.0.1",
@@ -19,12 +19,12 @@
       "color": "#FFFFFF",
     },
     "ios": {
-      "bundleIdentifier": "com.sohobase.splitwallet",
+      "bundleIdentifier": "com.sohobase.splitbits",
       "buildNumber": "1",
       "supportsTablet": false
     },
     "android": {
-      "package": "com.sohobase.splitwallet",
+      "package": "com.sohobase.splitbits",
       "permissions": ["CAMERA"],
       "versionCode": 1
     }

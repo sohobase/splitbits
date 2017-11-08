@@ -1,7 +1,7 @@
 export default {
 
   DEFAULTS: {
-    TOKEN: 'sohobase-splitwallet-dev',
+    TOKEN: 'sohobase-splitbits-dev',
   },
 
   FIAT: {
