@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "color": "^2.0.0",
-    "expo": "^20.0.0",
+    "expo": "^22.0.1",
     "identicon.js": "^2.3.1",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
