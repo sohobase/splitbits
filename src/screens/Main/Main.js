@@ -21,7 +21,6 @@ class Main extends Component {
       index: undefined,
       modalTransaction: false,
       modalWallet: false,
-      prefetch: false,
       refreshing: false,
       transactions: undefined,
     };
@@ -121,7 +120,7 @@ class Main extends Component {
           onRequest={() => _onNewTransaction(REQUEST)}
           onSend={() => _onNewTransaction(SEND)}
         />
-        <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} />
+        <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} onSuccess={_onModalWallet} />
       </View>
     );
   }
