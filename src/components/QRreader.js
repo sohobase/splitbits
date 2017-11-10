@@ -5,6 +5,8 @@ import { BarCodeScanner, Permissions } from 'expo';
 import Button from './Button';
 import styles from './QRreader.style';
 
+const { Constants: { isDevice } } = Expo; // eslint-disable-line
+
 class QRreader extends Component {
   constructor(props) {
     super(props);
@@ -34,11 +36,12 @@ class QRreader extends Component {
 
     return (
       <View style={styles.QRreader}>
-        <BarCodeScanner
-          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-          onBarCodeRead={this._onBarCodeRead}
-          style={StyleSheet.absoluteFill}
-        />
+        { isDevice &&
+          <BarCodeScanner
+            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+            onBarCodeRead={this._onBarCodeRead}
+            style={StyleSheet.absoluteFill}
+          /> }
         <View style={styles.border}>
           <Text style={styles.hint}>Place the code inside the frame</Text>
         </View>
