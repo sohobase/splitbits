@@ -8,7 +8,7 @@ const Icon = ({ value, style }) => <Image style={[styles.icon, style]} source={I
 
 Icon.propTypes = {
   value: string,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 Icon.defaultProps = {

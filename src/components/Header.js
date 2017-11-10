@@ -16,7 +16,8 @@ const renderButton = (props, animation, tintColor) => (
 
 const Header = ({ animation, buttonRight = {}, children, navigation, style, tintColor, title }) => (
   <View style={[STYLE.ROW, styles.header, style]}>
-    { navigation && renderButton({ icon: 'arrowBack', onPress: () => navigation.goBack() }, { animation, delay: 200 }, tintColor) }
+    { navigation &&
+      renderButton({ icon: 'arrowBack', onPress: () => navigation.goBack() }, { animation, delay: 200 }, tintColor) }
     <Animatable animation={animation} delay={300} style={styles.content}>
       <View style={STYLE.CENTERED}>
         { title && <Text style={[styles.title, (tintColor && { color: tintColor })]}>{title}</Text> }
@@ -30,10 +31,10 @@ const Header = ({ animation, buttonRight = {}, children, navigation, style, tint
 Header.propTypes = {
   animation: string,
   buttonRight: SHAPE.BUTTON,
-  children: oneOfType(array, node),
+  children: oneOfType([array, node]),
   navigation: SHAPE.NAVIGATION,
-  style: oneOfType(array, number),
-  tintColor: oneOfType(string, object),
+  style: oneOfType([array, number]),
+  tintColor: oneOfType([string, object]),
   title: string,
 };
 

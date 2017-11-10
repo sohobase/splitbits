@@ -19,7 +19,7 @@ const Input = ({ highlight, style, ...inherit }) => (
 
 Input.propTypes = {
   highlight: bool,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 Input.defaultProps = {

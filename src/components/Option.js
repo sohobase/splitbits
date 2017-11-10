@@ -28,7 +28,7 @@ Option.propTypes = {
   icon: string,
   image: number,
   onPress: func,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 Option.defaultProps = {

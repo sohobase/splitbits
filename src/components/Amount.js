@@ -68,7 +68,7 @@ const Amount = (props) => {
 Amount.propTypes = {
   caption: string,
   coin: string,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
   value: number,
 };
 

@@ -39,7 +39,7 @@ DevicesList.propTypes = {
   refreshing: bool,
   request: bool,
   selected: string,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 DevicesList.defaultProps = {

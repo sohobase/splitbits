@@ -68,7 +68,7 @@ WalletItem.propTypes = {
   device: SHAPE.DEVICE,
   onOption: func,
   onPress: func,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 WalletItem.defaultProps = {

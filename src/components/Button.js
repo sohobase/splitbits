@@ -1,4 +1,4 @@
-import { array, bool, func, number, oneOfType, string } from 'prop-types';
+import { array, bool, func, node, number, object, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -34,13 +34,14 @@ Button.propTypes = {
   accent: bool,
   animation: string,
   caption: string,
-  captionStyle: oneOfType(array, number),
+  captionStyle: oneOfType([array, number, object]),
+  children: node,
   circle: bool,
   disabled: bool,
   icon: string,
   onPress: func,
   raised: bool,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 Button.defaultProps = {
@@ -48,6 +49,7 @@ Button.defaultProps = {
   animation: undefined,
   caption: undefined,
   captionStyle: [],
+  children: undefined,
   circle: false,
   disabled: false,
   icon: undefined,

@@ -102,7 +102,7 @@ DeviceItem.propTypes = {
   request: bool,
   selected: bool,
   updateDevice: func,
-  style: oneOfType(array, number),
+  style: oneOfType([array, number]),
 };
 
 DeviceItem.defaultProps = {
