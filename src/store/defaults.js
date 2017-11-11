@@ -4,6 +4,6 @@ export default {
   devices: [],
   pushToken: undefined,
   selectedDevice: undefined,
-  transactions: [],
+  transactions: {},
   wallets: [],
 };

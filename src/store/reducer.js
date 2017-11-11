@@ -4,6 +4,7 @@ import {
   UPDATE_CURRENCIES,
   UPDATE_DEVICE,
   SELECT_DEVICE,
+  UPDATE_TRANSACTIONS,
   ADD_WALLET,
   REMOVE_WALLET,
   UPDATE_WALLET,
@@ -27,6 +28,17 @@ export default function(state = DEFAULTS, action) {
       return { ...state, selectedDevice: action.deviceId };
 
     // -- Transaction
+    case UPDATE_TRANSACTIONS: {
+      const { transactions = [] } = state;
+
+      return {
+        ...state,
+        transactions: [
+          ...action.transactions.filter(tx => transactions.find(({ hash }) => hash === tx.hash) === undefined),
+          ...transactions.map(tx => action.transactions.find(({ hash }) => hash === tx.hash) || tx),
+        ],
+      };
+    }
 
     // -- Wallet
     case ADD_WALLET:
