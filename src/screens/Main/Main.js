@@ -1,13 +1,12 @@
 import { arrayOf } from 'prop-types';
 import React, { Component } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import { Button } from '../../components';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { WalletModal } from '../../containers';
-import { TransactionService } from '../../services';
-import { Header, Footer, TransactionModal, TransactionItem, WalletItem } from './components';
+import { Header, Footer, TransactionModal, Transactions, WalletItem } from './components';
 import styles from './Main.style';
 
 const { DURATION } = THEME.ANIMATION;
@@ -21,24 +20,11 @@ class Main extends Component {
       index: undefined,
       modalTransaction: false,
       modalWallet: false,
-      refreshing: false,
-      transactions: undefined,
     };
     this._onNewTransaction = this._onNewTransaction.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onModalWallet = this._onModalWallet.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
-    this._renderTransaction = this._renderTransaction.bind(this);
-  }
-
-  async componentWillMount() {
-    const { wallets = [] } = this.props;
-    if (wallets.length > 0) this.setState({ transactions: await TransactionService.list(wallets[0].id) });
-  }
-
-  _renderTransaction({ item }) {
-    const { navigation: { navigate } } = this.props;
-    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item })} />;
   }
 
   _onNewTransaction(type) {
@@ -60,20 +46,16 @@ class Main extends Component {
   }
 
   async _onSwipeWallet(event, { index }) {
-    const { wallets = [] } = this.props;
-    const wallet = wallets[index];
-
-    this.setState({ index, refreshing: wallet !== undefined, transactions: [] });
-    if (wallet) {
-      const transactions = await TransactionService.list(wallets[index].id);
-      this.setState({ refreshing: false, transactions });
-    }
+    this.setState({ index });
   }
 
   render() {
-    const { _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet } = this;
-    const { navigation: { navigate }, wallets } = this.props;
-    const { importWallet, modalTransaction, modalWallet, refreshing, transactions = [] } = this.state;
+    const {
+      _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet,
+      props: { navigation: { navigate }, wallets = [] },
+      state: { index = 0, importWallet, modalTransaction, modalWallet },
+    } = this;
+    const { id: walletId } = wallets[index] || {};
 
     return (
       <View style={STYLE.SCREEN}>
@@ -95,14 +77,7 @@ class Main extends Component {
             ]}
           </Swiper>
         </View>
-
-        <FlatList
-          data={transactions}
-          keyExtractor={item => item.id}
-          refreshControl={<RefreshControl refreshing={refreshing} />}
-          renderItem={this._renderTransaction}
-          style={[STYLE.LAYOUT_BOTTOM, styles.activity]}
-        />
+        <Transactions navigate={navigate} walletId={walletId} />
         <Footer navigate={navigate} />
         <Button
           accent

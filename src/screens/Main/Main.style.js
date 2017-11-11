@@ -1,13 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { COLOR, FOOTER_SIZE, UNIT } = THEME;
+const { FOOTER_SIZE, UNIT } = THEME;
 
 export default StyleSheet.create({
-  activity: {
-    backgroundColor: COLOR.BACKGROUND,
-  },
-
   wallets: {
     flex: 0,
     alignContent: 'center',

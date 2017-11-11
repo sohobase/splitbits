@@ -49,8 +49,8 @@ export default {
     createdAt: date,
     fee: number,
     state: string,
-    walletFrom: string,
-    walletTo: string,
+    from: object,
+    to: object,
   }),
   WALLET,
 };
