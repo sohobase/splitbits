@@ -9,7 +9,7 @@ import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
 const { ANIMATION: { DURATION }, COLOR, QR_SIZE } = THEME;
-const { VERB: { CREATE, IMPORT } } = C;
+const { SATOSHI, VERB: { CREATE, IMPORT } } = C;
 
 const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
   <View style={[STYLE.CENTERED, styles.option]}>
@@ -34,7 +34,7 @@ const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress,
             <View style={styles.info}>
               <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
               <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
-              <Amount coin={currency} value={balance / currencies[coin]} style={[styles.label, styles.fiat]} />
+              <Amount coin={currency} value={balance / (currencies[coin] / SATOSHI)} style={[styles.label, styles.fiat]} />
             </View>
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
