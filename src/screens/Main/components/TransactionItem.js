@@ -6,7 +6,7 @@ import { Amount, Icon, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
 import styles from './TransactionItem.style';
 
-const { DELETED, UNCONFIRMED, REQUESTED } = C.STATE;
+const { STATE: { DELETED, UNCONFIRMED, REQUESTED }, SATOSHI } = C;
 
 const getIcon = (amount, state) => {
   if (amount < 0) {
@@ -38,7 +38,7 @@ const TransactionItem = ({ currencies, data: { amount, coin, createdAt, state, w
       </View>
       <View style={styles.amounts}>
         <Amount coin={coin} value={amount} style={[styles.amount]} />
-        <Amount coin={device.currency} value={amount / currencies[coin]} style={[styles.label, styles.fiat]} />
+        <Amount coin={device.currency} value={amount / (currencies[coin] / SATOSHI)} style={[styles.label, styles.fiat]} />
       </View>
     </View>
   </Touchable>
