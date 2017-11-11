@@ -44,6 +44,17 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.SMALL,
   },
 
+  pro: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: UNIT / 2,
+    backgroundColor: COLOR.ACCENT,
+    color: COLOR.WHITE,
+    fontWeight: FONT.WEIGHT.BOLD,
+    fontSize: FONT.SIZE.SMALL,
+  },
+
   amount: {
     color: COLOR.TEXT_DEFAULT,
     fontSize: FONT.SIZE.LARGE,

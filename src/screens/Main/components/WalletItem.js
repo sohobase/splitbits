@@ -9,7 +9,7 @@ import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
 const { ANIMATION: { DURATION }, COLOR, QR_SIZE } = THEME;
-const { SATOSHI, VERB: { CREATE, IMPORT } } = C;
+const { SATOSHI, TYPE: { PRO }, VERB: { CREATE, IMPORT } } = C;
 
 const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
   <View style={[STYLE.CENTERED, styles.option]}>
@@ -19,7 +19,9 @@ const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
 );
 
 const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress, style }) => {
-  const { address, balance = 0, coin = 'BTC', name, trend = 0 } = data || {};
+  const { address, balance = 0, coin = 'BTC', name, trend = 0, type } = data || {};
+
+  console.log('type', type);
 
   return (
     <Animatable
@@ -33,6 +35,7 @@ const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress,
           <View style={styles.content}>
             <View style={styles.info}>
               <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
+              { type === PRO && <Text style={styles.pro}>PRO</Text> }
               <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
               <Amount coin={currency} value={balance / (currencies[coin] / SATOSHI)} style={[styles.label, styles.fiat]} />
             </View>
