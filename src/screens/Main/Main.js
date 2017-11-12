@@ -55,7 +55,6 @@ class Main extends Component {
       props: { navigation: { navigate }, wallets = [] },
       state: { index = 0, importWallet, modalTransaction, modalWallet },
     } = this;
-    const { id: walletId } = wallets[index] || {};
 
     return (
       <View style={STYLE.SCREEN}>
@@ -77,7 +76,7 @@ class Main extends Component {
             ]}
           </Swiper>
         </View>
-        <Transactions navigate={navigate} walletId={walletId} />
+        <Transactions navigate={navigate} wallet={wallets[index]} />
         <Footer navigate={navigate} />
         <Button
           accent

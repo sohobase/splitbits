@@ -1,4 +1,4 @@
-import { arrayOf, func, string } from 'prop-types';
+import { arrayOf, func } from 'prop-types';
 import React, { Component } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
@@ -16,14 +16,14 @@ class Transactions extends Component {
     this._renderTransaction = this._renderTransaction.bind(this);
   }
 
-  async componentWillReceiveProps({ walletId }) {
-    if (walletId && walletId !== this.props.walletId) this._onRefresh(walletId);
+  async componentWillReceiveProps({ wallet }) {
+    if (wallet && wallet.id && wallet.id !== this.props.wallet.id) this._onRefresh(wallet);
   }
 
-  async _onRefresh(walletId = this.props.walletId) {
+  async _onRefresh(wallet = this.props.wallet) {
     const { updateTransactions } = this.props;
     this.setState({ refreshing: true });
-    updateTransactions(await TransactionService.list(walletId));
+    updateTransactions(await TransactionService.list(wallet.id));
     this.setState({ refreshing: false });
   }
 
@@ -55,18 +55,18 @@ Transactions.propTypes = {
   navigate: func,
   transactions: arrayOf(SHAPE.TRANSACTION),
   updateTransactions: func,
-  walletId: string,
+  wallet: SHAPE.WALLET,
 };
 
 Transactions.defaultProps = {
   navigate() {},
   transactions: [],
   updateTransactions() {},
-  walletId: undefined,
+  wallet: undefined,
 };
 
-const mapStateToProps = ({ transactions }) => ({
-  transactions,
+const mapStateToProps = ({ transactions }, { wallet: { address } = {} }) => ({
+  transactions: transactions.filter(({ from, to }) => from.address === address || to.address === address),
 });
 
 const mapDispatchToProps = dispatch => ({
