@@ -17,7 +17,8 @@ class Transactions extends Component {
   }
 
   async componentWillReceiveProps({ wallet }) {
-    if (wallet && wallet.id && wallet.id !== this.props.wallet.id) this._onRefresh(wallet);
+    const { wallet: { id } = {} } = this.props;
+    if (wallet && wallet.id && wallet.id !== id) this._onRefresh(wallet);
   }
 
   async _onRefresh(wallet = this.props.wallet) {
@@ -65,7 +66,7 @@ Transactions.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = ({ transactions }, { wallet: { address } = {} }) => ({
+const mapStateToProps = ({ transactions = [] }, { wallet: { address } = {} }) => ({
   transactions: transactions.filter(({ from, to }) => from.address === address || to.address === address),
 });
 

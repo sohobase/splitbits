@@ -45,6 +45,7 @@ export default {
     amount: number,
     charge: number,
     coin: string,
+    concept: string,
     confirmations: number,
     createdAt: date,
     fee: number,

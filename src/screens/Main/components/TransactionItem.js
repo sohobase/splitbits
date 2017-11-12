@@ -22,18 +22,18 @@ const getIcon = (amount, state) => {
   return 'arrowBack';
 };
 
-const TransactionItem = ({ currencies, data: { amount, coin, createdAt, state, walletFrom = {}, walletTo = {} }, device, onPress }) => (
+const TransactionItem = ({ currencies, data: { amount, coin, concept, createdAt, state, from = {}, to = {} }, device, onPress }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
       <View>
-        <Image style={styles.image} source={{ uri: walletFrom.image }} />
+        <Image style={styles.image} source={{ uri: from.image }} />
         <Icon
           value={getIcon(amount, state)}
           style={[styles.iconArrow, (amount < 0 && styles.iconNegative), (state === DELETED && styles.iconInactive)]}
         />
       </View>
       <View style={styles.info}>
-        <Text style={[styles.name]}>{walletFrom.name}</Text>
+        <Text style={[styles.name]}>{from.name || concept}</Text>
         <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
       </View>
       <View style={styles.amounts}>

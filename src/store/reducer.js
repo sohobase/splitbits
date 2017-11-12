@@ -29,13 +29,14 @@ export default function(state = DEFAULTS, action) {
 
     // -- Transaction
     case UPDATE_TRANSACTIONS: {
-      const { transactions = [] } = state;
+      const { transactions: actionTXs = [] } = action;
+      const { transactions: stateTXs = [] } = state;
 
       return {
         ...state,
         transactions: [
-          ...action.transactions.filter(tx => transactions.find(({ hash }) => hash === tx.hash) === undefined),
-          ...transactions.map(tx => action.transactions.find(({ hash }) => hash === tx.hash) || tx),
+          ...actionTXs.filter(tx => stateTXs.find(({ hash }) => hash === tx.hash) === undefined),
+          ...stateTXs.map(tx => actionTXs.find(({ hash }) => hash === tx.hash) || tx),
         ],
       };
     }
