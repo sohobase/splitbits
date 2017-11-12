@@ -29,8 +29,8 @@ class Transactions extends Component {
   }
 
   _renderTransaction({ item }) {
-    const { navigate } = this.props;
-    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item })} />;
+    const { navigate, wallet } = this.props;
+    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item, wallet })} />;
   }
 
   render() {

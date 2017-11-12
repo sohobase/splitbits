@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingLeft: OFFSET,
     paddingRight: OFFSET,
-    marginBottom: UNIT / 2,
+    paddingBottom: UNIT,
   },
 
   input: {
@@ -17,6 +17,7 @@ export default StyleSheet.create({
     paddingTop: 0,
     fontWeight: FONT.WEIGHT.LIGHT,
     textAlign: 'center',
+    color: COLOR.TEXT_HIGHLIGHT,
   },
 
   label: {

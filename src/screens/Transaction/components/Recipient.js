@@ -1,4 +1,4 @@
-import { arrayOf, func, string } from 'prop-types';
+import { func, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -71,6 +71,5 @@ const mapStateToProps = ({ device: { devices } }, { deviceId }) => {
 
   return { devices, device };
 };
-
 
 export default connect(mapStateToProps)(Recipient);

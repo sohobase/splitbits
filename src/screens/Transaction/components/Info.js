@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { SHAPE, STYLE } from '../../../config';
 import styles from './Info.style';
 
-const TransactionInfo = ({ item: { confirmations = 0, createdAt, state } }) => (
+const TransactionInfo = ({ item: { confirmations = 0, charge = 0, createdAt, fee = 0, state } }) => (
   <View style={styles.info}>
     <View style={STYLE.LIST_ITEM}>
       <Text style={styles.label}>State</Text>
@@ -12,6 +12,10 @@ const TransactionInfo = ({ item: { confirmations = 0, createdAt, state } }) => (
     <View style={STYLE.LIST_ITEM}>
       <Text style={styles.label}>Confirmations</Text>
       <Text style={styles.value}>{confirmations}</Text>
+    </View>
+    <View style={STYLE.LIST_ITEM}>
+      <Text style={styles.label}>Fee</Text>
+      <Text style={styles.value}>{fee + charge}</Text>
     </View>
     <View style={STYLE.LIST_ITEM}>
       <Text style={styles.label}>Date</Text>

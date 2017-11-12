@@ -16,15 +16,14 @@ let timeout;
 class Transaction extends Component {
   constructor(props) {
     super(props);
-    const { item: { amount } } = props;
+    const { item = {} } = props;
 
     this.state = {
-      amount,
+      amount: item.amount,
       address: undefined,
       camera: false,
       concept: undefined,
       fees: {},
-      swap: false,
     };
     this._onAddress = this._onAddress.bind(this);
     this._onAmount = this._onAmount.bind(this);
@@ -84,30 +83,25 @@ class Transaction extends Component {
       state: { address, amount = 0, camera, concept, fees = {} },
     } = this;
     const { balance, coin } = wallet;
-    const editable = !item || !item.id;
+    const editable = !item;
     const checked = amount > 0 && amount <= balance && concept && (deviceId || address);
     const fee = wallet.type === PRO ? fees.average : fees.slow + fees.charge;
+    const amountProps = { coin, editable, item, navigation, wallet };
+    const recipientProps = { concept, deviceId, navigation, type };
 
     return (
       <View style={STYLE.SCREEN}>
-        <AmountTransaction coin={coin} navigation={navigation} onAmount={_onAmount} wallet={wallet} />
+        <AmountTransaction {...amountProps} onAmount={_onAmount} />
         <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
           { editable
-            ? <Recipient
-              concept={concept}
-              deviceId={deviceId}
-              navigation={navigation}
-              onCamera={_onCamera}
-              onConcept={_onConcept}
-              type={type}
-            />
+            ? <Recipient {...recipientProps} onCamera={_onCamera} onConcept={_onConcept} />
             : <Info item={item} /> }
-          { (type === REQUEST || type === SEND) &&
+          { editable &&
             <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
               <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
             </Button>
           }
-          { fee > 0 &&
+          { editable && fee > 0 &&
             <Animatable animation="bounceIn" style={styles.fee}>
               <Amount caption="Included fee " coin='USD' value={fee * currencies[coin]} style={styles.feeCaption} />
             </Animatable>
@@ -132,7 +126,7 @@ Transaction.propTypes = {
 Transaction.defaultProps = {
   currencies: {},
   deviceId: undefined,
-  item: {},
+  item: undefined,
   navigation: undefined,
   selectDevice() {},
   type: REQUEST,
@@ -140,10 +134,7 @@ Transaction.defaultProps = {
 };
 
 const mapStateToProps = ({ currencies, selectedDevice }, props) => {
-  const { item = {}, type = REQUEST, wallet = {} } = props.navigation.state.params;
-  // const item = { };
-  // const type = REQUEST;
-  // const wallet = { balance: 5 / SATOSHI, coin: 'BTC', id: 'wallet-id', wif: 'wif-secret' };
+  const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
   return { currencies, deviceId: selectedDevice, item, type, wallet };
 };

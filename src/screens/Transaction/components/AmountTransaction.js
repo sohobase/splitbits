@@ -1,4 +1,4 @@
-import { func, string } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -12,11 +12,10 @@ const { SATOSHI, TYPE: { REQUEST } } = C;
 class AmountTransaction extends Component {
   constructor(props) {
     super(props);
-    const { item: { amount }, type } = props;
+    const { item = {}, type } = props;
 
     this.state = {
-      amount,
-      concept: type,
+      amount: item.amount,
       swap: false,
     };
     this._onAmount = this._onAmount.bind(this);
@@ -36,13 +35,17 @@ class AmountTransaction extends Component {
   render() {
     const {
       _onAmount, _onSwap,
-      props: { coin, currencies, device: { currency }, item, navigation, wallet: { balance } },
+      props: { coin, currencies, device: { currency }, editable, item, navigation, wallet: { balance } },
       state: { amount, swap },
     } = this;
     const from = swap ? currency : coin;
     const to = swap ? coin : currency;
-    const conversion = swap ? ((amount || 0) / SATOSHI) * currencies[coin] : (amount || 0) / currencies[coin];
-    const editable = !item || !item.id;
+    let conversion;
+    if (editable) {
+      conversion = swap ? ((amount || 0) / SATOSHI) * currencies[coin] : (amount || 0) / currencies[coin];
+    } else {
+      conversion = (amount * SATOSHI) / currencies[coin];
+    }
 
     return (
       <View style={STYLE.LAYOUT_TOP}>
@@ -54,20 +57,24 @@ class AmountTransaction extends Component {
         <Animatable animation="bounceIn" delay={600} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
             <Text style={[styles.label]}>{from}</Text>
-            <Input
-              _autoFocus={!amount}
-              editable={editable}
-              highlight
-              keyboardType="numeric"
-              onChangeText={(_onAmount)}
-              placeholder="0.00"
-              style={styles.input}
-              value={amount && amount.toString()}
-            />
+            { editable
+              ? <Input
+                autoFocus={!amount}
+                highlight
+                keyboardType="numeric"
+                onChangeText={_onAmount}
+                placeholder="0.00"
+                style={styles.input}
+                value={amount && amount.toString()}
+              />
+              : <Amount coin={coin} style={styles.input} value={amount} />
+            }
             <Amount coin={to} value={conversion} style={[styles.label]} />
-            <View style={styles.balance}>
-              <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
-            </View>
+            { editable &&
+              <View style={styles.balance}>
+                <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
+              </View>
+            }
           </View>
         </Animatable>
       </View>
@@ -79,6 +86,7 @@ AmountTransaction.propTypes = {
   coin: string,
   currencies: SHAPE.CURRENCIES,
   device: SHAPE.DEVICE,
+  editable: bool,
   item: SHAPE.TRANSACTION,
   navigation: SHAPE.NAVIGATION,
   onAmount: func,
@@ -91,7 +99,7 @@ AmountTransaction.defaultProps = {
   currencies: {},
   device: {},
   editable: true,
-  item: {},
+  item: undefined,
   navigation: undefined,
   onAmount() {},
   type: REQUEST,
