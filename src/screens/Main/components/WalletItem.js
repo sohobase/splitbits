@@ -21,8 +21,6 @@ const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
 const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress, style }) => {
   const { address, balance = 0, coin = 'BTC', name, trend = 0, type } = data || {};
 
-  console.log('type', type);
-
   return (
     <Animatable
       animation="bounceIn"
@@ -37,19 +35,18 @@ const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress,
               <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
               { type === PRO && <Text style={styles.pro}>PRO</Text> }
               <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
-              <Amount coin={currency} value={balance / (currencies[coin] / SATOSHI)} style={[styles.label, styles.fiat]} />
+              <Amount
+                coin={currency}
+                value={balance / (currencies[coin] / SATOSHI)}
+                style={[styles.label, styles.fiat]}
+              />
             </View>
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
               <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
             </View>
             <View style={styles.qr}>
-              <QRCode
-                value={address}
-                size={QR_SIZE}
-                fgColor={COLOR.WHITE}
-                bgColor={COLOR.BLACK}
-              />
+              <QRCode value={address} size={QR_SIZE} fgColor={COLOR.WHITE} bgColor={COLOR.BLACK} />
             </View>
           </View>
           :

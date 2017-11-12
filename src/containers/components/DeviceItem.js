@@ -20,7 +20,6 @@ const BUTTON_CANCEL = { backgroundColor: CANCEL, underlayColor: Color(CANCEL).da
 class DeviceItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: props.device.name };
     this._onRequest = this._onRequest.bind(this);
     this._onRelation = this._onRelation.bind(this);
   }
