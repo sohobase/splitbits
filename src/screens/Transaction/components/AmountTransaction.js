@@ -7,12 +7,12 @@ import { Amount, Header, Input } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
 import styles from './AmountTransaction.style';
 
-const { SATOSHI, TYPE: { REQUEST } } = C;
+const { SATOSHI } = C;
 
 class AmountTransaction extends Component {
   constructor(props) {
     super(props);
-    const { item = {}, type } = props;
+    const { item = {} } = props;
 
     this.state = {
       amount: item.amount,
@@ -25,7 +25,7 @@ class AmountTransaction extends Component {
   _onAmount(amount = 0) {
     const { props: { coin, currencies, onAmount }, state: { swap } } = this;
     onAmount(swap ? amount * currencies[coin] : amount);
-    this.setState({ amount, fee: undefined });
+    this.setState({ amount });
   }
 
   _onSwap() {
@@ -35,7 +35,12 @@ class AmountTransaction extends Component {
   render() {
     const {
       _onAmount, _onSwap,
-      props: { coin, currencies, device: { currency }, editable, item, navigation, wallet: { balance } },
+      props: {
+        coin, currencies, editable, navigation,
+        device: { currency },
+        item: { fee, charge = 0 } = {},
+        wallet: { balance },
+      },
       state: { amount, swap },
     } = this;
     const from = swap ? currency : coin;
@@ -70,11 +75,16 @@ class AmountTransaction extends Component {
               : <Amount coin={coin} style={styles.input} value={amount} />
             }
             <Amount coin={to} value={conversion} style={[styles.label]} />
-            { editable &&
-              <View style={styles.balance}>
-                <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
-              </View>
-            }
+            <View style={styles.balance}>
+              { editable
+                ? <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
+                : <Amount
+                  caption="Fee "
+                  coin={to}
+                  style={[styles.label, styles.small]}
+                  value={((fee + charge) * SATOSHI) / currencies[coin]}
+                /> }
+            </View>
           </View>
         </Animatable>
       </View>
@@ -90,7 +100,6 @@ AmountTransaction.propTypes = {
   item: SHAPE.TRANSACTION,
   navigation: SHAPE.NAVIGATION,
   onAmount: func,
-  type: string,
   wallet: SHAPE.WALLET,
 };
 
@@ -102,7 +111,6 @@ AmountTransaction.defaultProps = {
   item: undefined,
   navigation: undefined,
   onAmount() {},
-  type: REQUEST,
   wallet: {},
 };
 

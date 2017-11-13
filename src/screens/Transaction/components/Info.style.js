@@ -4,8 +4,20 @@ import { THEME } from '../../../config';
 const { COLOR, FONT, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  info: {
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    backgroundColor: COLOR.WHITE,
+  },
 
+  avatar: {
+    marginRight: OFFSET,
+  },
+
+  half: {
+    width: '50%',
   },
 
   label: {
