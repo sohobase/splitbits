@@ -12,7 +12,7 @@ export default StyleSheet.create({
   avatar: {
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
-    borderRadius: UNIT / 3,
+    borderRadius: AVATAR_SIZE / 2,
     backgroundColor: COLOR.DIVIDER,
     overflow: 'hidden',
     justifyContent: 'center',

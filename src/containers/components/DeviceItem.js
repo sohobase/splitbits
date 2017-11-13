@@ -1,5 +1,4 @@
 import Color from 'color';
-import Identicon from 'identicon.js';
 import { array, bool, func, number, oneOfType } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
@@ -43,17 +42,9 @@ class DeviceItem extends Component {
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
-    const timestamp = new Date().getTime().toString();
 
-    if (!selected && (!image || image.length === 0)) {
-      const identicon = new Identicon(`${id}${timestamp}`, {
-        background: [255, 255, 255, 255],
-        margin: 0,
-        size: 256,
-      }).toString();
-      image = `data:image/png;base64,${identicon}`;
-    } else {
-      image = `${SERVICE}public/${image}?timestamp=${timestamp}}`;
+    if (!selected && image && image.length > 0) {
+      image = `${SERVICE}public/${image}?timestamp=${new Date().getTime().toString()}}`;
     }
 
     if (!request && !onPress) {
