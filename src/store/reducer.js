@@ -35,8 +35,8 @@ export default function(state = DEFAULTS, action) {
       return {
         ...state,
         transactions: [
-          ...actionTXs.filter(tx => stateTXs.find(({ hash }) => hash === tx.hash) === undefined),
-          ...stateTXs.map(tx => actionTXs.find(({ hash }) => hash === tx.hash) || tx),
+          ...actionTXs.filter(tx => stateTXs.find(({ id }) => id === tx.id) === undefined),
+          ...stateTXs.map(tx => actionTXs.find(({ id }) => id === tx.id) || tx),
         ],
       };
     }
