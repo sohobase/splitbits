@@ -9,13 +9,6 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND,
   },
 
-  image: {
-    width: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    borderRadius: AVATAR_SIZE / 2,
-    backgroundColor: COLOR.DIVIDER,
-  },
-
   iconArrow: {
     position: 'absolute',
     bottom: 0,

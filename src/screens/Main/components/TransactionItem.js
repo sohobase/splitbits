@@ -26,7 +26,7 @@ const TransactionItem = ({ currencies, data: { amount, coin, concept, createdAt,
   <Touchable onPress={onPress} activeOpacity={0.95}>
     <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
       <View>
-        <Image style={styles.image} source={{ uri: from.image }} />
+        <Image style={STYLE.AVATAR} source={{ uri: from.image }} />
         <Icon
           value={getIcon(amount, state)}
           style={[styles.iconArrow, (amount < 0 && styles.iconNegative), (state === DELETED && styles.iconInactive)]}
@@ -38,7 +38,11 @@ const TransactionItem = ({ currencies, data: { amount, coin, concept, createdAt,
       </View>
       <View style={styles.amounts}>
         <Amount coin={coin} value={amount} style={[styles.amount]} />
-        <Amount coin={device.currency} value={amount / (currencies[coin] / SATOSHI)} style={[styles.label, styles.fiat]} />
+        <Amount
+          coin={device.currency}
+          value={amount / (currencies[coin] / SATOSHI)}
+          style={[styles.label, styles.fiat]}
+        />
       </View>
     </View>
   </Touchable>

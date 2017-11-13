@@ -9,15 +9,6 @@ export default StyleSheet.create({
     backgroundColor: Color(COLOR.PRIMARY).lighten(0.9),
   },
 
-  avatar: {
-    width: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    borderRadius: AVATAR_SIZE / 2,
-    backgroundColor: COLOR.DIVIDER,
-    overflow: 'hidden',
-    justifyContent: 'center',
-  },
-
   avatarSelected: {
     backgroundColor: COLOR.PRIMARY,
   },

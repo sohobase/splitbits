@@ -60,10 +60,10 @@ class DeviceItem extends Component {
       <Swipeout right={options} backgroundColor={WHITE} >
         <TouchableWithoutFeedback onPress={onPress ? () => onPress(id) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
-            <View style={[styles.avatar, selected ? styles.avatarSelected : undefined]}>
+            <View style={[STYLE.AVATAR, selected ? styles.avatarSelected : undefined]}>
               { selected
                 ? <Icon value="check" style={styles.icon} />
-                : <Image source={{ uri: image }} style={[styles.avatar, styles.image]} /> }
+                : <Image source={{ uri: image }} style={[STYLE.AVATAR, styles.image]} /> }
             </View>
             <View style={styles.content}>
               <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
