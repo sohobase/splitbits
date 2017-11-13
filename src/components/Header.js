@@ -8,13 +8,13 @@ import styles from './Header.style';
 
 const { COLOR } = THEME;
 
-const renderButton = (props, animation, tintColor) => (
+const renderButton = (props = {}, animation, tintColor) => (
   <Animatable {...animation}>
     <Button {...props} raised style={styles.button} captionStyle={{ tintColor }} />
   </Animatable>
 );
 
-const Header = ({ animation, buttonRight = {}, children, navigation, style, tintColor, title }) => (
+const Header = ({ animation, buttonRight, children, navigation, style, tintColor, title }) => (
   <View style={[STYLE.ROW, styles.header, style]}>
     { navigation &&
       renderButton({ icon: 'arrowBack', onPress: () => navigation.goBack() }, { animation, delay: 200 }, tintColor) }
@@ -24,7 +24,7 @@ const Header = ({ animation, buttonRight = {}, children, navigation, style, tint
         { children }
       </View>
     </Animatable>
-    { (navigation || buttonRight.icon) && renderButton(buttonRight, { animation, delay: 400 }, tintColor) }
+    { navigation && renderButton(buttonRight, { animation, delay: 400 }, tintColor) }
   </View>
 );
 

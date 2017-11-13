@@ -27,8 +27,7 @@ export default StyleSheet.create({
   button: {
     paddingTop: UNIT / 2,
     paddingBottom: UNIT / 2,
-    paddingLeft: UNIT,
-    paddingRight: UNIT,
+    width: UNIT * 4.8,
     opacity: 0.75,
   },
 });
