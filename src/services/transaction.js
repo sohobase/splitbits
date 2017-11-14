@@ -17,4 +17,8 @@ export default {
   send(props) {
     return service('transaction/send', { method: 'POST', body: JSON.stringify(props) });
   },
+
+  cancelRequest(id, walletId) {
+    return service(`transaction/request/${id}`, { method: 'DELETE', body: JSON.stringify({ walletId }) });
+  },
 };

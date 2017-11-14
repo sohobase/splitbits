@@ -28,4 +28,8 @@ export default StyleSheet.create({
   value: {
     fontSize: FONT.SIZE.DEFAULT,
   },
+
+  title: {
+    fontWeight: FONT.WEIGHT.BOLD,
+  },
 });

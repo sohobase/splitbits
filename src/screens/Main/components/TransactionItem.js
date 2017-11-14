@@ -9,19 +9,24 @@ import styles from './TransactionItem.style';
 
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
 
+const verboseTitle = ({ emitter, concept, other: { name }, state, payment }) => {
+  if (!name) return concept;
+  if (state === REQUESTED) return `Request ${emitter ? 'from' : 'to'} ${name}`;
+  return `${payment ? 'To' : 'From'} ${name}`;
+};
+
 const TransactionItem = (props) => {
   const {
     currencies,
     data: { amount, confirmations = 0, coin, concept, createdAt, payment, state, from = {}, to = {} },
     device: { currency, devices },
     onPress,
-    wallet: { address },
+    wallet: { address } = {},
   } = props;
 
   const other = devices.find(({ id }) => id === from.device || id === to.device) || {};
   const symbol = payment ? '-' : '+';
-  let name = concept;
-  if (other.name) name = `${payment ? 'To' : 'From'} ${other.name}`;
+
   let icon = 'settings';
   if (state === CONFIRMED) icon = payment ? 'arrowForward' : 'arrowBack';
   if (state === REQUESTED) icon = 'operations';
@@ -37,8 +42,9 @@ const TransactionItem = (props) => {
           />
         </View>
         <View style={styles.info}>
-          <Text style={[styles.name]}>{name}</Text>
+          <Text style={styles.title}>{verboseTitle({ emitter: (address !== to.address), concept, other, state, payment })}</Text>
           <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
+          { other.name && <Text style={[styles.label]}>{concept}</Text> }
         </View>
         <View style={styles.amounts}>
           <Amount caption={symbol} coin={coin} value={amount} style={[styles.amount]} />

@@ -26,15 +26,15 @@ const TransactionInfo = (props) => {
             <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
               <Image source={{ uri: (device && publicUri(device.image)) }} style={[STYLE.AVATAR, styles.avatar]} />
               <View>
-                <Text style={styles.value}>{device.name}</Text>
-                <Text style={styles.label}>{from.address}</Text>
+                <Text style={[styles.value, styles.title]}>{device.name}</Text>
+                { from.address && <Text style={styles.label}>{from.address}</Text> }
               </View>
             </View>
           :
             renderField('Address', from.address)}
 
-        { renderField('State', state, styles.half) }
-        { renderField('Confirmations', confirmations, styles.half) }
+        { hash && renderField('State', state, styles.half) }
+        { hash && renderField('Confirmations', confirmations, styles.half) }
         { renderField('Concept', concept) }
         { hash && renderField('Hash', hash) }
         { renderField('Date', createdAt) }

@@ -2,11 +2,13 @@ import { arrayOf, func } from 'prop-types';
 import React, { Component } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
-import { SHAPE, STYLE } from '../../../config';
+import { C, SHAPE, STYLE } from '../../../config';
 import { TransactionService } from '../../../services';
 import { updateTransactionsAction } from '../../../store/actions';
 import TransactionItem from './TransactionItem';
 import styles from './Transactions.style';
+
+const { STATE: { ARCHIVED } } = C;
 
 class Transactions extends Component {
   constructor(props) {
@@ -71,8 +73,10 @@ Transactions.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = ({ transactions = [] }, { wallet: { address } = {} }) => ({
-  transactions: transactions.filter(({ from, to }) => from.address === address || to.address === address),
+const mapStateToProps = ({ transactions = [] }, { wallet = {} }) => ({
+  transactions: transactions.filter(({ coin, from, state, to }) => (
+    coin === wallet.coin && state !== ARCHIVED && (from.address === wallet.address || to.address === wallet.address)
+  )),
 });
 
 const mapDispatchToProps = dispatch => ({

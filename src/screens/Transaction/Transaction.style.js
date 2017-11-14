@@ -14,6 +14,7 @@ export default StyleSheet.create({
 
   buttonCaption: {
     color: COLOR.WHITE,
+    fontWeight: FONT.WEIGHT.BOLD,
   },
 
   fee: {

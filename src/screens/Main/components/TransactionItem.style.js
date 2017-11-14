@@ -7,6 +7,7 @@ const ICON_DISABLED = '#666666';
 export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BACKGROUND,
+    // alignItems: 'flex-start',
   },
 
   icon: {
@@ -30,8 +31,8 @@ export default StyleSheet.create({
     marginLeft: UNIT,
   },
 
-  name: {
-    fontSize: FONT.SIZE.DEFAULT,
+  title: {
+    // fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
   },
 

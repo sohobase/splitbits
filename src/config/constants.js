@@ -30,7 +30,7 @@ export default {
     // -- Devices
     ACTIVE: 'active',
     // -- Common
-    DELETED: 'deleted',
+    ARCHIVED: 'archived',
     BANNED: 'banned',
   },
 

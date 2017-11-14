@@ -38,7 +38,7 @@ class AmountTransaction extends Component {
       props: {
         coin, currencies, editable, navigation,
         device: { currency },
-        item: { charge = 0, fee, payment = false, state } = {},
+        item: { payment = false, state } = {},
         wallet: { balance },
       },
       state: { amount, swap },
@@ -54,7 +54,7 @@ class AmountTransaction extends Component {
     let title = 'Transaction';
     if (state) {
       title = payment ? 'Payment' : 'Deposit';
-      if (state === REQUESTED) title = `${title} Request`;
+      if (state === REQUESTED) title = 'Payment Request';
     }
 
     return (
@@ -81,14 +81,7 @@ class AmountTransaction extends Component {
             }
             <Amount coin={to} value={conversion} style={[styles.label]} />
             <View style={styles.balance}>
-              { editable
-                ? <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
-                : <Amount
-                  caption="Fee "
-                  coin={to}
-                  style={[styles.label, styles.small]}
-                  value={((fee + charge) * SATOSHI) / currencies[coin]}
-                /> }
+              <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
             </View>
           </View>
         </Animatable>

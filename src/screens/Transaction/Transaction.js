@@ -10,7 +10,7 @@ import { selectDeviceAction, updateTransactionsAction } from '../../store/action
 import { AmountTransaction, Recipient, Info } from './components';
 import styles from './Transaction.style';
 
-const { SATOSHI, TYPE: { PRO, REQUEST } } = C;
+const { SATOSHI, STATE: { REQUESTED }, TYPE: { PRO, REQUEST } } = C;
 let timeout;
 
 class Transaction extends Component {
@@ -28,6 +28,7 @@ class Transaction extends Component {
     this._onAddress = this._onAddress.bind(this);
     this._onAmount = this._onAmount.bind(this);
     this._onCamera = this._onCamera.bind(this);
+    this._onCancel = this._onCancel.bind(this);
     this._onConcept = this._onConcept.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
   }
@@ -66,15 +67,38 @@ class Transaction extends Component {
 
   async _onSubmit() {
     const {
-      props: { deviceId, item: { id } = {}, navigation, type, updateTransactions, wallet: { coin, id: walletId, wif } },
+      props: {
+        deviceId, navigation, type, updateTransactions,
+        item: { id } = {},
+        wallet: { coin, id: walletId, wif },
+      },
       state: { address, amount, concept },
     } = this;
     const isRequest = type === REQUEST;
     const method = isRequest ? 'request' : 'send';
-    const params = { address, amount: parseInt(amount / SATOSHI), coin, concept, deviceId, id, walletId, wif: (!isRequest ? wif : undefined) };
+    const params = {
+      address,
+      amount: parseInt(amount / SATOSHI, 10),
+      coin,
+      concept,
+      deviceId,
+      id,
+      walletId,
+      wif: (!isRequest ? wif : undefined),
+    };
 
     const transaction = await TransactionService[method](params);
-    if (transaction) {
+    if (transaction && transaction.id) {
+      updateTransactions(transaction);
+      navigation.goBack();
+    }
+  }
+
+  async _onCancel() {
+    const { item: { id }, navigation, updateTransactions, wallet } = this.props;
+
+    const transaction = await TransactionService.cancelRequest(id, wallet.id);
+    if (transaction && transaction.id) {
       updateTransactions(transaction);
       navigation.goBack();
     }
@@ -82,7 +106,7 @@ class Transaction extends Component {
 
   render() {
     const {
-      _onAddress, _onAmount, _onCamera, _onConcept, _onSubmit,
+      _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onSubmit,
       props: { currencies, device: { currency }, deviceId, item, navigation, type, wallet },
       state: { address, amount = 0, camera, concept, fees = {} },
     } = this;
@@ -104,7 +128,17 @@ class Transaction extends Component {
             <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
               <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
             </Button> }
-          { editable && fee > 0 &&
+          { item && item.state === REQUESTED &&
+            <Animatable animation="bounceInUp" delay={800}>
+              { wallet.address !== item.to.address
+                ? // @TODO: Accept a request
+                  <Button accent disabled={balance <= item.amount} _onPress={_onSubmit} style={styles.button}>
+                    <Amount caption="Send " coin={coin} style={styles.buttonCaption} value={item.amount} />
+                  </Button>
+                :
+                  <Button accent caption="Cancel request" onPress={_onCancel} style={styles.button} /> }
+            </Animatable> }
+          { fee > 0 &&
             <Animatable animation="bounceIn" style={styles.fee}>
               <Amount
                 caption="Included fee "
