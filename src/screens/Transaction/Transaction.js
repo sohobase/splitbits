@@ -10,7 +10,7 @@ import { selectDeviceAction } from '../../store/actions';
 import { AmountTransaction, Recipient, Info } from './components';
 import styles from './Transaction.style';
 
-const { SATOSHI, TYPE: { PRO, REQUEST, SEND } } = C;
+const { SATOSHI, TYPE: { PRO, REQUEST } } = C;
 let timeout;
 
 class Transaction extends Component {

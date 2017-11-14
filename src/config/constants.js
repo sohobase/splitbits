@@ -1,5 +1,12 @@
 export default {
 
+  MIN_CONFIRMATIONS: 3,
+
+  CRYPTO: {
+    BTC: 'BTC',
+    LTC: 'LTC',
+  },
+
   DEFAULTS: {
     TOKEN: 'sohobase-splitbits-dev',
   },
@@ -10,6 +17,10 @@ export default {
   },
 
   SATOSHI: 0.00000001,
+
+  SERVICE: 'http://localhost:3000/',
+  // SERVICE: 'http://100.76.165.45:3000/',
+  // SERVICE: 'http://172.17.164.83:3000/',
 
   STATE: {
     // -- Transactions
@@ -27,10 +38,6 @@ export default {
     ANDROID: 'http://',
     IOS: 'http://',
   },
-
-  SERVICE: 'http://localhost:3000/',
-  // SERVICE: 'http://100.76.165.45:3000/',
-  // SERVICE: 'http://172.17.164.83:3000/',
 
   TYPE: {
     DEFAULT: 'default',

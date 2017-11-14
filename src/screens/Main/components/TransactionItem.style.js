@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { AVATAR_SIZE, COLOR, FONT, UNIT, OFFSET } = THEME;
+const { COLOR, FONT, UNIT, OFFSET } = THEME;
 const ICON_DISABLED = '#666666';
 
 export default StyleSheet.create({
@@ -9,28 +9,19 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND,
   },
 
-  iconArrow: {
+  icon: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: FONT.SIZE.LARGE,
-    height: FONT.SIZE.LARGE,
+    bottom: -UNIT / 5,
+    right: -UNIT / 5,
+    width: OFFSET,
+    height: OFFSET,
     backgroundColor: COLOR.PRIMARY,
     tintColor: COLOR.WHITE,
-    borderRadius: UNIT,
-    borderWidth: 2,
-    borderColor: COLOR.PRIMARY,
-    padding: 2,
+    borderRadius: OFFSET / 2,
   },
 
-  iconNegative: {
+  iconAlert: {
     backgroundColor: COLOR.ACCENT,
-    borderColor: COLOR.ACCENT,
-  },
-
-  iconInactive: {
-    backgroundColor: ICON_DISABLED,
-    borderColor: ICON_DISABLED,
   },
 
   info: {

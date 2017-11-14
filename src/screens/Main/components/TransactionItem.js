@@ -4,55 +4,62 @@ import { Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Icon, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
+import { publicUri } from '../../../modules';
 import styles from './TransactionItem.style';
 
-const { STATE: { DELETED, UNCONFIRMED, REQUESTED }, SATOSHI } = C;
+const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
 
-const getIcon = (amount, state) => {
-  if (amount < 0) {
-    return 'arrowForward';
-  } else if (state === REQUESTED) {
-    return 'operations';
-  } else if (state === UNCONFIRMED) {
-    return 'settings';
-  } else if (state === DELETED) {
-    return 'close';
-  }
+const TransactionItem = (props) => {
+  const {
+    currencies,
+    data: { amount, confirmations = 0, coin, concept, createdAt, payment, state, from = {}, to = {} },
+    device: { currency, devices },
+    onPress,
+    wallet: { address },
+  } = props;
 
-  return 'arrowBack';
+  const other = devices.find(({ id }) => id === from.device || id === to.device) || {};
+  const symbol = payment ? '-' : '+';
+  let name = concept;
+  if (other.name) name = `${payment ? 'To' : 'From'} ${other.name}`;
+  let icon = 'settings';
+  if (state === CONFIRMED) icon = payment ? 'arrowForward' : 'arrowBack';
+  if (state === REQUESTED) icon = 'operations';
+
+  return (
+    <Touchable onPress={() => onPress(payment)} activeOpacity={0.95}>
+      <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
+        <View>
+          <Image style={STYLE.AVATAR} source={{ uri: publicUri(other.image) }} />
+          <Icon
+            value={icon}
+            style={[styles.icon, (confirmations < MIN_CONFIRMATIONS && styles.iconAlert)]}
+          />
+        </View>
+        <View style={styles.info}>
+          <Text style={[styles.name]}>{name}</Text>
+          <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
+        </View>
+        <View style={styles.amounts}>
+          <Amount caption={symbol} coin={coin} value={amount} style={[styles.amount]} />
+          <Amount
+            caption={symbol}
+            coin={currency}
+            value={amount / (currencies[coin] / SATOSHI)}
+            style={[styles.label, styles.fiat]}
+          />
+        </View>
+      </View>
+    </Touchable>
+  );
 };
-
-const TransactionItem = ({ currencies, data: { amount, coin, concept, createdAt, state, from = {}, to = {} }, device, onPress }) => (
-  <Touchable onPress={onPress} activeOpacity={0.95}>
-    <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
-      <View>
-        <Image style={STYLE.AVATAR} source={{ uri: from.image }} />
-        <Icon
-          value={getIcon(amount, state)}
-          style={[styles.iconArrow, (amount < 0 && styles.iconNegative), (state === DELETED && styles.iconInactive)]}
-        />
-      </View>
-      <View style={styles.info}>
-        <Text style={[styles.name]}>{from.name || concept}</Text>
-        <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
-      </View>
-      <View style={styles.amounts}>
-        <Amount coin={coin} value={amount} style={[styles.amount]} />
-        <Amount
-          coin={device.currency}
-          value={amount / (currencies[coin] / SATOSHI)}
-          style={[styles.label, styles.fiat]}
-        />
-      </View>
-    </View>
-  </Touchable>
-);
 
 TransactionItem.propTypes = {
   currencies: SHAPE.CURRENCIES,
   data: SHAPE.TRANSACTION,
   device: SHAPE.DEVICE,
   onPress: func,
+  wallet: SHAPE.WALLET,
 };
 
 TransactionItem.defaultProps = {
@@ -60,6 +67,7 @@ TransactionItem.defaultProps = {
   data: {},
   device: {},
   onPress: undefined,
+  wallet: undefined,
 };
 
 const mapStateToProps = ({ currencies, device }) => ({

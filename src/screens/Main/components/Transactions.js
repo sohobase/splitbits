@@ -16,7 +16,12 @@ class Transactions extends Component {
     this._renderTransaction = this._renderTransaction.bind(this);
   }
 
-  async componentWillReceiveProps({ wallet }) {
+  componentDidMount() {
+    const { wallet } = this.props;
+    if (wallet) this._onRefresh(wallet);
+  }
+
+  componentWillReceiveProps({ wallet }) {
     const { wallet: { id } = {} } = this.props;
     if (wallet && wallet.id && wallet.id !== id) this._onRefresh(wallet);
   }
@@ -30,7 +35,7 @@ class Transactions extends Component {
 
   _renderTransaction({ item }) {
     const { navigate, wallet } = this.props;
-    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item, wallet })} />;
+    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item, wallet })} wallet={wallet} />;
   }
 
   render() {

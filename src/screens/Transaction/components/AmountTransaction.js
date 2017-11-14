@@ -7,7 +7,7 @@ import { Amount, Header, Input } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
 import styles from './AmountTransaction.style';
 
-const { SATOSHI } = C;
+const { SATOSHI, STATE: { REQUESTED } } = C;
 
 class AmountTransaction extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class AmountTransaction extends Component {
       props: {
         coin, currencies, editable, navigation,
         device: { currency },
-        item: { fee, charge = 0 } = {},
+        item: { charge = 0, fee, payment = false, state } = {},
         wallet: { balance },
       },
       state: { amount, swap },
@@ -51,11 +51,16 @@ class AmountTransaction extends Component {
     } else {
       conversion = (amount * SATOSHI) / currencies[coin];
     }
+    let title = 'Transaction';
+    if (state) {
+      title = payment ? 'Payment' : 'Deposit';
+      if (state === REQUESTED) title = `${title} Request`;
+    }
 
     return (
       <View style={STYLE.LAYOUT_TOP}>
         <Header
-          title="Transaction"
+          title={title}
           navigation={navigation}
           buttonRight={editable ? { icon: 'swap', onPress: _onSwap } : undefined}
         />

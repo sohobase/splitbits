@@ -1,4 +1,4 @@
-import { array, date, func, number, object, shape, string } from 'prop-types';
+import { array, bool, date, func, number, object, shape, string } from 'prop-types';
 
 const WALLET = shape({
   id: string,
@@ -49,6 +49,7 @@ export default {
     confirmations: number,
     createdAt: date,
     fee: number,
+    payment: bool,
     state: string,
     from: object,
     to: object,
