@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Amount, Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
-import { selectDeviceAction } from '../../store/actions';
+import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
 import { AmountTransaction, Recipient, Info } from './components';
 import styles from './Transaction.style';
 
@@ -66,20 +66,24 @@ class Transaction extends Component {
 
   async _onSubmit() {
     const {
-      props: { deviceId, item: { id }, navigation, type, wallet: { coin, id: walletId, wif } },
+      props: { deviceId, item: { id } = {}, navigation, type, updateTransactions, wallet: { coin, id: walletId, wif } },
       state: { address, amount, concept },
     } = this;
     const isRequest = type === REQUEST;
-    const params = { address, amount, coin, concept, deviceId, id, walletId };
+    const method = isRequest ? 'request' : 'send';
+    const params = { address, amount: parseInt(amount / SATOSHI), coin, concept, deviceId, id, walletId, wif: (!isRequest ? wif : undefined) };
 
-    await TransactionService[isRequest ? 'request' : 'send']({ ...params, wif: (!isRequest ? wif : undefined) });
-    navigation.goBack();
+    const transaction = await TransactionService[method](params);
+    if (transaction) {
+      updateTransactions(transaction);
+      navigation.goBack();
+    }
   }
 
   render() {
     const {
       _onAddress, _onAmount, _onCamera, _onConcept, _onSubmit,
-      props: { currencies, deviceId, item, navigation, type, wallet },
+      props: { currencies, device: { currency }, deviceId, item, navigation, type, wallet },
       state: { address, amount = 0, camera, concept, fees = {} },
     } = this;
     const { balance, coin } = wallet;
@@ -99,13 +103,16 @@ class Transaction extends Component {
           { editable &&
             <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
               <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
-            </Button>
-          }
+            </Button> }
           { editable && fee > 0 &&
             <Animatable animation="bounceIn" style={styles.fee}>
-              <Amount caption="Included fee " coin='USD' value={fee * currencies[coin]} style={styles.feeCaption} />
-            </Animatable>
-          }
+              <Amount
+                caption="Included fee "
+                coin={currency}
+                value={fee * currencies[coin]}
+                style={styles.feeCaption}
+              />
+            </Animatable> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
       </View>
@@ -120,6 +127,7 @@ Transaction.propTypes = {
   navigation: SHAPE.NAVIGATION,
   selectDevice: func,
   type: string,
+  updateTransactions: func,
   wallet: SHAPE.WALLET,
 };
 
@@ -130,17 +138,19 @@ Transaction.defaultProps = {
   navigation: undefined,
   selectDevice() {},
   type: REQUEST,
+  updateTransactions() {},
   wallet: {},
 };
 
-const mapStateToProps = ({ currencies, selectedDevice }, props) => {
+const mapStateToProps = ({ currencies, device, selectedDevice }, props) => {
   const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
-  return { currencies, deviceId: selectedDevice, item, type, wallet };
+  return { currencies, device, deviceId: selectedDevice, item, type, wallet };
 };
 
 const mapDispatchToProps = dispatch => ({
   selectDevice: deviceId => dispatch(selectDeviceAction(deviceId)),
+  updateTransactions: transaction => dispatch(updateTransactionsAction([transaction])),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

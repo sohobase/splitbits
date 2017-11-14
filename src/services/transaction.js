@@ -14,7 +14,7 @@ export default {
     return service('transaction/request', { method: 'POST', body: JSON.stringify(props) });
   },
 
-  send(props, wif) {
+  send(props) {
     return service('transaction/send', { method: 'POST', body: JSON.stringify(props) });
   },
 };
