@@ -54,7 +54,7 @@ TransactionInfo.defaultProps = {
 };
 
 const mapStateToProps = ({ currencies, device }) => ({
-  currencies,
+  currencies: currencies[device.currency],
   devices: device.devices,
 });
 

@@ -8,7 +8,8 @@ import styles from './Header.style';
 const { SATOSHI } = C;
 
 
-const HeaderTitle = ({ currencies, symbol, wallets }) => {
+const HeaderTitle = ({ currencies, device, wallets }) => {
+  const { currency } = device;
   let totalBalance = 0;
   let totalTrend = 0;
 
@@ -20,26 +21,27 @@ const HeaderTitle = ({ currencies, symbol, wallets }) => {
 
   return (
     <Header>
-      <Amount coin={symbol} value={totalBalance} style={styles.amount} />
-      <Amount coin={symbol} value={totalTrend} style={styles.trend} />
+      <Amount coin={currency} value={totalBalance} style={styles.amount} />
+      <Amount coin={currency} value={totalTrend} style={styles.trend} />
     </Header>
   );
 };
 
 HeaderTitle.propTypes = {
   currencies: SHAPE.CURRENCIES,
-  symbol: string,
+  device: SHAPE.DEVICE,
   wallets: arrayOf(SHAPE.WALLET),
 };
 
 HeaderTitle.defaultProps = {
   currencies: {},
-  symbol: undefined,
+  device: undefined,
   wallets: [],
 };
 
-const mapStateToProps = ({ currencies, wallets }) => ({
-  currencies,
+const mapStateToProps = ({ currencies, device, wallets }) => ({
+  currencies: currencies[device.currency],
+  device,
   wallets,
 });
 

@@ -4,14 +4,7 @@ import { Text, View } from 'react-native';
 import { C, STYLE } from '../config';
 import styles from './Amount.style';
 
-const { FIAT: { EUR, USD }, SATOSHI } = C;
-
-const SYMBOL = {
-  BTC: '฿',
-  EUR: '€',
-  LTC: 'Ł',
-  USD: '$',
-};
+const { FIAT: { EUR, USD }, SATOSHI, SYMBOL } = C;
 
 const SYMBOL_FRIENDLY = {
   BTC: ' Bits',

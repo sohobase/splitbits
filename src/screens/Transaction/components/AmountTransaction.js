@@ -112,6 +112,9 @@ AmountTransaction.defaultProps = {
   wallet: {},
 };
 
-const mapStateToProps = ({ currencies, device }) => ({ currencies, device });
+const mapStateToProps = ({ currencies, device }) => ({
+  currencies: currencies[device.currency],
+  device,
+});
 
 export default connect(mapStateToProps)(AmountTransaction);

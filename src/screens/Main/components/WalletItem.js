@@ -81,7 +81,7 @@ WalletItem.defaultProps = {
 };
 
 const mapStateToProps = ({ currencies, device }) => ({
-  currencies,
+  currencies: currencies[device.currency],
   device,
 });
 

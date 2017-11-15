@@ -14,6 +14,18 @@ export default {
   FIAT: {
     EUR: 'EUR',
     USD: 'USD',
+    GBP: 'GBP',
+    JPY: 'JPY',
+  },
+
+  SYMBOL: {
+    EUR: '€',
+    USD: '$',
+    GBP: '£',
+    JPY: '¥',
+
+    BTC: '฿',
+    LTC: 'Ł',
   },
 
   SATOSHI: 0.00000001,
@@ -49,5 +61,6 @@ export default {
   VERB: {
     CREATE: 'create',
     IMPORT: 'import',
+    SAVE: 'save',
   },
 };
