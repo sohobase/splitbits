@@ -9,8 +9,8 @@ const relationship = async(endpoint, props, action, method = 'POST') => {
 
 export default {
 
-  async update(props = {}, action) {
-    const { image, name } = props;
+  async update(props = {}) {
+    const { currency, image, name } = props;
     const body = new FormData(); // eslint-disable-line
 
     if (image) {
@@ -22,10 +22,10 @@ export default {
         type: `image/${fileType}`,
       });
     }
+    if (currency) body.append('currency', currency);
     if (name) body.append('name', name);
 
     const response = await service('device', { method: 'PUT', body }, true);
-    if (response && action) action(response);
 
     return response;
   },
@@ -48,9 +48,5 @@ export default {
 
   remove(props = {}, action) {
     return relationship('device/remove', props, action, 'DELETE');
-  },
-
-  settings(props = {}, action) {
-
   },
 };
