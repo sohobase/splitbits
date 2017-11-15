@@ -19,7 +19,7 @@ const TransactionInfo = (props) => {
   const device = devices.find(({ id }) => id === from.device || id === to.device);
 
   return (
-    <Animatable animation="bounceInUp" delay={600}>
+    <Animatable animation="bounceInUp" delay={500}>
       <View style={styles.container}>
         { device
           ?

@@ -129,7 +129,7 @@ class Transaction extends Component {
               <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
             </Button> }
           { item && item.state === REQUESTED &&
-            <Animatable animation="bounceInUp" delay={800}>
+            <Animatable animation="bounceInUp" delay={600}>
               { wallet.address !== item.to.address
                 ? // @TODO: Accept a request
                   <Button accent disabled={balance <= item.amount} _onPress={_onSubmit} style={styles.button}>

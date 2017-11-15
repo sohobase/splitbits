@@ -64,7 +64,7 @@ class AmountTransaction extends Component {
           navigation={navigation}
           buttonRight={editable ? { icon: 'swap', onPress: _onSwap } : undefined}
         />
-        <Animatable animation="bounceIn" delay={600} style={styles.preview}>
+        <Animatable animation="bounceIn" delay={400} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
             <Text style={[styles.label]}>{from}</Text>
             { editable
