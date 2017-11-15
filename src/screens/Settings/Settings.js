@@ -1,6 +1,7 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
+import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
 import { C, SHAPE, STYLE, THEME } from '../../config';
@@ -71,29 +72,31 @@ class Settings extends Component {
 
     return (
       <View style={[STYLE.SCREEN, styles.screen]}>
-        <Header title="Settings" navigation={navigation} tintColor={COLOR.TEXT_DEFAULT} />
-        <View>
-          <View style={[STYLE.LIST_ITEM, styles.thumb]}>
-            <View style={styles.image}>
-              <Image source={{ uri: imageUrl }} style={[styles.image, styles.imageBorder]} />
+        <Header title="Settings" navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
+        <Animatable animation="bounceInUp" delay={400}>
+          <View>
+            <View style={[STYLE.LIST_ITEM, styles.thumb]}>
+              <View style={styles.image}>
+                <Image source={{ uri: imageUrl }} style={[styles.image, styles.imageBorder]} />
+              </View>
+              <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
             </View>
-            <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
+            <View style={STYLE.LIST_ITEM}>
+              <Text style={styles.label}>Name</Text>
+              <Input
+                autoFocus={!name || name.length === 0}
+                onChangeText={_onName}
+                placeholder="Choose a name..."
+                style={styles.input}
+                value={name}
+              />
+            </View>
+            <View style={STYLE.LIST_ITEM} >
+              <Text style={styles.label}>Currency</Text>
+              <Text style={styles.input} onPress={_onModalCurrency}>{currency}</Text>
+            </View>
           </View>
-          <View style={STYLE.LIST_ITEM}>
-            <Text style={styles.label}>Name</Text>
-            <Input
-              autoFocus={!name || name.length === 0}
-              onChangeText={_onName}
-              placeholder="Choose a name..."
-              style={styles.input}
-              value={name}
-            />
-          </View>
-          <View style={STYLE.LIST_ITEM} >
-            <Text style={styles.label}>Currency</Text>
-            <Text style={styles.input} onPress={_onModalCurrency}>{currency}</Text>
-          </View>
-        </View>
+        </Animatable>
         <CameraModal visible={modalImage} onClose={_onModalImage} onFile={_onImage} />
         <CurrencyModal visible={modalCurrency} onClose={_onModalCurrency} onValue={_onCurrency} />
       </View>

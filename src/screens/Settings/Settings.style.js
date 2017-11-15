@@ -9,7 +9,6 @@ export default StyleSheet.create({
   },
 
   header: {
-    // backgroundColor: COLOR.ACCENT,
     borderBottomWidth: 1,
     borderBottomColor: COLOR.DIVIDER,
   },
@@ -29,15 +28,9 @@ export default StyleSheet.create({
 
   buttonCamera: {
     position: 'absolute',
-    left: AVATAR_SIZE / 2,
-    // right: -OFFSET,
+    left: '50%',
     bottom: -OFFSET,
     transform: [{ scale: 0.6 }],
-    // alignSelf: 'center',
-  },
-
-  buttonSave: {
-    margin: OFFSET,
   },
 
   input: {
