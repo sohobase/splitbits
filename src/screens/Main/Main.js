@@ -101,7 +101,10 @@ class Main extends Component {
           onSend={() => _onNewTransaction(SEND)}
         />
         <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} onSuccess={_onModalWallet} />
-        <WalletInfoModal visible={modalWalletInfo} wallet={wallets[index]} onClose={_onWallet} />
+        {
+          wallets[index] &&
+          <WalletInfoModal visible={modalWalletInfo} wallet={wallets[index]} onClose={_onWallet} />
+        }
       </View>
     );
   }
