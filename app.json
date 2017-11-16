@@ -5,7 +5,7 @@
     "slug": "sohobase-splitbits",
     "privacy": "public",
     "sdkVersion": "22.0.0",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "orientation": "portrait",
     "primaryColor": "#3f51b5",
     "icon": "./assets/app-icon.png",

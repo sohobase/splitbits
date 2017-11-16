@@ -1,6 +1,6 @@
 {
   "name": "Splitbits",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": true,
   "contributors": [
     {
@@ -33,11 +33,10 @@
   },
   "dependencies": {
     "color": "^2.0.0",
-    "expo": "^22.0.0",
-    "identicon.js": "^2.3.1",
+    "expo": "^22.0.2",
     "prop-types": "^15.5.10",
-    "react": "16.1.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.0.tar.gz",
+    "react": "16.0.0",
+    "react-native": "^0.49.5",
     "react-native-animatable": "^1.2.3",
     "react-native-elements": "^0.18.2",
     "react-native-qrcode": "^0.2.6",
