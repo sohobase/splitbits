@@ -6,11 +6,11 @@ import Icon from './Icon';
 import Touchable from './Touchable';
 import styles from './Option.style';
 
-const Option = ({ activity, caption, centered, icon, image, onPress, style, hint }) => (
-  <Touchable onPress={onPress} activeOpacity={0.95}>
-    <View style={[styles.option, (centered ? STYLE.CENTERED : [STYLE.ROW, styles.row]), style]}>
+const Option = ({ activity, caption, centered, disabled, icon, image, onPress, style, hint }) => (
+  <Touchable onPress={!disabled ? onPress : undefined} activeOpacity={0.95}>
+    <View style={[styles.option, (centered ? STYLE.CENTERED : [STYLE.ROW, styles.row]), (disabled && styles.disabled), style]}>
       { image && <Image source={image} style={styles.image} /> }
-      { icon && <Icon value={icon} style={[styles.icon, (!centered && styles.iconAccent)]} /> }
+      { icon && <Icon value={icon} style={[styles.icon, (!disabled && !centered && styles.iconAccent)]} /> }
       { activity && <View style={styles.activity} />}
       <View style={!centered && icon && styles.texts}>
         <Text style={[centered ? styles.text : styles.caption]}>{caption}</Text>
@@ -24,6 +24,7 @@ Option.propTypes = {
   activity: bool,
   caption: string,
   centered: bool,
+  disabled: bool,
   hint: string,
   icon: string,
   image: number,
@@ -35,6 +36,7 @@ Option.defaultProps = {
   activity: false,
   caption: undefined,
   centered: false,
+  disabled: false,
   hint: undefined,
   icon: undefined,
   image: undefined,

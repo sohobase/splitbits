@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT, FOOTER_SIZE, UNIT, OFFSET } = THEME;
+const { COLOR, DISABLED, FONT, FOOTER_SIZE, UNIT, OFFSET } = THEME;
 
 export default StyleSheet.create({
   option: {
     minHeight: FOOTER_SIZE,
     backgroundColor: COLOR.WHITE,
+  },
+
+  disabled: {
+    opacity: DISABLED,
   },
 
   icon: {
