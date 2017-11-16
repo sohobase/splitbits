@@ -28,7 +28,6 @@ const screens = {
   Profile: { screen: ProfileScreen, navigationOptions },
   Friends: { screen: FriendsScreen, navigationOptions },
   Settings: { screen: SettingsScreen, navigationOptions },
-  Wallet: { screen: WalletScreen, navigationOptions },
 };
 
 const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Main' });
