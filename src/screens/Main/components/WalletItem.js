@@ -2,7 +2,6 @@ import { array, func, number, oneOfType } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
-import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { C, SHAPE, STYLE, THEME } from '../../../config';
 import { Amount, Button, Icon } from '../../../components';
@@ -25,15 +24,16 @@ const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress,
     <Animatable
       animation="bounceIn"
       duration={DURATION}
-      onPress={onPress}
       style={[styles.container, (!data ? styles.empty : undefined), style]}
     >
       {
         data ?
           <View style={styles.content}>
+            <Button captionStyle={styles.menuIcon} icon="menu" onPress={onPress} raised style={styles.menu} />
             <View style={styles.info}>
-              <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
-              { type === PRO && <Text style={styles.pro}>PRO</Text> }
+              <View style={STYLE.ROW}>
+                <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
+              </View>
               <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
               <Amount
                 coin={currency}
@@ -44,9 +44,7 @@ const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress,
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
               <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
-            </View>
-            <View style={styles.qr}>
-              <QRCode value={address} size={QR_SIZE} fgColor={COLOR.WHITE} bgColor={COLOR.BLACK} />
+              { type === PRO && <Text style={styles.pro}>PRO</Text> }
             </View>
           </View>
           :

@@ -33,6 +33,7 @@ export default StyleSheet.create({
 
   info: {
     flex: 1,
+    width: '90%',
   },
 
   name: {
@@ -46,7 +47,7 @@ export default StyleSheet.create({
 
   pro: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     right: 0,
     padding: UNIT / 2,
     backgroundColor: COLOR.ACCENT,
@@ -72,12 +73,14 @@ export default StyleSheet.create({
     marginRight: UNIT / 2,
   },
 
-  qr: {
+  menu: {
     position: 'absolute',
-    right: OFFSET,
-    bottom: OFFSET,
-    width: QR_SIZE,
-    height: QR_SIZE,
+    right: -UNIT,
+    top: 0,
+  },
+
+  menuIcon: {
+    tintColor: COLOR.TEXT_SECONDARY,
   },
 
   options: {

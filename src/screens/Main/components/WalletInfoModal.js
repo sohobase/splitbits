@@ -5,6 +5,7 @@ import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { Modal, Option } from '../../../components';
 import { C, SHAPE, STYLE, THEME } from '../../../config';
+import { ServiceWallet } from '../../../services';
 import styles from './WalletInfoModal.style';
 
 const { QR_SIZE } = THEME;
@@ -20,7 +21,7 @@ class WalletModal extends Component {
 
   _onArchive() {
     const { props: { onClose } } = this;
-    console.log('onArchive');
+    console.log('onArchive', ServiceWallet);
     onClose();
   }
 
@@ -39,7 +40,7 @@ class WalletModal extends Component {
   render() {
     const {
       _onArchive, _onBackup, _onPro,
-      props: { onClose, visible, wallet: { address, type } },
+      props: { onClose, visible, wallet: { address, imported, type, readOnly } },
     } = this;
 
     return (
@@ -49,26 +50,26 @@ class WalletModal extends Component {
           <Text style={styles.address}>{address}</Text>
         </View>
         <View style={[STYLE.COL]}>
-          { type !== PRO &&
-            <Option
-              caption="Switch to PRO"
-              hint="Your wallet will be much better."
-              icon="star"
-              onPress={_onPro}
-              disabled
-            /> }
           <Option
-            caption="Create a Backup"
-            hint="It's recomendable"
+            caption="Create a backup"
+            hint="The simplest way to have control of your wallet."
             icon="backup"
             onPress={_onBackup}
           />
           <Option
             caption="Archive this wallet"
-            hint="lorem ipsum..."
+            hint="If you do not want to use this wallet anymore."
             icon="remove"
             onPress={_onArchive}
           />
+          { type !== PRO &&
+            <Option
+              caption="Switch to PRO"
+              hint="Super powers for your wallet."
+              icon="star"
+              onPress={_onPro}
+              disabled
+            /> }
         </View>
       </Modal>
     );
