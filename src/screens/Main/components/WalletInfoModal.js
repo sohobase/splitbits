@@ -1,11 +1,12 @@
 import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
+import { connect } from 'react-redux';
 import { Modal, Option } from '../../../components';
 import { C, SHAPE, STYLE, THEME } from '../../../config';
-import { ServiceWallet } from '../../../services';
+import { WalletService } from '../../../services';
+import { removeWalletAction } from '../../../store/actions';
 import styles from './WalletInfoModal.style';
 
 const { QR_SIZE } = THEME;
@@ -19,9 +20,11 @@ class WalletModal extends Component {
     this._onPro = this._onPro.bind(this);
   }
 
-  _onArchive() {
-    const { props: { onClose } } = this;
-    console.log('onArchive', ServiceWallet);
+  async _onArchive() {
+    const { onClose, removeWallet, wallet } = this.props;
+
+    removeWallet(wallet);
+    await WalletService.archive({ id: wallet.id });
     onClose();
   }
 
@@ -78,14 +81,21 @@ class WalletModal extends Component {
 
 WalletModal.propTypes = {
   onClose: func,
+  removeWallet: func,
   visible: bool,
   wallet: SHAPE.WALLET,
 };
 
 WalletModal.defaultProps = {
   onClose: undefined,
+  removeWallet() {},
   visible: false,
   wallet: undefined,
 };
 
-export default WalletModal;
+const mapStateToProps = undefined;
+const mapDispatchToProps = dispatch => ({
+  removeWallet: wallet => dispatch(removeWalletAction(wallet)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletModal);
