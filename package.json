@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "assert": "^1.4.1",
+    "bip39": "^2.4.0",
     "bitcoinjs-lib": "^3.3.0",
     "buffer": "^5.0.8",
     "color": "^2.0.0",
