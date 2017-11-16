@@ -5,7 +5,6 @@ import ProfileScreen from './Profile';
 import FriendsScreen from './Friends';
 import SettingsScreen from './Settings';
 import TransactionScreen from './Transaction';
-import WalletScreen from './Wallet';
 
 export {
   LoadingScreen,
@@ -15,5 +14,4 @@ export {
   FriendsScreen,
   SettingsScreen,
   TransactionScreen,
-  WalletScreen,
 };
