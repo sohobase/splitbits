@@ -1,27 +1,40 @@
-import './node-hacks'
-import bitcoinjs from 'bitcoinjs-lib'
-import { PushService } from './';
-import { service } from './modules';
-import { C } from '../config'
+import BitcoinJS from 'bitcoinjs-lib';
+import { nodeEnvironment, service } from './modules';
+import { C } from '../config';
+
+const { CRYPTO_NAMES } = C;
+
+const save = async(props) => {
+  const {
+    coin, name, wif, imported,
+  } = props;
+  const address = BitcoinJS.ECPair.fromWIF(wif).getAddress();
+  const response = await service('wallet', {
+    method: 'POST',
+    body: JSON.stringify({
+      coin, name, address, imported,
+    }),
+  });
+
+  return response;
+};
 
 export default {
   create(props) {
-    const network = bitcoinjs.networks[C.CRYPTO_NAMES[props.coin]];
-    const ecPair = new bitcoinjs.ECPair.makeRandom({ network });
-    return this._save({ ...props, imported: false, wif: ecPair.toWIF() });
+    const network = BitcoinJS.networks[CRYPTO_NAMES[props.coin]];
+    const ecPair = new BitcoinJS.ECPair.makeRandom({ network }); //eslint-disable-line
+
+    return save({ ...props, imported: false, wif: ecPair.toWIF() });
   },
 
   import(props) {
-    return this._save({ ...props, imported: true });
+    return save({ ...props, imported: true });
   },
 
-  async _save(props) {
-    const { coin, name, wif, imported } = props;
-    const address = bitcoinjs.ECPair.fromWIF(wif).getAddress()
-    const resp = await service('wallet', {
-      method: 'POST',
-      body: JSON.stringify({coin, name, address, imported})
+  async archive(props) {
+    return service('wallet', {
+      method: 'DELETE',
+      body: JSON.stringify(props),
     });
-    return { ...resp, wif }
-  }
+  },
 };
