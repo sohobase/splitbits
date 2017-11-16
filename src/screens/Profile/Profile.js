@@ -16,11 +16,11 @@ const Profile = ({ device: { session }, navigation }) => (
       <Header
         title="Profile"
         navigation={navigation}
-        buttonRight={{ icon: 'add', onPress: () => navigation.navigate('Friends') }}
+        buttonRight={{ icon: 'addDevice', onPress: () => navigation.navigate('Friends') }}
       />
       <Animatable animation="bounceIn" delay={400} style={styles.preview}>
         <View style={[STYLE.CENTERED, styles.preview]}>
-          <QRCode value={session} size={QR_SIZE * 2} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+          <QRCode value={session} size={QR_SIZE} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
         </View>
       </Animatable>
       <Animatable animation="bounceIn" delay={600}>
