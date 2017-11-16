@@ -7,6 +7,11 @@ export default {
     LTC: 'LTC',
   },
 
+  CRYPTO_NAMES: {
+    BTC: 'bitcoin',
+    LTC: 'litecoin',
+  },
+
   DEFAULTS: {
     TOKEN: 'sohobase-splitbits-dev',
   },
