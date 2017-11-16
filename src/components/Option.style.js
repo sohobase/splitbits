@@ -51,4 +51,11 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.SMALL,
     color: COLOR.TEXT_SECONDARY,
   },
+
+  row: {
+    paddingLeft: OFFSET,
+    paddingRight: OFFSET,
+    paddingBottom: UNIT,
+    paddingTop: UNIT,
+  },
 });

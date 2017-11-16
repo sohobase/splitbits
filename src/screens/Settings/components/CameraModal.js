@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { FileSystem, ImagePicker } from 'expo';
 import { Modal, Option } from '../../../components';
 import { STYLE } from '../../../config';
-import styles from './CameraModal.style';
 
 const CameraModal = ({ onClose, onFile, visible }) => {
   const launchCamera = async() => {
@@ -41,14 +40,12 @@ const CameraModal = ({ onClose, onFile, visible }) => {
           hint="lorem ipsum..."
           icon="camera"
           onPress={launchCamera}
-          style={styles.option}
         />
         <Option
           caption="Gallery"
           hint="lorem ipsum..."
           icon="gallery"
           onPress={launchImageLibrary}
-          style={styles.option}
         />
       </View>
     </Modal>

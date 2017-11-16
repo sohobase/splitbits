@@ -8,7 +8,7 @@ import styles from './Option.style';
 
 const Option = ({ activity, caption, centered, icon, image, onPress, style, hint }) => (
   <Touchable onPress={onPress} activeOpacity={0.95}>
-    <View style={[styles.option, (centered ? STYLE.CENTERED : STYLE.ROW), style]}>
+    <View style={[styles.option, (centered ? STYLE.CENTERED : [STYLE.ROW, styles.row]), style]}>
       { image && <Image source={image} style={styles.image} /> }
       { icon && <Icon value={icon} style={[styles.icon, (!centered && styles.iconAccent)]} /> }
       { activity && <View style={styles.activity} />}

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Button } from '../../components';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { WalletModal } from '../../containers';
-import { Header, Footer, TransactionModal, Transactions, WalletItem } from './components';
+import { Header, Footer, TransactionModal, Transactions, WalletItem, WalletInfoModal } from './components';
 import styles from './Main.style';
 
 const { DURATION } = THEME.ANIMATION;
@@ -20,11 +20,13 @@ class Main extends Component {
       index: undefined,
       modalTransaction: false,
       modalWallet: false,
+      modalWalletInfo: false,
     };
     this._onNewTransaction = this._onNewTransaction.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onModalWallet = this._onModalWallet.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
+    this._onWallet = this._onWallet.bind(this);
   }
 
   _onNewTransaction(type) {
@@ -45,15 +47,19 @@ class Main extends Component {
     this.setState({ importWallet: context === IMPORT, modalWallet: !this.state.modalWallet });
   }
 
+  _onWallet() {
+    this.setState({ modalWalletInfo: !this.state.modalWalletInfo });
+  }
+
   async _onSwipeWallet(event, { index }) {
     this.setState({ index });
   }
 
   render() {
     const {
-      _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet,
+      _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
-      state: { index = 0, importWallet, modalTransaction, modalWallet },
+      state: { index = 0, importWallet, modalTransaction, modalWallet, modalWalletInfo },
     } = this;
 
     return (
@@ -71,7 +77,7 @@ class Main extends Component {
             style={styles.wallets}
           >
             {[
-              ...wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} />),
+              ...wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} onPress={_onWallet} />),
               <WalletItem key="new" onOption={_onModalWallet} />,
             ]}
           </Swiper>
@@ -95,6 +101,7 @@ class Main extends Component {
           onSend={() => _onNewTransaction(SEND)}
         />
         <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} onSuccess={_onModalWallet} />
+        <WalletInfoModal visible={modalWalletInfo} wallet={wallets[index]} onClose={_onWallet} />
       </View>
     );
   }

@@ -3,7 +3,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { Modal, Option } from '../../../components';
 import { STYLE } from '../../../config';
-import styles from './TransactionModal.style';
 
 const TransactionModal = ({ onClose, onRequest, onSend, visible }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
@@ -13,14 +12,12 @@ const TransactionModal = ({ onClose, onRequest, onSend, visible }) => (
         hint="lorem ipsum..."
         icon="arrowForward"
         onPress={onSend}
-        style={styles.option}
       />
       <Option
         caption="Request Money"
         hint="lorem ipsum..."
         icon="arrowBack"
         onPress={onRequest}
-        style={styles.option}
       />
     </View>
   </Modal>
