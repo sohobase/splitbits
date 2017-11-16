@@ -17,14 +17,14 @@ const renderButton = (props = {}, animation, tintColor) => (
 const Header = ({ animation, buttonRight, children, navigation, style, tintColor, title }) => (
   <View style={[STYLE.ROW, styles.header, style]}>
     { navigation &&
-      renderButton({ icon: 'arrowBack', onPress: () => navigation.goBack() }, { animation, delay: 200 }, tintColor) }
-    <Animatable animation={animation} delay={300} style={styles.content}>
+      renderButton({ icon: 'arrowBack', onPress: () => navigation.goBack() }, { animation, delay: 100 }, tintColor) }
+    <Animatable animation={animation} delay={200} style={styles.content}>
       <View style={STYLE.CENTERED}>
         { title && <Text style={[styles.title, (tintColor && { color: tintColor })]}>{title}</Text> }
         { children }
       </View>
     </Animatable>
-    { navigation && renderButton(buttonRight, { animation, delay: 400 }, tintColor) }
+    { navigation && renderButton(buttonRight, { animation, delay: 300 }, tintColor) }
   </View>
 );
 
