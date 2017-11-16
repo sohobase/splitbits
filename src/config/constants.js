@@ -1,3 +1,5 @@
+import { Constants } from 'expo'
+
 export default {
 
   MIN_CONFIRMATIONS: 3,
@@ -30,9 +32,7 @@ export default {
 
   SATOSHI: 0.00000001,
 
-  SERVICE: 'http://localhost:3000/',
-  // SERVICE: 'http://100.76.165.45:3000/',
-  // SERVICE: 'http://172.17.164.83:3000/',
+  SERVICE: Constants.linkingUrl.replace(/^\w+:\/\/([^:\/]+):\d+\/.*$/, 'http://$1:3000/'),
 
   STATE: {
     // -- Transactions
