@@ -8,7 +8,9 @@ import styles from './Modal.style';
 
 const { ANIMATION: { DURATION } } = THEME;
 
-const Modal = ({ children, onClose, title, visible }) => (
+const Modal = ({
+  children, onClose, title, visible,
+}) => (
   <ReactNativeModal
     transparent
     visible={visible}
@@ -35,9 +37,7 @@ const Modal = ({ children, onClose, title, visible }) => (
             captionStyle={styles.buttonCloseCaption}
           />
         </View>
-        <View style={styles.children}>
-          { children }
-        </View>
+        { children }
       </Animatable>
     </Animatable>
   </ReactNativeModal>

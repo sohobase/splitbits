@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT, ICON_SIZE, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, ICON_SIZE, OFFSET, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -19,6 +21,8 @@ export default StyleSheet.create({
     backgroundColor: COLOR.WHITE,
     borderTopLeftRadius: UNIT,
     borderTopRightRadius: UNIT,
+    marginBottom: -OFFSET,
+    paddingBottom: 2 * OFFSET,
   },
 
   header: {
@@ -40,9 +44,5 @@ export default StyleSheet.create({
 
   buttonCloseCaption: {
     tintColor: COLOR.TEXT_DISABLED,
-  },
-
-  children: {
-    paddingBottom: OFFSET,
   },
 });
