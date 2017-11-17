@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT, UNIT, OFFSET } = THEME;
+const { COLOR, FONT, UNIT } = THEME;
 
 export default StyleSheet.create({
   input: {
@@ -15,6 +15,5 @@ export default StyleSheet.create({
 
   highlight: {
     color: COLOR.WHITE,
-    // fontWeight: FONT.WEIGHT.BOLD,
   },
 });
