@@ -30,8 +30,8 @@ class WalletModal extends Component {
   }
 
   _onBackup() {
-    const { props: { onClose } } = this;
-    console.log('onBackup');
+    const { props: { onBackup, onClose } } = this;
+    onBackup();
     onClose();
   }
 
@@ -44,7 +44,7 @@ class WalletModal extends Component {
   render() {
     const {
       _onArchive, _onBackup, _onPro,
-      props: { onClose, visible, wallet: { address, imported, type, readOnly } },
+      props: { onClose, visible, wallet: { address, hexSeed, imported, type, readOnly } },
     } = this;
 
     return (
@@ -54,12 +54,13 @@ class WalletModal extends Component {
           <Text style={styles.address}>{address}</Text>
         </View>
         <View style={[STYLE.COL]}>
-          <Option
-            caption="Create a backup"
-            hint="The simplest way to have control of your wallet."
-            icon="backup"
-            onPress={_onBackup}
-          />
+          { hexSeed &&
+            <Option
+              caption="Create a backup"
+              hint="The simplest way to have control of your wallet."
+              icon="backup"
+              onPress={_onBackup}
+            /> }
           <Option
             caption="Archive this wallet"
             hint="If you do not want to use this wallet anymore."
@@ -81,6 +82,7 @@ class WalletModal extends Component {
 }
 
 WalletModal.propTypes = {
+  onBackup: func,
   onClose: func,
   removeWallet: func,
   visible: bool,
@@ -88,6 +90,7 @@ WalletModal.propTypes = {
 };
 
 WalletModal.defaultProps = {
+  onBackup() {},
   onClose: undefined,
   removeWallet() {},
   visible: false,

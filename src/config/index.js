@@ -2,6 +2,7 @@ import C from './constants';
 import ICONS from './icons';
 import SHAPE from './shape';
 import STYLE from './style';
+import TEXT from './text';
 import THEME from './theme';
 
 export {
@@ -9,5 +10,6 @@ export {
   ICONS,
   SHAPE,
   STYLE,
+  TEXT,
   THEME,
 };

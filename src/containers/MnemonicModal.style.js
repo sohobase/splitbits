@@ -11,18 +11,25 @@ export default StyleSheet.create({
   },
 
   input: {
-    width: '27.5%',
     margin: UNIT / 2,
-    textAlign: 'center',
     borderBottomWidth: 1,
     borderBottomColor: COLOR.DIVIDER,
   },
 
-  text: {
+  word: {
     textAlign: 'center',
-    width: 'auto',
-    paddingLeft: 0,
-    paddingRight: 0,
+    width: '27.5%',
+  },
+
+  hint: {
+    alignSelf: 'center',
+    color: COLOR.TEXT_SECONDARY,
+    fontSize: FONT.SIZE.SMALL,
+    marginLeft: OFFSET,
+    marginRight: OFFSET,
+    marginTop: UNIT,
+    marginBottom: UNIT,
+    textAlign: 'center',
   },
 
   button: {

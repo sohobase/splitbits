@@ -1,14 +1,16 @@
-import { bool, func } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal } from '../components';
-import { C, STYLE } from '../config';
-import { StateService, WalletService } from '../services';
+import { C, SHAPE, STYLE, TEXT } from '../config';
+import { MnemonicService, StateService, WalletService } from '../services';
 import { addWalletAction, updateDeviceAction } from '../store/actions';
 import styles from './MnemonicModal.style';
 
-const { VERB: { CREATE, IMPORT } } = C;
+// const { VERB: { CREATE, IMPORT } } = C;
+const { WALLET } = SHAPE;
+const { EN: { PAPER_WALLET } } = TEXT;
 const WORDS = 12;
 
 class MnemonicModal extends Component {
@@ -16,10 +18,17 @@ class MnemonicModal extends Component {
     super(props);
 
     this.state = {
-      values: Array(WORDS).fill('hola'),
+      values: Array(WORDS).fill(''),
     };
+
     this._onRestore = this._onRestore.bind(this);
     this._onValue = this._onValue.bind(this);
+  }
+
+  componentWillReceiveProps({ readOnly, wallet: { hexSeed } }) {
+    this.setState({
+      values: (readOnly && hexSeed) ? MnemonicService.backup(hexSeed) : Array(WORDS).fill(''),
+    });
   }
 
   _onValue(position, value) {
@@ -38,22 +47,24 @@ class MnemonicModal extends Component {
     } = this;
 
     return (
-      <Modal title="Mnemonic" visible={visible} onClose={onClose} style={STYLE.CENTERED}>
-        <View style={[STYLE.ROW, STYLE.CsENTERED, styles.words]}>
+      <Modal title="Paper key" visible={visible} onClose={onClose} style={STYLE.CENTERED}>
+        <Text style={styles.hint}>{PAPER_WALLET}</Text>
+        <View style={[STYLE.ROW, styles.words]}>
           { values.map((value, i) => (
             <Input
+              editable={!readOnly}
               key={i.toString()}
               onChangeText={text => _onValue(i, text)}
               placeholder={`Word ${i + 1}`}
-              style={readOnly ? styles.text : styles.input}
+              style={[styles.word, (!readOnly && styles.input)]}
               value={value}
             />)) }
         </View>
 
         <Button
           accent
-          caption={readOnly ? 'I already wrote in a paper' : 'Restore wallet'}
-          disabled={readOnly}
+          caption={readOnly ? 'Already written my paper key' : 'Restore wallet'}
+          disabled={!readOnly}
           onPress={readOnly ? onClose : _onRestore}
           style={styles.button}
         />
@@ -66,12 +77,14 @@ MnemonicModal.propTypes = {
   onClose: func,
   readOnly: bool,
   visible: bool,
+  wallet: shape(WALLET),
 };
 
 MnemonicModal.defaultProps = {
   onClose() {},
   readOnly: false,
   visible: false,
+  wallet: {},
 };
 
 const mapStateToProps = undefined;

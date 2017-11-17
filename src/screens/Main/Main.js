@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
-import { Button } from '../../components';
-import { C, SHAPE, STYLE, THEME } from '../../config';
-import { WalletModal } from '../../containers';
-import { Header, Footer, TransactionModal, Transactions, WalletItem, WalletInfoModal } from './components';
+import { C, SHAPE, STYLE } from '../../config';
+import { WalletModal, MnemonicModal } from '../../containers';
+import {
+  Header, Footer, TransactionButton, TransactionModal, Transactions, WalletItem, WalletInfoModal,
+} from './components';
 import styles from './Main.style';
 
 const { TYPE: { REQUEST, SEND }, VERB: { IMPORT } } = C;
 const { NAVIGATION, WALLET } = SHAPE;
-const { DURATION } = THEME.ANIMATION;
 
 class Main extends Component {
   constructor(props) {
@@ -22,8 +22,10 @@ class Main extends Component {
       modalTransaction: false,
       modalWallet: false,
       modalWalletInfo: false,
+      modalMnemonic: false,
     };
     this._onNewTransaction = this._onNewTransaction.bind(this);
+    this._onMnemonic = this._onMnemonic.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onModalWallet = this._onModalWallet.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
@@ -48,6 +50,10 @@ class Main extends Component {
     this.setState({ importWallet: context === IMPORT, modalWallet: !this.state.modalWallet });
   }
 
+  _onMnemonic() {
+    this.setState({ modalMnemonic: !this.state.modalMnemonic });
+  }
+
   _onWallet() {
     this.setState({ modalWalletInfo: !this.state.modalWalletInfo });
   }
@@ -58,10 +64,10 @@ class Main extends Component {
 
   render() {
     const {
-      _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet, _onWallet,
+      _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onSwipeWallet, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
       state: {
-        index = 0, importWallet, modalTransaction, modalWallet, modalWalletInfo,
+        index = 0, importWallet, modalMnemonic, modalTransaction, modalWallet, modalWalletInfo,
       },
     } = this;
 
@@ -87,16 +93,7 @@ class Main extends Component {
         </View>
         <Transactions navigate={navigate} wallet={wallets[index]} />
         <Footer navigate={navigate} />
-        <Button
-          accent
-          animation={modalTransaction ? 'bounceOutDown' : 'bounceInUp'}
-          delay={modalTransaction ? 0 : DURATION / 2}
-          duration={DURATION}
-          circle
-          icon="operations"
-          onPress={_onModal}
-          style={styles.button}
-        />
+        <TransactionButton onPress={_onModal} visible={!modalTransaction} />
         <TransactionModal
           visible={modalTransaction}
           onClose={_onModal}
@@ -104,10 +101,14 @@ class Main extends Component {
           onSend={() => _onNewTransaction(SEND)}
         />
         <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} onSuccess={_onModalWallet} />
-        {
-          wallets[index] &&
-          <WalletInfoModal visible={modalWalletInfo} wallet={wallets[index]} onClose={_onWallet} />
-        }
+        { wallets[index] &&
+          <WalletInfoModal
+            visible={modalWalletInfo}
+            wallet={wallets[index]}
+            onBackup={_onMnemonic}
+            onClose={_onWallet}
+          /> }
+        <MnemonicModal visible={modalMnemonic} readOnly onClose={_onMnemonic} wallet={wallets[index]} />
       </View>
     );
   }

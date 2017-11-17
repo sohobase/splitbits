@@ -41,11 +41,6 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
-  inputActive: {
-    borderBottomColor: COLOR.ACCENT,
-    borderBottomWidth: 2,
-  },
-
   inputAddress: {
     fontSize: FONT.SIZE.TINY,
   },
