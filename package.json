@@ -33,8 +33,10 @@
   },
   "dependencies": {
     "assert": "^1.4.1",
+    "bigi": "^1.4.2",
     "bip39": "^2.4.0",
     "bitcoinjs-lib": "^3.3.0",
+    "bs58check": "^2.1.0",
     "buffer": "^5.0.8",
     "color": "^2.0.0",
     "events": "^1.1.1",
@@ -51,6 +53,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-persist": "^4.9.1",
-    "stream-browserify": "^2.0.1"
+    "stream-browserify": "^2.0.1",
+    "wif": "^2.0.6"
   }
 }
