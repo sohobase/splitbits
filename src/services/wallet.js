@@ -4,31 +4,32 @@ import { C } from '../config';
 
 const { CRYPTO_NAMES } = C;
 
-const save = async(props) => {
-  const {
-    coin, name, wif, imported,
-  } = props;
-  const address = BitcoinJS.ECPair.fromWIF(wif).getAddress();
-  const response = await service('wallet', {
-    method: 'POST',
-    body: JSON.stringify({
-      coin, name, address, imported,
-    }),
-  });
-
-  return response;
-};
-
 export default {
-  create(props) {
-    const network = BitcoinJS.networks[CRYPTO_NAMES[props.coin]];
+  async create({ coin, name }) {
+    const network = BitcoinJS.networks[CRYPTO_NAMES[coin]];
     const ecPair = new BitcoinJS.ECPair.makeRandom({ network }); //eslint-disable-line
+    const wif = ecPair.toWIF();
+    const address = BitcoinJS.ECPair.fromWIF(wif).getAddress();
 
-    return save({ ...props, imported: false, wif: ecPair.toWIF() });
+    const wallet = await service('wallet', {
+      method: 'POST',
+      body: JSON.stringify({ address, coin, name }),
+    });
+
+    return ({ ...wallet, wif });
   },
 
-  import(props) {
-    return save({ ...props, imported: true });
+  async import({ address, wif, ...props }) {
+    if (wif) address = BitcoinJS.ECPair.fromWIF(wif).getAddress();
+
+    const wallet = await service('wallet', {
+      method: 'POST',
+      body: JSON.stringify({
+        ...props, address, imported: true, readOnly: (wif === undefined),
+      }),
+    });
+
+    return ({ ...wallet, wif });
   },
 
   async archive(props) {
