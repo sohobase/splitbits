@@ -40,7 +40,7 @@ export const addWalletAction = wallet => ({
 });
 
 export const REMOVE_WALLET = '@xCryptos/REMOVE_WALLET';
-export const removeAlertAction = wallet => ({
+export const removeWalletAction = wallet => ({
   type: REMOVE_WALLET,
   wallet,
 });
