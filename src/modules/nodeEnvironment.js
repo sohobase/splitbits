@@ -8,6 +8,10 @@ process.browser = true;
 // @TODO: Use CSPRNG
 global.crypto = {
   getRandomValues(value) {
-    return value.map(() => Math.floor(Math.random() * 0xFF));
+    for (let i = 0, len = value.length; i < len; i += 1) {
+      value[i] = Math.floor(Math.random() * 0xFF);
+    }
+
+    return value;
   },
 };

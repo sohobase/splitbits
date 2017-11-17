@@ -1,5 +1,5 @@
 import BitcoinJS from 'bitcoinjs-lib';
-import { nodeEnvironment, service } from './modules';
+import { service } from './modules';
 import { C } from '../config';
 
 const { CRYPTO_NAMES } = C;
