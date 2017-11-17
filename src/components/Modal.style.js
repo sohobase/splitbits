@@ -26,20 +26,20 @@ export default StyleSheet.create({
   },
 
   header: {
-    paddingLeft: OFFSET,
     paddingTop: OFFSET,
     paddingBottom: UNIT,
   },
 
   title: {
-    flex: 1,
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
+    alignSelf: 'center',
   },
 
   buttonClose: {
-    marginLeft: ICON_SIZE * -1,
+    position: 'absolute',
     right: UNIT,
+    top: -(OFFSET + UNIT),
   },
 
   buttonCloseCaption: {
