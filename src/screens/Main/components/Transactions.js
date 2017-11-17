@@ -19,11 +19,6 @@ class Transactions extends Component {
     this._renderTransaction = this._renderTransaction.bind(this);
   }
 
-  componentDidMount() {
-    const { wallet } = this.props;
-    if (wallet) this._onRefresh(wallet);
-  }
-
   componentWillReceiveProps({ wallet }) {
     const { wallet: { id } = {} } = this.props;
     if (wallet && wallet.id && wallet.id !== id) this._onRefresh(wallet);
