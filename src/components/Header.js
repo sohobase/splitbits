@@ -1,4 +1,4 @@
-import { array, node, number, object, oneOfType, string } from 'prop-types';
+import { array, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -6,6 +6,7 @@ import { SHAPE, STYLE, THEME } from '../config';
 import Button from './Button';
 import styles from './Header.style';
 
+const { BUTTON, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 
 const renderButton = (props = {}, animation, tintColor) => (
@@ -30,9 +31,9 @@ const Header = ({ animation, buttonRight, children, navigation, style, tintColor
 
 Header.propTypes = {
   animation: string,
-  buttonRight: SHAPE.BUTTON,
+  buttonRight: shape(BUTTON),
   children: oneOfType([array, node]),
-  navigation: SHAPE.NAVIGATION,
+  navigation: shape(NAVIGATION),
   style: oneOfType([array, number]),
   tintColor: oneOfType([string, object]),
   title: string,

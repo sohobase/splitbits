@@ -1,3 +1,4 @@
+import { shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -8,6 +9,7 @@ import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import styles from './Profile.style';
 
+const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR, QR_SIZE } = THEME;
 
 const Profile = ({ device: { session }, navigation }) => (
@@ -36,8 +38,8 @@ const Profile = ({ device: { session }, navigation }) => (
 );
 
 Profile.propTypes = {
-  device: SHAPE.DEVICE,
-  navigation: SHAPE.NAVIGATION,
+  device: shape(DEVICE),
+  navigation: shape(NAVIGATION),
 };
 
 Profile.defaultProps = {

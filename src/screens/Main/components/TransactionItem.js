@@ -1,4 +1,4 @@
-import { func } from 'prop-types';
+import { func, shape } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { publicUri } from '../../../modules';
 import styles from './TransactionItem.style';
 
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
+const { CURRENCIES, DEVICE, TRANSACTION , WALLET } = SHAPE;
 
 const verboseTitle = ({ emitter, concept, other: { name }, state, payment }) => {
   if (!name) return concept;
@@ -42,7 +43,11 @@ const TransactionItem = (props) => {
           />
         </View>
         <View style={styles.info}>
-          <Text style={styles.title}>{verboseTitle({ emitter: (address !== to.address), concept, other, state, payment })}</Text>
+          <Text style={styles.title}>
+            {verboseTitle({
+              emitter: (address !== to.address), concept, other, state, payment,
+            })}
+          </Text>
           <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
           { other.name && <Text style={[styles.label]}>{concept}</Text> }
         </View>
@@ -61,11 +66,11 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
-  currencies: SHAPE.CURRENCIES,
-  data: SHAPE.TRANSACTION,
-  device: SHAPE.DEVICE,
+  currencies: shape(CURRENCIES),
+  data: shape(TRANSACTION),
+  device: shape(DEVICE),
   onPress: func,
-  wallet: SHAPE.WALLET,
+  wallet: shape(WALLET),
 };
 
 TransactionItem.defaultProps = {

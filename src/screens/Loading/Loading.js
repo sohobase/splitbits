@@ -15,16 +15,19 @@ class Loading extends Component {
     const store = await initialize();
     const { wallets: storeWallets } = store.getState();
 
-    if (storeWallets.length > 0) {
-      const response = await StateService.get(storeWallets.map(({ id }) => id));
-
-      if (response) {
-        const { currencies = {}, device = {}, wallets = [] } = response;
-        store.dispatch(updateCurrenciesAction(currencies));
-        store.dispatch(updateDeviceAction(device));
-        wallets.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
-      }
-    }
+    // if (storeWallets.length > 0) {
+    //   const response = await StateService.get(storeWallets.map(({ id }) => id));
+    //
+    //   if (response) {
+    //     const { currencies = {}, device = {}, wallets = [] } = response;
+    //
+    //     console.log('currencies', currencies);
+    //
+    //     store.dispatch(updateCurrenciesAction(currencies));
+    //     // store.dispatch(updateDeviceAction(device));
+    //     // wallets.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
+    //   }
+    // }
 
     onLoad({ store });
   }

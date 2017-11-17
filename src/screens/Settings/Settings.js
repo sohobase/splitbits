@@ -1,4 +1,4 @@
-import { func } from 'prop-types';
+import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -10,8 +10,9 @@ import { updateDeviceAction } from '../../store/actions';
 import { CameraModal, CurrencyModal } from './components';
 import styles from './Settings.style';
 
-const { COLOR } = THEME;
 const { SERVICE } = C;
+const { DEVICE, NAVIGATION } = SHAPE;
+const { COLOR } = THEME;
 let timeout;
 
 class Settings extends Component {
@@ -105,8 +106,8 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  device: SHAPE.DEVICE,
-  navigation: SHAPE.NAVIGATION,
+  device: shape(DEVICE),
+  navigation: shape(NAVIGATION),
   updateDevice: func,
 };
 

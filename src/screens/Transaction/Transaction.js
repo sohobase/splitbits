@@ -1,4 +1,4 @@
-import { func, string } from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { View as Animatable } from 'react-native-animatable';
 import { View } from 'react-native';
@@ -11,6 +11,9 @@ import { AmountTransaction, Recipient, Info } from './components';
 import styles from './Transaction.style';
 
 const { SATOSHI, STATE: { REQUESTED }, TYPE: { PRO, REQUEST } } = C;
+const {
+  CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
+} = SHAPE;
 let timeout;
 
 class Transaction extends Component {
@@ -95,7 +98,9 @@ class Transaction extends Component {
   }
 
   async _onCancel() {
-    const { item: { id }, navigation, updateTransactions, wallet } = this.props;
+    const {
+      item: { id }, navigation, updateTransactions, wallet,
+    } = this.props;
 
     const transaction = await TransactionService.cancelRequest(id, wallet.id);
     if (transaction && transaction.id) {
@@ -107,15 +112,23 @@ class Transaction extends Component {
   render() {
     const {
       _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onSubmit,
-      props: { currencies, device: { currency }, deviceId, item, navigation, type, wallet },
-      state: { address, amount = 0, camera, concept, fees = {} },
+      props: {
+        currencies, device: { currency }, deviceId, item, navigation, type, wallet,
+      },
+      state: {
+        address, amount = 0, camera, concept, fees = {},
+      },
     } = this;
     const { balance, coin } = wallet;
     const editable = !item;
     const checked = amount > 0 && amount <= balance && concept && (deviceId || address);
     const fee = wallet.type === PRO ? fees.average : fees.slow + fees.charge;
-    const amountProps = { coin, editable, item, navigation, wallet };
-    const recipientProps = { concept, deviceId, navigation, type };
+    const amountProps = {
+      coin, editable, item, navigation, wallet,
+    };
+    const recipientProps = {
+      concept, deviceId, navigation, type,
+    };
 
     return (
       <View style={STYLE.SCREEN}>
@@ -155,18 +168,20 @@ class Transaction extends Component {
 }
 
 Transaction.propTypes = {
-  currencies: SHAPE.CURRENCIES,
+  currencies: shape(CURRENCIES),
+  device: shape(DEVICE),
   deviceId: string,
-  item: SHAPE.TRANSACTION,
-  navigation: SHAPE.NAVIGATION,
+  item: shape(TRANSACTION),
+  navigation: shape(NAVIGATION),
   selectDevice: func,
   type: string,
   updateTransactions: func,
-  wallet: SHAPE.WALLET,
+  wallet: shape(WALLET),
 };
 
 Transaction.defaultProps = {
   currencies: {},
+  device: undefined,
   deviceId: undefined,
   item: undefined,
   navigation: undefined,
@@ -179,7 +194,9 @@ Transaction.defaultProps = {
 const mapStateToProps = ({ currencies, device, selectedDevice }, props) => {
   const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
-  return { currencies, device, deviceId: selectedDevice, item, type, wallet };
+  return {
+    currencies, device, deviceId: selectedDevice, item, type, wallet,
+  };
 };
 
 const mapDispatchToProps = dispatch => ({

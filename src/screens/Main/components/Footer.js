@@ -1,10 +1,12 @@
-import { func } from 'prop-types';
+import { func, shape } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Option } from '../../../components';
 import { SHAPE, STYLE } from '../../../config';
 import styles from './Footer.style';
+
+const { DEVICE } = SHAPE;
 
 const Footer = ({ device: { requests = [] }, navigate }) => (
   <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
@@ -21,7 +23,7 @@ const Footer = ({ device: { requests = [] }, navigate }) => (
 );
 
 Footer.propTypes = {
-  device: SHAPE.DEVICE,
+  device: shape(DEVICE),
   navigate: func,
 };
 

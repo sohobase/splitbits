@@ -1,31 +1,16 @@
-import { array, bool, date, func, number, object, shape, string } from 'prop-types';
-
-const WALLET = shape({
-  id: string,
-  address: string,
-  balance: number,
-  coin: string,
-  imported: bool,
-  name: string,
-  lastBlockheight: string,
-  progress: number,
-  readOnly: bool,
-  trend: number,
-  type: string,
-  wif: string,
-});
+import { array, bool, date, func, number, object, string } from 'prop-types';
 
 export default {
-  BUTTON: shape({
+  BUTTON: {
     delay: number,
     icon: string,
     onPress: func,
-  }),
-  CURRENCIES: shape({
+  },
+  CURRENCIES: {
     BTC: number,
     LTC: number,
-  }),
-  DEVICE: shape({
+  },
+  DEVICE: {
     id: string,
     currency: string,
     devices: array,
@@ -37,12 +22,12 @@ export default {
     state: string,
     token: string,
     createdAt: date,
-  }),
-  NAVIGATION: shape({
+  },
+  NAVIGATION: {
     navigate: func,
     setParams: func,
-  }),
-  TRANSACTION: shape({
+  },
+  TRANSACTION: {
     id: string,
     amount: number,
     charge: number,
@@ -55,6 +40,19 @@ export default {
     state: string,
     from: object,
     to: object,
-  }),
-  WALLET,
+  },
+  WALLET: {
+    id: string,
+    address: string,
+    balance: number,
+    coin: string,
+    imported: bool,
+    name: string,
+    lastBlockheight: string,
+    progress: number,
+    readOnly: bool,
+    trend: number,
+    type: string,
+    wif: string,
+  },
 };

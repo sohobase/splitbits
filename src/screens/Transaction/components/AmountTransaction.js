@@ -1,4 +1,4 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -8,6 +8,9 @@ import { C, SHAPE, STYLE } from '../../../config';
 import styles from './AmountTransaction.style';
 
 const { SATOSHI, STATE: { REQUESTED } } = C;
+const {
+  CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
+} = SHAPE;
 
 class AmountTransaction extends Component {
   constructor(props) {
@@ -92,13 +95,13 @@ class AmountTransaction extends Component {
 
 AmountTransaction.propTypes = {
   coin: string,
-  currencies: SHAPE.CURRENCIES,
-  device: SHAPE.DEVICE,
+  currencies: shape(CURRENCIES),
+  device: shape(DEVICE),
   editable: bool,
-  item: SHAPE.TRANSACTION,
-  navigation: SHAPE.NAVIGATION,
+  item: shape(TRANSACTION),
+  navigation: shape(NAVIGATION),
   onAmount: func,
-  wallet: SHAPE.WALLET,
+  wallet: shape(WALLET),
 };
 
 AmountTransaction.defaultProps = {

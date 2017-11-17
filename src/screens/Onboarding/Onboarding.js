@@ -1,3 +1,4 @@
+import { shape } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -7,6 +8,7 @@ import { WalletModal } from '../../containers';
 import { Slide } from './components';
 import styles from './Onboarding.style';
 
+const { NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 const MAX_INDEX = 3;
 
@@ -105,7 +107,7 @@ class Onboarding extends Component {
 }
 
 Onboarding.propTypes = {
-  navigation: SHAPE.NAVIGATION,
+  navigation: shape(NAVIGATION),
 };
 
 Onboarding.defaultProps = {

@@ -1,4 +1,4 @@
-import { array, func, number, oneOfType } from 'prop-types';
+import { array, func, number, oneOfType, shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -7,8 +7,9 @@ import { C, SHAPE, STYLE, THEME } from '../../../config';
 import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
-const { ANIMATION: { DURATION }, COLOR, QR_SIZE } = THEME;
 const { SATOSHI, TYPE: { PRO }, VERB: { CREATE, IMPORT } } = C;
+const { CURRENCIES, DEVICE, WALLET } = SHAPE;
+const { ANIMATION: { DURATION } } = THEME;
 
 const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
   <View style={[STYLE.CENTERED, styles.option]}>
@@ -17,8 +18,12 @@ const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
   </View>
 );
 
-const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress, style }) => {
-  const { address, balance = 0, coin = 'BTC', name, trend = 0, type } = data || {};
+const WalletItem = ({
+  currencies, data, device: { currency }, onOption, onPress, style,
+}) => {
+  const {
+    balance = 0, coin = 'BTC', name, trend = 0, type,
+  } = data || {};
 
   return (
     <Animatable
@@ -61,9 +66,9 @@ const WalletItem = ({ currencies, data, device: { currency }, onOption, onPress,
 };
 
 WalletItem.propTypes = {
-  currencies: SHAPE.CURRENCIES,
-  data: SHAPE.WALLET,
-  device: SHAPE.DEVICE,
+  currencies: shape(CURRENCIES),
+  data: shape(WALLET),
+  device: shape(DEVICE),
   onOption: func,
   onPress: func,
   style: oneOfType([array, number]),

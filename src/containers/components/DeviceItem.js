@@ -1,5 +1,5 @@
 import Color from 'color';
-import { array, bool, func, number, oneOfType } from 'prop-types';
+import { array, bool, func, number, oneOfType, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -11,6 +11,7 @@ import { updateDeviceAction } from '../../store/actions';
 import styles from './DeviceItem.style';
 
 const { SERVICE } = C;
+const { DEVICE } = SHAPE;
 const { COLOR: { ACCEPT, CANCEL, WHITE } } = THEME;
 
 const BUTTON_ACCEPT = { backgroundColor: ACCEPT, underlayColor: Color(ACCEPT).darken(0.1).string(), type: 'delete' };
@@ -37,7 +38,9 @@ class DeviceItem extends Component {
   render() {
     const {
       _onRelation, _onRequest,
-      props: { data: { id, name }, device: { requests }, onPress, request, selected, style },
+      props: {
+        data: { id, name }, device: { requests }, onPress, request, selected, style,
+      },
     } = this;
     let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
@@ -85,8 +88,8 @@ class DeviceItem extends Component {
 }
 
 DeviceItem.propTypes = {
-  data: SHAPE.DEVICE,
-  device: SHAPE.DEVICE,
+  data: shape(DEVICE),
+  device: shape(DEVICE),
   onPress: func,
   onRequest: func,
   request: bool,
@@ -103,7 +106,7 @@ DeviceItem.defaultProps = {
   request: false,
   selected: false,
   updateDevice: undefined,
-  style: []
+  style: [],
 };
 
 const mapStateToProps = ({ device }) => ({

@@ -1,4 +1,4 @@
-import { arrayOf, bool, func } from 'prop-types';
+import { arrayOf, bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Keyboard, View } from 'react-native';
@@ -9,6 +9,7 @@ import { DeviceService } from '../../services';
 import { selectDeviceAction, updateDeviceAction } from '../../store/actions';
 import styles from './Friends.style';
 
+const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 
 class Friends extends Component {
@@ -89,8 +90,8 @@ class Friends extends Component {
 }
 
 Friends.propTypes = {
-  devices: arrayOf(SHAPE.DEVICE),
-  navigation: SHAPE.NAVIGATION,
+  devices: arrayOf(shape(DEVICE)),
+  navigation: shape(NAVIGATION),
   selectMode: bool,
   selectDevice: func.isRequired,
   updateDevice: func.isRequired,

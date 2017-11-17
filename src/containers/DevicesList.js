@@ -1,10 +1,12 @@
-import { array, arrayOf, bool, func, number, oneOfType, string } from 'prop-types';
+import { array, arrayOf, bool, func, number, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { SHAPE } from '../config';
 import { DeviceItem } from './components';
 import styles from './DevicesList.style';
+
+const { DEVICE, NAVIGATION } = SHAPE;
 
 const consolidate = (a = [], b = []) => {
   const dataSource = [];
@@ -32,9 +34,9 @@ const DevicesList = ({ data, device: { devices, requests }, navigation, onItem, 
 );
 
 DevicesList.propTypes = {
-  data: arrayOf(SHAPE.DEVICE),
-  device: SHAPE.DEVICE,
-  navigation: SHAPE.NAVIGATION,
+  data: arrayOf(shape(DEVICE)),
+  device: shape(DEVICE),
+  navigation: shape(NAVIGATION),
   onItem: func,
   refreshing: bool,
   request: bool,

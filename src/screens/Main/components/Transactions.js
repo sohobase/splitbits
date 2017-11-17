@@ -1,4 +1,4 @@
-import { arrayOf, func } from 'prop-types';
+import { arrayOf, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import TransactionItem from './TransactionItem';
 import styles from './Transactions.style';
 
 const { STATE: { ARCHIVED } } = C;
+const { TRANSACTION, WALLET } = SHAPE;
 
 class Transactions extends Component {
   constructor(props) {
@@ -61,9 +62,9 @@ class Transactions extends Component {
 
 Transactions.propTypes = {
   navigate: func,
-  transactions: arrayOf(SHAPE.TRANSACTION),
+  transactions: arrayOf(shape(TRANSACTION)),
   updateTransactions: func,
-  wallet: SHAPE.WALLET,
+  wallet: shape(WALLET),
 };
 
 Transactions.defaultProps = {
@@ -74,7 +75,9 @@ Transactions.defaultProps = {
 };
 
 const mapStateToProps = ({ transactions = [] }, { wallet = {} }) => ({
-  transactions: transactions.filter(({ coin, from, state, to }) => (
+  transactions: transactions.filter(({
+    coin, from, state, to,
+  }) => (
     coin === wallet.coin && state !== ARCHIVED && (from.address === wallet.address || to.address === wallet.address)
   )),
 });

@@ -1,4 +1,4 @@
-import { arrayOf } from 'prop-types';
+import { arrayOf, shape } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { SHAPE, STYLE } from '../../../config';
 import { publicUri } from '../../../modules';
 import styles from './Info.style';
+
+const { DEVICE, TRANSACTION } = SHAPE;
 
 const renderField = (caption, value, style) => (
   <View style={[STYLE.LIST_ITEM, style]}>
@@ -15,7 +17,12 @@ const renderField = (caption, value, style) => (
 );
 
 const TransactionInfo = (props) => {
-  const { devices, item: { confirmations = 0, concept, createdAt, from, hash, to, state } } = props;
+  const {
+    devices,
+    item: {
+      confirmations = 0, concept, createdAt, from, hash, to, state,
+    },
+  } = props;
   const device = devices.find(({ id }) => id === from.device || id === to.device);
 
   return (
@@ -44,8 +51,8 @@ const TransactionInfo = (props) => {
 };
 
 TransactionInfo.propTypes = {
-  devices: arrayOf(SHAPE.DEVICE),
-  item: SHAPE.TRANSACTION,
+  devices: arrayOf(shape(DEVICE)),
+  item: shape(TRANSACTION),
 };
 
 TransactionInfo.defaultProps = {

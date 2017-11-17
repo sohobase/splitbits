@@ -1,4 +1,4 @@
-import { arrayOf, string } from 'prop-types';
+import { arrayOf, shape } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Amount, Header } from '../../../components';
@@ -6,7 +6,7 @@ import { C, SHAPE } from '../../../config';
 import styles from './Header.style';
 
 const { SATOSHI } = C;
-
+const { CURRENCIES, DEVICE, WALLET } = SHAPE;
 
 const HeaderTitle = ({ currencies, device, wallets }) => {
   const { currency } = device;
@@ -28,9 +28,9 @@ const HeaderTitle = ({ currencies, device, wallets }) => {
 };
 
 HeaderTitle.propTypes = {
-  currencies: SHAPE.CURRENCIES,
-  device: SHAPE.DEVICE,
-  wallets: arrayOf(SHAPE.WALLET),
+  currencies: shape(CURRENCIES),
+  device: shape(DEVICE),
+  wallets: arrayOf(shape(WALLET)),
 };
 
 HeaderTitle.defaultProps = {

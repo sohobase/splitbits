@@ -1,4 +1,4 @@
-import { arrayOf } from 'prop-types';
+import { arrayOf, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -9,8 +9,9 @@ import { WalletModal } from '../../containers';
 import { Header, Footer, TransactionModal, Transactions, WalletItem, WalletInfoModal } from './components';
 import styles from './Main.style';
 
-const { DURATION } = THEME.ANIMATION;
 const { TYPE: { REQUEST, SEND }, VERB: { IMPORT } } = C;
+const { NAVIGATION, WALLET } = SHAPE;
+const { DURATION } = THEME.ANIMATION;
 
 class Main extends Component {
   constructor(props) {
@@ -59,7 +60,9 @@ class Main extends Component {
     const {
       _onNewTransaction, _onModal, _onModalWallet, _onSwipeWallet, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
-      state: { index = 0, importWallet, modalTransaction, modalWallet, modalWalletInfo },
+      state: {
+        index = 0, importWallet, modalTransaction, modalWallet, modalWalletInfo,
+      },
     } = this;
 
     return (
@@ -111,8 +114,8 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  navigation: SHAPE.NAVIGATION,
-  wallets: arrayOf(SHAPE.WALLET),
+  navigation: shape(NAVIGATION),
+  wallets: arrayOf(shape(WALLET)),
 };
 
 Main.defaultProps = {

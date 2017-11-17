@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { nodeEnvironment } from './src/modules'; // eslint-disable-line
 import {
   LoadingScreen,
   OnboardingScreen,
@@ -9,17 +10,15 @@ import {
   FriendsScreen,
   SettingsScreen,
   TransactionScreen,
-  WalletScreen,
 } from './src/screens';
 
-// const navigationOptions = {
+const navigationOptions = {
+  header: null,
 //   headerBackTitle: ' ',
 //   headerStyle: STYLE.HEADER,
 //   headerTitleStyle: STYLE.HEADER_TITLE,
 //   headerTintColor: THEME.COLOR.TEXT_HIGHLIGHT,
-// };
-
-const navigationOptions = { header: null };
+};
 
 const screens = {
   Onboarding: { screen: OnboardingScreen, navigationOptions },

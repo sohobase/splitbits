@@ -1,4 +1,4 @@
-import { func, string } from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -8,8 +8,11 @@ import { DeviceItem } from '../../../containers/components';
 import styles from './Recipient.style';
 
 const { TYPE: { SEND } } = C;
+const { DEVICE, NAVIGATION } = SHAPE;
 
-const Recipient = ({ address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept, type }) => (
+const Recipient = ({
+  address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept, type,
+}) => (
   <View>
     <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
       { deviceId
@@ -47,9 +50,9 @@ const Recipient = ({ address, concept, device, deviceId, navigation: { navigate 
 Recipient.propTypes = {
   address: string,
   concept: string,
-  device: SHAPE.DEVICE,
+  device: shape(DEVICE),
   deviceId: string,
-  navigation: SHAPE.NAVIGATION,
+  navigation: shape(NAVIGATION),
   onCamera: func,
   onConcept: func,
   type: string,

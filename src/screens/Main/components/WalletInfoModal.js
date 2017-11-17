@@ -1,4 +1,4 @@
-import { bool, func } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import QRCode from 'react-native-qrcode';
@@ -9,8 +9,9 @@ import { WalletService } from '../../../services';
 import { removeWalletAction } from '../../../store/actions';
 import styles from './WalletInfoModal.style';
 
-const { QR_SIZE } = THEME;
 const { TYPE: { PRO } } = C;
+const { WALLET } = SHAPE;
+const { QR_SIZE } = THEME;
 
 class WalletModal extends Component {
   constructor(props) {
@@ -83,7 +84,7 @@ WalletModal.propTypes = {
   onClose: func,
   removeWallet: func,
   visible: bool,
-  wallet: SHAPE.WALLET,
+  wallet: shape(WALLET),
 };
 
 WalletModal.defaultProps = {

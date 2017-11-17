@@ -6,7 +6,9 @@ import Icon from './Icon';
 import Touchable from './Touchable';
 import styles from './Option.style';
 
-const Option = ({ activity, caption, centered, disabled, icon, image, onPress, style, hint }) => (
+const Option = ({
+  activity, caption, centered, disabled, icon, image, onPress, style, hint,
+}) => (
   <Touchable onPress={!disabled ? onPress : undefined} activeOpacity={0.95}>
     <View style={[styles.option, (centered ? STYLE.CENTERED : [STYLE.ROW, styles.row]), (disabled && styles.disabled), style]}>
       { image && <Image source={image} style={styles.image} /> }
