@@ -54,5 +54,6 @@ export default {
     trend: number,
     type: string,
     wif: string,
+    hexSeed: string,
   },
 };

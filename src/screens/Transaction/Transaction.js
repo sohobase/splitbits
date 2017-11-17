@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View as Animatable } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+import BitcoinJS from 'bitcoinjs-lib';
 import { Amount, Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
@@ -15,6 +16,8 @@ const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
 let timeout;
+
+const getWif = hexSeed => BitcoinJS.HDNode.fromSeedHex(hexSeed).keyPair.toWIF();
 
 class Transaction extends Component {
   constructor(props) {
@@ -73,7 +76,12 @@ class Transaction extends Component {
       props: {
         deviceId, navigation, type, updateTransactions,
         item: { id } = {},
-        wallet: { coin, id: walletId, wif },
+        wallet: {
+          coin,
+          wif,
+          hexSeed,
+          id: walletId,
+        },
       },
       state: { address, amount, concept },
     } = this;
@@ -87,7 +95,7 @@ class Transaction extends Component {
       deviceId,
       id,
       walletId,
-      wif: (!isRequest ? wif : undefined),
+      wif: (!isRequest ? wif || getWif(hexSeed) : undefined),
     };
 
     const transaction = await TransactionService[method](params);
