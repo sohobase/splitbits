@@ -3,14 +3,16 @@ import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Modal, Option, QRreader } from '../components';
-import { STYLE, TEXT } from '../config';
+import { C, STYLE, TEXT } from '../config';
 import { StateService, WalletService } from '../services';
+import { validateAddress } from '../modules';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
 import styles from './ModalWalletNew.style';
 
 const imageBTC = require('../../assets/coin-bitcoin.png');
 const imageLTC = require('../../assets/coin-litecoin.png');
 
+const { CRYPTO: { BTC, LTC } } = C;
 const { EN: { CREATE, IMPORT } } = TEXT;
 
 class ModalWalletNew extends Component {
@@ -18,10 +20,11 @@ class ModalWalletNew extends Component {
     super(props);
 
     this.state = {
-      wif: undefined,
+      address: undefined,
       cameraActive: props.camera,
-      coin: 'BTC',
+      coin: BTC,
       name: undefined,
+      wif: undefined,
     };
     this._onCoin = this._onCoin.bind(this);
     this._onQR = this._onQR.bind(this);
@@ -33,21 +36,21 @@ class ModalWalletNew extends Component {
   }
 
   _onCoin(coin) {
-    this.setState({ coin });
+    if (!this.props.camera) this.setState({ coin });
   }
 
   _onQR(value) {
-    this.setState({ wif: value });
+    this.setState(validateAddress(value));
   }
 
   async _onSubmit() {
     const {
       props: {
-        addWallet, onSuccess, updateCurrencies, updateDevice, updateWallet,
+        addWallet, camera, onSuccess, updateCurrencies, updateDevice, updateWallet,
       },
       state,
     } = this;
-    const wallet = await WalletService[state.wif ? 'import' : 'create'](state);
+    const wallet = await WalletService[camera ? 'import' : 'create'](state);
 
     if (wallet) {
       addWallet(wallet);
@@ -68,7 +71,7 @@ class ModalWalletNew extends Component {
       _onCoin, _onQR, _onSubmit,
       props: { camera, onClose, visible },
       state: {
-        wif, cameraActive, coin, name,
+        address, cameraActive, coin, name, wif,
       },
     } = this;
 
@@ -81,15 +84,15 @@ class ModalWalletNew extends Component {
               centered
               image={imageBTC}
               caption="Bitcoin"
-              onPress={() => _onCoin('BTC')}
-              style={[styles.coin, coin === 'BTC' && styles.coinActive]}
+              onPress={() => _onCoin(BTC)}
+              style={[styles.coin, coin === BTC && styles.coinActive]}
             />
             <Option
               centered
               image={imageLTC}
               caption="Litecoin"
-              onPress={() => _onCoin('LTC')}
-              style={[styles.coin, coin === 'LTC' && styles.coinActive]}
+              onPress={() => _onCoin(LTC)}
+              style={[styles.coin, coin === LTC && styles.coinActive]}
             />
           </View>
           <TextInput
@@ -104,7 +107,7 @@ class ModalWalletNew extends Component {
             <TextInput
               editable={false}
               style={[styles.input, styles.inputAddress]}
-              value={wif}
+              value={wif || address}
             /> }
           <Button
             accent

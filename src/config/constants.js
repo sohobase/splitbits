@@ -62,4 +62,19 @@ export default {
     REQUEST: 'request',
     SEND: 'send',
   },
+
+  VERB: {
+    CREATE: 'create',
+    IMPORT: 'import',
+    SAVE: 'save',
+  },
+
+  WALLET_VERSIONS: {
+    ADDRESS_BTC: 0,
+    ADDRESS_BTC_TESTNET: 111,
+    ADDRESS_LTC: 48,
+    WIF_BTC: 128,
+    WIF_BTC_TESTNET: 239,
+    WIF_LTC: 176,
+  },
 };
