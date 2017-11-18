@@ -31,9 +31,20 @@ export default StyleSheet.create({
   },
 
   title: {
+    alignSelf: 'center',
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
+  },
+
+  hint: {
     alignSelf: 'center',
+    color: COLOR.TEXT_SECONDARY,
+    fontSize: FONT.SIZE.SMALL,
+    marginLeft: OFFSET,
+    marginRight: OFFSET,
+    marginTop: UNIT,
+    marginBottom: UNIT,
+    textAlign: 'center',
   },
 
   buttonClose: {

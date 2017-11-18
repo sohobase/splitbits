@@ -48,8 +48,13 @@ class ModalMnemonic extends Component {
     const readOnly = hexSeed !== undefined;
 
     return (
-      <Modal title="Paper key" visible={visible} onClose={onClose} style={STYLE.CENTERED}>
-        <Text style={styles.hint}>{readOnly ? PAPER_WALLET : RECOVER_PAPER_WALLET}</Text>
+      <Modal
+        hint={readOnly ? PAPER_WALLET : RECOVER_PAPER_WALLET}
+        onClose={onClose}
+        style={STYLE.CENTERED}
+        title="Paper key"
+        visible={visible}
+      >
         <View style={[STYLE.ROW, styles.words]}>
           { words.map((value, i) => (
             <Input

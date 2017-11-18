@@ -9,7 +9,7 @@ import styles from './Modal.style';
 const { ANIMATION: { DURATION } } = THEME;
 
 const Modal = ({
-  children, onClose, title, visible,
+  children, hint, onClose, title, visible,
 }) => (
   <ReactNativeModal
     transparent
@@ -37,6 +37,7 @@ const Modal = ({
             captionStyle={styles.buttonCloseCaption}
           />
         </View>
+        { hint && <Text style={styles.hint}>{hint}</Text> }
         { children }
       </Animatable>
     </Animatable>
@@ -45,6 +46,7 @@ const Modal = ({
 
 Modal.propTypes = {
   children: node,
+  hint: string,
   onClose: func,
   title: string,
   visible: bool,
@@ -52,6 +54,7 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   children: undefined,
+  hint: undefined,
   onClose: undefined,
   title: undefined,
   visible: false,
