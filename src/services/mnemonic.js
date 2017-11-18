@@ -6,16 +6,10 @@ export default {
   },
 
   restore(words = []) {
-    let hexSeed;
-    try {
-      hexSeed = bip39.mnemonicToEntropy(words.join(' '));
-    } catch (e) {
-      hexSeed = undefined;
-    }
-    return hexSeed;
+    return bip39.mnemonicToEntropy(words.join(' '));
   },
 
-  validate(words = '') {
-    return bip39.validateMnemonic(words);
+  validate(words = []) {
+    return bip39.validateMnemonic(words.join(' '));
   },
 };

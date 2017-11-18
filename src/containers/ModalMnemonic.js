@@ -70,7 +70,7 @@ class ModalMnemonic extends Component {
         <Button
           accent
           caption={readOnly ? 'Already written my paper key' : NEXT}
-          disabled={!readOnly && !MnemonicService.restore(words)}
+          disabled={!readOnly && !MnemonicService.validate(words)}
           onPress={readOnly ? onClose : _onRecover}
           style={styles.button}
         />
