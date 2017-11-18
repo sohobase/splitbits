@@ -14,11 +14,17 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: -UNIT / 5,
     right: -UNIT / 5,
+    backgroundColor: COLOR.PRIMARY,
+  },
+
+  iconLayout: {
     width: OFFSET,
     height: OFFSET,
-    backgroundColor: COLOR.PRIMARY,
-    tintColor: COLOR.WHITE,
     borderRadius: OFFSET / 2,
+  },
+
+  iconColor: {
+    tintColor: COLOR.WHITE,
   },
 
   iconAlert: {

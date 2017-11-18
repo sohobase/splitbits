@@ -42,10 +42,9 @@ const TransactionItem = (props) => {
       <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
         <View>
           <Avatar value={other.image} />
-          <Icon
-            value={icon}
-            style={[styles.icon, (confirmations < MIN_CONFIRMATIONS && styles.iconAlert)]}
-          />
+          <View style={[styles.icon, styles.iconLayout, (confirmations < MIN_CONFIRMATIONS && styles.iconAlert)]}>
+            <Icon value={icon} style={[styles.iconLayout, styles.iconColor]} />
+          </View>
         </View>
         <View style={styles.info}>
           <Text style={styles.title}>
