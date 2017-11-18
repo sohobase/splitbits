@@ -1,10 +1,10 @@
 import { arrayOf, shape } from 'prop-types';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { SHAPE, STYLE } from '../../../config';
-import { publicUri } from '../../../modules';
+import { Avatar } from '../../../components';
 import styles from './Info.style';
 
 const { DEVICE, TRANSACTION } = SHAPE;
@@ -31,7 +31,7 @@ const TransactionInfo = (props) => {
         { device
           ?
             <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
-              <Image source={{ uri: (device && publicUri(device.image)) }} style={[STYLE.AVATAR, styles.avatar]} />
+              <Avatar value={device.image} style={styles.avatar} />
               <View>
                 <Text style={[styles.value, styles.title]}>{device.name}</Text>
                 { from.address && <Text style={styles.label}>{from.address}</Text> }

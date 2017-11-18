@@ -1,4 +1,5 @@
 import Amount from './Amount';
+import Avatar from './Avatar';
 import Button from './Button';
 import Header from './Header';
 import Icon from './Icon';
@@ -11,6 +12,7 @@ import Touchable from './Touchable';
 
 export {
   Amount,
+  Avatar,
   Button,
   Header,
   Icon,

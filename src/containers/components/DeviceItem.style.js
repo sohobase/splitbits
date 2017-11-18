@@ -9,18 +9,6 @@ export default StyleSheet.create({
     backgroundColor: Color(COLOR.PRIMARY).lighten(0.9),
   },
 
-  avatarSelected: {
-    backgroundColor: COLOR.PRIMARY,
-  },
-
-  image: {
-    resizeMode: 'cover',
-  },
-
-  icon: {
-    tintColor: COLOR.WHITE,
-  },
-
   content: {
     marginLeft: OFFSET,
     flex: 1,

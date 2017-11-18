@@ -1,16 +1,19 @@
 import { func, shape } from 'prop-types';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Amount, Icon, Touchable } from '../../../components';
+import { Amount, Avatar, Icon, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
-import { publicUri } from '../../../modules';
 import styles from './TransactionItem.style';
 
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
-const { CURRENCIES, DEVICE, TRANSACTION , WALLET } = SHAPE;
+const {
+  CURRENCIES, DEVICE, TRANSACTION, WALLET,
+} = SHAPE;
 
-const verboseTitle = ({ emitter, concept, other: { name }, state, payment }) => {
+const verboseTitle = ({
+  emitter, concept, other: { name }, state, payment,
+}) => {
   if (!name) return concept;
   if (state === REQUESTED) return `Request ${emitter ? 'from' : 'to'} ${name}`;
   return `${payment ? 'To' : 'From'} ${name}`;
@@ -19,7 +22,9 @@ const verboseTitle = ({ emitter, concept, other: { name }, state, payment }) => 
 const TransactionItem = (props) => {
   const {
     currencies,
-    data: { amount, confirmations = 0, coin, concept, createdAt, payment, state, from = {}, to = {} },
+    data: {
+      amount, confirmations = 0, coin, concept, createdAt, payment, state, from = {}, to = {},
+    },
     device: { currency, devices },
     onPress,
     wallet: { address } = {},
@@ -36,7 +41,7 @@ const TransactionItem = (props) => {
     <Touchable onPress={() => onPress(payment)} activeOpacity={0.95}>
       <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
         <View>
-          <Image style={STYLE.AVATAR} source={{ uri: publicUri(other.image) }} />
+          <Avatar value={other.image} />
           <Icon
             value={icon}
             style={[styles.icon, (confirmations < MIN_CONFIRMATIONS && styles.iconAlert)]}

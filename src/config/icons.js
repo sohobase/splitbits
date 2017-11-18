@@ -7,6 +7,7 @@ const camera = require('../../assets/icon-camera.png');
 const check = require('../../assets/icon-check.png');
 const close = require('../../assets/icon-close.png');
 const create = require('../../assets/icon-create.png');
+const face = require('../../assets/icon-face.png');
 const fingerprint = require('../../assets/icon-fingerprint.png');
 const gallery = require('../../assets/icon-gallery.png');
 const menu = require('../../assets/icon-menu.png');
@@ -33,6 +34,7 @@ export default {
   check,
   close,
   create,
+  face,
   fingerprint,
   gallery,
   import: add,

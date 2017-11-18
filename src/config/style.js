@@ -1,20 +1,13 @@
 import { Platform, StatusBar, StyleSheet } from 'react-native';
 import THEME from './theme';
 
-const { AVATAR_SIZE, COLOR, UNIT, OFFSET, ROW_MIN_HEIGHT } = THEME;
+const {
+  COLOR, UNIT, OFFSET, ROW_MIN_HEIGHT,
+} = THEME;
 let androidHeader = {};
 if (Platform.OS !== 'ios') androidHeader = { paddingTop: StatusBar.currentHeight, height: 80 };
 
 export default StyleSheet.create({
-  AVATAR: {
-    width: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    borderRadius: AVATAR_SIZE / 2,
-    backgroundColor: COLOR.DIVIDER,
-    overflow: 'hidden',
-    justifyContent: 'center',
-  },
-
   CENTERED: {
     alignItems: 'center',
     alignContent: 'center',

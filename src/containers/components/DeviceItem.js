@@ -1,16 +1,15 @@
 import Color from 'color';
 import { array, bool, func, number, oneOfType, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
-import { Button, Icon } from '../../components';
-import { C, SHAPE, STYLE, THEME } from '../../config';
+import { Avatar, Button } from '../../components';
+import { SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import styles from './DeviceItem.style';
 
-const { SERVICE } = C;
 const { DEVICE } = SHAPE;
 const { COLOR: { ACCEPT, CANCEL, WHITE } } = THEME;
 
@@ -39,16 +38,11 @@ class DeviceItem extends Component {
     const {
       _onRelation, _onRequest,
       props: {
-        data: { id, name }, device: { requests }, onPress, request, selected, style,
+        data: { id, image, name }, device: { requests }, onPress, request, selected, style,
       },
     } = this;
-    let { props: { data: { image } } } = this;
     const isRequest = requests.find(item => item.id === id);
     let options;
-
-    if (!selected && image && image.length > 0) {
-      image = `${SERVICE}public/${image}?timestamp=${new Date().getTime().toString()}}`;
-    }
 
     if (!request && !onPress) {
       options = (!isRequest)
@@ -63,11 +57,7 @@ class DeviceItem extends Component {
       <Swipeout right={options} backgroundColor={WHITE} >
         <TouchableWithoutFeedback onPress={onPress ? () => onPress(id) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
-            <View style={[STYLE.AVATAR, selected ? styles.avatarSelected : undefined]}>
-              { selected
-                ? <Icon value="check" style={styles.icon} />
-                : <Image source={{ uri: image }} style={[STYLE.AVATAR, styles.image]} /> }
-            </View>
+            <Avatar selected={selected} value={image} />
             <View style={styles.content}>
               <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
               { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
