@@ -6,7 +6,13 @@ export default {
   },
 
   restore(words = []) {
-    return bip39.mnemonicToEntropy(words.join(' '));
+    let hexSeed;
+    try {
+      hexSeed = bip39.mnemonicToEntropy(words.join(' '));
+    } catch (e) {
+      hexSeed = undefined;
+    }
+    return hexSeed;
   },
 
   validate(words = '') {
