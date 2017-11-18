@@ -1,34 +1,39 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { COLOR, FONT, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 
-const CARD_SIZE = THEME.UNIT * 18;
-const QR_SIZE = THEME.UNIT * 6.4;
+const SIZE = {
+  WIDTH: UNIT * 22.4,
+  HEIGHT: UNIT * 14.4,
+};
 
 export default StyleSheet.create({
   container: {
     zIndex: 1,
-    flex: 1,
-    width: '75%',
-    minHeight: CARD_SIZE,
-    maxHeight: CARD_SIZE,
+    width: SIZE.WIDTH,
+    height: SIZE.HEIGHT,
     backgroundColor: COLOR.WHITE,
     marginTop: OFFSET,
-    marginBottom: OFFSET * 3,
+    marginBottom: OFFSET,
     alignSelf: 'center',
     borderRadius: THEME.BORDER_RADIUS,
+    shadowColor: COLOR.BLACK,
+    shadowOffset: { height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
   },
 
   empty: {
     backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
+    shadowOffset: { height: 0 },
   },
 
   content: {
-    flex: 1,
     padding: OFFSET,
-    minHeight: CARD_SIZE,
-    maxHeight: CARD_SIZE,
+    height: SIZE.HEIGHT,
   },
 
   info: {

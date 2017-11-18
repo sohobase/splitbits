@@ -33,11 +33,9 @@ export default StyleSheet.create({
 
   LAYOUT_TOP: {
     flex: 0,
-    // minHeight: '45%',
     minHeight: UNIT * 25.6,
     height: '45%',
     maxHeight: UNIT * 36,
-    // maxHeight: UNIT * 19,
     backgroundColor: COLOR.PRIMARY,
   },
 
