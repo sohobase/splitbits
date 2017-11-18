@@ -1,9 +1,9 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Modal, Option, QRreader } from '../components';
-import { C, STYLE } from '../config';
+import { STYLE, TEXT } from '../config';
 import { StateService, WalletService } from '../services';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
 import styles from './WalletModal.style';
@@ -11,7 +11,7 @@ import styles from './WalletModal.style';
 const imageBTC = require('../../assets/coin-bitcoin.png');
 const imageLTC = require('../../assets/coin-litecoin.png');
 
-const { VERB: { CREATE, IMPORT } } = C;
+const { EN: { CREATE, IMPORT } } = TEXT;
 
 class WalletModal extends Component {
   constructor(props) {
@@ -41,7 +41,12 @@ class WalletModal extends Component {
   }
 
   async _onSubmit() {
-    const { props: { addWallet, onSuccess, updateCurrencies, updateDevice, updateWallet }, state } = this;
+    const {
+      props: {
+        addWallet, onSuccess, updateCurrencies, updateDevice, updateWallet,
+      },
+      state,
+    } = this;
     const wallet = await WalletService[state.wif ? 'import' : 'create'](state);
 
     if (wallet) {
@@ -62,7 +67,9 @@ class WalletModal extends Component {
     const {
       _onCoin, _onQR, _onSubmit,
       props: { camera, onClose, visible },
-      state: { wif, cameraActive, coin, name },
+      state: {
+        wif, cameraActive, coin, name,
+      },
     } = this;
 
     return (

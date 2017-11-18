@@ -3,11 +3,12 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { C, SHAPE, STYLE, THEME } from '../../../config';
+import { C, SHAPE, STYLE, TEXT, THEME } from '../../../config';
 import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
-const { SATOSHI, TYPE: { PRO }, VERB: { CREATE, IMPORT } } = C;
+const { SATOSHI, TYPE: { PRO } } = C;
+const { EN: { CREATE, IMPORT, RESTORE } } = TEXT;
 const { CURRENCIES, DEVICE, WALLET } = SHAPE;
 const { ANIMATION: { DURATION } } = THEME;
 
@@ -58,6 +59,7 @@ const WalletItem = ({
             <View style={[STYLE.ROW]}>
               <WalletOption type={CREATE} onPress={onOption} />
               <WalletOption type={IMPORT} onPress={onOption} />
+              <WalletOption type={RESTORE} onPress={onOption} />
             </View>
           </View>
       }

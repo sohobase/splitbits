@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
 

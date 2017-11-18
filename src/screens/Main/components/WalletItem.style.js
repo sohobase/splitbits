@@ -89,8 +89,8 @@ export default StyleSheet.create({
   },
 
   option: {
-    paddingLeft: OFFSET * 2,
-    paddingRight: OFFSET * 2,
+    paddingLeft: UNIT,
+    paddingRight: UNIT,
     paddingTop: OFFSET * 2,
   },
 

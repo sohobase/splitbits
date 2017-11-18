@@ -40,6 +40,7 @@ export default {
   operations,
   profile,
   remove,
+  restore: backup,
   search,
   security,
   settings,

@@ -3,21 +3,22 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
-import { C, SHAPE, STYLE } from '../../config';
+import { C, SHAPE, STYLE, TEXT } from '../../config';
 import { WalletModal, MnemonicModal } from '../../containers';
 import {
   Header, Footer, TransactionButton, TransactionModal, Transactions, WalletItem, WalletInfoModal,
 } from './components';
 import styles from './Main.style';
 
-const { TYPE: { REQUEST, SEND }, VERB: { IMPORT } } = C;
+const { TYPE: { REQUEST, SEND } } = C;
+const { EN: { IMPORT, RESTORE } } = TEXT;
 const { NAVIGATION, WALLET } = SHAPE;
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      importWallet: false,
+      context: undefined,
       index: undefined,
       modalTransaction: false,
       modalWallet: false,
@@ -47,7 +48,13 @@ class Main extends Component {
   }
 
   _onModalWallet(context) {
-    this.setState({ importWallet: context === IMPORT, modalWallet: !this.state.modalWallet });
+    const nextState = { context };
+    if (context !== RESTORE) {
+      nextState.modalWallet = !this.state.modalWallet;
+    } else {
+      nextState.modalMnemonic = !this.state.modalMnemonic;
+    }
+    this.setState(nextState);
   }
 
   _onMnemonic() {
@@ -67,7 +74,7 @@ class Main extends Component {
       _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onSwipeWallet, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
       state: {
-        index = 0, importWallet, modalMnemonic, modalTransaction, modalWallet, modalWalletInfo,
+        context, index = 0, modalMnemonic, modalTransaction, modalWallet, modalWalletInfo,
       },
     } = this;
 
@@ -100,7 +107,7 @@ class Main extends Component {
           onRequest={() => _onNewTransaction(REQUEST)}
           onSend={() => _onNewTransaction(SEND)}
         />
-        <WalletModal visible={modalWallet} camera={importWallet} onClose={_onModalWallet} onSuccess={_onModalWallet} />
+        <WalletModal visible={modalWallet} camera={context === IMPORT} onClose={_onModalWallet} onSuccess={_onModalWallet} />
         { wallets[index] &&
           <WalletInfoModal
             visible={modalWalletInfo}
@@ -108,7 +115,7 @@ class Main extends Component {
             onBackup={_onMnemonic}
             onClose={_onWallet}
           /> }
-        <MnemonicModal visible={modalMnemonic} readOnly onClose={_onMnemonic} wallet={wallets[index]} />
+        <MnemonicModal visible={modalMnemonic} onClose={_onMnemonic} wallet={wallets[index]} />
       </View>
     );
   }
