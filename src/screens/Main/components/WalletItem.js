@@ -8,7 +8,7 @@ import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
 const { SATOSHI, TYPE: { PRO } } = C;
-const { EN: { CREATE, IMPORT, RESTORE } } = TEXT;
+const { EN: { CREATE, IMPORT, NEW_WALLET, RECOVER } } = TEXT;
 const { CURRENCIES, DEVICE, WALLET } = SHAPE;
 const { ANIMATION: { DURATION } } = THEME;
 
@@ -55,11 +55,11 @@ const WalletItem = ({
           </View>
           :
           <View style={[STYLE.CENTERED, styles.options]}>
-            <Text style={[styles.name, styles.highlight]}>Add Wallet</Text>
+            <Text style={[styles.name, styles.highlight]}>{NEW_WALLET}</Text>
             <View style={[STYLE.ROW]}>
               <WalletOption type={CREATE} onPress={onOption} />
               <WalletOption type={IMPORT} onPress={onOption} />
-              <WalletOption type={RESTORE} onPress={onOption} />
+              <WalletOption type={RECOVER} onPress={onOption} />
             </View>
           </View>
       }

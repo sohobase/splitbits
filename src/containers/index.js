@@ -1,9 +1,13 @@
 import DevicesList from './DevicesList';
-import MnemonicModal from './MnemonicModal';
-import WalletModal from './WalletModal';
+import ModalMnemonic from './ModalMnemonic';
+import ModalTransaction from './ModalTransaction';
+import ModalWallet from './ModalWallet';
+import ModalWalletNew from './ModalWalletNew';
 
 export {
   DevicesList,
-  MnemonicModal,
-  WalletModal,
+  ModalMnemonic,
+  ModalTransaction,
+  ModalWallet,
+  ModalWalletNew,
 };

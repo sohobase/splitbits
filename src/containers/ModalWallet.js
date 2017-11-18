@@ -3,17 +3,17 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
-import { Modal, Option } from '../../../components';
-import { C, SHAPE, STYLE, THEME } from '../../../config';
-import { WalletService } from '../../../services';
-import { removeWalletAction } from '../../../store/actions';
-import styles from './WalletInfoModal.style';
+import { Modal, Option } from '../components';
+import { C, SHAPE, STYLE, THEME } from '../config';
+import { WalletService } from '../services';
+import { removeWalletAction } from '../store/actions';
+import styles from './ModalWallet.style';
 
 const { TYPE: { PRO } } = C;
 const { WALLET } = SHAPE;
 const { QR_SIZE } = THEME;
 
-class WalletModal extends Component {
+class ModalWallet extends Component {
   constructor(props) {
     super(props);
     this._onArchive = this._onArchive.bind(this);
@@ -44,7 +44,7 @@ class WalletModal extends Component {
   render() {
     const {
       _onArchive, _onBackup, _onPro,
-      props: { onClose, visible, wallet: { address, hexSeed, imported, type, readOnly } },
+      props: { onClose, visible, wallet: { address, hexSeed, type } },
     } = this;
 
     return (
@@ -81,7 +81,7 @@ class WalletModal extends Component {
   }
 }
 
-WalletModal.propTypes = {
+ModalWallet.propTypes = {
   onBackup: func,
   onClose: func,
   removeWallet: func,
@@ -89,7 +89,7 @@ WalletModal.propTypes = {
   wallet: shape(WALLET),
 };
 
-WalletModal.defaultProps = {
+ModalWallet.defaultProps = {
   onBackup() {},
   onClose: undefined,
   removeWallet() {},
@@ -102,4 +102,4 @@ const mapDispatchToProps = dispatch => ({
   removeWallet: wallet => dispatch(removeWalletAction(wallet)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalWallet);

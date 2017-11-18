@@ -3,30 +3,30 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal } from '../components';
-import { C, SHAPE, STYLE, TEXT } from '../config';
-import { MnemonicService, StateService, WalletService } from '../services';
+import { SHAPE, STYLE, TEXT } from '../config';
+import { MnemonicService } from '../services';
 import { addWalletAction, updateDeviceAction } from '../store/actions';
-import styles from './MnemonicModal.style';
+import styles from './ModalMnemonic.style';
 
 const { WALLET } = SHAPE;
-const { EN: { PAPER_WALLET } } = TEXT;
-const WORDS = 12;
+const { EN: { NEXT, PAPER_WALLET, RECOVER_PAPER_WALLET } } = TEXT;
+const WORDS_LENGTH = 12;
 
-class MnemonicModal extends Component {
+class ModalMnemonic extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      words: Array(WORDS).fill(undefined),
+      words: Array(WORDS_LENGTH).fill(undefined),
     };
 
-    this._onRestore = this._onRestore.bind(this);
+    this._onRecover = this._onRecover.bind(this);
     this._onValue = this._onValue.bind(this);
   }
 
   componentWillReceiveProps({ wallet: { hexSeed } }) {
     this.setState({
-      words: (hexSeed) ? MnemonicService.backup(hexSeed) : Array(WORDS).fill(''),
+      words: (hexSeed) ? MnemonicService.backup(hexSeed) : Array(WORDS_LENGTH).fill(''),
     });
   }
 
@@ -36,20 +36,20 @@ class MnemonicModal extends Component {
     this.setState({ words });
   }
 
-  _onRestore() {
+  _onRecover() {
     const { words } = this.state;
-    console.log('_onRestore', words);
+    console.log('_onRecover', words);
   }
 
   render() {
     const {
-      _onRestore, _onValue, props: { onClose, visible, wallet: { hexSeed } }, state: { words = [] },
+      _onRecover, _onValue, props: { onClose, visible, wallet: { hexSeed } }, state: { words = [] },
     } = this;
     const readOnly = hexSeed !== undefined;
 
     return (
       <Modal title="Paper key" visible={visible} onClose={onClose} style={STYLE.CENTERED}>
-        <Text style={styles.hint}>{PAPER_WALLET}</Text>
+        <Text style={styles.hint}>{readOnly ? PAPER_WALLET : RECOVER_PAPER_WALLET}</Text>
         <View style={[STYLE.ROW, styles.words]}>
           { words.map((value, i) => (
             <Input
@@ -64,9 +64,9 @@ class MnemonicModal extends Component {
 
         <Button
           accent
-          caption={readOnly ? 'Already written my paper key' : 'Restore wallet'}
+          caption={readOnly ? 'Already written my paper key' : NEXT}
           disabled={!readOnly && !MnemonicService.restore(words)}
-          onPress={readOnly ? onClose : _onRestore}
+          onPress={readOnly ? onClose : _onRecover}
           style={styles.button}
         />
       </Modal>
@@ -74,13 +74,13 @@ class MnemonicModal extends Component {
   }
 }
 
-MnemonicModal.propTypes = {
+ModalMnemonic.propTypes = {
   onClose: func,
   visible: bool,
   wallet: shape(WALLET),
 };
 
-MnemonicModal.defaultProps = {
+ModalMnemonic.defaultProps = {
   onClose() {},
   visible: false,
   wallet: {},
@@ -92,4 +92,4 @@ const mapDispatchToProps = dispatch => ({
   updateDevice: wallet => dispatch(updateDeviceAction(wallet)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MnemonicModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalMnemonic);

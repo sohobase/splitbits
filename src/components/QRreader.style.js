@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT } = THEME;
+const {
+  BUTTON_CIRCLE_SIZE, COLOR, FONT, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   QRreader: {
@@ -38,5 +40,12 @@ export default StyleSheet.create({
     maxHeight: 320,
     width: 320,
     maxWidth: 320,
+  },
+
+  button: {
+    position: 'absolute',
+    bottom: -(BUTTON_CIRCLE_SIZE + UNIT),
+    // bottom: 0,
+    alignSelf: 'center',
   },
 });

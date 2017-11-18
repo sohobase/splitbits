@@ -1,11 +1,14 @@
 import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { View as Animatable } from 'react-native-animatable';
 import { BarCodeScanner, Permissions } from 'expo';
+import { THEME } from '../config';
 import Button from './Button';
 import styles from './QRreader.style';
 
 const { Constants: { isDevice } } = Expo; // eslint-disable-line
+const { ANIMATION: { DURATION } } = THEME;
 
 class QRreader extends Component {
   constructor(props) {
@@ -51,7 +54,9 @@ class QRreader extends Component {
           <View style={styles.border} />
         </View>
         <View style={styles.border}>
-          <Button circle icon="close" onPress={onClose} accent />
+          <Animatable animation="bounceInUp" duration={DURATION}>
+            <Button accent circle icon="close" onPress={onClose} style={styles.button} />
+          </Animatable>
         </View>
       </View>
     );

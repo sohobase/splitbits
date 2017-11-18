@@ -6,14 +6,14 @@ import { Button, Modal, Option, QRreader } from '../components';
 import { STYLE, TEXT } from '../config';
 import { StateService, WalletService } from '../services';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
-import styles from './WalletModal.style';
+import styles from './ModalWalletNew.style';
 
 const imageBTC = require('../../assets/coin-bitcoin.png');
 const imageLTC = require('../../assets/coin-litecoin.png');
 
 const { EN: { CREATE, IMPORT } } = TEXT;
 
-class WalletModal extends Component {
+class ModalWalletNew extends Component {
   constructor(props) {
     super(props);
 
@@ -119,7 +119,7 @@ class WalletModal extends Component {
   }
 }
 
-WalletModal.propTypes = {
+ModalWalletNew.propTypes = {
   addWallet: func,
   camera: bool,
   onClose: func,
@@ -130,7 +130,7 @@ WalletModal.propTypes = {
   visible: bool,
 };
 
-WalletModal.defaultProps = {
+ModalWalletNew.defaultProps = {
   addWallet() {},
   camera: false,
   onClose() {},
@@ -149,4 +149,4 @@ const mapDispatchToProps = dispatch => ({
   updateWallet: wallet => dispatch(updateWalletAction(wallet)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalWalletNew);

@@ -1,10 +1,12 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
-import { Modal, Option } from '../../../components';
-import { STYLE } from '../../../config';
+import { Modal, Option } from '../components';
+import { STYLE } from '../config';
 
-const TransactionModal = ({ onClose, onRequest, onSend, visible }) => (
+const ModalTransaction = ({
+  onClose, onRequest, onSend, visible,
+}) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
       <Option
@@ -23,18 +25,18 @@ const TransactionModal = ({ onClose, onRequest, onSend, visible }) => (
   </Modal>
 );
 
-TransactionModal.propTypes = {
+ModalTransaction.propTypes = {
   onClose: func,
   onRequest: func,
   onSend: func,
   visible: bool,
 };
 
-TransactionModal.defaultProps = {
+ModalTransaction.defaultProps = {
   onClose: undefined,
   onRequest: undefined,
   onSend: undefined,
   visible: false,
 };
 
-export default TransactionModal;
+export default ModalTransaction;

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { Button } from '../../components';
-import { WalletModal } from '../../containers';
+import { ModalWalletNew } from '../../containers';
 import { Slide } from './components';
 import styles from './Onboarding.style';
 
@@ -56,7 +56,9 @@ class Onboarding extends Component {
   }
 
   render() {
-    const { _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, state: { index, modal } } = this;
+    const {
+      _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, state: { index, modal },
+    } = this;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -100,7 +102,7 @@ class Onboarding extends Component {
           style={[styles.option, styles.right]}
         />
 
-        <WalletModal visible={modal} onClose={_onWallet} onSuccess={_onSuccess} />
+        <ModalWalletNew visible={modal} onClose={_onWallet} onSuccess={_onSuccess} />
       </View>
     );
   }
