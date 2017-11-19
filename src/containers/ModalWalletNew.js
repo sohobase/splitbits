@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Button, Modal, Option, QRreader } from '../components';
 import { C, STYLE, TEXT } from '../config';
 import { StateService, WalletService } from '../services';
-import { validateAddress } from '../modules';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
+import { validateAddress } from './modules';
 import styles from './ModalWalletNew.style';
 
 const imageBTC = require('../../assets/coin-bitcoin.png');

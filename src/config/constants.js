@@ -35,9 +35,9 @@ export default {
 
   SATOSHI: 0.00000001,
 
-  SERVICE: 'http://localhost:3000/',
+  // SERVICE: 'http://localhost:3000/',
   // SERVICE: 'http://100.76.165.45:3000/',
-  // SERVICE: 'http://172.17.164.83:3000/',
+  SERVICE: 'http://192.168.100.129:3000/',
 
   STATE: {
     // -- Transactions
@@ -69,12 +69,16 @@ export default {
     SAVE: 'save',
   },
 
-  WALLET_VERSIONS: {
-    ADDRESS_BTC: 0,
-    ADDRESS_BTC_TESTNET: 111,
-    ADDRESS_LTC: 48,
-    WIF_BTC: 128,
-    WIF_BTC_TESTNET: 239,
-    WIF_LTC: 176,
+  WALLET: {
+    ADDRESS: {
+      BTC: 0,
+      BTC_TESTNET: 111,
+      LTC: 48,
+    },
+    WIF: {
+      BTC: 128,
+      BTC_TESTNET: 239,
+      LTC: 176,
+    },
   },
 };
