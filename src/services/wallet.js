@@ -20,13 +20,20 @@ export default {
     return ({ ...wallet, hexSeed: seed.toString('hex') });
   },
 
-  async import({ address, wif, ...props }) {
-    if (wif) address = BitcoinJS.ECPair.fromWIF(wif).getAddress();
+  async import(args) {
+    const {
+      wif,
+      coin,
+      address: importedAddress,
+      ...props
+    } = args;
+    const network = BitcoinJS.networks[CRYPTO_NAMES[coin]];
+    const address = wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : importedAddress;
 
     const wallet = await service('wallet', {
       method: 'POST',
       body: JSON.stringify({
-        ...props, address, imported: true, readOnly: (wif === undefined),
+        ...props, address, coin, imported: true, readOnly: (wif === undefined),
       }),
     });
 
