@@ -1,16 +1,18 @@
-import { array, bool, func, node, number, object, oneOfType, string } from 'prop-types';
+import { array, bool, func, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';
 import { STYLE } from '../config';
 import styles from './Button.style';
 
-const Button = ({ accent, caption, captionStyle, children, circle, disabled, icon, onPress, raised, style, ...animation }) => (
+const Button = ({
+  accent, caption, captionStyle, children, circle, disabled, icon, onPress, raised, style, motion,
+}) => (
   <Touchable onPress={!disabled ? onPress : undefined}>
-    <Animatable
-      {...animation}
+    <Motion
+      {...motion}
       style={StyleSheet.flatten([
         styles.container,
         STYLE.CENTERED,
@@ -26,19 +28,19 @@ const Button = ({ accent, caption, captionStyle, children, circle, disabled, ico
       { caption &&
         <Text style={[styles.caption, captionStyle]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
       { !icon && !caption && children }
-    </Animatable>
+    </Motion>
   </Touchable>
 );
 
 Button.propTypes = {
   accent: bool,
-  animation: string,
   caption: string,
   captionStyle: oneOfType([array, number, object]),
   children: node,
   circle: bool,
   disabled: bool,
   icon: string,
+  motion: shape({}),
   onPress: func,
   raised: bool,
   style: oneOfType([array, number]),
@@ -46,13 +48,13 @@ Button.propTypes = {
 
 Button.defaultProps = {
   accent: false,
-  animation: undefined,
   caption: undefined,
   captionStyle: [],
   children: undefined,
   circle: false,
   disabled: false,
   icon: undefined,
+  motion: {},
   onPress: undefined,
   raised: false,
   style: [],

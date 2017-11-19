@@ -1,6 +1,6 @@
 import { func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import BitcoinJS from 'bitcoinjs-lib';
@@ -150,7 +150,7 @@ class Transaction extends Component {
               <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
             </Button> }
           { item && item.state === REQUESTED &&
-            <Animatable animation="bounceInUp" delay={600}>
+            <Motion animation="bounceInUp" delay={600}>
               { wallet.address !== item.to.address
                 ? // @TODO: Accept a request
                   <Button accent disabled={balance <= item.amount} _onPress={_onSubmit} style={styles.button}>
@@ -158,16 +158,16 @@ class Transaction extends Component {
                   </Button>
                 :
                   <Button accent caption="Cancel request" onPress={_onCancel} style={styles.button} /> }
-            </Animatable> }
+            </Motion> }
           { fee > 0 &&
-            <Animatable animation="bounceIn" style={styles.fee}>
+            <Motion animation="bounceIn" style={styles.fee}>
               <Amount
                 caption="Included fee "
                 coin={currency}
                 value={fee * currencies[coin]}
                 style={styles.feeCaption}
               />
-            </Animatable> }
+            </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
       </View>

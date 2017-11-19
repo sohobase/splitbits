@@ -1,8 +1,8 @@
 import { bool, func, node, string } from 'prop-types';
 import React from 'react';
 import { Modal as ReactNativeModal, Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
-import { STYLE, THEME } from '../config';
+import { View as Motion } from 'react-native-animatable';
+import { THEME } from '../config';
 import Button from './Button';
 import styles from './Modal.style';
 
@@ -16,13 +16,13 @@ const Modal = ({
     visible={visible}
     onRequestClose={() => { }}
   >
-    <Animatable
+    <Motion
       animation={visible ? 'fadeIn' : 'fadeOut'}
       duration={DURATION / 2}
       delay={visible ? 0 : DURATION / 2}
       style={styles.container}
     >
-      <Animatable
+      <Motion
         animation={visible ? 'bounceInUp' : 'bounceOutDown'}
         duration={DURATION}
         style={styles.content}
@@ -39,8 +39,8 @@ const Modal = ({
         </View>
         { hint && <Text style={styles.hint}>{hint}</Text> }
         { children }
-      </Animatable>
-    </Animatable>
+      </Motion>
+    </Motion>
   </ReactNativeModal>
 );
 

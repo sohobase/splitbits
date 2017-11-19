@@ -1,7 +1,7 @@
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
 import { ModalCamera, ModalCurrency } from '../../containers';
@@ -74,7 +74,7 @@ class Settings extends Component {
     return (
       <View style={[STYLE.SCREEN, styles.screen]}>
         <Header title="Settings" navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
-        <Animatable animation="bounceInUp" delay={400}>
+        <Motion animation="bounceInUp" delay={400}>
           <View>
             <View style={[STYLE.LIST_ITEM, styles.thumb]}>
               <View style={styles.image}>
@@ -97,7 +97,7 @@ class Settings extends Component {
               <Text style={styles.input} onPress={_onModalCurrency}>{device.currency}</Text>
             </View>
           </View>
-        </Animatable>
+        </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
         <ModalCurrency visible={currency} onClose={_onModalCurrency} onValue={_onCurrency} />
       </View>

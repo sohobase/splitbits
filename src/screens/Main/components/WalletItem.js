@@ -1,7 +1,7 @@
 import { array, func, number, oneOfType, shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { C, SHAPE, STYLE, TEXT, THEME } from '../../../config';
 import { Amount, Button, Icon } from '../../../components';
@@ -31,7 +31,7 @@ const WalletItem = ({
   } = data || {};
 
   return (
-    <Animatable
+    <Motion
       animation="bounceIn"
       duration={DURATION}
       style={[styles.container, (!data ? styles.empty : undefined), style]}
@@ -67,7 +67,7 @@ const WalletItem = ({
             </View>
           </View>
       }
-    </Animatable>
+    </Motion>
   );
 };
 

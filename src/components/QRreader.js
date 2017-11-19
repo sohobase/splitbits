@@ -1,7 +1,6 @@
 import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
 import { BarCodeScanner, Permissions } from 'expo';
 import { THEME } from '../config';
 import Button from './Button';
@@ -54,9 +53,14 @@ class QRreader extends Component {
           <View style={styles.border} />
         </View>
         <View style={styles.border}>
-          <Animatable animation="bounceInUp" duration={DURATION}>
-            <Button accent circle icon="close" onPress={onClose} style={styles.button} />
-          </Animatable>
+          <Button
+            accent
+            motion={{ animation: 'bounceInUp', duration: DURATION }}
+            circle
+            icon="close"
+            onPress={onClose}
+            style={styles.button}
+          />
         </View>
       </View>
     );

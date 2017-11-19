@@ -1,7 +1,7 @@
 import { arrayOf, shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { SHAPE, STYLE } from '../../../config';
 import { Avatar } from '../../../components';
@@ -26,7 +26,7 @@ const TransactionInfo = (props) => {
   const device = devices.find(({ id }) => id === from.device || id === to.device);
 
   return (
-    <Animatable animation="bounceInUp" delay={500}>
+    <Motion animation="bounceInUp" delay={500}>
       <View style={styles.container}>
         { device
           ?
@@ -46,7 +46,7 @@ const TransactionInfo = (props) => {
         { hash && renderField('Hash', hash) }
         { renderField('Date', createdAt) }
       </View>
-    </Animatable>
+    </Motion>
   );
 };
 

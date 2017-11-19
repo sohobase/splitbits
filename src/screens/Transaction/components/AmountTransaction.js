@@ -1,7 +1,7 @@
 import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Header, Input } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
@@ -67,7 +67,7 @@ class AmountTransaction extends Component {
           navigation={navigation}
           buttonRight={editable ? { icon: 'swap', onPress: _onSwap } : undefined}
         />
-        <Animatable animation="bounceIn" delay={400} style={styles.preview}>
+        <Motion animation="bounceIn" delay={400} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
             <Text style={[styles.label]}>{from}</Text>
             { editable
@@ -87,7 +87,7 @@ class AmountTransaction extends Component {
               <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
             </View>
           </View>
-        </Animatable>
+        </Motion>
       </View>
     );
   }

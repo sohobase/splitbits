@@ -1,7 +1,7 @@
 import { array, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { SHAPE, STYLE, THEME } from '../config';
 import Button from './Button';
 import styles from './Header.style';
@@ -9,23 +9,33 @@ import styles from './Header.style';
 const { BUTTON, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 
-const renderButton = (props = {}, animation, tintColor) => (
-  <Animatable {...animation}>
-    <Button {...props} raised style={styles.button} captionStyle={{ tintColor }} />
-  </Animatable>
-);
-
-const Header = ({ animation, buttonRight, children, navigation, style, tintColor, title }) => (
+const Header = ({
+  animation, buttonRight, children, navigation, style, tintColor, title,
+}) => (
   <View style={[STYLE.ROW, styles.header, style]}>
     { navigation &&
-      renderButton({ icon: 'arrowBack', onPress: () => navigation.goBack() }, { animation, delay: 100 }, tintColor) }
-    <Animatable animation={animation} delay={200} style={styles.content}>
+      <Button
+        motion={{ animation, delay: 100 }}
+        icon="arrowBack"
+        onPress={() => navigation.goBack()}
+        raised
+        style={styles.button}
+        captionStyle={{ tintColor }}
+      /> }
+    <Motion animation={animation} delay={200} style={styles.content}>
       <View style={STYLE.CENTERED}>
         { title && <Text style={[styles.title, (tintColor && { color: tintColor })]}>{title}</Text> }
         { children }
       </View>
-    </Animatable>
-    { navigation && renderButton(buttonRight, { animation, delay: 300 }, tintColor) }
+    </Motion>
+    { navigation &&
+      <Button
+        motion={{ animation, delay: 300 }}
+        {...buttonRight}
+        raised
+        style={styles.button}
+        captionStyle={{ tintColor }}
+      /> }
   </View>
 );
 

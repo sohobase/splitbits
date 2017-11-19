@@ -1,7 +1,7 @@
 import { shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { Header } from '../../components';
@@ -20,19 +20,19 @@ const Profile = ({ device: { session }, navigation }) => (
         navigation={navigation}
         buttonRight={{ icon: 'addDevice', onPress: () => navigation.navigate('Friends') }}
       />
-      <Animatable animation="bounceIn" delay={400} style={styles.preview}>
+      <Motion animation="bounceIn" delay={400} style={styles.preview}>
         <View style={[STYLE.CENTERED, styles.preview]}>
           <QRCode value={session} size={QR_SIZE} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
         </View>
-      </Animatable>
-      <Animatable animation="bounceIn" delay={600}>
+      </Motion>
+      <Motion animation="bounceIn" delay={600}>
         <Text style={styles.hint}>This QR will help your friends to find you easily.</Text>
-      </Animatable>
+      </Motion>
     </View>
     <View style={STYLE.LAYOUT_BOTTOM}>
-      <Animatable animation="bounceInUp" delay={500} style={styles.preview}>
+      <Motion animation="bounceInUp" delay={500} style={styles.preview}>
         <DevicesList />
-      </Animatable>
+      </Motion>
     </View>
   </View>
 );

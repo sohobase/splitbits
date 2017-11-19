@@ -1,21 +1,21 @@
 import { node, string } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
+import { View as Motion } from 'react-native-animatable';
 import { STYLE, THEME } from '../../../config';
 import styles from './Slide.style';
 
 const Slide = ({ backgroundColor, caption, children, image, text }) => (
   <View style={[STYLE.SCREEN, STYLE.CENTERED, styles.slide, { backgroundColor }]}>
-    <Animatable animation="bounceInDown">
+    <Motion animation="bounceInDown">
       <Image style={styles.image} source={{ uri: image }} />
-    </Animatable>
-    <Animatable animation="bounceInUp" delay={200}>
+    </Motion>
+    <Motion animation="bounceInUp" delay={200}>
       <Text style={styles.caption}>{caption.toUpperCase()}</Text>
-    </Animatable>
-    <Animatable animation="bounceInUp" delay={400}>
+    </Motion>
+    <Motion animation="bounceInUp" delay={400}>
       <Text style={styles.text}>{text}</Text>
-    </Animatable>
+    </Motion>
     {children}
   </View>
 );
