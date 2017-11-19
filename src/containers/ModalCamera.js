@@ -2,10 +2,10 @@ import { bool, func } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { FileSystem, ImagePicker } from 'expo';
-import { Modal, Option } from '../../../components';
-import { STYLE } from '../../../config';
+import { Modal, Option } from '../components';
+import { STYLE } from '../config';
 
-const CameraModal = ({ onClose, onFile, visible }) => {
+const ModalCamera = ({ onClose, onFile, visible }) => {
   const launchCamera = async() => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -52,16 +52,16 @@ const CameraModal = ({ onClose, onFile, visible }) => {
   );
 };
 
-CameraModal.propTypes = {
+ModalCamera.propTypes = {
   onClose: func,
   onFile: func,
   visible: bool,
 };
 
-CameraModal.defaultProps = {
+ModalCamera.defaultProps = {
   onClose() {},
   onFile() {},
   visible: false,
 };
 
-export default CameraModal;
+export default ModalCamera;

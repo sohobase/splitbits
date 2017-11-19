@@ -1,14 +1,14 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
-import { Modal, Option } from '../../../components';
-import { C, STYLE } from '../../../config';
+import { Modal, Option } from '../components';
+import { C, STYLE } from '../config';
 
 const { FIAT, SYMBOL } = C;
 const values = Object.values(FIAT);
 
 
-const CameraModal = ({ onClose, onValue, visible }) =>  (
+const ModalCurrency = ({ onClose, onValue, visible }) =>  (
   <Modal title="Choose your currency" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
       { values.map(item => (
@@ -18,16 +18,16 @@ const CameraModal = ({ onClose, onValue, visible }) =>  (
   </Modal>
 );
 
-CameraModal.propTypes = {
+ModalCurrency.propTypes = {
   onClose: func,
   onValue: func,
   visible: bool,
 };
 
-CameraModal.defaultProps = {
+ModalCurrency.defaultProps = {
   onClose() {},
   onValue() {},
   visible: false,
 };
 
-export default CameraModal;
+export default ModalCurrency;

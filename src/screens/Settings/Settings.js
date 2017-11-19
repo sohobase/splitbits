@@ -4,10 +4,10 @@ import { Image, Text, View } from 'react-native';
 import { View as Animatable } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
+import { ModalCamera, ModalCurrency } from '../../containers';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
-import { CameraModal, CurrencyModal } from './components';
 import styles from './Settings.style';
 
 const { SERVICE } = C;
@@ -21,8 +21,8 @@ class Settings extends Component {
     const { device: { image, name } } = props;
     this.state = {
       image,
-      modalImage: false,
-      modalCurrency: false,
+      camera: false,
+      currency: false,
       name,
       timestamp: new Date().getTime(),
     };
@@ -34,12 +34,12 @@ class Settings extends Component {
   }
 
   async _onCurrency(currency) {
-    this.setState({ modalCurrency: false });
+    this.setState({ currency: false });
     this.props.updateDevice(await DeviceService.update({ currency }));
   }
 
   async _onImage(image) {
-    this.setState({ image: image.uri, modalImage: false, timestamp: new Date().getTime() });
+    this.setState({ image: image.uri, camera: false, timestamp: new Date().getTime() });
     this.props.updateDevice(await DeviceService.update({ image }));
   }
 
@@ -52,20 +52,20 @@ class Settings extends Component {
   }
 
   _onModalCurrency() {
-    this.setState({ modalCurrency: !this.state.modalCurrency });
+    this.setState({ currency: !this.state.currency });
   }
 
   _onModalImage() {
-    this.setState({ modalImage: !this.state.modalImage });
+    this.setState({ camera: !this.state.camera });
   }
-
-
 
   render() {
     const {
       _onCurrency, _onImage, _onName, _onModalCurrency, _onModalImage,
-      props: { device: { currency }, navigation },
-      state: { image, modalCurrency, modalImage, name, timestamp },
+      props: { device, navigation },
+      state: {
+        image, currency, camera, name, timestamp,
+      },
     } = this;
     const imageUrl = image && !image.startsWith('file:')
       ? `${SERVICE}public/${image}?timestamp=${timestamp}`
@@ -94,12 +94,12 @@ class Settings extends Component {
             </View>
             <View style={STYLE.LIST_ITEM} >
               <Text style={styles.label}>Currency</Text>
-              <Text style={styles.input} onPress={_onModalCurrency}>{currency}</Text>
+              <Text style={styles.input} onPress={_onModalCurrency}>{device.currency}</Text>
             </View>
           </View>
         </Animatable>
-        <CameraModal visible={modalImage} onClose={_onModalImage} onFile={_onImage} />
-        <CurrencyModal visible={modalCurrency} onClose={_onModalCurrency} onValue={_onCurrency} />
+        <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
+        <ModalCurrency visible={currency} onClose={_onModalCurrency} onValue={_onCurrency} />
       </View>
     );
   }
