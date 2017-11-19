@@ -8,7 +8,11 @@ import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
 const { SATOSHI, TYPE: { PRO } } = C;
-const { EN: { CREATE, IMPORT, NEW_WALLET, RECOVER } } = TEXT;
+const {
+  EN: {
+    CREATE, IMPORT, NEW_WALLET, RECOVER,
+  },
+} = TEXT;
 const { CURRENCIES, DEVICE, WALLET } = SHAPE;
 const { ANIMATION: { DURATION } } = THEME;
 
@@ -50,7 +54,7 @@ const WalletItem = ({
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
               <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
-              { type === PRO && <Text style={styles.pro}>PRO</Text> }
+              { type === PRO && <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
             </View>
           </View>
           :
