@@ -24,16 +24,19 @@ export default {
     const {
       wif,
       coin,
-      address: importedAddress,
+      address,
       ...props
     } = args;
     const network = BitcoinJS.networks[CRYPTO_NAMES[coin]];
-    const address = wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : importedAddress;
 
     const wallet = await service('wallet', {
       method: 'POST',
       body: JSON.stringify({
-        ...props, address, coin, imported: true, readOnly: (wif === undefined),
+        ...props,
+        address: wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : address,
+        coin,
+        imported: true,
+        readOnly: (wif === undefined),
       }),
     });
 
