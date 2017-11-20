@@ -91,7 +91,7 @@ export default StyleSheet.create({
   menu: {
     position: 'absolute',
     right: Platform.OS === 'ios' ? -UNIT : 0,
-    top: 0,
+    top: Platform.OS === 'ios' ? 0 : UNIT,
   },
 
   menuIcon: {
