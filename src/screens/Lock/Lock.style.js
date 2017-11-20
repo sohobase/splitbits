@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
 const {
-  BUTTON_CIRCLE_SIZE, COLOR, FONT, UNIT, OFFSET,
+  COLOR, FONT, UNIT, OFFSET,
 } = THEME;
 
 export default StyleSheet.create({

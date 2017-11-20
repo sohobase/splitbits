@@ -8,5 +8,6 @@ export default StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     bottom: FOOTER_SIZE * 0.25,
+    elevation: 10,
   },
 });

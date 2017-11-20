@@ -14,6 +14,19 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
+  COL: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  ELEVATION: {
+    elevation: 8,
+    shadowColor: COLOR.BLACK,
+    shadowOffset: { height: 8 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
+  },
+
   HEADER: Object.assign({
     backgroundColor: COLOR.PRIMARY,
     elevation: 0,
@@ -22,13 +35,13 @@ export default StyleSheet.create({
     shadowOffset: { height: 0 },
   }, androidHeader),
 
-  HEADER_TITLE: {
-    alignSelf: 'center',
-  },
-
   HEADER_HIGHLIGHT: {
     borderBottomWidth: 1,
     borderBottomColor: COLOR.DIVIDER,
+  },
+
+  HEADER_TITLE: {
+    alignSelf: 'center',
   },
 
   LAYOUT_TOP: {
@@ -37,6 +50,15 @@ export default StyleSheet.create({
     height: '45%',
     maxHeight: UNIT * 36,
     backgroundColor: COLOR.PRIMARY,
+  },
+
+  LTC: {
+    backgroundColor: COLOR.ACCENT,
+  },
+
+  LAYOUT_BOTTOM: {
+    flex: 1,
+    backgroundColor: COLOR.BACKGROUND,
   },
 
   LIST_ITEM: {
@@ -51,20 +73,10 @@ export default StyleSheet.create({
     minHeight: ROW_MIN_HEIGHT,
   },
 
-  LAYOUT_BOTTOM: {
-    flex: 1,
-    backgroundColor: COLOR.BACKGROUND,
-  },
-
   ROW: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-
-  COL: {
-    display: 'flex',
-    flexDirection: 'column',
   },
 
   SCREEN: {

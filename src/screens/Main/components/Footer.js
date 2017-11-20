@@ -1,4 +1,4 @@
-import { func, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
@@ -8,8 +8,8 @@ import styles from './Footer.style';
 
 const { DEVICE } = SHAPE;
 
-const Footer = ({ device: { requests = [] }, navigate }) => (
-  <View style={[STYLE.ROW, STYLE.CENTERED, styles.footer]}>
+const Footer = ({ device: { requests = [] }, elevation, navigate }) => (
+  <View style={[STYLE.ROW, STYLE.CENTERED, STYLE.ELEVATION, styles.footer, (elevation && styles.elevation)]}>
     <Option
       activity={requests.length > 0}
       centered
@@ -24,11 +24,13 @@ const Footer = ({ device: { requests = [] }, navigate }) => (
 
 Footer.propTypes = {
   device: shape(DEVICE),
+  elevation: bool,
   navigate: func,
 };
 
 Footer.defaultProps = {
   device: {},
+  elevation: true,
   navigate: undefined,
 };
 

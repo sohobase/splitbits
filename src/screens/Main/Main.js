@@ -75,10 +75,12 @@ class Main extends Component {
         context, index = 0, showMnemonic, showTransaction, showWalletNew, showWallet,
       },
     } = this;
+    const wallet = wallets[index];
+    const focus = !showTransaction && !showWallet && !showWalletNew;
 
     return (
       <View style={STYLE.SCREEN}>
-        <View style={STYLE.LAYOUT_TOP}>
+        <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]}>
           <Header symbol="USD" />
           <Swiper
             bounces
@@ -91,14 +93,14 @@ class Main extends Component {
             style={styles.wallets}
           >
             {[
-              ...wallets.map(wallet => <WalletItem key={wallet.id} data={wallet} onPress={_onWallet} />),
+              ...wallets.map(item => <WalletItem key={item.id} data={item} onPress={_onWallet} />),
               <WalletItem key="new" onOption={_onModalWallet} />,
             ]}
           </Swiper>
         </View>
-        <Transactions navigate={navigate} wallet={wallets[index]} />
-        <Footer navigate={navigate} />
-        <TransactionButton onPress={_onModal} visible={!showTransaction} />
+        <Transactions navigate={navigate} wallet={wallet} />
+        <Footer navigate={navigate} elevation={focus} />
+        <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined} />
         <ModalTransaction
           visible={showTransaction}
           onClose={_onModal}
@@ -111,14 +113,14 @@ class Main extends Component {
           onClose={_onModalWallet}
           onSuccess={_onModalWallet}
         />
-        { wallets[index] &&
+        { wallet &&
           <ModalWallet
             visible={showWallet}
-            wallet={wallets[index]}
+            wallet={wallet}
             onBackup={_onMnemonic}
             onClose={_onWallet}
           /> }
-        <ModalMnemonic visible={showMnemonic} onClose={_onMnemonic} wallet={wallets[index]} />
+        <ModalMnemonic visible={showMnemonic} onClose={_onMnemonic} wallet={wallet} />
       </View>
     );
   }

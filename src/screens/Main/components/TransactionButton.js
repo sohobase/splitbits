@@ -9,9 +9,11 @@ const { DURATION } = THEME.ANIMATION;
 const TransactionButton = ({ onPress, visible }) => (
   <Button
     accent
-    animation={visible ? 'bounceInUp' : 'bounceOutDown'}
-    delay={visible ? DURATION / 2 : 0}
-    duration={DURATION}
+    motion={{
+      animation: (visible ? 'bounceInUp' : 'bounceOutDown'),
+      delay: (visible ? DURATION / 2 : 0),
+      duration: DURATION,
+    }}
     circle
     icon="operations"
     onPress={onPress}

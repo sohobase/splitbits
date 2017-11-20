@@ -3,9 +3,6 @@ import Color from 'color';
 const UNIT = 10;
 const WHITE = '#ffffff';
 const BLACK = '#000000';
-const PRIMARY = '#3f51b5';
-// const PRIMARY = '#333333';
-const ACCENT = '#e91e63';
 const DISABLED = 0.38;
 
 export default {
@@ -15,11 +12,8 @@ export default {
   },
 
   COLOR: {
-    PRIMARY,
-    PRIMARY_LIGHT: Color(WHITE).lighten(0.2),
-    PRIMARY_DARK: Color(WHITE).darken(0.2),
-
-    ACCENT,
+    PRIMARY: '#303498',
+    ACCENT: '#ff4566', /* #e91e63 */
 
     BACKGROUND: Color(WHITE).darken(0.03),
     BACKGROUND_HIGHLIGHT: Color(WHITE).alpha(0.15),
@@ -35,7 +29,7 @@ export default {
     TEXT_HIGHLIGHT_SECONDARY: Color(WHITE).alpha(0.7),
     TEXT_HIGHLIGHT_DISABLED: Color(WHITE).alpha(0.45),
 
-    ACCEPT: '#4CAF50',
+    ACCEPT: '#32dba8',
     CANCEL: '#F44336',
     WHITE,
     BLACK,

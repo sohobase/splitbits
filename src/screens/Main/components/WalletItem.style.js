@@ -12,7 +12,6 @@ const SIZE = {
 
 export default StyleSheet.create({
   container: {
-    zIndex: 1,
     width: SIZE.WIDTH,
     height: SIZE.HEIGHT,
     backgroundColor: COLOR.WHITE,
@@ -20,15 +19,11 @@ export default StyleSheet.create({
     marginBottom: OFFSET,
     alignSelf: 'center',
     borderRadius: BORDER_RADIUS,
-    shadowColor: COLOR.BLACK,
-    shadowOffset: { height: 8 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
   },
 
   empty: {
     backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
-    shadowOffset: { height: 0 },
+    elevation: 0,
   },
 
   content: {

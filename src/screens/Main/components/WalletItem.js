@@ -34,7 +34,7 @@ const WalletItem = ({
     <Motion
       animation="bounceIn"
       duration={DURATION}
-      style={[styles.container, (!data ? styles.empty : undefined), style]}
+      style={[STYLE.ELEVATION, styles.container, (!data ? styles.empty : undefined), style]}
     >
       {
         data ?

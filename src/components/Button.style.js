@@ -24,6 +24,10 @@ export default StyleSheet.create({
 
   accent: {
     backgroundColor: COLOR.ACCENT,
+    shadowColor: COLOR.ACCENT,
+    shadowOffset: { height: 6 },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
   },
 
   disabled: {

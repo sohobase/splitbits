@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { AVATAR_SIZE, COLOR, FONT, HEADER_SIZE, UNIT, OFFSET } = THEME;
+const {
+  AVATAR_SIZE, COLOR, FONT, UNIT, OFFSET,
+} = THEME;
 
 export default StyleSheet.create({
   screen: {

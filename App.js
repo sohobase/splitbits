@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { nodeEnvironment } from './src/modules'; // eslint-disable-line
 import {
   LoadingScreen,
+  LockScreen,
   OnboardingScreen,
   MainScreen,
   ProfileScreen,
@@ -21,6 +22,7 @@ const navigationOptions = {
 };
 
 const screens = {
+  Lock: { screen: LockScreen, navigationOptions },
   Onboarding: { screen: OnboardingScreen, navigationOptions },
   Main: { screen: MainScreen, navigationOptions },
   Transaction: { screen: TransactionScreen, navigationOptions },

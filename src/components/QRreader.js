@@ -55,7 +55,7 @@ class QRreader extends Component {
         <View style={styles.border}>
           <Button
             accent
-            motion={{ animation: 'bounceInUp', duration: DURATION }}
+            motion={{ animation: 'bounceInUp', delay: 300, duration: DURATION }}
             circle
             icon="close"
             onPress={onClose}
