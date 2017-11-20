@@ -27,7 +27,7 @@ const Modal = ({
         duration={DURATION}
         style={styles.content}
       >
-        <View style={[styles.header]}>
+        <View style={styles.header}>
           { title && <Text style={styles.title}>{title}</Text> }
           <Button
             icon="close"

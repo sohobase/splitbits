@@ -17,8 +17,6 @@ export default StyleSheet.create({
   coins: {
     borderBottomColor: COLOR.DIVIDER,
     borderBottomWidth: 1,
-    borderTopColor: COLOR.DIVIDER,
-    borderTopWidth: 1,
     padding: OFFSET,
   },
 
