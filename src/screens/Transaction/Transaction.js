@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { View as Motion } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import BitcoinJS from 'bitcoinjs-lib';
 import { Amount, Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
 import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
 import { AmountTransaction, Recipient, Info } from './components';
+import { submit } from './modules';
 import styles from './Transaction.style';
 
 const { SATOSHI, STATE: { REQUESTED }, TYPE: { PRO, REQUEST } } = C;
@@ -16,8 +16,6 @@ const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
 let timeout;
-
-const getWif = hexSeed => BitcoinJS.HDNode.fromSeedHex(hexSeed).keyPair.toWIF();
 
 class Transaction extends Component {
   constructor(props) {
@@ -72,34 +70,9 @@ class Transaction extends Component {
   }
 
   async _onSubmit() {
-    const {
-      props: {
-        deviceId, navigation, type, updateTransactions,
-        item: { id } = {},
-        wallet: {
-          coin,
-          wif,
-          hexSeed,
-          id: walletId,
-        },
-      },
-      state: { address, amount, concept },
-    } = this;
-    const isRequest = type === REQUEST;
-    const method = isRequest ? 'request' : 'send';
-    const params = {
-      address,
-      amount: parseInt(amount / SATOSHI, 10),
-      coin,
-      concept,
-      deviceId,
-      id,
-      walletId,
-      wif: (!isRequest ? wif || getWif(hexSeed) : undefined),
-    };
-
-    const transaction = await TransactionService[method](params);
+    const transaction = await submit(this);
     if (transaction && transaction.id) {
+      const { navigation, updateTransactions } = this.props;
       updateTransactions(transaction);
       navigation.goBack();
     }
