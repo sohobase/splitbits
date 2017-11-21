@@ -19,9 +19,9 @@ class Transactions extends Component {
     this._renderTransaction = this._renderTransaction.bind(this);
   }
 
-  componentWillReceiveProps({ wallet }) {
+  componentWillReceiveProps({ wallet = {} }) {
     const { wallet: { id } = {} } = this.props;
-    if (wallet && wallet.id && wallet.id !== id) this._onRefresh(wallet);
+    if (wallet.id !== undefined && wallet.id !== id) this._onRefresh(wallet);
   }
 
   async _onRefresh(wallet = this.props.wallet) {
@@ -69,11 +69,16 @@ Transactions.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = ({ transactions = [] }, { wallet = {} }) => ({
+const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
   transactions: transactions.filter(({
     coin, from, state, to,
   }) => (
-    coin === wallet.coin && state !== ARCHIVED && (from.address === wallet.address || to.address === wallet.address)
+    coin === wallet.coin &&
+    state !== ARCHIVED &&
+    (
+      [from.address, to.address].includes(wallet.address) ||
+      [from.device, to.device].includes(device.id)
+    )
   )),
 });
 
