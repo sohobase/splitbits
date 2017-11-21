@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View as Motion } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { Amount, Button, QRreader } from '../../components';
+import { Amount, QRreader } from '../../components';
 import { C, SHAPE, STYLE, TEXT } from '../../config';
 import { TransactionService } from '../../services';
 import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
@@ -15,7 +15,7 @@ const { SATOSHI, STATE: { REQUESTED }, TYPE: { PRO, REQUEST } } = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
-const { EN: { CANCEL_REQUEST, FEE, SEND } } = TEXT;
+const { EN: { FEE } } = TEXT;
 let timeout;
 
 class Transaction extends Component {
@@ -25,7 +25,7 @@ class Transaction extends Component {
 
     this.state = {
       amount: item.amount,
-      address: undefined,
+      address: undefined, //eslint-disable-line
       camera: false,
       concept: undefined,
       fees: {},
@@ -44,7 +44,7 @@ class Transaction extends Component {
 
   _onAddress(address) {
     this.props.selectDevice(undefined);
-    this.setState({ address });
+    this.setState({ address }); //eslint-disable-line
   }
 
   _onAmount(amount) {
@@ -139,27 +139,21 @@ class Transaction extends Component {
 }
 
 Transaction.propTypes = {
-  currencies: shape(CURRENCIES),
-  device: shape(DEVICE),
+  currencies: shape(CURRENCIES).isRequired,
+  device: shape(DEVICE).isRequired,
   deviceId: string,
   item: shape(TRANSACTION),
-  navigation: shape(NAVIGATION),
-  selectDevice: func,
+  navigation: shape(NAVIGATION).isRequired,
+  selectDevice: func.isRequired,
   type: string,
-  updateTransactions: func,
-  wallet: shape(WALLET),
+  updateTransactions: func.isRequired,
+  wallet: shape(WALLET).isRequired,
 };
 
 Transaction.defaultProps = {
-  currencies: {},
-  device: undefined,
   deviceId: undefined,
   item: undefined,
-  navigation: undefined,
-  selectDevice() {},
   type: REQUEST,
-  updateTransactions() {},
-  wallet: {},
 };
 
 const mapStateToProps = ({ currencies, device, selectedDevice }, props) => {
