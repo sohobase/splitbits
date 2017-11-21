@@ -82,7 +82,7 @@ class Transaction extends Component {
       item: { id }, navigation, updateTransactions, wallet,
     } = this.props;
 
-    const transaction = await TransactionService.cancelRequest(id, wallet.id);
+    const transaction = await TransactionService.archive(id, wallet.id);
     if (transaction && transaction.id) {
       updateTransactions(transaction);
       navigation.goBack();
@@ -108,7 +108,6 @@ class Transaction extends Component {
     const recipientProps = {
       concept, deviceId, navigation, type,
     };
-    console.log('fee', fee, fee * currencies[currency][coin]);
 
     return (
       <View style={STYLE.SCREEN}>
@@ -128,7 +127,12 @@ class Transaction extends Component {
             /> }
           { fee > 0 &&
             <Motion animation="bounceIn" style={styles.fee}>
-              <Amount caption={`${FEE} `} coin={currency} value={fee * currencies[currency][coin]} style={styles.feeCaption} />
+              <Amount
+                caption={`${FEE} `}
+                coin={currency}
+                value={fee * currencies[currency][coin]}
+                style={styles.feeCaption}
+              />
             </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />

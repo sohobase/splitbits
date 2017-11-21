@@ -40,7 +40,7 @@ export default {
 
   // SERVICE: 'http://localhost:3000/',
   // SERVICE: 'http://100.76.165.45:3000/',
-  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'http://splitbits.sohobase.co',
+  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'https://splitbits.sohobase.co',
 
   STATE: {
     // -- Transactions

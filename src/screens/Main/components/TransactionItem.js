@@ -3,19 +3,20 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Avatar, Icon, Touchable } from '../../../components';
-import { C, SHAPE, STYLE } from '../../../config';
+import { C, SHAPE, STYLE, TEXT } from '../../../config';
 import styles from './TransactionItem.style';
 
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
 const {
   CURRENCIES, DEVICE, TRANSACTION, WALLET,
 } = SHAPE;
+const { EN: { PAY, REQUEST, TO } } = TEXT;
 
 const verboseTitle = ({
   emitter, concept, other: { name = '' }, state, payment,
 }) => {
   if (!name) return concept;
-  if (state === REQUESTED) return `${emitter ? 'Payment' : 'Request'} to ${name.split(' ')[0]}`;
+  if (state === REQUESTED) return `${emitter ? PAY : REQUEST} ${TO} ${name.split(' ')[0]}`;
   return `${payment ? 'To' : 'From'} ${name}`;
 };
 

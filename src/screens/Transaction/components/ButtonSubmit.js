@@ -4,7 +4,7 @@ import { Amount, Button } from '../../../components';
 import { C, SHAPE, TEXT } from '../../../config';
 import styles from './ButtonSubmit.style';
 
-const { TYPE } = C;
+const { TYPE, TYPE: { REQUEST } } = C;
 const { TRANSACTION, WALLET } = SHAPE;
 const { EN: { CANCEL_REQUEST, SEND } } = TEXT;
 
@@ -25,7 +25,12 @@ const ButtonSubmit = ({
       style={styles.button}
     >
       { !cancel &&
-        <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount} /> }
+        <Amount
+          caption={`${(editable && type === REQUEST) ? REQUEST : SEND} `}
+          coin={coin}
+          style={styles.buttonCaption}
+          value={amount}
+        /> }
     </Button>
   );
 };

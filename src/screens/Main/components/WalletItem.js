@@ -27,7 +27,7 @@ const WalletItem = ({
   currencies, data, device: { currency }, onOption, onPress, style,
 }) => {
   const {
-    balance = 0, coin = 'BTC', name, trend = 0, type,
+    balance = 0, coin = 'BTC', name = '', trend = 0, type,
   } = data || {};
 
   return (
