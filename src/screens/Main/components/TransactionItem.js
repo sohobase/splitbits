@@ -12,10 +12,10 @@ const {
 } = SHAPE;
 
 const verboseTitle = ({
-  emitter, concept, other: { name }, state, payment,
+  emitter, concept, other: { name = '' }, state, payment,
 }) => {
   if (!name) return concept;
-  if (state === REQUESTED) return `Request ${emitter ? 'from' : 'to'} ${name}`;
+  if (state === REQUESTED) return `${emitter ? 'Payment' : 'Request'} to ${name.split(' ')[0]}`;
   return `${payment ? 'To' : 'From'} ${name}`;
 };
 
@@ -32,10 +32,10 @@ const TransactionItem = (props) => {
 
   const other = devices.find(({ id }) => id === from.device || id === to.device) || {};
   const symbol = payment ? '-' : '+';
+  const emitter = address !== to.address;
 
   let icon = 'settings';
-  if (state === CONFIRMED) icon = payment ? 'arrowForward' : 'arrowBack';
-  if (state === REQUESTED) icon = 'operations';
+  if ([CONFIRMED, REQUESTED].includes(state)) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
 
   return (
     <Touchable onPress={() => onPress(payment)} activeOpacity={0.95}>
@@ -49,7 +49,7 @@ const TransactionItem = (props) => {
         <View style={styles.info}>
           <Text style={styles.title}>
             {verboseTitle({
-              emitter: (address !== to.address), concept, other, state, payment,
+              emitter, concept, other, state, payment,
             })}
           </Text>
           <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
@@ -70,19 +70,15 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
-  currencies: shape(CURRENCIES),
-  data: shape(TRANSACTION),
-  device: shape(DEVICE),
+  currencies: shape(CURRENCIES).isRequired,
+  data: shape(TRANSACTION).isRequired,
+  device: shape(DEVICE).isRequired,
   onPress: func,
-  wallet: shape(WALLET),
+  wallet: shape(WALLET).isRequired,
 };
 
 TransactionItem.defaultProps = {
-  currencies: {},
-  data: {},
-  device: {},
-  onPress: undefined,
-  wallet: undefined,
+  onPress() {},
 };
 
 const mapStateToProps = ({ currencies, device }) => ({
