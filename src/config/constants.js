@@ -7,7 +7,7 @@ export default {
   },
 
   CRYPTO_NAMES: {
-    BTC: __DEV__ ? 'testnet' : 'bitcoin', // eslint-disable-line
+    BTC: DEV ? 'testnet' : 'bitcoin',
     LTC: 'litecoin',
   },
 
@@ -40,7 +40,7 @@ export default {
 
   // SERVICE: 'http://localhost:3000/',
   // SERVICE: 'http://100.76.165.45:3000/',
-  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'http://',
+  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'http://splitbits.sohobase.co',
 
   STATE: {
     // -- Transactions
