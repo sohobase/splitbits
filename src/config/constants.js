@@ -1,7 +1,6 @@
+const DEV = __DEV__; //eslint-disable-line
+
 export default {
-
-  MIN_CONFIRMATIONS: 3,
-
   CRYPTO: {
     BTC: 'BTC',
     LTC: 'LTC',
@@ -16,12 +15,16 @@ export default {
     TOKEN: 'sohobase-splitbits-dev',
   },
 
+  DEV,
+
   FIAT: {
     EUR: 'EUR',
     USD: 'USD',
     GBP: 'GBP',
     JPY: 'JPY',
   },
+
+  MIN_CONFIRMATIONS: 3,
 
   SYMBOL: {
     EUR: '€',
@@ -37,7 +40,7 @@ export default {
 
   // SERVICE: 'http://localhost:3000/',
   // SERVICE: 'http://100.76.165.45:3000/',
-  SERVICE: 'http://192.168.100.129:3000/',
+  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'http://',
 
   STATE: {
     // -- Transactions
@@ -61,12 +64,6 @@ export default {
     PRO: 'pro',
     REQUEST: 'request',
     SEND: 'send',
-  },
-
-  VERB: {
-    CREATE: 'create',
-    IMPORT: 'import',
-    SAVE: 'save',
   },
 
   WALLET: {
