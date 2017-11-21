@@ -4,10 +4,10 @@ import { View as Motion } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Button, QRreader } from '../../components';
-import { C, SHAPE, STYLE } from '../../config';
+import { C, SHAPE, STYLE, TEXT } from '../../config';
 import { TransactionService } from '../../services';
 import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
-import { AmountTransaction, Recipient, Info } from './components';
+import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
 import { submit } from './modules';
 import styles from './Transaction.style';
 
@@ -15,6 +15,7 @@ const { SATOSHI, STATE: { REQUESTED }, TYPE: { PRO, REQUEST } } = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
+const { EN: { CANCEL_REQUEST, FEE, SEND } } = TEXT;
 let timeout;
 
 class Transaction extends Component {
@@ -97,12 +98,11 @@ class Transaction extends Component {
         currencies, device: { currency }, deviceId, item, navigation, type, wallet,
       },
       state: {
-        address, amount = 0, camera, concept, fees = {},
+        amount = 0, camera, concept, fees = {},
       },
     } = this;
-    const { balance, coin } = wallet;
+    const { coin } = wallet;
     const editable = !item;
-    const checked = amount > 0 && amount <= balance && concept && (deviceId || address);
     const fee = wallet.type === PRO ? fees.average : fees.slow + fees.charge;
     const amountProps = {
       coin, editable, item, navigation, wallet,
@@ -118,28 +118,18 @@ class Transaction extends Component {
           { editable
             ? <Recipient {...recipientProps} onCamera={_onCamera} onConcept={_onConcept} />
             : <Info item={item} /> }
-          { editable &&
-            <Button accent disabled={!checked} onPress={_onSubmit} style={styles.button}>
-              <Amount caption={`${type} `} coin={coin} style={styles.buttonCaption} value={amount / SATOSHI} />
-            </Button> }
-          { item && item.state === REQUESTED &&
-            <Motion animation="bounceInUp" delay={600}>
-              { wallet.address !== item.to.address
-                ? // @TODO: Accept a request
-                  <Button accent disabled={balance <= item.amount} _onPress={_onSubmit} style={styles.button}>
-                    <Amount caption="Send " coin={coin} style={styles.buttonCaption} value={item.amount} />
-                  </Button>
-                :
-                  <Button accent caption="Cancel request" onPress={_onCancel} style={styles.button} /> }
-            </Motion> }
+          { (editable || item.state === REQUESTED) &&
+            <ButtonSubmit
+              amount={editable ? amount / SATOSHI : item.amount}
+              item={item}
+              onCancel={_onCancel}
+              onPress={_onSubmit}
+              type={type}
+              wallet={wallet}
+            /> }
           { fee > 0 &&
             <Motion animation="bounceIn" style={styles.fee}>
-              <Amount
-                caption="Included fee "
-                coin={currency}
-                value={fee * currencies[coin]}
-                style={styles.feeCaption}
-              />
+              <Amount caption={`${FEE} `} coin={currency} value={fee * currencies[coin]} style={styles.feeCaption} />
             </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
