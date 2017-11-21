@@ -7,7 +7,7 @@ export default {
   },
 
   CRYPTO_NAMES: {
-    BTC: 'bitcoin',
+    BTC: __DEV__ ? 'testnet' : 'bitcoin', // eslint-disable-line
     LTC: 'litecoin',
   },
 

@@ -1,4 +1,3 @@
-import BitcoinJS from 'bitcoinjs-lib';
 import { C } from '../../../config';
 import { TransactionService } from '../../../services';
 
@@ -7,17 +6,12 @@ const { SATOSHI, TYPE: { REQUEST } } = C;
 export default async(component) => {
   const {
     props: {
-      deviceId, type,
+      deviceId, type, wallet,
       item: { id } = {},
-      wallet: {
-        coin,
-        wif,
-        hexSeed,
-        id: walletId,
-      },
     },
     state: { address, amount, concept },
   } = component;
+  const { coin, id: walletId } = wallet;
 
   const isRequest = type === REQUEST;
   const method = isRequest ? 'request' : 'send';
@@ -29,10 +23,7 @@ export default async(component) => {
     deviceId,
     id,
     walletId,
-    wif: !isRequest
-      ? wif || BitcoinJS.HDNode.fromSeedHex(hexSeed).keyPair.toWIF()
-      : undefined,
   };
 
-  return TransactionService[method](params);
+  return TransactionService[method](params, wallet);
 };
