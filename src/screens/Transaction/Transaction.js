@@ -11,7 +11,7 @@ import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
 import { submit } from './modules';
 import styles from './Transaction.style';
 
-const { SATOSHI, STATE: { REQUESTED }, TYPE: { PRO, REQUEST } } = C;
+const { SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, PRO, REQUEST } } = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
@@ -48,16 +48,14 @@ class Transaction extends Component {
   }
 
   _onAmount(amount) {
-    this.setState({ amount });
+    const { type, wallet: { coin } } = this.props;
+    this.setState({ amount, fees: {} });
     clearTimeout(timeout);
 
-    if (amount > 0) {
+    if (type === SEND && amount > 0) {
       timeout = setTimeout(async() => {
-        const { wallet: { coin } } = this.props;
         this.setState({ fees: await TransactionService.fees(coin, amount * SATOSHI) });
       }, 300);
-    } else {
-      this.setState({ fees: {} });
     }
   }
 
@@ -110,6 +108,7 @@ class Transaction extends Component {
     const recipientProps = {
       concept, deviceId, navigation, type,
     };
+    console.log('fee', fee, fee * currencies[currency][coin]);
 
     return (
       <View style={STYLE.SCREEN}>
@@ -129,7 +128,7 @@ class Transaction extends Component {
             /> }
           { fee > 0 &&
             <Motion animation="bounceIn" style={styles.fee}>
-              <Amount caption={`${FEE} `} coin={currency} value={fee * currencies[coin]} style={styles.feeCaption} />
+              <Amount caption={`${FEE} `} coin={currency} value={fee * currencies[currency][coin]} style={styles.feeCaption} />
             </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
@@ -145,7 +144,7 @@ Transaction.propTypes = {
   item: shape(TRANSACTION),
   navigation: shape(NAVIGATION).isRequired,
   selectDevice: func.isRequired,
-  type: string,
+  type: string.isRequired,
   updateTransactions: func.isRequired,
   wallet: shape(WALLET).isRequired,
 };
@@ -153,7 +152,6 @@ Transaction.propTypes = {
 Transaction.defaultProps = {
   deviceId: undefined,
   item: undefined,
-  type: REQUEST,
 };
 
 const mapStateToProps = ({ currencies, device, selectedDevice }, props) => {
