@@ -12,6 +12,7 @@ const Input = ({ highlight, style, ...inherit }) => (
     style={[
       styles.input,
       (highlight ? styles.highlight : undefined),
+      (!inherit.editable && styles.disabled),
       style,
     ]}
   />

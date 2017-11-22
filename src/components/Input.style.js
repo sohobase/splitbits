@@ -16,4 +16,8 @@ export default StyleSheet.create({
   highlight: {
     color: COLOR.WHITE,
   },
+
+  disabled: {
+    color: COLOR.TEXT_SECONDARY,
+  },
 });
