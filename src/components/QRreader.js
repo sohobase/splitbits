@@ -25,9 +25,7 @@ class QRreader extends Component {
   }
 
   _onBarCodeRead = ({ data }) => {
-    const { onClose, onRead } = this.props;
-    onClose();
-    onRead(data);
+    this.props.onRead(data);
   }
 
   render() {

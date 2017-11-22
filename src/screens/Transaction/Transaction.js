@@ -44,7 +44,8 @@ class Transaction extends Component {
 
   _onAddress(address) {
     this.props.selectDevice(undefined);
-    this.setState({ address }); //eslint-disable-line
+    // @TODO validate address
+    this.setState({ address, camera: false }); //eslint-disable-line
   }
 
   _onAmount(amount) {
