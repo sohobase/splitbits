@@ -4,13 +4,6 @@ import { C } from '../config';
 
 const { NETWORKS } = C;
 
-const walletToECPair = ({ wif, hexSeed }, network) => {
-  if (wif) {
-    return BitcoinJS.ECPair.fromWIF(wif, network);
-  }
-  return BitcoinJS.HDNode.fromSeedHex(hexSeed, network).keyPair;
-};
-
 export default {
 
   fees(coin, amount) {
@@ -25,12 +18,16 @@ export default {
     return service('transaction/request', { method: 'POST', body: JSON.stringify(props) });
   },
 
-  async send(props, wallet) {
-    const network = BitcoinJS.networks[NETWORKS[wallet.coin]];
+  async send(props, { coin, wif, hexSeed }) {
+    const network = BitcoinJS.networks[NETWORKS[coin]];
     const { tx: hexTx, fee } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
     const tx = BitcoinJS.TransactionBuilder.fromTransaction(BitcoinJS.Transaction.fromHex(hexTx), network);
+    const ECPair = wif
+      ? BitcoinJS.ECPair.fromWIF(wif, network)
+      : BitcoinJS.HDNode.fromSeedHex(hexSeed, network).keyPair;
+
     // @TODO: verify outputs are what we expect
-    tx.sign(0, walletToECPair(wallet, network)); // @TODO try/catch
+    tx.sign(0, ECPair); // @TODO try/catch
     const body = JSON.stringify({ ...props, fee, tx: tx.build().toHex() });
     return service('transaction/send', { method: 'POST', body });
   },
