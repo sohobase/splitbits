@@ -2,25 +2,21 @@ import { bool, func } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { Modal, Option } from '../components';
-import { STYLE } from '../config';
+import { STYLE, TEXT } from '../config';
+
+const {
+  EN: {
+    REQUEST_MONEY, REQUEST_MONEY_HINT, SEND_MONEY, SEND_MONEY_HINT,
+  },
+} = TEXT;
 
 const ModalTransaction = ({
   onClose, onRequest, onSend, visible,
 }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
-      <Option
-        caption="Send Money"
-        hint="lorem ipsum..."
-        icon="arrowForward"
-        onPress={onSend}
-      />
-      <Option
-        caption="Request Money"
-        hint="lorem ipsum..."
-        icon="arrowBack"
-        onPress={onRequest}
-      />
+      <Option caption={SEND_MONEY} hint={SEND_MONEY_HINT} icon="arrowForward" onPress={onSend} />
+      <Option caption={REQUEST_MONEY} hint={REQUEST_MONEY_HINT} icon="arrowBack" onPress={onRequest} />
     </View>
   </Modal>
 );

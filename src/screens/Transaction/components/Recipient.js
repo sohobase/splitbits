@@ -2,22 +2,33 @@ import { func, shape, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Input } from '../../../components';
-import { C, SHAPE, STYLE } from '../../../config';
+import { Button, Input, Touchable } from '../../../components';
+import { C, SHAPE, STYLE, TEXT } from '../../../config';
 import { DeviceItem } from '../../../containers/components';
 import styles from './Recipient.style';
 
 const { TYPE: { SEND } } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
+const { EN: { CONCEPT, USE_PUBLIC_ADDRESS } } = TEXT;
 
 const Recipient = ({
   address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept, type,
 }) => (
   <View>
+    <Input
+      editable={onConcept !== undefined}
+      onChangeText={onConcept}
+      placeholder={`${CONCEPT}...`}
+      style={[STYLE.ROW, STYLE.LIST_ITEM]}
+      value={concept}
+    />
     <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
       { deviceId
         ? <DeviceItem data={device} style={styles.device} />
-        : <Text style={styles.hint}>Choose a recipient...</Text>
+        :
+        <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.input}>
+          <Text style={styles.hint}>Choose a recipient...</Text>
+        </Touchable>
       }
       <Button
         captionStyle={styles.icon}
@@ -30,20 +41,13 @@ const Recipient = ({
       <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
         <Input
           editable={false}
-          placeholder="... or use a public address"
+          placeholder={`...${USE_PUBLIC_ADDRESS}`}
           style={styles.input}
           value={address}
         />
         <Button icon="camera" raised onPress={onCamera} captionStyle={styles.icon} />
       </View>
     }
-    <Input
-      editable={onConcept !== undefined}
-      onChangeText={onConcept}
-      placeholder="Concept"
-      style={[STYLE.ROW, STYLE.LIST_ITEM]}
-      value={concept}
-    />
   </View>
 );
 

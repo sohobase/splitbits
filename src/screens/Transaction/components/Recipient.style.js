@@ -20,7 +20,6 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.LARGE,
     color: COLOR.TEXT_DISABLED,
     opacity: 0.7,
-    flex: 1,
   },
 
   input: {

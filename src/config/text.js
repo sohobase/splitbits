@@ -1,6 +1,7 @@
 export default {
   EN: {
     CANCEL_REQUEST: 'Cancel request',
+    CONCEPT: 'Concept',
     CREATE: 'create',
 
     FEE: 'Fee',
@@ -16,10 +17,16 @@ export default {
     RECOVER_PAPER_WALLET: 'Recovering another wallet allows you to access and manage a different wallet on this device. Enter the Paper Key.',
     RECOVER: 'recover',
     REQUEST: 'Request',
+    REQUEST_MONEY: 'Request Money',
+    REQUEST_MONEY_HINT: 'You can ask money in your private network.',
 
     SEND: 'Send',
+    SEND_MONEY: 'Send Money',
+    SEND_MONEY_HINT: 'Send money to any wallet in the world.',
 
     TO: 'to',
     TYPE_OF_WALLET: 'Type of wallet',
+
+    USE_PUBLIC_ADDRESS: 'or use a public address',
   },
 };
