@@ -4,11 +4,11 @@ import { C } from '../config';
 
 const { NETWORKS } = C;
 
-const walletToECPair = (wallet, network) => {
-  if (wallet.wif) {
-    return BitcoinJS.ECPair.fromWIF(wallet.wif, network);
+const walletToECPair = ({ wif, hexSeed }, network) => {
+  if (wif) {
+    return BitcoinJS.ECPair.fromWIF(wif, network);
   }
-  return BitcoinJS.HDNode.fromSeedHex(wallet.hexSeed, network).keyPair;
+  return BitcoinJS.HDNode.fromSeedHex(hexSeed, network).keyPair;
 };
 
 export default {
