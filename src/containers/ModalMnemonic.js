@@ -1,6 +1,6 @@
 import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal } from '../components';
 import { SHAPE, STYLE, TEXT } from '../config';
@@ -37,8 +37,8 @@ class ModalMnemonic extends Component {
   }
 
   _onRecover() {
-    const { words } = this.state;
-    console.log('_onRecover', words);
+    const { props: { onRecover }, state: { words } } = this;
+    onRecover(MnemonicService.restore(words));
   }
 
   render() {
@@ -81,12 +81,14 @@ class ModalMnemonic extends Component {
 
 ModalMnemonic.propTypes = {
   onClose: func,
+  onRecover: func,
   visible: bool,
   wallet: shape(WALLET),
 };
 
 ModalMnemonic.defaultProps = {
   onClose() {},
+  onRecover() {},
   visible: false,
   wallet: {},
 };

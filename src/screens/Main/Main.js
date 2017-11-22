@@ -17,6 +17,7 @@ class Main extends Component {
     super(props);
     this.state = {
       context: undefined,
+      hexSeed: undefined,
       index: undefined,
       showTransaction: false,
       showWalletNew: false,
@@ -27,6 +28,7 @@ class Main extends Component {
     this._onMnemonic = this._onMnemonic.bind(this);
     this._onModal = this._onModal.bind(this);
     this._onModalWallet = this._onModalWallet.bind(this);
+    this._onRecover = this._onRecover.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
     this._onWallet = this._onWallet.bind(this);
   }
@@ -46,7 +48,7 @@ class Main extends Component {
   }
 
   _onModalWallet(context) {
-    const nextState = { context };
+    const nextState = { context, hexSeed: undefined };
     if (context !== RECOVER) {
       nextState.showWalletNew = !this.state.showWalletNew;
     } else {
@@ -56,7 +58,11 @@ class Main extends Component {
   }
 
   _onMnemonic() {
-    this.setState({ showMnemonic: !this.state.showMnemonic });
+    this.setState({ showMnemonic: !this.state.showMnemonic, hexSeed: undefined });
+  }
+
+  _onRecover(hexSeed) {
+    this.setState({ showMnemonic: false, showWalletNew: true, hexSeed });
   }
 
   _onWallet() {
@@ -69,10 +75,10 @@ class Main extends Component {
 
   render() {
     const {
-      _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onSwipeWallet, _onWallet,
+      _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipeWallet, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
       state: {
-        context, index = 0, showMnemonic, showTransaction, showWalletNew, showWallet,
+        context, hexSeed, index = 0, showMnemonic, showTransaction, showWalletNew, showWallet,
       },
     } = this;
     const wallet = wallets[index];
@@ -93,8 +99,8 @@ class Main extends Component {
             style={styles.wallets}
           >
             {[
-              ...wallets.map(item => <WalletItem key={item.id} data={item} onPress={_onWallet} />),
               <WalletItem key="new" onOption={_onModalWallet} />,
+              ...wallets.map(item => <WalletItem key={item.id} data={item} onPress={_onWallet} />),
             ]}
           </Swiper>
         </View>
@@ -110,17 +116,13 @@ class Main extends Component {
         <ModalWalletNew
           visible={showWalletNew}
           camera={context === IMPORT}
+          hexSeed={hexSeed}
           onClose={_onModalWallet}
           onSuccess={_onModalWallet}
         />
         { wallet &&
-          <ModalWallet
-            visible={showWallet}
-            wallet={wallet}
-            onBackup={_onMnemonic}
-            onClose={_onWallet}
-          /> }
-        <ModalMnemonic visible={showMnemonic} onClose={_onMnemonic} wallet={wallet} />
+          <ModalWallet visible={showWallet} wallet={wallet} onBackup={_onMnemonic} onClose={_onWallet} /> }
+        <ModalMnemonic visible={showMnemonic} onClose={_onMnemonic} onRecover={_onRecover} wallet={wallet} />
       </View>
     );
   }
