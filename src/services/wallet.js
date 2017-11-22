@@ -2,11 +2,11 @@ import BitcoinJS from 'bitcoinjs-lib';
 import { service } from './modules';
 import { C } from '../config';
 
-const { CRYPTO_NAMES } = C;
+const { NETWORKS } = C;
 
 export default {
   async create({ coin, name }) {
-    const network = BitcoinJS.networks[CRYPTO_NAMES[coin]];
+    const network = BitcoinJS.networks[NETWORKS[coin]];
     // @TODO: Use CSPRNG
     const seed = Buffer.from([...Array(16)].map(() => Math.floor(Math.random() * 0xFF)));
     const HDWallet = BitcoinJS.HDNode.fromSeedBuffer(seed, network);
@@ -27,7 +27,7 @@ export default {
       address,
       ...props
     } = args;
-    const network = BitcoinJS.networks[CRYPTO_NAMES[coin]];
+    const network = BitcoinJS.networks[NETWORKS[coin]];
 
     const wallet = await service('wallet', {
       method: 'POST',

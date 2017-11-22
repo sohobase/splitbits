@@ -6,15 +6,6 @@ export default {
     LTC: 'LTC',
   },
 
-  CRYPTO_NAMES: {
-    BTC: DEV ? 'testnet' : 'bitcoin',
-    LTC: 'litecoin',
-  },
-
-  DEFAULTS: {
-    TOKEN: 'sohobase-splitbits-dev',
-  },
-
   DEV,
 
   FIAT: {
@@ -25,6 +16,11 @@ export default {
   },
 
   MIN_CONFIRMATIONS: 3,
+
+  NETWORKS: {
+    BTC: DEV ? 'testnet' : 'bitcoin',
+    LTC: 'litecoin',
+  },
 
   SYMBOL: {
     EUR: '€',
@@ -40,7 +36,7 @@ export default {
 
   // SERVICE: 'http://localhost:3000/',
   // SERVICE: 'http://100.76.165.45:3000/',
-  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'https://splitbits.sohobase.co',
+  SERVICE: DEV ? 'http://localhost:3000/' : 'https://splitbits.sohobase.co',
 
   STATE: {
     // -- Transactions
@@ -58,6 +54,8 @@ export default {
     ANDROID: 'http://',
     IOS: 'http://',
   },
+
+  TOKEN: 'sohobase-splitbits-dev',
 
   TYPE: {
     DEFAULT: 'default',

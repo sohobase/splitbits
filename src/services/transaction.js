@@ -2,7 +2,7 @@ import BitcoinJS from 'bitcoinjs-lib';
 import { service } from './modules';
 import { C } from '../config';
 
-const { CRYPTO_NAMES } = C;
+const { NETWORKS } = C;
 
 const walletToECPair = (wallet, network) => {
   if (wallet.wif) {
@@ -26,7 +26,7 @@ export default {
   },
 
   async send(props, wallet) {
-    const network = BitcoinJS.networks[CRYPTO_NAMES[wallet.coin]];
+    const network = BitcoinJS.networks[NETWORKS[wallet.coin]];
     const { tx: hexTx, fee } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
     const tx = BitcoinJS.TransactionBuilder.fromTransaction(BitcoinJS.Transaction.fromHex(hexTx), network);
     // @TODO: verify outputs are what we expect
