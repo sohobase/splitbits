@@ -39,6 +39,9 @@ class ModalWalletNew extends Component {
     this.setState({
       address: WalletService.addressFromHexSeed(hexSeed, this.state.coin),
       cameraActive: camera,
+      coin: BTC,
+      name: undefined,
+      wif: undefined,
     });
   }
 
