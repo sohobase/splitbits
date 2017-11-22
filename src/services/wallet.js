@@ -2,37 +2,43 @@ import BitcoinJS from 'bitcoinjs-lib';
 import { service } from './modules';
 import { C } from '../config';
 
-const { NETWORKS } = C;
+const { CRYPTO: { BTC }, NETWORKS } = C;
 
 export default {
-  async create({ coin, name }) {
+  async create({
+    address, coin = BTC, hexSeed, name,
+  }) {
     const network = BitcoinJS.networks[NETWORKS[coin]];
-    // @TODO: Use CSPRNG
-    const seed = Buffer.from([...Array(16)].map(() => Math.floor(Math.random() * 0xFF)));
-    const HDWallet = BitcoinJS.HDNode.fromSeedBuffer(seed, network);
-    const address = HDWallet.getAddress();
+
+    if (!hexSeed) {
+      // @TODO: Use CSPRNG
+      const seed = Buffer.from([...Array(16)].map(() => Math.floor(Math.random() * 0xFF)));
+      const HDWallet = BitcoinJS.HDNode.fromSeedBuffer(seed, network);
+      address = HDWallet.getAddress();
+      hexSeed = seed.toString('hex');
+    }
 
     const wallet = await service('wallet', {
       method: 'POST',
       body: JSON.stringify({ address, coin, name }),
     });
 
-    return ({ ...wallet, hexSeed: seed.toString('hex') });
+    return ({ ...wallet, hexSeed });
   },
 
-  async import(args) {
+  async import(props) {
     const {
       wif,
-      coin,
+      coin = BTC,
       address,
-      ...props
-    } = args;
+      ...inherit
+    } = props;
     const network = BitcoinJS.networks[NETWORKS[coin]];
 
     const wallet = await service('wallet', {
       method: 'POST',
       body: JSON.stringify({
-        ...props,
+        ...inherit,
         address: wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : address,
         coin,
         imported: true,
@@ -48,5 +54,12 @@ export default {
       method: 'DELETE',
       body: JSON.stringify(props),
     });
+  },
+
+  addressFromHexSeed(hexSeed, coin = BTC) {
+    if (!hexSeed) return undefined;
+
+    const network = BitcoinJS.networks[NETWORKS[coin]];
+    return BitcoinJS.HDNode.fromSeedHex(hexSeed, network).keyPair.getAddress();
   },
 };
