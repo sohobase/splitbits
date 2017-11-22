@@ -1,7 +1,7 @@
 export default {
   EN: {
     CANCEL_REQUEST: 'Cancel request',
-    CREATE: 'Create',
+    CREATE: 'create',
 
     FEE: 'Fee',
 
@@ -20,5 +20,6 @@ export default {
     SEND: 'Send',
 
     TO: 'to',
+    TYPE_OF_WALLET: 'Type of wallet',
   },
 };

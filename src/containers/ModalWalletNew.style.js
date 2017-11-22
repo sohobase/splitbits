@@ -1,9 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const {
-  COLOR, FONT, OFFSET, UNIT,
-} = THEME;
+const { COLOR, FONT, OFFSET } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -30,22 +28,19 @@ export default StyleSheet.create({
   },
 
   input: {
-    marginBottom: OFFSET,
-    fontSize: FONT.SIZE.LARGE,
     borderBottomColor: COLOR.DIVIDER,
     borderBottomWidth: 1,
     paddingTop: OFFSET,
     paddingBottom: OFFSET,
-    paddingLeft: UNIT / 4,
-    paddingRight: UNIT / 4,
     textAlign: 'center',
   },
 
   inputAddress: {
-    fontSize: FONT.SIZE.TINY,
+    fontSize: FONT.SIZE.DEFAULT,
   },
 
   button: {
+    marginTop: OFFSET,
     marginLeft: OFFSET,
     marginRight: OFFSET,
   },

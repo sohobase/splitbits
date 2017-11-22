@@ -1,8 +1,8 @@
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import React, { Component } from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Modal, Option, QRreader } from '../components';
+import { Button, Input, Modal, Option, QRreader } from '../components';
 import { C, STYLE, TEXT } from '../config';
 import { StateService, WalletService } from '../services';
 import { addWalletAction, updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../store/actions';
@@ -13,7 +13,11 @@ const imageBTC = require('../../assets/coin-bitcoin.png');
 const imageLTC = require('../../assets/coin-litecoin.png');
 
 const { CRYPTO: { BTC, LTC } } = C;
-const { EN: { CREATE, IMPORT } } = TEXT;
+const {
+  EN: {
+    CREATE, IMPORT, RECOVER, TYPE_OF_WALLET,
+  },
+} = TEXT;
 
 class ModalWalletNew extends Component {
   constructor(props) {
@@ -31,12 +35,21 @@ class ModalWalletNew extends Component {
     this._onSubmit = this._onSubmit.bind(this);
   }
 
-  componentWillReceiveProps({ camera }) {
-    this.setState({ cameraActive: camera });
+  componentWillReceiveProps({ camera, hexSeed }) {
+    this.setState({
+      address: WalletService.addressFromHexSeed(hexSeed, this.state.coin),
+      cameraActive: camera,
+    });
   }
 
   _onCoin(coin) {
-    if (!this.props.camera) this.setState({ coin });
+    const { props: { camera, hexSeed } } = this;
+
+    if (camera) return;
+    this.setState({
+      address: WalletService.addressFromHexSeed(hexSeed, coin),
+      coin,
+    });
   }
 
   _onQR(value) {
@@ -46,11 +59,11 @@ class ModalWalletNew extends Component {
   async _onSubmit() {
     const {
       props: {
-        addWallet, camera, onSuccess, updateCurrencies, updateDevice, updateWallet,
+        addWallet, camera, hexSeed, onSuccess, updateCurrencies, updateDevice, updateWallet,
       },
       state,
     } = this;
-    const wallet = await WalletService[camera ? 'import' : 'create'](state);
+    const wallet = await WalletService[camera ? 'import' : 'create']({ ...state, hexSeed });
 
     if (wallet) {
       addWallet(wallet);
@@ -69,16 +82,20 @@ class ModalWalletNew extends Component {
   render() {
     const {
       _onCoin, _onQR, _onSubmit,
-      props: { camera, onClose, visible },
+      props: {
+        camera, hexSeed, onClose, visible,
+      },
       state: {
         address, cameraActive, coin, name, wif,
       },
     } = this;
+    let buttonCaption = camera ? IMPORT : CREATE;
+    if (hexSeed) buttonCaption = RECOVER;
 
     return (
       <View style={styles.container} pointerEvents={visible ? 'auto' : 'none'}>
         <QRreader active={cameraActive} onClose={onClose} onRead={_onQR} />
-        <Modal title="Type of wallet" visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
+        <Modal title={TYPE_OF_WALLET} visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
           <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
             <Option
               centered
@@ -95,23 +112,17 @@ class ModalWalletNew extends Component {
               style={[styles.coin, coin === LTC && styles.coinActive]}
             />
           </View>
-          <TextInput
-            _autoFocus
+          <Input
             onChangeText={text => this.setState({ name: text })}
             placeholder="Choose a name..."
             style={styles.input}
-            underlineColorAndroid="transparent"
             value={name}
           />
-          { camera &&
-            <TextInput
-              editable={false}
-              style={[styles.input, styles.inputAddress]}
-              value={wif || address}
-            /> }
+          { (camera || hexSeed) &&
+            <Input editable={false} style={[styles.input, styles.inputAddress]} value={wif || address} /> }
           <Button
             accent
-            caption={camera ? IMPORT : CREATE}
+            caption={buttonCaption}
             disabled={!coin || !name}
             onPress={_onSubmit}
             style={styles.button}
@@ -125,6 +136,7 @@ class ModalWalletNew extends Component {
 ModalWalletNew.propTypes = {
   addWallet: func,
   camera: bool,
+  hexSeed: string,
   onClose: func,
   onSuccess: func,
   updateCurrencies: func,
@@ -136,6 +148,7 @@ ModalWalletNew.propTypes = {
 ModalWalletNew.defaultProps = {
   addWallet() {},
   camera: false,
+  hexSeed: undefined,
   onClose() {},
   onSuccess() {},
   visible: false,
