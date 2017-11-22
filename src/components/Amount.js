@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { C, STYLE } from '../config';
 import styles from './Amount.style';
 
-const { FIAT: { EUR, USD }, SATOSHI, SYMBOL } = C;
+const { FIAT, SATOSHI, SYMBOL } = C;
 
 const SYMBOL_FRIENDLY = {
   BTC: ' Bits',
@@ -28,7 +28,7 @@ const Amount = (props) => {
   let fixed = 0;
   let symbols;
 
-  if ([EUR, USD].includes(coin)) {
+  if (Object.values(FIAT).includes(coin)) {
     fixed = 2;
   } else {
     const satoshis = value * SATOSHI;
@@ -45,7 +45,7 @@ const Amount = (props) => {
     <View style={STYLE.ROW}>
       { caption && <Text style={[styles.amount, style]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
       { value < 0 && <Text style={[styles.amount, style]}>-</Text> }
-      { coin === USD && renderSymbol(props, symbols) }
+      { coin === FIAT.USD && renderSymbol(props, symbols) }
       <Text style={[styles.amount, style]}>
         {
           parseFloat(Math.abs(value))
@@ -53,7 +53,7 @@ const Amount = (props) => {
             .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
         }
       </Text>
-      { coin !== USD && renderSymbol(props, symbols) }
+      { coin !== FIAT.USD && renderSymbol(props, symbols) }
     </View>
   );
 };
