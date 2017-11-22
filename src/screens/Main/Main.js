@@ -99,8 +99,8 @@ class Main extends Component {
             style={styles.wallets}
           >
             {[
+              ...wallets.map(item => <WalletItem key={item.address} data={item} onPress={_onWallet} />),
               <WalletItem key="new" onOption={_onModalWallet} />,
-              ...wallets.map(item => <WalletItem key={item.id} data={item} onPress={_onWallet} />),
             ]}
           </Swiper>
         </View>
