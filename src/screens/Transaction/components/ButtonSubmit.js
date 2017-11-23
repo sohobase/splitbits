@@ -9,7 +9,7 @@ const { TRANSACTION, WALLET } = SHAPE;
 const { EN: { CANCEL_REQUEST, SEND } } = TEXT;
 
 const ButtonSubmit = ({
-  amount, item, onCancel, onPress, type, wallet,
+  amount, item, onCancel, onPress, type, wallet, ...inherit
 }) => {
   const editable = !item;
   const { balance, coin } = wallet;
@@ -17,6 +17,7 @@ const ButtonSubmit = ({
 
   return (
     <Button
+      {...inherit}
       accent
       caption={cancel ? CANCEL_REQUEST : undefined}
       disabled={!cancel && type === TYPE.SEND && balance <= amount}

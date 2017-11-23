@@ -29,6 +29,7 @@ class Transaction extends Component {
       camera: false,
       concept: undefined,
       fees: {},
+      processing: false,
     };
     this._onAddress = this._onAddress.bind(this);
     this._onAmount = this._onAmount.bind(this);
@@ -70,10 +71,12 @@ class Transaction extends Component {
   }
 
   async _onSubmit() {
+    this.setState({ processing: true });
     const transaction = await submit(this);
     if (transaction && transaction.id) {
       const { navigation, updateTransactions } = this.props;
       updateTransactions(transaction);
+      this.setState({ processing: false });
       navigation.goBack();
     }
   }
@@ -97,7 +100,7 @@ class Transaction extends Component {
         currencies, device: { currency }, deviceId, item, navigation, type, wallet,
       },
       state: {
-        amount = 0, camera, concept, fees = {},
+        amount = 0, camera, concept, fees = {}, processing,
       },
     } = this;
     const { coin } = wallet;
@@ -123,6 +126,7 @@ class Transaction extends Component {
               item={item}
               onCancel={_onCancel}
               onPress={_onSubmit}
+              processing={processing}
               type={type}
               wallet={wallet}
             /> }
