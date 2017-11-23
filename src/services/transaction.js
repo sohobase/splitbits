@@ -27,7 +27,9 @@ export default {
       : BitcoinJS.HDNode.fromSeedHex(hexSeed, network).keyPair;
 
     // @TODO: verify outputs are what we expect
-    tx.sign(0, ECPair); // @TODO try/catch
+    tx.inputs.forEach((_, i) => {
+      tx.sign(i, ECPair); // @TODO try/catch
+    });
     const body = JSON.stringify({ ...props, fee, tx: tx.build().toHex() });
     return service('transaction/send', { method: 'POST', body });
   },
