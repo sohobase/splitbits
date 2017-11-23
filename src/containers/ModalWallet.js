@@ -37,15 +37,21 @@ class ModalWallet extends Component {
 
   _onPro() {
     const { props: { onClose } } = this;
-    console.log('onPro');
     onClose();
   }
 
   render() {
     const {
       _onArchive, _onBackup, _onPro,
-      props: { onClose, visible, wallet: { address, hexSeed, type } },
+      props: {
+        onClose, visible,
+        wallet: {
+          address, backup, hexSeed, type,
+        },
+      },
     } = this;
+
+    console.log('>>>', this.props.wallet.wif, hexSeed, backup);
 
     return (
       <Modal title="Wallet" visible={visible} onClose={onClose}>
@@ -65,6 +71,7 @@ class ModalWallet extends Component {
             caption="Archive this wallet"
             hint="If you do not want to use this wallet anymore."
             icon="remove"
+            disabled={hexSeed !== undefined && backup === undefined}
             onPress={_onArchive}
           />
           { type !== PRO &&

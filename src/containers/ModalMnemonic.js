@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Input, Modal } from '../components';
 import { SHAPE, STYLE, TEXT } from '../config';
 import { MnemonicService } from '../services';
-import { addWalletAction, updateDeviceAction } from '../store/actions';
+import { updateWalletAction } from '../store/actions';
 import styles from './ModalMnemonic.style';
 
 const { WALLET } = SHAPE;
@@ -20,6 +20,7 @@ class ModalMnemonic extends Component {
       words: Array(WORDS_LENGTH).fill(undefined),
     };
 
+    this._onBackup = this._onBackup.bind(this);
     this._onRecover = this._onRecover.bind(this);
     this._onValue = this._onValue.bind(this);
   }
@@ -41,9 +42,15 @@ class ModalMnemonic extends Component {
     onRecover(MnemonicService.restore(words));
   }
 
+  _onBackup() {
+    const { props: { onClose, updateWallet, wallet } } = this;
+    updateWallet({ ...wallet, backup: true });
+    onClose();
+  }
+
   render() {
     const {
-      _onRecover, _onValue, props: { onClose, visible, wallet: { hexSeed } }, state: { words = [] },
+      _onBackup, _onRecover, _onValue, props: { onClose, visible, wallet: { hexSeed } }, state: { words = [] },
     } = this;
     const readOnly = hexSeed !== undefined;
 
@@ -71,7 +78,7 @@ class ModalMnemonic extends Component {
           accent
           caption={readOnly ? 'Already written my paper key' : NEXT}
           disabled={!readOnly && !MnemonicService.validate(words)}
-          onPress={readOnly ? onClose : _onRecover}
+          onPress={readOnly ? _onBackup : _onRecover}
           style={styles.button}
         />
       </Modal>
@@ -83,20 +90,21 @@ ModalMnemonic.propTypes = {
   onClose: func,
   onRecover: func,
   visible: bool,
+  updateWallet: func,
   wallet: shape(WALLET),
 };
 
 ModalMnemonic.defaultProps = {
   onClose() {},
   onRecover() {},
+  updateWallet() {},
   visible: false,
   wallet: {},
 };
 
 const mapStateToProps = undefined;
 const mapDispatchToProps = dispatch => ({
-  addWallet: wallet => dispatch(addWalletAction(wallet)),
-  updateDevice: wallet => dispatch(updateDeviceAction(wallet)),
+  updateWallet: wallet => dispatch(updateWalletAction(wallet)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalMnemonic);
