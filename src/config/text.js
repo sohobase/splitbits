@@ -25,6 +25,8 @@ export default {
     SEND: 'Send',
     SEND_MONEY: 'Send Money',
     SEND_MONEY_HINT: 'Send money to any wallet in the world.',
+    SKIP: 'Skip',
+    START: 'Start',
 
     TO: 'to',
     TYPE_OF_WALLET: 'Type of wallet',

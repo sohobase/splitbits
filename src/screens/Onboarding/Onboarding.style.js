@@ -8,13 +8,13 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
-  buttonWallet: {
+  button: {
     marginTop: OFFSET * 2,
   },
 
   option: {
     position: 'absolute',
-    bottom: UNIT / 3,
+    bottom: OFFSET / 2,
   },
 
   optionCaption: {

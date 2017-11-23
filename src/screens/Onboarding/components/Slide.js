@@ -5,15 +5,17 @@ import { View as Motion } from 'react-native-animatable';
 import { STYLE, THEME } from '../../../config';
 import styles from './Slide.style';
 
-const Slide = ({ backgroundColor, caption, children, image, text }) => (
+const Slide = ({
+  backgroundColor, caption, children, image, text,
+}) => (
   <View style={[STYLE.SCREEN, STYLE.CENTERED, styles.slide, { backgroundColor }]}>
     <Motion animation="bounceInDown">
       <Image style={styles.image} source={{ uri: image }} />
     </Motion>
     <Motion animation="bounceInUp" delay={200}>
-      <Text style={styles.caption}>{caption.toUpperCase()}</Text>
+      <Text style={styles.caption}>{caption}</Text>
     </Motion>
-    <Motion animation="bounceInUp" delay={400}>
+    <Motion animation="bounceInUp" delay={300}>
       <Text style={styles.text}>{text}</Text>
     </Motion>
     {children}

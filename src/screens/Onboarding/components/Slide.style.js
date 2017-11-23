@@ -1,7 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { COLOR, FONT, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
+
+const IMAGE_SIZE = UNIT * 19.2;
 
 export default StyleSheet.create({
   slide: {
@@ -9,17 +13,17 @@ export default StyleSheet.create({
   },
 
   image: {
-    // marginTop: OFFSET * 2,
     marginBottom: OFFSET * 2,
-    width: UNIT * 19.2,
-    height: UNIT * 19.2,
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
     backgroundColor: COLOR.TEXT_HIGHLIGHT_DISABLED,
+    borderRadius: IMAGE_SIZE / 2,
   },
 
   caption: {
     marginBottom: OFFSET,
     marginTop: OFFSET,
-    fontSize: FONT.SIZE.LARGE,
+    fontSize: FONT.SIZE.EXTRA_LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
     color: COLOR.TEXT_HIGHLIGHT,
   },
