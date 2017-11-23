@@ -5,7 +5,7 @@ const { AVATAR_SIZE, COLOR } = THEME;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.DIVIDER,
+    backgroundColor: COLOR.TEXT_DISABLED,
     overflow: 'hidden',
     justifyContent: 'center',
   },
