@@ -108,7 +108,7 @@ class Main extends Component {
         <Footer navigate={navigate} elevation={focus} />
         <TransactionButton
           onPress={_onModal}
-          visible={focus && wallet !== undefined && (wallet.hexSeed || wallet.wif)}
+          visible={focus && wallet !== undefined && (wallet.hexSeed !== undefined || wallet.wif !== undefined)}
         />
         <ModalTransaction
           visible={showTransaction}
