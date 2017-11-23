@@ -31,8 +31,7 @@ export default StyleSheet.create({
   },
 
   disabled: {
-    backgroundColor: COLOR.TEXT_DISABLED,
-    opacity: 0.35,
+    backgroundColor: COLOR.DISABLED,
   },
 
   caption: {
