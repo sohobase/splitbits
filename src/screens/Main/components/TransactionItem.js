@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Avatar, Icon, Touchable } from '../../../components';
 import { C, SHAPE, STYLE, TEXT } from '../../../config';
+import { DateService } from '../../../services';
 import styles from './TransactionItem.style';
 
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
@@ -53,7 +54,7 @@ const TransactionItem = (props) => {
               emitter, concept, other, state, payment,
             })}
           </Text>
-          <Text style={[styles.label, styles.date]}>{createdAt.toString().substr(0, 10)}</Text>
+          <Text style={[styles.label, styles.date]}>{DateService.ago(createdAt)}</Text>
           { other.name && <Text style={[styles.label]}>{concept}</Text> }
         </View>
         <View style={styles.amounts}>
