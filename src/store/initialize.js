@@ -8,9 +8,7 @@ export default () => {
     const store = createStore(
       reducer,
       undefined,
-      compose(
-        autoRehydrate(),
-      ),
+      compose(autoRehydrate()),
     );
 
     persistStore(

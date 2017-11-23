@@ -84,7 +84,7 @@ export default StyleSheet.create({
   trend: {
     width: FONT.SIZE.LARGE,
     height: FONT.SIZE.LARGE,
-    tintColor: COLOR.TEXT_HIGHLIGHT_DISABLED,
+    tintColor: COLOR.TEXT_DISABLED,
     marginRight: UNIT / 2,
   },
 

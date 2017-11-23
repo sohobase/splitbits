@@ -30,7 +30,7 @@ class Main extends Component {
     this._onModal = this._onModal.bind(this);
     this._onModalWallet = this._onModalWallet.bind(this);
     this._onRecover = this._onRecover.bind(this);
-    this._onSwipeWallet = this._onSwipeWallet.bind(this);
+    this._onSwipe = this._onSwipe.bind(this);
     this._onWallet = this._onWallet.bind(this);
   }
 
@@ -78,13 +78,13 @@ class Main extends Component {
     this.setState({ showWallet: !this.state.showWallet });
   }
 
-  async _onSwipeWallet(event, { index }) {
+  async _onSwipe(event, { index }) {
     this.setState({ index });
   }
 
   render() {
     const {
-      _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipeWallet, _onWallet,
+      _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipe, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
       state: {
         context, hexSeed, index = 0, showMnemonic, showTransaction, showWalletNew, showWallet,
@@ -101,9 +101,8 @@ class Main extends Component {
           <Swiper
             bounces
             loop={false}
-            onMomentumScrollEnd={_onSwipeWallet}
+            onMomentumScrollEnd={_onSwipe}
             removeClippedSubviews={false}
-            showsPagination
             dotStyle={STYLE.SWIPER_DOT}
             activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
             style={styles.wallets}
