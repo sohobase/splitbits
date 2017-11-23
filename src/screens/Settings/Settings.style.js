@@ -45,4 +45,8 @@ export default StyleSheet.create({
     color: COLOR.TEXT_SECONDARY,
     fontSize: FONT.SIZE.SMALL,
   },
+
+  button: {
+    margin: OFFSET,
+  },
 });
