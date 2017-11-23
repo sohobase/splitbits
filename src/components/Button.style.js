@@ -31,7 +31,12 @@ export default StyleSheet.create({
   },
 
   disabled: {
-    backgroundColor: COLOR.DISABLED,
+    backgroundColor: COLOR.DIVIDER,
+    opacity: 0.35,
+  },
+
+  processing: {
+    backgroundColor: COLOR.DIVIDER,
   },
 
   caption: {

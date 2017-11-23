@@ -4,29 +4,35 @@ import { StyleSheet, Text } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';
-import { STYLE } from '../config';
+import { STYLE, TEXT } from '../config';
 import styles from './Button.style';
 
+const { EN: { PROCESSING } } = TEXT;
+const PROCESSING_MOTION = { animation: 'flash', iterationCount: 'infinite' };
+
 const Button = ({
-  accent, caption, captionStyle, children, circle, disabled, icon, onPress, raised, style, motion,
+  accent, caption, captionStyle, children, circle, disabled, icon, onPress, processing, raised, style, motion,
 }) => (
   <Touchable onPress={!disabled ? onPress : undefined}>
     <Motion
-      {...motion}
+      {...(processing ? PROCESSING_MOTION : motion)}
       style={StyleSheet.flatten([
         styles.container,
         STYLE.CENTERED,
         (circle && styles.circle),
         (!circle && !raised && styles.square),
         (disabled && styles.disabled),
-        (!disabled && accent && styles.accent),
+        (processing && styles.processing),
+        (!disabled && !processing && accent && styles.accent),
         style,
       ])}
     >
       { icon &&
         <Icon value={icon} style={[styles.icon, captionStyle]} /> }
       { caption &&
-        <Text style={[styles.caption, captionStyle]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
+        <Text style={[styles.caption, captionStyle]}>
+          {processing ? PROCESSING : caption.replace(/\b\w/g, l => l.toUpperCase())}
+        </Text> }
       { !icon && !caption && children }
     </Motion>
   </Touchable>
@@ -39,6 +45,7 @@ Button.propTypes = {
   children: node,
   circle: bool,
   disabled: bool,
+  processing: bool,
   icon: string,
   motion: shape({}),
   onPress: func,
@@ -56,6 +63,7 @@ Button.defaultProps = {
   icon: undefined,
   motion: {},
   onPress: undefined,
+  processing: false,
   raised: false,
   style: [],
 };

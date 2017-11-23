@@ -28,6 +28,7 @@ class ModalWalletNew extends Component {
       cameraActive: props.camera,
       coin: BTC,
       name: undefined,
+      processing: false,
       wif: undefined,
     };
     this._onCoin = this._onCoin.bind(this);
@@ -41,6 +42,7 @@ class ModalWalletNew extends Component {
       cameraActive: camera,
       coin: BTC,
       name: undefined,
+      processing: false,
       wif: undefined,
     });
   }
@@ -66,7 +68,9 @@ class ModalWalletNew extends Component {
       },
       state,
     } = this;
+    this.setState({ processing: true });
     const wallet = await WalletService[camera ? 'import' : 'create']({ ...state, hexSeed });
+    this.setState({ processing: false });
 
     if (wallet) {
       addWallet(wallet);
@@ -89,7 +93,7 @@ class ModalWalletNew extends Component {
         camera, hexSeed, onClose, visible,
       },
       state: {
-        address, cameraActive, coin, name, wif,
+        address, cameraActive, coin, name, processing, wif,
       },
     } = this;
     let buttonCaption = camera ? IMPORT : CREATE;
@@ -127,6 +131,7 @@ class ModalWalletNew extends Component {
             accent
             caption={buttonCaption}
             disabled={!coin || !name}
+            processing={processing}
             onPress={_onSubmit}
             style={styles.button}
           />
