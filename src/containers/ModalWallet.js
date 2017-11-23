@@ -51,8 +51,6 @@ class ModalWallet extends Component {
       },
     } = this;
 
-    console.log('>>>', this.props.wallet.wif, hexSeed, backup);
-
     return (
       <Modal title="Wallet" visible={visible} onClose={onClose}>
         <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.info]}>

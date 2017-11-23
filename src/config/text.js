@@ -15,6 +15,7 @@ export default {
     PAY: 'Pay',
     PROCESSING: 'Processing...',
 
+    READ_ONLY: 'Read only',
     RECOVER_PAPER_WALLET: 'Recovering another wallet allows you to access and manage a different wallet on this device. Enter the Paper Key.',
     RECOVER: 'recover',
     REQUEST: 'Request',

@@ -10,7 +10,7 @@ import styles from './WalletItem.style';
 const { SATOSHI, TYPE: { PRO } } = C;
 const {
   EN: {
-    CREATE, IMPORT, NEW_WALLET, RECOVER,
+    CREATE, IMPORT, NEW_WALLET, READ_ONLY, RECOVER,
   },
 } = TEXT;
 const { CURRENCIES, DEVICE, WALLET } = SHAPE;
@@ -27,7 +27,7 @@ const WalletItem = ({
   currencies, data, device: { currency }, onOption, onPress, style,
 }) => {
   const {
-    balance = 0, coin = 'BTC', name = '', trend = 0, type,
+    balance = 0, coin = 'BTC', hexSeed, name = '', trend = 0, type, wif,
   } = data || {};
 
   return (
@@ -54,7 +54,10 @@ const WalletItem = ({
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
               <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
-              { type === PRO && <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
+              <View style={styles.tags}>
+                { !hexSeed && !wif && <View style={styles.tag}><Text style={styles.tagLabel}>{READ_ONLY}</Text></View> }
+                { type === PRO && <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
+              </View>
             </View>
           </View>
           :

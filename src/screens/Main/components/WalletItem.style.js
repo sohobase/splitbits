@@ -48,22 +48,27 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.SMALL,
   },
 
-  pro: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
+  tags: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
   },
 
   tag: {
+    marginLeft: UNIT / 2,
     padding: UNIT / 2,
     borderRadius: BORDER_RADIUS,
-    backgroundColor: COLOR.ACCENT,
+    backgroundColor: COLOR.TEXT_SECONDARY,
   },
 
   tagLabel: {
     color: COLOR.WHITE,
     fontWeight: FONT.WEIGHT.BOLD,
     fontSize: FONT.SIZE.TINY,
+  },
+
+  pro: {
+    backgroundColor: COLOR.ACCENT,
   },
 
   amount: {
@@ -79,7 +84,7 @@ export default StyleSheet.create({
   trend: {
     width: FONT.SIZE.LARGE,
     height: FONT.SIZE.LARGE,
-    tintColor: COLOR.TEXT_SECONDARY,
+    tintColor: COLOR.TEXT_HIGHLIGHT_DISABLED,
     marginRight: UNIT / 2,
   },
 

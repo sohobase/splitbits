@@ -1,4 +1,5 @@
 import { arrayOf, shape } from 'prop-types';
+import { Notifications } from 'expo';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -31,6 +32,14 @@ class Main extends Component {
     this._onRecover = this._onRecover.bind(this);
     this._onSwipeWallet = this._onSwipeWallet.bind(this);
     this._onWallet = this._onWallet.bind(this);
+  }
+
+  componentWillMount() {
+    Notifications.addListener(this._onNotification);
+  }
+
+  _onNotification({ origin, data }) {
+    console.log('[PUSH]', origin, data, this.state);
   }
 
   _onNewTransaction(type) {
@@ -83,6 +92,7 @@ class Main extends Component {
     } = this;
     const wallet = wallets[index];
     const focus = !showTransaction && !showWallet && !showWalletNew;
+    const readOnly = wallet && !wallet.hexSeed && !wallet.wif;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -108,7 +118,7 @@ class Main extends Component {
         <Footer navigate={navigate} elevation={focus} />
         <TransactionButton
           onPress={_onModal}
-          visible={focus && wallet !== undefined && (wallet.hexSeed !== undefined || wallet.wif !== undefined)}
+          visible={focus && wallet !== undefined && !readOnly}
         />
         <ModalTransaction
           visible={showTransaction}
