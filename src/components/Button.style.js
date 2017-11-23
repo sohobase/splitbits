@@ -10,16 +10,22 @@ export default StyleSheet.create({
   },
 
   square: {
-    backgroundColor: COLOR.PRIMARY,
     borderRadius: THEME.OFFSET * 2,
     padding: THEME.OFFSET,
   },
 
   circle: {
-    backgroundColor: COLOR.PRIMARY,
     width: THEME.BUTTON_CIRCLE_SIZE,
     height: THEME.BUTTON_CIRCLE_SIZE,
     borderRadius: THEME.BUTTON_CIRCLE_SIZE / 2,
+  },
+
+  raised: {
+    backgroundColor: 'transparent',
+  },
+
+  primary: {
+    backgroundColor: COLOR.PRIMARY,
   },
 
   accent: {
@@ -32,11 +38,10 @@ export default StyleSheet.create({
 
   disabled: {
     backgroundColor: COLOR.DIVIDER,
-    opacity: 0.35,
   },
 
-  processing: {
-    backgroundColor: COLOR.DIVIDER,
+  disabledOpacity: {
+    opacity: 0.35,
   },
 
   caption: {

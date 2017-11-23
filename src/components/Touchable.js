@@ -1,3 +1,15 @@
-import { Platform, TouchableNativeFeedback, TouchableHighlight } from 'react-native';
+import React from 'react';
+import {
+  Platform, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity,
+} from 'react-native';
 
-export default (Platform.OS === 'ios') ? TouchableHighlight : TouchableNativeFeedback;
+const iOS = Platform.OS === 'ios';
+
+export default ({ raised, ...props }) => { //eslint-disable-line
+  if (iOS && raised) return <TouchableOpacity {...props} />;
+  return (
+    (Platform.OS === 'ios')
+      ? <TouchableHighlight {...props} />
+      : <TouchableNativeFeedback {...props} />
+  );
+};

@@ -13,7 +13,7 @@ const PROCESSING_MOTION = { animation: 'flash', iterationCount: 'infinite' };
 const Button = ({
   accent, caption, captionStyle, children, circle, disabled, icon, onPress, processing, raised, style, motion,
 }) => (
-  <Touchable onPress={!disabled ? onPress : undefined}>
+  <Touchable onPress={!disabled ? onPress : undefined} raised={raised}>
     <Motion
       {...(processing ? PROCESSING_MOTION : motion)}
       style={StyleSheet.flatten([
@@ -21,9 +21,11 @@ const Button = ({
         STYLE.CENTERED,
         (circle && styles.circle),
         (!circle && !raised && styles.square),
-        (disabled && styles.disabled),
-        (processing && styles.processing),
-        (!disabled && !processing && accent && styles.accent),
+        (!raised && !accent && styles.primary),
+        (accent && styles.accent),
+        (raised && styles.raised),
+        ((disabled || processing) && !raised && styles.disabled),
+        (disabled && raised && styles.disabledOpacity),
         style,
       ])}
     >
