@@ -7,17 +7,17 @@ export default async(component) => {
   const {
     props: {
       deviceId, type, wallet,
-      item: { id } = {},
+      item: { id, amount: itemAmount } = {},
     },
     state: { address, amount, concept },
   } = component;
   const { coin, id: walletId } = wallet;
 
   const isRequest = type === REQUEST;
-  const method = isRequest ? 'request' : 'send';
+  const method = isRequest && !id ? 'request' : 'send';
   const params = {
     address,
-    amount: parseInt(amount / SATOSHI, 10),
+    amount: itemAmount || parseInt(amount / SATOSHI, 10),
     coin,
     concept,
     deviceId,
