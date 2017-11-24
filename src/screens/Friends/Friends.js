@@ -57,7 +57,8 @@ class Friends extends Component {
   async _onQRreader(id) {
     this.setState({ scanner: false });
     const { navigation, updateDevice } = this.props;
-    updateDevice(await DeviceService.qr({ id, direct: true }));
+    await DeviceService.qr({ id, direct: true });
+    updateDevice(await DeviceService.state());
     navigation.goBack();
   }
 
