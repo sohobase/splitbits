@@ -26,6 +26,10 @@ export default StyleSheet.create({
 
   primary: {
     backgroundColor: COLOR.PRIMARY,
+    shadowColor: COLOR.PRIMARY,
+    shadowOffset: { height: 6 },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
   },
 
   accent: {
