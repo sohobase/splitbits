@@ -36,6 +36,10 @@ export default {
     return relationship('device/request', props, action);
   },
 
+  qr(props = {}, action) {
+    return relationship('device/qr', props, action);
+  },
+
   accept(props = {}, action) {
     return relationship('device/accept', props, action);
   },

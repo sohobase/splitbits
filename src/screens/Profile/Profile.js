@@ -12,7 +12,7 @@ import styles from './Profile.style';
 const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR, QR_SIZE } = THEME;
 
-const Profile = ({ device: { session }, navigation }) => (
+const Profile = ({ device: { id }, navigation }) => (
   <View style={STYLE.SCREEN}>
     <View style={STYLE.LAYOUT_TOP}>
       <Header
@@ -22,7 +22,7 @@ const Profile = ({ device: { session }, navigation }) => (
       />
       <Motion animation="bounceIn" delay={400} style={styles.preview}>
         <View style={[STYLE.CENTERED, styles.preview]}>
-          <QRCode value={session} size={QR_SIZE} fgColor={COLOR.PRIMARY} bgColor={COLOR.WHITE} />
+          <QRCode value={id} size={QR_SIZE} fgColor={COLOR.PRIMARY} />
         </View>
       </Motion>
       <Motion animation="bounceIn" delay={600}>
