@@ -14,9 +14,13 @@ const ButtonSubmit = ({
   const editable = !item;
   const { balance, coin } = wallet;
   const cancel = !editable && wallet.address === item.to.address;
-  const valid = amount > 0 && concept && recipient &&
-    (type === TYPE.REQUEST ||
-    (type === TYPE.SEND && balance >= amount));
+  const valid =
+    (!editable)
+    ||
+    (
+      amount > 0 && concept && recipient &&
+      (type === TYPE.REQUEST || (type === TYPE.SEND && balance >= amount))
+    );
 
   return (
     <Button

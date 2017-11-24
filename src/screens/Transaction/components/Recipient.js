@@ -9,7 +9,7 @@ import styles from './Recipient.style';
 
 const { TYPE: { SEND } } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
-const { EN: { CONCEPT, USE_PUBLIC_ADDRESS } } = TEXT;
+const { EN: { ADD_NOTE, CHOOSE_A_FRIEND, USE_PUBLIC_ADDRESS } } = TEXT;
 
 const Recipient = ({
   address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept, type,
@@ -18,7 +18,7 @@ const Recipient = ({
     <Input
       editable={onConcept !== undefined}
       onChangeText={onConcept}
-      placeholder={`${CONCEPT}...`}
+      placeholder={`${ADD_NOTE}...`}
       style={[STYLE.ROW, STYLE.LIST_ITEM]}
       value={concept}
     />
@@ -27,7 +27,7 @@ const Recipient = ({
         ? <DeviceItem data={device} style={styles.device} />
         :
         <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.input}>
-          <Text style={styles.hint}>Choose a recipient...</Text>
+          <Text style={styles.hint}>{`${CHOOSE_A_FRIEND}...`}</Text>
         </Touchable>
       }
       <Button

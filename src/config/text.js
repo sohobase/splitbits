@@ -1,6 +1,9 @@
 export default {
   EN: {
+    ADD_NOTE: 'Add note',
+
     CANCEL_REQUEST: 'Cancel request',
+    CHOOSE_A_FRIEND: 'Choose a friend',
     CONCEPT: 'Concept',
     CREATE: 'create',
 
