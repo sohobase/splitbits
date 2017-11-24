@@ -110,7 +110,7 @@ class Transaction extends Component {
       coin, editable, item, navigation, wallet,
     };
     const recipientProps = {
-      concept, deviceId, navigation, type,
+      concept, deviceId, navigation, type, address,
     };
 
     return (

@@ -43,7 +43,7 @@ const Recipient = ({
           editable={false}
           placeholder={`...${USE_PUBLIC_ADDRESS}`}
           style={styles.input}
-          value={address}
+          value={ deviceId ? undefined : address }
         />
         <Button icon="camera" raised onPress={onCamera} captionStyle={styles.icon} />
       </View>
