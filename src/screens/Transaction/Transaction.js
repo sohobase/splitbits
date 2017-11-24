@@ -100,7 +100,7 @@ class Transaction extends Component {
         currencies, device: { currency }, deviceId, item, navigation, type, wallet,
       },
       state: {
-        amount = 0, camera, concept, fees = {}, processing,
+        amount = 0, address, camera, concept, fees = {}, processing,
       },
     } = this;
     const { coin } = wallet;
@@ -123,10 +123,12 @@ class Transaction extends Component {
           { (editable || item.state === REQUESTED) &&
             <ButtonSubmit
               amount={editable ? amount / SATOSHI : item.amount}
+              concept={concept}
               item={item}
               onCancel={_onCancel}
               onPress={_onSubmit}
               processing={processing}
+              recipient={deviceId || address}
               type={type}
               wallet={wallet}
             /> }
