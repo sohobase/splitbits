@@ -28,15 +28,13 @@ export default {
     GBP: '£',
     JPY: '¥',
 
-    BTC: '฿',
+    BTC: '฿', // ₿
     LTC: 'Ł',
   },
 
   SATOSHI: 0.00000001,
 
-  // SERVICE: 'http://localhost:3000/',
-  // SERVICE: 'http://100.76.165.45:3000/',
-  SERVICE: DEV ? 'http://localhost:3000/' : 'https://splitbits.sohobase.co',
+  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'https://splitbits.sohobase.co/',
 
   STATE: {
     // -- Transactions
