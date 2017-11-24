@@ -1,6 +1,7 @@
 import BitcoinJS from 'bitcoinjs-lib';
 import { service } from './modules';
 import { C } from '../config';
+import { PushService } from './';
 
 const { CRYPTO: { BTC }, NETWORKS } = C;
 
@@ -20,7 +21,12 @@ export default {
 
     const wallet = await service('wallet', {
       method: 'POST',
-      body: JSON.stringify({ address, coin, name }),
+      body: JSON.stringify({
+        address,
+        coin,
+        name,
+        push: await PushService.getToken(),
+      }),
     });
 
     return ({ ...wallet, hexSeed });
