@@ -12,7 +12,7 @@ import styles from './ModalWalletNew.style';
 const imageBTC = require('../../assets/coin-bitcoin.png');
 const imageLTC = require('../../assets/coin-litecoin.png');
 
-const { CRYPTO: { BTC, LTC } } = C;
+const { CRYPTO: { BTC, LTC }, DEV } = C;
 const {
   EN: {
     CREATE, IMPORT, RECOVER, TYPE_OF_WALLET,
@@ -50,7 +50,7 @@ class ModalWalletNew extends Component {
   _onCoin(coin) {
     const { props: { camera, hexSeed } } = this;
 
-    if (camera) return;
+    if (camera && !DEV) return;
     this.setState({
       address: WalletService.addressFromHexSeed(hexSeed, coin),
       coin,

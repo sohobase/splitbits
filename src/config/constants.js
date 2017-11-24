@@ -19,7 +19,7 @@ export default {
 
   NETWORKS: {
     BTC: DEV ? 'testnet' : 'bitcoin',
-    LTC: 'litecoin',
+    LTC: DEV ? 'testnet' : 'litecoin',
   },
 
   SYMBOL: {
