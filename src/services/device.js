@@ -32,6 +32,10 @@ export default {
     return service(`device/search?query=${query}`);
   },
 
+  state() {
+    return service('device/state');
+  },
+
   request(props = {}, action) {
     return relationship('device/request', props, action);
   },
