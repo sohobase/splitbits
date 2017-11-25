@@ -53,6 +53,7 @@ export default StyleSheet.create({
     minWidth: '100%',
     marginTop: OFFSET,
     marginBottom: OFFSET,
+    opacity: 0.25,
   },
 
   hint: {
