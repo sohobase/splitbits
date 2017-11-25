@@ -25,7 +25,7 @@
     },
     "android": {
       "package": "com.sohobase.splitbits",
-      "permissions": ["CAMERA"],
+      "permissions": ["CAMERA", "VIBRATE"],
       "versionCode": 1
     }
    }

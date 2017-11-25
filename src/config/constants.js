@@ -1,4 +1,5 @@
 const DEV = __DEV__; //eslint-disable-line
+const LOGO = require('../../assets/app-brandname.png');
 
 export default {
   CRYPTO: {
@@ -21,6 +22,8 @@ export default {
     BTC: DEV ? 'testnet' : 'bitcoin',
     LTC: DEV ? 'testnet' : 'litecoin',
   },
+
+  LOGO,
 
   SYMBOL: {
     EUR: '€',

@@ -17,6 +17,7 @@ export default {
     image: string,
     name: string,
     push: string,
+    pin: string,
     private: object, // { capture: string, passport: string, phone: string },
     requests: array,
     state: string,
