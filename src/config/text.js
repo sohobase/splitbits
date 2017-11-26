@@ -28,6 +28,7 @@ export default {
     SEND: 'Send',
     SEND_MONEY: 'Send Money',
     SEND_MONEY_HINT: 'Send money to any wallet in the world.',
+    SET_PIN_CODE: 'Set your PIN code',
     SKIP: 'Skip',
     START: 'Start',
 
@@ -35,5 +36,6 @@ export default {
     TYPE_OF_WALLET: 'Type of wallet',
 
     USE_PUBLIC_ADDRESS: 'or use a public address',
+    USE_FINGERPRINT: 'Use fingerprint to unlock',
   },
 };

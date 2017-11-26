@@ -18,7 +18,11 @@ export default StyleSheet.create({
     width: UNIT * 14.8,
     height: UNIT * 3.2,
     resizeMode: 'contain',
-    margin: '15%',
+  },
+
+  pin: {
+    marginTop: OFFSET * 2,
+    marginBottom: OFFSET,
   },
 
   code: {
@@ -53,7 +57,7 @@ export default StyleSheet.create({
     minWidth: '100%',
     marginTop: OFFSET,
     marginBottom: OFFSET,
-    opacity: 0.25,
+    // opacity: 0.25,
   },
 
   hint: {

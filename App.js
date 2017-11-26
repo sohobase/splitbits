@@ -31,7 +31,7 @@ const screens = {
   Settings: { screen: SettingsScreen, navigationOptions },
 };
 
-const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Main' });
+const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Lock' });
 const NavigationOnboarding = StackNavigator({ ...screens }, { initialRouteName: 'Onboarding' });
 
 class App extends Component {
