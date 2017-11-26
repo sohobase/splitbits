@@ -1,3 +1,4 @@
+import { Fingerprint } from 'expo';
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, Vibration, View } from 'react-native';
@@ -18,11 +19,24 @@ class Lock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // fingerprint: undefined, // @TODO: v1.1 must unlock with fin
+      hasFingerprint: false,
       pin: undefined,
       wrong: false,
     };
+
+    this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
+    this._onFingerprint();
+  }
+
+  async _onFingerprint() {
+    if (await Fingerprint.isEnrolledAsync()) {
+      this.setState({ hasFingerprint: true });
+      if (await Fingerprint.authenticateAsync()) {
+        Fingerprint.cancelAuthenticate();
+        this.props.navigation.navigate('Main');
+      }
+    }
   }
 
   _onPress(number) {
@@ -46,7 +60,7 @@ class Lock extends Component {
   }
 
   render() {
-    const { _onPress, props: { device }, state: { pin, wrong } } = this;
+    const { _onPress, props: { device }, state: { hasFingerprint, pin, wrong } } = this;
     let animation;
     if (!pin) animation = 'bounceInDown';
     if (wrong) animation = 'shake';
@@ -80,12 +94,13 @@ class Lock extends Component {
               </Touchable>))}
           </View>
         </Motion>
-        <Motion animation="bounceInUp" delay={400}>
-          <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
-            <Icon value="fingerprint" style={styles.icon} />
-            <Text style={styles.hint}>{USE_FINGERPRINT}</Text>
-          </View>
-        </Motion>
+        { hasFingerprint &&
+          <Motion animation="bounceInUp" delay={400}>
+            <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
+              <Icon value="fingerprint" style={styles.icon} />
+              <Text style={styles.hint}>{USE_FINGERPRINT}</Text>
+            </View>
+          </Motion> }
       </View>
     );
   }
