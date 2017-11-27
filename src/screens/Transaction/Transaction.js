@@ -50,13 +50,13 @@ class Transaction extends Component {
   }
 
   _onAmount(amount) {
-    const { type, wallet: { coin } } = this.props;
+    const { type, wallet: { id } } = this.props;
     this.setState({ amount, fees: {} });
     clearTimeout(timeout);
 
     if (type === SEND && amount > 0) {
       timeout = setTimeout(async() => {
-        this.setState({ fees: await TransactionService.fees(coin, amount * SATOSHI) });
+        this.setState({ fees: await TransactionService.fees(id, Math.round(amount / SATOSHI)) });
       }, 300);
     }
   }
@@ -105,7 +105,7 @@ class Transaction extends Component {
     } = this;
     const { coin } = wallet;
     const editable = !item;
-    const fee = wallet.type === PRO ? fees.average : fees.slow + fees.charge;
+    const fee = fees.total;
     const amountProps = {
       coin, editable, item, navigation, wallet,
     };
@@ -137,7 +137,7 @@ class Transaction extends Component {
               <Amount
                 caption={`${FEE} `}
                 coin={currency}
-                value={fee * currencies[currency][coin]}
+                value={fee * SATOSHI / currencies[currency][coin]}
                 style={styles.feeCaption}
               />
             </Motion> }
