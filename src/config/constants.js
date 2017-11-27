@@ -1,3 +1,4 @@
+import { Constants } from 'expo';
 const DEV = __DEV__; //eslint-disable-line
 const LOGO = require('../../assets/app-brandname.png');
 
@@ -37,7 +38,9 @@ export default {
 
   SATOSHI: 0.00000001,
 
-  SERVICE: DEV ? 'http://100.76.165.45:3000/' : 'https://splitbits.sohobase.co/',
+  SERVICE: DEV
+    ? Constants.linkingUrl.replace(/^\w+:\/\/([^:/]+):\d+\/.*$/, 'http://$1:3000/')
+    : 'https://splitbits.sohobase.co/',
 
   STATE: {
     // -- Transactions
