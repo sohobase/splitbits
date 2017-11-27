@@ -6,8 +6,8 @@ const { NETWORKS } = C;
 
 export default {
 
-  fees(coin, amount) {
-    return service(`transaction/fee?coin=${coin}&amount=${amount}`);
+  fees(walletId, amount) {
+    return service(`transaction/fee?walletId=${walletId}&amount=${amount}`);
   },
 
   list(walletId) {
