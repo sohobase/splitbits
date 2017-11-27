@@ -13,15 +13,31 @@
 
 * [Introduction](#introduction)
   * [Team](#introduction)
+
+* [Privacy & Security](#privacy)
+
+* [OpenSource](#opensource)
+
 * [Support](#support)
   * [Backers](#backers)
   * [Sponsors](#sponsors)
 * [License](#license)
 
 ## Introduction
+The world is going to run on Blockchains and the number of digital coins and assets are exploding. Splitbits is your book keeping app for Blockchain assets that helps you to track all your digital wealth, income and expenses.
+
+ - **Maximum Privacy**: Splitbit's zero access architecture means that your addresses and meta data are encrypted in a way, that makes it inaccessible to us or anyone else.
+ - **Multi blockchain tracker**:  We currently support Bitcoin, Litecoin and Ethereum. More Blockchains will be added soon.
+ - **Wallet Overview**: Just connect your public keys to content all your individual wallets easily and sercurely. Transactions and holdings will be automatically imported and updated.
+ - **Transaction Meta Data**: Manage your Blockchain spendings and incomes with ease. Transactions can be labled and enriched with meta data to keep control of your activities and define budgets.
 
 ### Team
 
+## Privacy & Security
+Splitbit is designed to keep all your data secure and make in inaccessible by any other party than yourself. All your sensitive data are completely encrypted and saved on your device. Data decryption can only take place on your local device. All transaction updates and inputs are directly requested by your device, without a third party involved. Learn more about our high security standards and how we make sure, no one else than yourself is able to access your transaction and meta data.
+
+## OpenSource
+Splitbits is open source and everyone is welcome to participate in the project or fork the repository to start their own version. You can review and rewrite the source code as you want, but you need to keep it open source. Splitbits is published under the GNU General Public License 3 (GPLv3).
 
 ## Support
 
