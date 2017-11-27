@@ -1,15 +1,14 @@
 import { Fingerprint } from 'expo';
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Image, Text, Vibration, View } from 'react-native';
+import { Text, Vibration, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { Icon, Touchable } from '../../components';
-import { C, SHAPE, STYLE, TEXT } from '../../config';
+import { Icon, Logo, Touchable } from '../../components';
+import { SHAPE, STYLE, TEXT } from '../../config';
 import { updateDeviceAction } from '../../store/actions';
 import styles from './Lock.style';
 
-const { LOGO } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
 
@@ -68,9 +67,7 @@ class Lock extends Component {
     return (
       <View style={[STYLE.SCREEN, STYLE.COL, styles.screen]}>
         <View style={[STYLE.CENTERED, styles.header]}>
-          <Motion animation="bounceInDown">
-            <Image style={styles.brandname} source={LOGO} />
-          </Motion>
+          <Logo motion={{ animation: 'bounceInDown' }} />
           <Motion animation={animation} delay={100} style={styles.pin}>
             <View style={STYLE.ROW}>
               <View style={[styles.code, (pin && pin.length >= 1 && styles.codeActive)]} />

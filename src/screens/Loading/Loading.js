@@ -1,7 +1,6 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { View as Animatable } from 'react-native-animatable';
 import { updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE } from '../../config';
@@ -10,6 +9,13 @@ import { initialize } from '../../store';
 import styles from './Loading.style';
 
 class Loading extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      processing: true,
+    };
+  }
+
   async componentWillMount() {
     const { onLoad } = this.props;
     const store = await initialize();
@@ -26,16 +32,19 @@ class Loading extends Component {
         wallets.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
       }
     }
-
-    onLoad({ store });
+    this.setState({ processing: false });
+    setTimeout(() => { onLoad({ store }); }, 500);
   }
 
   render() {
+    const { processing } = this.state;
+    const motion = processing
+      ? { animation: 'flash', duration: 5000, iterationCount: 'infinite' }
+      : { animation: 'bounceOutUp' };
+
     return (
       <View style={StyleSheet.flatten([STYLE.SCREEN, STYLE.CENTERED, styles.loading])}>
-        <Animatable animation="bounceIn" duration={1000}>
-          <Logo />
-        </Animatable>
+        <Logo motion={motion} />
       </View>
     );
   }

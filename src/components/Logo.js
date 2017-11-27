@@ -1,17 +1,25 @@
-import { array, number, oneOfType } from 'prop-types';
+import { array, number, shape, oneOfType } from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
+import { View as Motion } from 'react-native-animatable';
 import styles from './Logo.style';
+import { C } from '../config';
 
-const asset = require('../../assets/app-brandname.png');
+const { LOGO } = C;
 
-const Logo = ({ style }) => <Image style={[styles.logo, style]} source={asset} />;
+const Logo = ({ motion, style }) => (
+  <Motion {...motion}>
+    <Image style={[styles.logo, style]} source={LOGO} />
+  </Motion>
+);
 
 Logo.propTypes = {
+  motion: shape({}),
   style: oneOfType([array, number]),
 };
 
 Logo.defaultProps = {
+  motion: {},
   style: [],
 };
 

@@ -14,12 +14,6 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  brandname: {
-    width: UNIT * 14.8,
-    height: UNIT * 3.2,
-    resizeMode: 'contain',
-  },
-
   pin: {
     marginTop: OFFSET * 2,
     marginBottom: OFFSET,
