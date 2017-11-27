@@ -12,20 +12,23 @@ export default StyleSheet.create({
     marginTop: OFFSET * 2,
   },
 
-  option: {
+  options: {
     position: 'absolute',
+    width: '100%',
     bottom: OFFSET / 2,
   },
 
-  optionCaption: {
+  option: {
     padding: OFFSET,
   },
 
   left: {
-    alignSelf: 'flex-start',
+    minWidth: '50%',
+    alignItems: 'flex-start',
   },
 
   right: {
-    alignSelf: 'flex-end',
+    minWidth: '50%',
+    alignItems: 'flex-end',
   },
 });

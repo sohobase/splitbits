@@ -74,28 +74,28 @@ class Onboarding extends Component {
           <Slide caption="Welcome" />
           <Slide caption="Feature Number 1" />
           <Slide caption="Feature Number 2" backgroundColor={COLOR.ACCENT} />
-          <Slide caption="Feature Number 3" backgroundColor={COLOR.TEXT_DEFAULT} />
+          <Slide caption="Feature Number 3" />
           <Slide caption="Your wallet">
             <Button accent caption="Create your first wallet" onPress={_onWallet} style={styles.button} />
           </Slide>
         </Swiper>
-
-        <Button
-          caption={SKIP.toUpperCase()}
-          captionStyle={styles.optionCaption}
-          onPress={_onSkip}
-          raised
-          style={[styles.option, styles.left]}
-        />
-        <Button
-          captionStyle={styles.optionCaption}
-          caption={NEXT.toUpperCase()}
-          disabled={(index + 1) === SLIDES}
-          onPress={_onNext}
-          raised
-          style={[styles.option, styles.right]}
-        />
-
+        <View style={[STYLE.ROW, styles.options]}>
+          <Button
+            caption={SKIP.toUpperCase()}
+            captionStyle={styles.option}
+            onPress={_onSkip}
+            raised
+            style={styles.left}
+          />
+          <Button
+            caption={NEXT.toUpperCase()}
+            captionStyle={styles.option}
+            disabled={(index + 1) === SLIDES}
+            onPress={_onNext}
+            raised
+            style={styles.right}
+          />
+        </View>
         <ModalWalletNew visible={modal} onClose={_onWallet} onSuccess={_onSuccess} />
       </View>
     );
