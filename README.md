@@ -1,6 +1,6 @@
 # <a href='http://sohobase.co/splitbits/'><img src='https://i.imgur.com/ABE1Otk.png' height='64'></a>
 
-[![version](https://img.shields.io/badge/v-0.3.0-blue.svg?style=for-the-badge)]()
+[![version](https://img.shields.io/badge/v-0.3.1-blue.svg?style=for-the-badge)]()
 [![devDependency Status](https://img.shields.io/david/sohobase/splitbits.svg?style=for-the-badge)](https://david-dm.org/sohobase/splitbits#info=dependencies)
 [![license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=for-the-badge)](http://www.opensource.org/licenses/GPL-3.0)
 [![slack](https://img.shields.io/badge/slack--blue.svg?style=for-the-badge)](https://sohobase.slack.com/join/shared_invite/enQtMjUxMjI4MjEyNjQ2LTNkYWRjY2VkMmEwNzRkYjg3Y2JmOTU5ODliMDBiODgwZWQ3MjcwM2IwOWIyYTAxODkyYWQ2NDY4N2ZiOGMxZjc)

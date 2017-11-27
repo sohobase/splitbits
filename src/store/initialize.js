@@ -1,22 +1,21 @@
-import { AsyncStorage } from 'react-native';
-import { compose, createStore } from 'redux';
-import { autoRehydrate, persistStore } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
+import { createStore } from 'redux';
+import storage from 'redux-persist/es/storage';
+import { C } from '../config';
 import reducer from './reducer';
 
-export default () => {
-  return new Promise((resolve) => {
-    const store = createStore(
-      reducer,
-      undefined,
-      compose(autoRehydrate()),
-    );
+const { SERVICE } = C;
 
-    persistStore(
-      store,
-      {
-        storage: AsyncStorage,
-      },
-      () => resolve(store),
-    );
-  });
+const config = {
+  key: SERVICE,
+  rehydrated: true,
+  storage,
+  version: 2,
+};
+
+export default () => {
+  const store = createStore(persistReducer(config, reducer));
+  persistStore(store);
+
+  return store;
 };

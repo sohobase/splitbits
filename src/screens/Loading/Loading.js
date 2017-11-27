@@ -18,7 +18,7 @@ class Loading extends Component {
 
   async componentWillMount() {
     const { onLoad } = this.props;
-    const store = await initialize();
+    const store = initialize();
     const { wallets: storeWallets } = store.getState();
 
     if (storeWallets.length > 0) {
