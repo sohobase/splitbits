@@ -41,6 +41,7 @@
     "color": "^2.0.0",
     "events": "^1.1.1",
     "expo": "^23.0.2",
+    "more-entropy": "0.0.7",
     "prop-types": "^15.5.10",
     "react": "16.0.0-beta.5",
     "react-native": "^0.50.4",
@@ -53,6 +54,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-persist": "^5.4.0",
+    "sha.js": "^2.4.9",
     "stream-browserify": "^2.0.1",
     "timeago.js": "^3.0.2",
     "wif": "^2.0.6"

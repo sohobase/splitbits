@@ -2,22 +2,16 @@ import BitcoinJS from 'bitcoinjs-lib';
 import { service } from './modules';
 import { C } from '../config';
 import { PushService } from './';
+import { csprng } from '../modules';
 
 const { CRYPTO: { BTC }, NETWORKS } = C;
 
 export default {
-  async create({
-    address, coin = BTC, hexSeed, name,
-  }) {
+  async create(params) {
+    const { coin, name } = params;
     const network = BitcoinJS.networks[NETWORKS[coin]];
-
-    if (!hexSeed) {
-      // @TODO: Use CSPRNG
-      const seed = Buffer.from([...Array(16)].map(() => Math.floor(Math.random() * 0xFF)));
-      const HDWallet = BitcoinJS.HDNode.fromSeedBuffer(seed, network);
-      address = HDWallet.getAddress();
-      hexSeed = seed.toString('hex');
-    }
+    const hexSeed = params.hexSeed || (await csprng()).substring(0, 32);
+    const address = params.address || BitcoinJS.HDNode.fromSeedHex(hexSeed, network).getAddress();
 
     const wallet = await service('wallet', {
       method: 'POST',
