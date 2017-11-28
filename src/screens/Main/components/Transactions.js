@@ -8,7 +8,7 @@ import { updateTransactionsAction } from '../../../store/actions';
 import TransactionItem from './TransactionItem';
 import styles from './Transactions.style';
 
-const { STATE: { ARCHIVED } } = C;
+const { STATE: { ARCHIVED, REQUESTED } } = C;
 const { TRANSACTION, WALLET } = SHAPE;
 
 class Transactions extends Component {
@@ -77,7 +77,7 @@ const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
     state !== ARCHIVED &&
     (
       [from.address, to.address].includes(wallet.address) ||
-      [from.device, to.device].includes(device.id)
+      (state === REQUESTED && [from.device, to.device].includes(device.id))
     )
   )),
 });

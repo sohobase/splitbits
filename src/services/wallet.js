@@ -1,4 +1,5 @@
 import BitcoinJS from 'bitcoinjs-lib';
+import { SecureStore } from 'expo';
 import { service } from './modules';
 import { C } from '../config';
 import { PushService } from './';
@@ -13,7 +14,11 @@ export default {
     const hexSeed = params.hexSeed || (await csprng()).substring(0, 32);
     const address = params.address || BitcoinJS.HDNode.fromSeedHex(hexSeed, network).getAddress();
 
-    const wallet = await service('wallet', {
+    if (hexSeed) {
+      await SecureStore.setItemAsync(`${coin}_${address}`, hexSeed, { keychainAccessible: SecureStore.WHEN_UNLOCKED });
+    }
+
+    return service('wallet', {
       method: 'POST',
       body: JSON.stringify({
         address,
@@ -22,31 +27,32 @@ export default {
         push: await PushService.getToken(),
       }),
     });
-
-    return ({ ...wallet, hexSeed });
   },
 
   async import(props) {
     const {
       wif,
       coin = BTC,
-      address,
+      address: readOnlyAddress,
       ...inherit
     } = props;
     const network = BitcoinJS.networks[NETWORKS[coin]];
+    const address = wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : readOnlyAddress;
 
-    const wallet = await service('wallet', {
+    if (wif) {
+      await SecureStore.setItemAsync(`${coin}_${address}`, wif, { keychainAccessible: SecureStore.WHEN_UNLOCKED });
+    }
+
+    return service('wallet', {
       method: 'POST',
       body: JSON.stringify({
         ...inherit,
-        address: wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : address,
         coin,
+        address,
         imported: true,
         readOnly: (wif === undefined),
       }),
     });
-
-    return ({ ...wallet, wif });
   },
 
   async archive(props) {

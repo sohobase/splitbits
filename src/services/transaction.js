@@ -1,3 +1,4 @@
+import { SecureStore } from 'expo';
 import BitcoinJS from 'bitcoinjs-lib';
 import { service } from './modules';
 import { C } from '../config';
@@ -18,13 +19,14 @@ export default {
     return service('transaction/request', { method: 'POST', body: JSON.stringify(props) });
   },
 
-  async send(props, { coin, wif, hexSeed }) {
+  async send(props, { coin, address, imported }) {
     const network = BitcoinJS.networks[NETWORKS[coin]];
     const { tx: hexTx, fee } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
     const tx = BitcoinJS.TransactionBuilder.fromTransaction(BitcoinJS.Transaction.fromHex(hexTx), network);
-    const ECPair = wif
-      ? BitcoinJS.ECPair.fromWIF(wif, network)
-      : BitcoinJS.HDNode.fromSeedHex(hexSeed, network).keyPair;
+    const secret = await SecureStore.getItemAsync(`${coin}_${address}`);
+    const ECPair = imported
+      ? BitcoinJS.ECPair.fromWIF(secret, network)
+      : BitcoinJS.HDNode.fromSeedHex(secret, network).keyPair;
 
     // @TODO: verify outputs are what we expect
     tx.inputs.forEach((_, i) => {

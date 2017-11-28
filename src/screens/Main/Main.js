@@ -92,11 +92,11 @@ class Main extends Component {
     } = this;
     const wallet = wallets[index];
     const focus = !showTransaction && !showWallet && !showWalletNew;
-    const readOnly = wallet && !wallet.hexSeed && !wallet.wif;
+    const { readOnly, coin } = wallet || { readOnly: false };
 
     return (
       <View style={STYLE.SCREEN}>
-        <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]}>
+        <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[coin])]}>
           <Header symbol="USD" />
           <Swiper
             bounces
