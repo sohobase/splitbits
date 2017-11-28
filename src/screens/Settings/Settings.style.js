@@ -7,7 +7,8 @@ const {
 
 export default StyleSheet.create({
   screen: {
-    backgroundColor: 'white',
+    flex: 1,
+    backgroundColor: COLOR.WHITE,
   },
 
   header: {

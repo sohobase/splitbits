@@ -5,7 +5,7 @@ import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
 import { ModalCamera, ModalCurrency } from '../../containers';
-import { C, SHAPE, STYLE, THEME } from '../../config';
+import { C, SHAPE, STYLE, THEME, TEXT } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
@@ -14,6 +14,7 @@ import styles from './Settings.style';
 const { DEV, SERVICE } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
+const { EN: { SETTINGS } } = TEXT;
 let timeout;
 
 const onFlush = () => {
@@ -77,8 +78,8 @@ class Settings extends Component {
       : image;
 
     return (
-      <View style={[STYLE.SCREEN, styles.screen]}>
-        <Header title="Settings" navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
+      <View style={styles.screen}>
+        <Header title={SETTINGS} navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
         <Motion animation="bounceInUp" delay={400}>
           <View>
             <View style={[STYLE.LIST_ITEM, styles.thumb]}>

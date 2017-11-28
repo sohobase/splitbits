@@ -8,6 +8,7 @@ export default {
     CREATE: 'create',
 
     FEE: 'Fee',
+    FRIENDS: 'Friends',
 
     IMPORT: 'import',
 
@@ -28,6 +29,7 @@ export default {
     SEND: 'Send',
     SEND_MONEY: 'Send Money',
     SEND_MONEY_HINT: 'Send money to any wallet in the world.',
+    SETTINGS: 'Settings',
     SET_PIN_CODE: 'Set your PIN code',
     SKIP: 'Skip',
     START: 'Start',
