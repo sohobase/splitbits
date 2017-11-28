@@ -8,6 +8,7 @@ import { ModalCamera, ModalCurrency } from '../../containers';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
+import PKG from '../../../package.json';
 import styles from './Settings.style';
 
 const { DEV, SERVICE } = C;
@@ -105,6 +106,7 @@ class Settings extends Component {
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
         <ModalCurrency visible={currency} onClose={_onModalCurrency} onValue={_onCurrency} />
+        <Text style={styles.version}>{`Version ${PKG.version}`}</Text>
       </View>
     );
   }

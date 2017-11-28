@@ -49,4 +49,13 @@ export default StyleSheet.create({
   button: {
     margin: OFFSET,
   },
+
+  version: {
+    position: 'absolute',
+    bottom: OFFSET,
+    left: OFFSET,
+    right: OFFSET,
+    textAlign: 'center',
+    color: COLOR.TEXT_DISABLED,
+  },
 });
