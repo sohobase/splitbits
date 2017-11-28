@@ -34,19 +34,19 @@ export default StyleSheet.create({
   },
 
   title: {
+    position: 'absolute',
     alignSelf: 'center',
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
+    marginTop: 1.9 * UNIT,
   },
 
-  buttonClose: {
-    position: 'absolute',
-    right: UNIT,
-    top: Platform.OS === 'ios' ? -(OFFSET + UNIT) : OFFSET,
-    // top: -(OFFSET + UNIT),
+  button: {
+    alignSelf: 'flex-end',
+    marginRight: UNIT,
   },
 
-  buttonCloseCaption: {
+  buttonCaption: {
     tintColor: COLOR.TEXT_DISABLED,
   },
 

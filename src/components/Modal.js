@@ -11,11 +11,7 @@ const { ANIMATION: { DURATION } } = THEME;
 const Modal = ({
   children, hint, onClose, title, visible,
 }) => (
-  <ReactNativeModal
-    transparent
-    visible={visible}
-    onRequestClose={() => { }}
-  >
+  <ReactNativeModal transparent visible={visible} onRequestClose={onClose}>
     <Motion
       animation={visible ? 'fadeIn' : 'fadeOut'}
       duration={DURATION / 2}
@@ -34,8 +30,8 @@ const Modal = ({
               icon="close"
               onPress={onClose}
               raised
-              style={styles.buttonClose}
-              captionStyle={styles.buttonCloseCaption}
+              style={styles.button}
+              captionStyle={styles.buttonCaption}
             />
           </View>
           { hint && <Text style={styles.hint}>{hint}</Text> }

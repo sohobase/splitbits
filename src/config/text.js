@@ -3,7 +3,9 @@ export default {
     ADD_NOTE: 'Add note',
 
     CANCEL_REQUEST: 'Cancel request',
+    CHANGE_YOUR_AVATAR: 'Change your avatar',
     CHOOSE_A_FRIEND: 'Choose a friend',
+    CHOOSE_EXISTING_PHOTO: 'Choose existing photo',
     CONCEPT: 'Concept',
     CREATE: 'create',
 
@@ -34,6 +36,7 @@ export default {
     SKIP: 'Skip',
     START: 'Start',
 
+    TAKE_PHOTO: 'Take photo',
     TO: 'to',
     TYPE_OF_WALLET: 'Type of wallet',
 

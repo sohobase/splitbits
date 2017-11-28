@@ -3,7 +3,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { FileSystem, ImagePicker } from 'expo';
 import { Modal, Option } from '../components';
-import { STYLE } from '../config';
+import { STYLE, TEXT } from '../config';
+
+const { EN: { CHANGE_YOUR_AVATAR, CHOOSE_EXISTING_PHOTO, TAKE_PHOTO } } = TEXT;
 
 const ModalCamera = ({ onClose, onFile, visible }) => {
   const launchCamera = async() => {
@@ -33,20 +35,10 @@ const ModalCamera = ({ onClose, onFile, visible }) => {
   };
 
   return (
-    <Modal title="Update your avatar" visible={visible} onClose={onClose}>
+    <Modal title={CHANGE_YOUR_AVATAR} visible={visible} onClose={onClose}>
       <View style={[STYLE.COL]}>
-        <Option
-          caption="Camera"
-          hint="lorem ipsum..."
-          icon="camera"
-          onPress={launchCamera}
-        />
-        <Option
-          caption="Gallery"
-          hint="lorem ipsum..."
-          icon="gallery"
-          onPress={launchImageLibrary}
-        />
+        <Option caption={TAKE_PHOTO} icon="camera" onPress={launchCamera} />
+        <Option caption={CHOOSE_EXISTING_PHOTO} icon="gallery" onPress={launchImageLibrary} />
       </View>
     </Modal>
   );

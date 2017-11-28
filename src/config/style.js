@@ -1,4 +1,4 @@
-import { Platform, StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import THEME from './theme';
 
 const {

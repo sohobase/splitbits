@@ -82,21 +82,15 @@ class Settings extends Component {
         <Header title={SETTINGS} navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
         <Motion animation="bounceInUp" delay={400}>
           <View>
-            <View style={[STYLE.LIST_ITEM, styles.thumb]}>
+            <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.thumb]}>
               <View style={styles.image}>
-                <Image source={{ uri: imageUrl }} style={[styles.image, styles.imageBorder]} />
+                <Image source={{ uri: imageUrl }} style={styles.image} />
               </View>
               <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
             </View>
             <View style={STYLE.LIST_ITEM}>
               <Text style={styles.label}>Name</Text>
-              <Input
-                autoFocus={!name || name.length === 0}
-                onChangeText={_onName}
-                placeholder="Choose a name..."
-                style={styles.input}
-                value={name}
-              />
+              <Input onChangeText={_onName} placeholder="..." style={styles.input} value={name} />
             </View>
             <View style={STYLE.LIST_ITEM} >
               <Text style={styles.label}>Currency</Text>

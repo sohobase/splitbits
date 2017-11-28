@@ -22,12 +22,12 @@ const Recipient = ({
       style={[STYLE.ROW, STYLE.LIST_ITEM]}
       value={concept}
     />
-    <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
+    <View style={[STYLE.ROW, STYLE.LIST_ITEM, { alignItems: 'center', justifyContent: 'center'} ]}>
       { deviceId
         ? <DeviceItem data={device} style={styles.device} />
         :
         <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.input}>
-          <Text style={styles.hint}>{`${CHOOSE_A_FRIEND}...`}</Text>
+          <Text style={[styles.hint, styles.input]}>{`${CHOOSE_A_FRIEND}...`}</Text>
         </Touchable>
       }
       <Button
@@ -43,7 +43,7 @@ const Recipient = ({
           editable={false}
           placeholder={`...${USE_PUBLIC_ADDRESS}`}
           style={styles.input}
-          value={ deviceId ? undefined : address }
+          value={deviceId ? undefined : address}
         />
         <Button icon="camera" raised onPress={onCamera} captionStyle={styles.icon} />
       </View>

@@ -19,7 +19,9 @@ export default StyleSheet.create({
   hint: {
     fontSize: FONT.SIZE.LARGE,
     color: COLOR.TEXT_DISABLED,
-    opacity: 0.7,
+    opacity: 0.675,
+    lineHeight: FONT.SIZE.LARGE,
+    maxHeight: FONT.SIZE.LARGE,
   },
 
   input: {

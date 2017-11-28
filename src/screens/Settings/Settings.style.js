@@ -16,23 +16,22 @@ export default StyleSheet.create({
     borderBottomColor: COLOR.DIVIDER,
   },
 
+  thumb: {
+    height: (AVATAR_SIZE * 3) + (OFFSET * 2),
+  },
+
   image: {
+    position: 'absolute',
     width: AVATAR_SIZE * 3,
     height: AVATAR_SIZE * 3,
     borderRadius: AVATAR_SIZE * 1.5,
     overflow: 'hidden',
-    alignSelf: 'center',
-  },
-
-  imageBorder: {
-    borderWidth: 4,
-    borderColor: COLOR.WHITE,
+    backgroundColor: COLOR.DIVIDER,
   },
 
   buttonCamera: {
-    position: 'absolute',
-    left: '50%',
-    bottom: -OFFSET,
+    top: AVATAR_SIZE,
+    right: -AVATAR_SIZE,
     transform: [{ scale: 0.6 }],
   },
 

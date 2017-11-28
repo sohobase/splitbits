@@ -1,18 +1,17 @@
-import { Platform, StatusBar, StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { THEME } from '../config';
 import { isIphoneX } from '../modules';
 
 const {
   COLOR, FONT, HEADER_SIZE, IPHONEX_OFFSET, UNIT,
 } = THEME;
-let HEIGHT = isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE;
-if (Platform.OS !== 'ios') HEIGHT = (HEADER_SIZE + StatusBar.currentHeight);
+const iOS = Platform.OS === 'ios';
 
 export default StyleSheet.create({
   header: {
-    height: HEIGHT,
+    height: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
     padding: 0,
-    alignItems: 'flex-end',
+    alignItems: iOS ? 'flex-end' : 'center',
   },
 
   content: {
@@ -25,7 +24,7 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT,
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
-    marginBottom: UNIT,
+    marginBottom: iOS ? UNIT : 0,
   },
 
   button: {
