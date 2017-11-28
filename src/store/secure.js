@@ -8,7 +8,7 @@ export default {
     return SecureStore.setItemAsync(key, value, PROPS);
   },
 
-  get() {
-
+  async get(key) {
+    return SecureStore.getItemAsync(key);
   },
 };

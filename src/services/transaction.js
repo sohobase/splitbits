@@ -1,7 +1,7 @@
-import { SecureStore } from 'expo';
 import BitcoinJS from 'bitcoinjs-lib';
-import { service } from './modules';
 import { C } from '../config';
+import { SecureStore } from '../store';
+import { service } from './modules';
 
 const { NETWORKS } = C;
 
@@ -23,7 +23,7 @@ export default {
     const network = BitcoinJS.networks[NETWORKS[coin]];
     const { tx: hexTx, fee } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
     const tx = BitcoinJS.TransactionBuilder.fromTransaction(BitcoinJS.Transaction.fromHex(hexTx), network);
-    const secret = await SecureStore.getItemAsync(`${coin}_${address}`);
+    const secret = await SecureStore.get(`${coin}_${address}`);
     const ECPair = imported
       ? BitcoinJS.ECPair.fromWIF(secret, network)
       : BitcoinJS.HDNode.fromSeedHex(secret, network).keyPair;

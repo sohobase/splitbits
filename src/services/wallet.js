@@ -14,7 +14,7 @@ export default {
     const hexSeed = params.hexSeed || (await csprng()).substring(0, 32);
     const address = params.address || BitcoinJS.HDNode.fromSeedHex(hexSeed, network).getAddress();
 
-    if (hexSeed) SecureStore.set(`${coin}_${address}`, hexSeed);
+    if (hexSeed) await SecureStore.set(`${coin}_${address}`, hexSeed);
     const wallet = service('wallet', {
       method: 'POST',
       body: JSON.stringify({
@@ -38,7 +38,7 @@ export default {
     const network = BitcoinJS.networks[NETWORKS[coin]];
     const address = wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : readOnlyAddress;
 
-    if (wif) SecureStore.set(`${coin}_${address}`, wif);
+    if (wif) await SecureStore.set(`${coin}_${address}`, wif);
     const wallet = service('wallet', {
       method: 'POST',
       body: JSON.stringify({
