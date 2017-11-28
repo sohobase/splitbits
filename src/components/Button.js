@@ -1,6 +1,6 @@
 import { array, bool, func, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';
@@ -24,7 +24,7 @@ const Button = ({
         (circle && styles.circle),
         (!circle && !raised && styles.square),
         (!disabled && !raised && !accent && styles.primary),
-        (!disabled && accent && styles.accent),
+        (!disabled && !raised && accent && styles.accent),
         (raised && styles.raised),
         (disabled && !raised && styles.disabled),
         (disabled && raised && styles.disabledOpacity),

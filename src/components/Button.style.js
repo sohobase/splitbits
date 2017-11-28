@@ -7,7 +7,6 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     display: 'flex',
-    overflow: 'hidden',
   },
 
   square: {
