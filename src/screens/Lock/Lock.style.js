@@ -36,6 +36,7 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignContent: 'flex-end',
+    marginBottom: OFFSET,
   },
 
   keyPad: {
@@ -49,9 +50,7 @@ export default StyleSheet.create({
 
   fingerPrint: {
     minWidth: '100%',
-    marginTop: OFFSET,
     marginBottom: OFFSET,
-    // opacity: 0.25,
   },
 
   hint: {

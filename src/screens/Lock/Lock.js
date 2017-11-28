@@ -1,7 +1,7 @@
 import { Fingerprint } from 'expo';
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Text, Vibration, View } from 'react-native';
+import { Platform, Text, Vibration, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Icon, Logo, Touchable } from '../../components';
@@ -31,8 +31,9 @@ class Lock extends Component {
   async _onFingerprint() {
     if (await Fingerprint.isEnrolledAsync()) {
       this.setState({ hasFingerprint: true });
-      if (await Fingerprint.authenticateAsync()) {
-        Fingerprint.cancelAuthenticate();
+      const { success } = await Fingerprint.authenticateAsync(USE_FINGERPRINT);
+      if (success) {
+        if (Platform.OS !== 'ios') Fingerprint.cancelAuthenticate();
         this.props.navigation.navigate('Main');
       }
     }
@@ -59,7 +60,11 @@ class Lock extends Component {
   }
 
   render() {
-    const { _onPress, props: { device }, state: { hasFingerprint, pin, wrong } } = this;
+    const {
+      _onFingerprint, _onPress,
+      props: { device },
+      state: { hasFingerprint, pin, wrong },
+    } = this;
     let animation;
     if (!pin) animation = 'bounceInDown';
     if (wrong) animation = 'shake';
@@ -93,10 +98,12 @@ class Lock extends Component {
         </Motion>
         { hasFingerprint &&
           <Motion animation="bounceInUp" delay={400}>
-            <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
-              <Icon value="fingerprint" style={styles.icon} />
-              <Text style={styles.hint}>{USE_FINGERPRINT}</Text>
-            </View>
+            <Touchable raised onPress={_onFingerprint}>
+              <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
+                <Icon value="fingerprint" style={styles.icon} />
+                <Text style={styles.hint}>{USE_FINGERPRINT}</Text>
+              </View>
+            </Touchable>
           </Motion> }
       </View>
     );
