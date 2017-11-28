@@ -79,7 +79,7 @@ const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
       [from.address, to.address].includes(wallet.address) ||
       [from.device, to.device].includes(device.id)
     )
-  )),
+  )).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
 });
 
 const mapDispatchToProps = dispatch => ({
