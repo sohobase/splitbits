@@ -27,7 +27,7 @@ const WalletItem = ({
   currencies, data, device: { currency }, onOption, onPress, style,
 }) => {
   const {
-    balance = 0, coin = 'BTC', hexSeed, name = '', trend = 0, type, wif,
+    balance = 0, coin = 'BTC', name = '', readOnly, trend = 0, type,
   } = data || {};
 
   return (
@@ -55,7 +55,7 @@ const WalletItem = ({
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
               <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
               <View style={styles.tags}>
-                { !hexSeed && !wif && <View style={styles.tag}><Text style={styles.tagLabel}>{READ_ONLY}</Text></View> }
+                { readOnly && <View style={styles.tag}><Text style={styles.tagLabel}>{READ_ONLY}</Text></View> }
                 { type === PRO && <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
               </View>
             </View>
