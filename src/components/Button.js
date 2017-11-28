@@ -1,30 +1,32 @@
 import { array, bool, func, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';
-import { STYLE, TEXT } from '../config';
+import { STYLE } from '../config';
 import styles from './Button.style';
 
-const { EN: { PROCESSING } } = TEXT;
-const PROCESSING_MOTION = { animation: 'flash', iterationCount: 'infinite' };
+const PROCESSING_ANIMATION = {
+  from: { right: 256 },
+  to: { right: 0 },
+};
 
 const Button = ({
   accent, caption, captionStyle, children, circle, disabled, icon, onPress, processing, raised, style, motion,
 }) => (
-  <Touchable onPress={!disabled ? onPress : undefined} raised={raised}>
+  <Touchable onPress={!disabled && !processing ? onPress : undefined} raised={raised}>
     <Motion
-      {...(processing ? PROCESSING_MOTION : motion)}
+      {...motion}
       style={StyleSheet.flatten([
         styles.container,
         STYLE.CENTERED,
         (circle && styles.circle),
         (!circle && !raised && styles.square),
-        (!disabled && !processing && !raised && !accent && styles.primary),
-        (!disabled && !processing && accent && styles.accent),
+        (!disabled && !raised && !accent && styles.primary),
+        (!disabled && accent && styles.accent),
         (raised && styles.raised),
-        ((disabled || processing) && !raised && styles.disabled),
+        (disabled && !raised && styles.disabled),
         (disabled && raised && styles.disabledOpacity),
         style,
       ])}
@@ -33,9 +35,11 @@ const Button = ({
         <Icon value={icon} style={[styles.icon, captionStyle]} /> }
       { caption &&
         <Text style={[styles.caption, captionStyle]}>
-          {processing ? PROCESSING : caption.replace(/\b\w/g, l => l.toUpperCase())}
+          {caption.replace(/\b\w/g, l => l.toUpperCase())}
         </Text> }
       { !icon && !caption && children }
+      { processing &&
+        <Motion animation={PROCESSING_ANIMATION} duration={5000} iterationCount={6} style={styles.processing} /> }
     </Motion>
   </Touchable>
 );

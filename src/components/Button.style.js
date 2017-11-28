@@ -7,6 +7,7 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     display: 'flex',
+    overflow: 'hidden',
   },
 
   square: {
@@ -52,9 +53,21 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT,
     fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
+    backgroundColor: 'transparent',
   },
 
   icon: {
     tintColor: COLOR.WHITE,
+  },
+
+  processing: {
+    zIndex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: COLOR.BACKGROUND_DISABLED,
+    borderRadius: THEME.OFFSET * 2,
   },
 });
