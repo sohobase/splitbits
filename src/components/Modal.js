@@ -1,6 +1,6 @@
 import { bool, func, node, string } from 'prop-types';
 import React from 'react';
-import { Modal as ReactNativeModal, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Modal as ReactNativeModal, Platform, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { STYLE, THEME } from '../config';
 import Button from './Button';
@@ -22,24 +22,26 @@ const Modal = ({
       delay={visible ? 0 : DURATION / 2}
       style={styles.container}
     >
-      <Motion
-        animation={visible ? 'bounceInUp' : 'bounceOutDown'}
-        duration={DURATION}
-        style={[STYLE.ELEVATION, styles.content]}
-      >
-        <View style={styles.header}>
-          { title && <Text style={styles.title}>{title}</Text> }
-          <Button
-            icon="close"
-            onPress={onClose}
-            raised
-            style={styles.buttonClose}
-            captionStyle={styles.buttonCloseCaption}
-          />
-        </View>
-        { hint && <Text style={styles.hint}>{hint}</Text> }
-        { children }
-      </Motion>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : undefined}>
+        <Motion
+          animation={visible ? 'bounceInUp' : 'bounceOutDown'}
+          duration={DURATION}
+          style={[STYLE.ELEVATION, styles.content]}
+        >
+          <View style={styles.header}>
+            { title && <Text style={styles.title}>{title}</Text> }
+            <Button
+              icon="close"
+              onPress={onClose}
+              raised
+              style={styles.buttonClose}
+              captionStyle={styles.buttonCloseCaption}
+            />
+          </View>
+          { hint && <Text style={styles.hint}>{hint}</Text> }
+          { children }
+        </Motion>
+      </KeyboardAvoidingView>
     </Motion>
   </ReactNativeModal>
 );
