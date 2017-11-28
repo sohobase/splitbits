@@ -1,3 +1,4 @@
+import { SecureStore } from 'expo';
 import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
@@ -25,7 +26,10 @@ class ModalMnemonic extends Component {
     this._onValue = this._onValue.bind(this);
   }
 
-  componentWillReceiveProps({ wallet: { hexSeed } }) {
+  async componentWillReceiveProps({ visible, wallet: { address, coin } }) {
+    if (!visible) return;
+    const hexSeed = address && await SecureStore.getItemAsync(`${coin}_${address}`);
+
     this.setState({
       words: (hexSeed) ? MnemonicService.backup(hexSeed) : Array(WORDS_LENGTH).fill(''),
     });
@@ -50,9 +54,9 @@ class ModalMnemonic extends Component {
 
   render() {
     const {
-      _onBackup, _onRecover, _onValue, props: { onClose, visible, wallet: { hexSeed } }, state: { words = [] },
+      _onBackup, _onRecover, _onValue, props: { onClose, visible, wallet: { address } }, state: { words = [] },
     } = this;
-    const readOnly = hexSeed !== undefined;
+    const readOnly = !!address;
 
     return (
       <Modal

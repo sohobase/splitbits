@@ -46,10 +46,11 @@ class ModalWallet extends Component {
       props: {
         onClose, visible,
         wallet: {
-          address, backup, hexSeed, type,
+          address, backup, imported, readOnly, type,
         },
       },
     } = this;
+    const created = !imported && !readOnly;
 
     return (
       <Modal title="Wallet" visible={visible} onClose={onClose}>
@@ -58,7 +59,7 @@ class ModalWallet extends Component {
           <Text style={styles.address}>{address}</Text>
         </View>
         <View style={[STYLE.COL]}>
-          { hexSeed &&
+          { created &&
             <Option
               caption="Create a backup"
               hint="The simplest way to have control of your wallet."
@@ -69,7 +70,7 @@ class ModalWallet extends Component {
             caption="Archive this wallet"
             hint="If you do not want to use this wallet anymore."
             icon="remove"
-            disabled={hexSeed !== undefined && backup === undefined}
+            disabled={created && !backup}
             onPress={_onArchive}
           />
           { type !== PRO &&

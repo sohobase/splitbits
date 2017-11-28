@@ -54,7 +54,5 @@ export default {
     readOnly: bool,
     trend: number,
     type: string,
-    wif: string,
-    hexSeed: string,
   },
 };
