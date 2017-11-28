@@ -4,8 +4,6 @@ import THEME from './theme';
 const {
   COLOR, UNIT, OFFSET, ROW_MIN_HEIGHT,
 } = THEME;
-let androidHeader = {};
-if (Platform.OS !== 'ios') androidHeader = { paddingTop: StatusBar.currentHeight, height: 80 };
 
 export default StyleSheet.create({
   CENTERED: {
@@ -27,21 +25,9 @@ export default StyleSheet.create({
     shadowRadius: 8,
   },
 
-  HEADER: Object.assign({
-    backgroundColor: COLOR.PRIMARY,
-    elevation: 0,
-    shadowColor: 'transparent',
-    shadowRadius: 0,
-    shadowOffset: { height: 0 },
-  }, androidHeader),
-
   HEADER_HIGHLIGHT: {
     borderBottomWidth: 1,
     borderBottomColor: COLOR.DIVIDER,
-  },
-
-  HEADER_TITLE: {
-    alignSelf: 'center',
   },
 
   LAYOUT_TOP: {

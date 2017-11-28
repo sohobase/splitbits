@@ -1,12 +1,14 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StatusBar, View, StyleSheet } from 'react-native';
 import { updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
-import { STYLE } from '../../config';
+import { STYLE, THEME } from '../../config';
 import { StateService } from '../../services';
 import { initialize } from '../../store';
 import styles from './Loading.style';
+
+const { COLOR } = THEME;
 
 class Loading extends Component {
   constructor(props) {
@@ -44,6 +46,7 @@ class Loading extends Component {
 
     return (
       <View style={StyleSheet.flatten([STYLE.SCREEN, STYLE.CENTERED, styles.loading])}>
+        <StatusBar backgroundColor={COLOR.PRIMARY} barStyle="dark-content" />
         <Logo motion={motion} />
       </View>
     );

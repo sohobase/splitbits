@@ -52,6 +52,8 @@ export default {
     },
   },
 
+  IPHONEX_OFFSET: 28,
+
   AVATAR_SIZE: UNIT * 4,
   BORDER_RADIUS: UNIT / 2,
   BUTTON_CIRCLE_SIZE: UNIT * 6.4,

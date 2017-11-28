@@ -1,8 +1,12 @@
 import { Platform, StatusBar, StyleSheet } from 'react-native';
 import { THEME } from '../config';
+import { isIphoneX } from '../modules';
 
-const { COLOR, FONT, HEADER_SIZE, UNIT } = THEME;
-const HEIGHT = (Platform.OS !== 'ios') ? (HEADER_SIZE + StatusBar.currentHeight) : HEADER_SIZE;
+const {
+  COLOR, FONT, HEADER_SIZE, IPHONEX_OFFSET, UNIT,
+} = THEME;
+let HEIGHT = isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE;
+if (Platform.OS !== 'ios') HEIGHT = (HEADER_SIZE + StatusBar.currentHeight);
 
 export default StyleSheet.create({
   header: {

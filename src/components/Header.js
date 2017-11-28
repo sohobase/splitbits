@@ -1,6 +1,6 @@
 import { array, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { SHAPE, STYLE, THEME } from '../config';
 import Button from './Button';
@@ -13,6 +13,11 @@ const Header = ({
   animation, buttonRight, children, navigation, style, tintColor, title,
 }) => (
   <View style={[STYLE.ROW, styles.header, style]}>
+    <StatusBar
+      animated
+      backgroundColor={tintColor !== COLOR.WHITE ? COLOR.BLACK : COLOR.PRIMARY}
+      barStyle={tintColor !== COLOR.WHITE ? 'dark-content' : 'light-content'}
+    />
     { navigation &&
       <Button
         motion={{ animation, delay: 100 }}

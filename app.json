@@ -4,7 +4,7 @@
     "description": "...",
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
-    "sdkVersion": "22.0.0",
+    "sdkVersion": "23.0.0",
     "version": "0.3.1",
     "orientation": "portrait",
     "primaryColor": "#2d126c",
@@ -27,6 +27,9 @@
       "package": "com.sohobase.splitbits",
       "permissions": ["CAMERA", "VIBRATE"],
       "versionCode": 1
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#2d126c"
     }
    }
  }
