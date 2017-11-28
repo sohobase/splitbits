@@ -7,12 +7,12 @@
     "sdkVersion": "22.0.0",
     "version": "0.3.1",
     "orientation": "portrait",
-    "primaryColor": "#303498",
+    "primaryColor": "#2d126c",
     "icon": "./assets/app-icon.png",
     "loading": {
       "icon": "./assets/app-loading.png",
       "hideExponentText": true,
-      "backgroundColor": "#303498"
+      "backgroundColor": "#2d126c"
     },
     "notification": {
       "icon": "./assets/app-notification.png",

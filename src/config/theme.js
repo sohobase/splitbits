@@ -12,8 +12,8 @@ export default {
   },
 
   COLOR: {
-    PRIMARY: '#303498',
-    ACCENT: '#ff4566',
+    PRIMARY: '#2d126c', // '#303498'
+    ACCENT: '#5edeb3', // '#ff4566'
 
     BACKGROUND: Color(WHITE).darken(0.03),
     BACKGROUND_HIGHLIGHT: Color(WHITE).alpha(0.15),
