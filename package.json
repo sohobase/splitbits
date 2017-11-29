@@ -26,6 +26,7 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
+    "prepare": "node_modules_patches/apply.sh",
     "test": "node node_modules/jest/bin/jest.js --watch"
   },
   "jest": {
