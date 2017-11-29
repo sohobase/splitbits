@@ -2,6 +2,8 @@ export default {
   EN: {
     ADD_NOTE: 'Add note',
 
+    BALANCE: 'Balance',
+
     CANCEL_REQUEST: 'Cancel request',
     CHANGE_YOUR_AVATAR: 'Change your avatar',
     CHOOSE_A_FRIEND: 'Choose a friend',
@@ -42,5 +44,7 @@ export default {
 
     USE_PUBLIC_ADDRESS: 'or use a public address',
     USE_FINGERPRINT: 'Use fingerprint to unlock',
+
+    WAIT_A_MOMENT: 'Wait a moment',
   },
 };

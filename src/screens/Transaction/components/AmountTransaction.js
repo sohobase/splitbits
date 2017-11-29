@@ -4,13 +4,14 @@ import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Header, Input } from '../../../components';
-import { C, SHAPE, STYLE } from '../../../config';
+import { C, SHAPE, STYLE, TEXT } from '../../../config';
 import styles from './AmountTransaction.style';
 
 const { SATOSHI, STATE: { REQUESTED } } = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
+const { EN: { BALANCE, FEE } } = TEXT;
 
 class AmountTransaction extends Component {
   constructor(props) {
@@ -41,7 +42,9 @@ class AmountTransaction extends Component {
       props: {
         coin, currencies, editable, navigation,
         device: { currency },
-        item: { payment = false, state } = {},
+        item: {
+          charge = 0, fee = 0, payment = false, state,
+        } = {},
         wallet: { balance },
       },
       state: { amount, swap },
@@ -83,7 +86,11 @@ class AmountTransaction extends Component {
             }
             <Amount coin={to} value={conversion} style={[styles.label]} />
             <View style={styles.balance}>
-              <Amount caption="Balance " coin={coin} style={[styles.label, styles.small]} value={balance} />
+              {
+                state === undefined
+                ? <Amount caption={`${BALANCE} `} coin={coin} style={[styles.label, styles.small]} value={balance} />
+                : <Amount caption={`${FEE} `} coin={coin} style={[styles.label, styles.small]} value={fee + charge} />
+              }
             </View>
           </View>
         </Motion>

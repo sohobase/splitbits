@@ -137,7 +137,7 @@ class Transaction extends Component {
               <Amount
                 caption={`${FEE} `}
                 coin={currency}
-                value={fee * SATOSHI / currencies[currency][coin]}
+                value={(fee * SATOSHI) / currencies[currency][coin]}
                 style={styles.feeCaption}
               />
             </Motion> }
