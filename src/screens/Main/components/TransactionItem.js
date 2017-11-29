@@ -24,17 +24,19 @@ const verboseTitle = ({
 const TransactionItem = (props) => {
   const {
     currencies,
-    data: {
-      amount, confirmations = 0, coin, concept, createdAt, payment, state, from = {}, to = {},
-    },
+    data: transactionData,
     device: { currency, devices },
     onPress,
     wallet: { address } = {},
   } = props;
+  const {
+    amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
+  } = transactionData;
 
   const other = devices.find(({ id }) => id === from.device || id === to.device) || {};
   const symbol = payment ? '-' : '+';
   const emitter = address !== to.address;
+  const concept = transactionData.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
 
   let icon = 'settings';
   if ([CONFIRMED, REQUESTED].includes(state)) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
