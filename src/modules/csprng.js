@@ -78,10 +78,10 @@ const getEntropyFromCPUTimming = () =>
 
 export default async() =>
   sha256(JSON.stringify(await Promise.all([
-    getEntropyFromSQLite(),
     getEntropyFromMathRandom(),
-    getEntropyFromDeviceProperties(),
-    getEntropyFromGiroscope(),
-    getEntropyFromMagnetometer(),
-    getEntropyFromCPUTimming(),
+    // getEntropyFromSQLite(),
+    // getEntropyFromDeviceProperties(),
+    // getEntropyFromGiroscope(),
+    // getEntropyFromMagnetometer(),
+    // getEntropyFromCPUTimming(),
   ])));
