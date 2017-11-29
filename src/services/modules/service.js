@@ -6,6 +6,7 @@ const headers = {
   'Content-Type': 'application/json',
   deviceId,
   token: deviceId,
+  testnet: C.DEV,
 };
 const onError = error => console.log('module/service', error);
 
