@@ -13,9 +13,8 @@ const config = {
   version: 2,
 };
 
-export default () => {
-  const store = createStore(persistReducer(config, reducer));
-  persistStore(store);
-
-  return store;
-};
+export default async() =>
+  new Promise((resolve) => {
+    const store = createStore(persistReducer(config, reducer));
+    persistStore(store, null, () => resolve(store));
+  });

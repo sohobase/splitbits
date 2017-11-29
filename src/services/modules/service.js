@@ -9,7 +9,7 @@ const headers = {
 };
 const onError = error => console.log('module/service', error);
 
-export default async(endpoint, props = {}, multipart) => {
+export default async(endpoint, props = {}, multipart = false) => {
   const { method = 'GET' } = props;
 
   if (multipart) headers['Content-Type'] = 'multipart/form-data';
