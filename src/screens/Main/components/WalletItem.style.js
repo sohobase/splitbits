@@ -25,13 +25,13 @@ export default StyleSheet.create({
     paddingTop: UNIT,
     paddingBottom: UNIT,
     paddingLeft: OFFSET,
-    paddingRight: OFFSET,
+    paddingRight: OFFSET / 2,
     height: WALLET_HEIGHT,
   },
 
   info: {
     flex: 1,
-    width: '90%',
+    alignItems: 'flex-start',
   },
 
   name: {
@@ -84,9 +84,7 @@ export default StyleSheet.create({
   },
 
   menu: {
-    position: 'absolute',
-    right: Platform.OS === 'ios' ? -UNIT : 0,
-    top: Platform.OS === 'ios' ? 0 : UNIT,
+    alignSelf: 'flex-end',
   },
 
   menuIcon: {

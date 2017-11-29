@@ -39,17 +39,17 @@ const WalletItem = ({
       {
         data ?
           <View style={styles.content}>
-            <Button captionStyle={styles.menuIcon} icon="menu" onPress={onPress} raised style={styles.menu} />
-            <View style={styles.info}>
-              <View style={STYLE.ROW}>
+            <View style={[STYLE.ROW, styles.info]}>
+              <View style={styles.info}>
                 <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
+                <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
+                <Amount
+                  coin={currency}
+                  value={balance / (currencies[coin] / SATOSHI)}
+                  style={[styles.label, styles.fiat]}
+                />
               </View>
-              <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
-              <Amount
-                coin={currency}
-                value={balance / (currencies[coin] / SATOSHI)}
-                style={[styles.label, styles.fiat]}
-              />
+              <Button captionStyle={styles.menuIcon} icon="menu" onPress={onPress} raised style={styles.menu} />
             </View>
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
