@@ -55,18 +55,11 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
   },
 
-  icon: {
-    tintColor: COLOR.WHITE,
+  captionProcessing: {
+    color: COLOR.TEXT_DISABLED,
   },
 
-  processing: {
-    zIndex: 1,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: COLOR.BACKGROUND_DISABLED,
-    borderRadius: THEME.OFFSET * 2,
+  icon: {
+    tintColor: COLOR.WHITE,
   },
 });

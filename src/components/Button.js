@@ -4,13 +4,10 @@ import { StyleSheet, Text } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';
-import { STYLE } from '../config';
+import { STYLE, TEXT } from '../config';
 import styles from './Button.style';
 
-const PROCESSING_ANIMATION = {
-  from: { right: 256 },
-  to: { right: 0 },
-};
+const { EN: { WAIT_A_MOMENT } } = TEXT;
 
 const Button = ({
   accent, caption, captionStyle, children, circle, disabled, icon, onPress, processing, raised, style, motion,
@@ -23,23 +20,23 @@ const Button = ({
         STYLE.CENTERED,
         (circle && styles.circle),
         (!circle && !raised && styles.square),
-        (!disabled && !raised && !accent && styles.primary),
-        (!disabled && !raised && accent && styles.accent),
+        (!disabled && !processing && !raised && !accent && styles.primary),
+        (!disabled && !processing && !raised && accent && styles.accent),
         (raised && styles.raised),
-        (disabled && !raised && styles.disabled),
+        ((disabled || processing) && !raised && styles.disabled),
         (disabled && raised && styles.disabledOpacity),
         style,
       ])}
     >
       { icon &&
         <Icon value={icon} style={[styles.icon, captionStyle]} /> }
-      { caption &&
-        <Text style={[styles.caption, captionStyle]}>
-          {caption.replace(/\b\w/g, l => l.toUpperCase())}
-        </Text> }
-      { !icon && !caption && children }
+      { caption && !processing &&
+        <Text style={[styles.caption, captionStyle]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
       { processing &&
-        <Motion animation={PROCESSING_ANIMATION} duration={5000} iterationCount={6} style={styles.processing} /> }
+        <Motion animation="flash" iterationCount="infinite">
+          <Text style={[styles.caption, styles.captionProcessing, captionStyle]}>{WAIT_A_MOMENT}</Text>
+        </Motion> }
+      { !icon && !caption && children }
     </Motion>
   </Touchable>
 );
