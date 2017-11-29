@@ -58,7 +58,7 @@ export default {
       BOLD: '700',
     },
   },
-  FOOTER_SIZE: UNIT * 6,
+  FOOTER_SIZE: UNIT * 5.8,
 
   HEADER_SIZE: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
 

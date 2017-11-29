@@ -73,7 +73,6 @@ class ModalWalletNew extends Component {
     } = this;
     this.setState({ processing: true });
     const wallet = await WalletService[camera ? 'import' : 'create']({ ...state, hexSeed });
-    this.setState({ processing: false });
 
     if (wallet) {
       addWallet(wallet);
@@ -87,6 +86,7 @@ class ModalWalletNew extends Component {
 
       onSuccess();
     }
+    this.setState({ processing: false });
   }
 
   render() {
