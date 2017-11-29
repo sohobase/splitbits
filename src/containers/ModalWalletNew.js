@@ -130,14 +130,15 @@ class ModalWalletNew extends Component {
           />
           { (camera || hexSeed) &&
             <Input editable={false} style={[styles.input, styles.inputAddress]} value={wif || address} /> }
-          <Button
-            accent
-            caption={buttonCaption}
-            disabled={!coin || !name}
-            processing={processing}
-            onPress={_onSubmit}
-            style={styles.button}
-          />
+          <View style={styles.button}>
+            <Button
+              accent
+              caption={buttonCaption}
+              disabled={!coin || !name}
+              processing={processing}
+              onPress={_onSubmit}
+            />
+          </View>
         </Modal>
       </View>
     );

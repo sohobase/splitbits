@@ -4,7 +4,7 @@ import { StyleSheet, Text } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import Icon from './Icon';
 import Touchable from './Touchable';
-import { STYLE, TEXT } from '../config';
+import { STYLE, TEXT, THEME } from '../config';
 import styles from './Button.style';
 
 const { EN: { WAIT_A_MOMENT } } = TEXT;
@@ -12,7 +12,11 @@ const { EN: { WAIT_A_MOMENT } } = TEXT;
 const Button = ({
   accent, caption, captionStyle, children, circle, disabled, icon, onPress, processing, raised, style, motion,
 }) => (
-  <Touchable onPress={!disabled && !processing ? onPress : undefined} raised={raised}>
+  <Touchable
+    onPress={!disabled && !processing ? onPress : undefined}
+    raised={raised}
+    style={!raised && { borderRadius: THEME.BUTTON_CIRCLE_SIZE / 2 }}
+  >
     <Motion
       {...motion}
       style={StyleSheet.flatten([

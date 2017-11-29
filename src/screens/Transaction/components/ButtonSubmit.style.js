@@ -4,7 +4,7 @@ import { THEME } from '../../../config';
 const { COLOR, FONT, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  button: {
+  wrapper: {
     margin: OFFSET,
   },
 

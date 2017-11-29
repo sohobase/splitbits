@@ -8,10 +8,6 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
-  button: {
-    marginTop: OFFSET * 2,
-  },
-
   options: {
     position: 'absolute',
     width: '100%',

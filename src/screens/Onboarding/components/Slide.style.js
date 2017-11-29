@@ -32,6 +32,7 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.DEFAULT,
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
     textAlign: 'center',
+    marginBottom: OFFSET,
   },
 
 });

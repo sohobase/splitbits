@@ -1,5 +1,6 @@
 import { number, func, shape, string } from 'prop-types';
 import React from 'react';
+import { View } from 'react-native';
 import { Amount, Button } from '../../../components';
 import { C, SHAPE, TEXT } from '../../../config';
 import styles from './ButtonSubmit.style';
@@ -23,23 +24,24 @@ const ButtonSubmit = ({
     );
 
   return (
-    <Button
-      {...inherit}
-      accent
-      caption={cancel ? CANCEL_REQUEST : undefined}
-      disabled={!cancel && !valid}
-      motion={{ animation: 'bounceInUp', delay: 600 }}
-      onPress={cancel ? onCancel : onPress}
-      style={styles.button}
-    >
-      { !cancel &&
-        <Amount
-          caption={`${(editable && type === TYPE.REQUEST) ? REQUEST : SEND} `}
-          coin={coin}
-          style={styles.buttonCaption}
-          value={amount}
-        /> }
-    </Button>
+    <View style={styles.wrapper}>
+      <Button
+        {...inherit}
+        accent
+        caption={cancel ? CANCEL_REQUEST : undefined}
+        disabled={!cancel && !valid}
+        motion={{ animation: 'bounceInUp', delay: 600 }}
+        onPress={cancel ? onCancel : onPress}
+      >
+        { !cancel &&
+          <Amount
+            caption={`${(editable && type === TYPE.REQUEST) ? REQUEST : SEND} `}
+            coin={coin}
+            style={styles.buttonCaption}
+            value={amount}
+          /> }
+      </Button>
+    </View>
   );
 };
 
