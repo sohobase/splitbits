@@ -1,6 +1,6 @@
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { AsyncStorage, Image, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
@@ -11,15 +11,11 @@ import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
 import styles from './Settings.style';
 
-const { DEV, SERVICE } = C;
+const { SERVICE } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 const { EN: { SETTINGS } } = TEXT;
 let timeout;
-
-const onFlush = () => {
-  AsyncStorage.clear();
-};
 
 class Settings extends Component {
   constructor(props) {
@@ -96,7 +92,6 @@ class Settings extends Component {
               <Text style={styles.label}>Currency</Text>
               <Text style={styles.input} onPress={_onModalCurrency}>{device.currency}</Text>
             </View>
-            { DEV && <Button accent caption="Flush Memory" onPress={onFlush} style={styles.button} /> }
           </View>
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
