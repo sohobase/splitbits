@@ -24,4 +24,9 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginTop: OFFSET,
   },
+
+  friends: {
+    flex: 1,
+    minHeight: '100%',
+  },
 });

@@ -50,7 +50,7 @@ class Profile extends Component {
             <QRCode value={id} size={QR_SIZE} />
             <Text style={styles.hint}>This QR will help your friends to find you easily.</Text>
           </View>
-          <DevicesList onRefresh={_onRefresh} refreshing={refreshing} />
+          <DevicesList onRefresh={_onRefresh} refreshing={refreshing} style={styles.friends} />
         </Motion>
       </View>
     );
