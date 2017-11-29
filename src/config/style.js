@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import THEME from './theme';
 
 const {
-  COLOR, UNIT, OFFSET, ROW_MIN_HEIGHT,
+  COLOR, HEADER_SIZE, UNIT, OFFSET, ROW_MIN_HEIGHT, WALLET_HEIGHT,
 } = THEME;
 
 export default StyleSheet.create({
@@ -32,9 +32,7 @@ export default StyleSheet.create({
 
   LAYOUT_TOP: {
     flex: 0,
-    minHeight: UNIT * 25.6,
-    height: '45%',
-    maxHeight: UNIT * 36,
+    height: WALLET_HEIGHT + HEADER_SIZE + (OFFSET * 4),
     backgroundColor: COLOR.PRIMARY,
   },
 

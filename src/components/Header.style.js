@@ -1,15 +1,14 @@
 import { Platform, StyleSheet } from 'react-native';
 import { THEME } from '../config';
-import { isIphoneX } from '../modules';
 
 const {
-  COLOR, FONT, HEADER_SIZE, IPHONEX_OFFSET, UNIT,
+  COLOR, FONT, HEADER_SIZE, UNIT,
 } = THEME;
 const iOS = Platform.OS === 'ios';
 
 export default StyleSheet.create({
   header: {
-    height: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
+    height: HEADER_SIZE,
     padding: 0,
     alignItems: iOS ? 'flex-end' : 'center',
   },

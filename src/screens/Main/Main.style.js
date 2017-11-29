@@ -1,9 +1,15 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { THEME } from '../../config';
+
+const { OFFSET, WALLET_HEIGHT } = THEME;
 
 export default StyleSheet.create({
   wallets: {
-    flex: 0,
-    height: '95%',
-    alignSelf: Platform.OS === 'ios' ? 'flex-end' : 'auto',
+    height: WALLET_HEIGHT + (OFFSET * 4),
+    alignSelf: 'flex-end',
+  },
+
+  pagination: {
+    bottom: OFFSET,
   },
 });

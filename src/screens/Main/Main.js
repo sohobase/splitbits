@@ -9,7 +9,7 @@ import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '..
 import { Header, Footer, TransactionButton, Transactions, WalletItem } from './components';
 import styles from './Main.style';
 
-const { TYPE: { REQUEST, SEND } } = C;
+const { DEV, TYPE: { REQUEST, SEND } } = C;
 const { EN: { IMPORT, RECOVER } } = TEXT;
 const { NAVIGATION, WALLET } = SHAPE;
 
@@ -35,7 +35,7 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    Notifications.addListener(this._onNotification);
+    if (DEV) Notifications.addListener(this._onNotification);
   }
 
   _onNotification({ origin, data }) {
@@ -105,6 +105,7 @@ class Main extends Component {
             removeClippedSubviews={false}
             dotStyle={STYLE.SWIPER_DOT}
             activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
+            paginationStyle={styles.pagination}
             style={styles.wallets}
           >
             {[

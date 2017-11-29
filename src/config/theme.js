@@ -1,15 +1,22 @@
 import Color from 'color';
+import { isIphoneX } from '../modules';
 
 const UNIT = 10;
 const WHITE = '#ffffff';
 const BLACK = '#000000';
 const DISABLED = 0.38;
+const IPHONEX_OFFSET = 28;
+const HEADER_SIZE = UNIT * 6;
 
 export default {
   ANIMATION: {
     DURATION: 900,
     EASING: 'ease-in-out-sine',
   },
+  AVATAR_SIZE: UNIT * 4,
+
+  BORDER_RADIUS: UNIT / 2,
+  BUTTON_CIRCLE_SIZE: UNIT * 6.4,
 
   COLOR: {
     PRIMARY: '#2d126c', // '#303498'
@@ -51,17 +58,21 @@ export default {
       BOLD: '700',
     },
   },
-
-  IPHONEX_OFFSET: 28,
-
-  AVATAR_SIZE: UNIT * 4,
-  BORDER_RADIUS: UNIT / 2,
-  BUTTON_CIRCLE_SIZE: UNIT * 6.4,
   FOOTER_SIZE: UNIT * 6,
-  HEADER_SIZE: UNIT * 6,
+
+  HEADER_SIZE: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
+
   ICON_SIZE: UNIT * 3.2,
+  IPHONEX_OFFSET,
+
   OFFSET: UNIT * 1.6,
-  ROW_MIN_HEIGHT: UNIT * 6.4,
+
   QR_SIZE: 12.8 * UNIT,
+
+  ROW_MIN_HEIGHT: UNIT * 6.4,
+
   UNIT,
+
+  WALLET_HEIGHT: UNIT * 14.4,
+  WALLET_WIDTH: UNIT * 22.4,
 };

@@ -2,18 +2,13 @@ import { Platform, StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
 const {
-  BORDER_RADIUS, COLOR, FONT, OFFSET, UNIT,
+  BORDER_RADIUS, COLOR, FONT, OFFSET, UNIT, WALLET_HEIGHT, WALLET_WIDTH,
 } = THEME;
-
-const SIZE = {
-  WIDTH: UNIT * 22.4,
-  HEIGHT: UNIT * 14.4,
-};
 
 export default StyleSheet.create({
   container: {
-    width: SIZE.WIDTH,
-    height: SIZE.HEIGHT,
+    width: WALLET_WIDTH,
+    height: WALLET_HEIGHT,
     backgroundColor: COLOR.WHITE,
     marginTop: OFFSET,
     marginBottom: OFFSET,
@@ -31,7 +26,7 @@ export default StyleSheet.create({
     paddingBottom: UNIT,
     paddingLeft: OFFSET,
     paddingRight: OFFSET,
-    height: SIZE.HEIGHT,
+    height: WALLET_HEIGHT,
   },
 
   info: {
