@@ -33,7 +33,7 @@ class Profile extends Component {
   render() {
     const {
       _onRefresh,
-      props: { device: { session }, navigation },
+      props: { device: { id }, navigation },
       state: { refreshing },
     } = this;
 
@@ -47,7 +47,7 @@ class Profile extends Component {
         />
         <Motion animation="bounceInUp" delay={400}>
           <View style={[STYLE.CENTERED, styles.summary]}>
-            <QRCode value={session} size={QR_SIZE} />
+            <QRCode value={id} size={QR_SIZE} />
             <Text style={styles.hint}>This QR will help your friends to find you easily.</Text>
           </View>
           <DevicesList onRefresh={_onRefresh} refreshing={refreshing} />
