@@ -8,31 +8,28 @@ import { STYLE, TEXT } from '../config';
 const { EN: { CHANGE_YOUR_AVATAR, CHOOSE_EXISTING_PHOTO, TAKE_PHOTO } } = TEXT;
 
 const ModalCamera = ({ onClose, onFile, visible }) => {
-  const launchCamera = async() => {
-    const result = await ImagePicker.launchCameraAsync({
+  const launch = async(isCamera) => {
+    const method = isCamera ? 'launchCameraAsync' : 'launchImageLibraryAsync';
+    const { uri, cancelled } = await ImagePicker[method]({
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.5,
     });
 
-    if (!result.cancelled) {
-      const file = await FileSystem.getInfoAsync(result.uri);
+    if (!cancelled) {
+      // @TODO: Workaround Expo bug
+      // https://github.com/expo/expo/issues/986
+      const badProtocol = 'file:///file%3A/';
+      const fixedUri = (uri.indexOf(badProtocol) === 0)
+        ? `file:///${decodeURIComponent(uri.substring(badProtocol.length))}`
+        : uri;
+      const file = await FileSystem.getInfoAsync(fixedUri);
       onFile(file);
     }
   };
 
-  const launchImageLibrary = async() => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.5,
-    });
-
-    if (!result.cancelled) {
-      const file = await FileSystem.getInfoAsync(result.uri);
-      onFile(file);
-    }
-  };
+  const launchCamera = () => launch(true);
+  const launchImageLibrary = () => launch(false);
 
   return (
     <Modal title={CHANGE_YOUR_AVATAR} visible={visible} onClose={onClose}>
