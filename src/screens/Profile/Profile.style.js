@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
-const { COLOR, FONT, OFFSET } = THEME;
+const { COLOR, FONT, OFFSET, ROW_MIN_HEIGHT } = THEME;
 
 export default StyleSheet.create({
   screen: {
@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
 
   friends: {
-    flex: 1,
-    minHeight: '100%',
+    height: '100%',
+    minHeight: ROW_MIN_HEIGHT,
   },
 });
