@@ -87,7 +87,7 @@ class AmountTransaction extends Component {
             <Amount coin={to} value={conversion} style={[styles.label]} />
             <View style={styles.balance}>
               {
-                state === undefined
+                state === undefined || state === REQUESTED
                 ? <Amount caption={`${BALANCE} `} coin={coin} style={[styles.label, styles.small]} value={balance} />
                 : <Amount caption={`${FEE} `} coin={coin} style={[styles.label, styles.small]} value={fee + charge} />
               }

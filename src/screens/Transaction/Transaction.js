@@ -11,7 +11,7 @@ import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
 import { submit } from './modules';
 import styles from './Transaction.style';
 
-const { SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, PRO, REQUEST } } = C;
+const { SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST } } = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
@@ -37,10 +37,13 @@ class Transaction extends Component {
     this._onCancel = this._onCancel.bind(this);
     this._onConcept = this._onConcept.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
+    this._updateFees = this._updateFees.bind(this);
   }
 
-  componentWillMount() {
-    this.props.selectDevice(undefined);
+  async componentWillMount() {
+    const { _updateFees, props: { selectDevice, item: { amount, state }, wallet } } = this;
+    selectDevice(undefined);
+    if (wallet && state === REQUESTED) _updateFees(amount);
   }
 
   _onAddress(address) {
@@ -50,14 +53,12 @@ class Transaction extends Component {
   }
 
   _onAmount(amount) {
-    const { type, wallet: { id } } = this.props;
+    const { _updateFees, props: { type } } = this;
     this.setState({ amount, fees: {} });
     clearTimeout(timeout);
 
     if (type === SEND && amount > 0) {
-      timeout = setTimeout(async() => {
-        this.setState({ fees: await TransactionService.fees(id, Math.round(amount / SATOSHI)) });
-      }, 300);
+      timeout = setTimeout(() => _updateFees(Math.round(amount / SATOSHI)), 300);
     }
   }
 
@@ -68,6 +69,11 @@ class Transaction extends Component {
 
   _onConcept(concept) {
     this.setState({ concept });
+  }
+
+  async _updateFees(amount) {
+    const { wallet: { balance, id } } = this.props;
+    if (balance > 0) this.setState({ fees: await TransactionService.fees(id, amount) });
   }
 
   async _onSubmit() {
