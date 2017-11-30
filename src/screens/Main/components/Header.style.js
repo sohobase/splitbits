@@ -14,5 +14,4 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
     fontSize: FONT.SIZE.SMALL,
   },
-
 });
