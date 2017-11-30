@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
 const {
-  AVATAR_SIZE, COLOR, FONT, UNIT, OFFSET,
+  AVATAR_SIZE, COLOR, FONT, FOOTER_OFFSET, UNIT, OFFSET,
 } = THEME;
 
 export default StyleSheet.create({
@@ -52,7 +52,7 @@ export default StyleSheet.create({
 
   version: {
     position: 'absolute',
-    bottom: OFFSET,
+    bottom: OFFSET + FOOTER_OFFSET,
     left: OFFSET,
     right: OFFSET,
     textAlign: 'center',
