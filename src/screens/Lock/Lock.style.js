@@ -2,12 +2,13 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
 const {
-  COLOR, FONT, UNIT, OFFSET,
+  COLOR, FONT, FOOTER_OFFSET, UNIT, OFFSET,
 } = THEME;
 
 export default StyleSheet.create({
   screen: {
     backgroundColor: COLOR.PRIMARY,
+    paddingBottom: FOOTER_OFFSET,
   },
 
   header: {
