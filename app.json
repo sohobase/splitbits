@@ -25,7 +25,7 @@
     },
     "android": {
       "package": "com.sohobase.splitbits",
-      "permissions": ["CAMERA", "VIBRATE"],
+      "permissions": ["CAMERA", "VIBRATE", "USE_FINGERPRINT"],
       "versionCode": 1
     },
     "androidStatusBar": {
