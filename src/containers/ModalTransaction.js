@@ -1,9 +1,11 @@
-import { bool, func } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 import { Modal, Option } from '../components';
-import { STYLE, TEXT } from '../config';
+import { SHAPE, STYLE, TEXT } from '../config';
 
+const { DEVICE } = SHAPE;
 const {
   EN: {
     REQUEST_MONEY, REQUEST_MONEY_HINT, SEND_MONEY, SEND_MONEY_HINT,
@@ -11,17 +13,24 @@ const {
 } = TEXT;
 
 const ModalTransaction = ({
-  onClose, onRequest, onSend, visible,
+  device: { devices = [] }, onClose, onRequest, onSend, visible,
 }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
       <Option caption={SEND_MONEY} hint={SEND_MONEY_HINT} icon="arrowForward" onPress={onSend} />
-      <Option caption={REQUEST_MONEY} hint={REQUEST_MONEY_HINT} icon="arrowBack" onPress={onRequest} />
+      <Option
+        caption={REQUEST_MONEY}
+        disabled={devices.length === 0}
+        hint={REQUEST_MONEY_HINT}
+        icon="arrowBack"
+        onPress={onRequest}
+      />
     </View>
   </Modal>
 );
 
 ModalTransaction.propTypes = {
+  device: shape(DEVICE).isRequired,
   onClose: func,
   onRequest: func,
   onSend: func,
@@ -35,4 +44,8 @@ ModalTransaction.defaultProps = {
   visible: false,
 };
 
-export default ModalTransaction;
+const mapStateToProps = ({ device }) => ({
+  device,
+});
+
+export default connect(mapStateToProps)(ModalTransaction);

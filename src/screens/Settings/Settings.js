@@ -20,11 +20,12 @@ let timeout;
 class Settings extends Component {
   constructor(props) {
     super(props);
-    const { device: { image, name } } = props;
+    const { device: { currency, image, name } } = props;
     this.state = {
       image,
       camera: false,
-      currency: false,
+      currency,
+      currencies: false,
       name,
       timestamp: new Date().getTime(),
     };
@@ -36,7 +37,7 @@ class Settings extends Component {
   }
 
   async _onCurrency(currency) {
-    this.setState({ currency: false });
+    this.setState({ currencies: false, currency });
     this.props.updateDevice(await DeviceService.update({ currency }));
   }
 
@@ -54,7 +55,7 @@ class Settings extends Component {
   }
 
   _onModalCurrency() {
-    this.setState({ currency: !this.state.currency });
+    this.setState({ currencies: !this.state.currencies });
   }
 
   _onModalImage() {
@@ -66,7 +67,7 @@ class Settings extends Component {
       _onCurrency, _onImage, _onName, _onModalCurrency, _onModalImage,
       props: { device, navigation },
       state: {
-        image, currency, camera, name, timestamp,
+        camera, currencies, currency, image, name, timestamp,
       },
     } = this;
     const imageUrl = image && !image.startsWith('file:')
@@ -90,12 +91,12 @@ class Settings extends Component {
             </View>
             <View style={STYLE.LIST_ITEM} >
               <Text style={styles.label}>Currency</Text>
-              <Text style={styles.input} onPress={_onModalCurrency}>{device.currency}</Text>
+              <Text style={styles.input} onPress={_onModalCurrency}>{currency || device.currency}</Text>
             </View>
           </View>
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
-        <ModalCurrency visible={currency} onClose={_onModalCurrency} onValue={_onCurrency} />
+        <ModalCurrency visible={currencies} onClose={_onModalCurrency} onValue={_onCurrency} />
         <Text style={styles.version}>{`Version ${PKG.version}`}</Text>
       </View>
     );

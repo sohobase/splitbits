@@ -47,6 +47,7 @@ export default {
     TEXT_HIGHLIGHT: Color(WHITE).alpha(1),
     TEXT_HIGHLIGHT_SECONDARY: Color(WHITE).alpha(0.7),
     TEXT_HIGHLIGHT_DISABLED: Color(WHITE).alpha(0.45),
+    PLACEHOLDER_HIGHLIGHT: Color(WHITE).alpha(0.225),
 
     ACCEPT: '#32dba8',
     CANCEL: '#F44336',

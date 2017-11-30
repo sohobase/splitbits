@@ -75,6 +75,7 @@ class AmountTransaction extends Component {
             <Text style={[styles.label]}>{from}</Text>
             { editable
               ? <Input
+                autoFocus={editable}
                 highlight
                 keyboardType="numeric"
                 onChangeText={_onAmount}
