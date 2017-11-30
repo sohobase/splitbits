@@ -19,9 +19,11 @@ class QRreader extends Component {
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
   }
 
-  async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === 'granted' });
+  async componentWillReceiveProps(nextProps) {
+    if (nextProps.active) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      this.setState({ hasCameraPermission: status === 'granted' });
+    }
   }
 
   _onBarCodeRead = ({ data }) => {
@@ -32,18 +34,21 @@ class QRreader extends Component {
     const { active, onClose } = this.props;
     const { hasCameraPermission } = this.state;
 
-    if (!active || !hasCameraPermission) return <View />;
+    if (!active) return <View />;
 
     return (
       <View style={styles.QRreader}>
-        { isDevice &&
+        { isDevice && hasCameraPermission &&
           <BarCodeScanner
             barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
             onBarCodeRead={this._onBarCodeRead}
             style={StyleSheet.absoluteFill}
           /> }
         <View style={styles.border}>
-          <Text style={styles.hint}>Place the code inside the frame</Text>
+          { hasCameraPermission
+              ? <Text style={styles.hint}>Place the code inside the frame</Text>
+              : <Text style={styles.hint}>Give the app camera permissions in order to read QR codes</Text>
+          }
         </View>
         <View style={styles.content} >
           <View style={styles.border} />
