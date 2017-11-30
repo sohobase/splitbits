@@ -9,7 +9,7 @@ import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '..
 import { Header, Footer, TransactionButton, Transactions, WalletItem } from './components';
 import styles from './Main.style';
 
-const { DEV, TYPE: { REQUEST, SEND } } = C;
+const { DEV } = C;
 const { EN: { IMPORT, RECOVER } } = TEXT;
 const { NAVIGATION, WALLET } = SHAPE;
 
@@ -20,6 +20,7 @@ class Main extends Component {
       context: undefined,
       hexSeed: undefined,
       index: undefined,
+      processing: false,
       showTransaction: false,
       showWalletNew: false,
       showWallet: false,
@@ -38,11 +39,20 @@ class Main extends Component {
     if (DEV) Notifications.addListener(this._onNotification);
   }
 
+  componentWillReceiveProps(nextProps) {
+    // @TODO: React-Native-Swiper is buggy with dynamic elements.
+    const { wallets = [] } = this.props;
+    if (nextProps.wallets.length !== wallets.length) {
+      this.setState({ index: 0, processing: true });
+      setTimeout(() => this.setState({ processing: false }), 500);
+    }
+  }
+
   _onNotification({ origin, data }) {
     console.log('[PUSH]', origin, data, this.state);
   }
 
-  _onNewTransaction(type = SEND) {
+  _onNewTransaction(type) {
     const {
       props: { navigation: { navigate }, wallets },
       state: { index = 0, showTransaction },
@@ -78,7 +88,7 @@ class Main extends Component {
     this.setState({ showWallet: !this.state.showWallet });
   }
 
-  async _onSwipe(event, { index }) {
+  _onSwipe(index) {
     this.setState({ index });
   }
 
@@ -87,7 +97,7 @@ class Main extends Component {
       _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipe, _onWallet,
       props: { navigation: { navigate }, wallets = [] },
       state: {
-        context, hexSeed, index = 0, showMnemonic, showTransaction, showWalletNew, showWallet,
+        context, hexSeed, index = 0, processing, showMnemonic, showTransaction, showWalletNew, showWallet,
       },
     } = this;
     const wallet = wallets[index];
@@ -99,21 +109,23 @@ class Main extends Component {
         <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[coin])]}>
           { DEV && <Text style={styles.env}>testnet</Text> }
           <Header symbol="USD" />
-          <Swiper
-            bounces
-            loop={false}
-            onMomentumScrollEnd={_onSwipe}
-            removeClippedSubviews={false}
-            dotStyle={STYLE.SWIPER_DOT}
-            activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
-            paginationStyle={styles.pagination}
-            style={styles.wallets}
-          >
-            {[
-              ...wallets.map(item => <WalletItem key={item.address} data={item} onPress={_onWallet} />),
-              <WalletItem key="new" onOption={_onModalWallet} />,
-            ]}
-          </Swiper>
+          { !processing &&
+            <Swiper
+              activeDotStyle={STYLE.SWIPER_DOT_ACTIVE}
+              bounces
+              dotStyle={STYLE.SWIPER_DOT}
+              key={wallets.length}
+              loop={false}
+              onIndexChanged={_onSwipe}
+              paginationStyle={styles.pagination}
+              removeClippedSubviews={false}
+              style={styles.wallets}
+            >
+              {[
+                ...wallets.map(item => <WalletItem key={item.address} data={item} onPress={_onWallet} />),
+                <WalletItem key="new" onOption={_onModalWallet} />,
+              ]}
+            </Swiper> }
         </View>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />
