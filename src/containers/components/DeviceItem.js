@@ -38,7 +38,7 @@ class DeviceItem extends Component {
     const {
       _onRelation, _onRequest,
       props: {
-        data: { id, image, name }, device: { requests }, onPress, request, selected, style,
+        data: { id, image, name, requested }, device: { requests }, onPress, request, selected, style,
       },
     } = this;
     const isRequest = requests.find(item => item.id === id);
@@ -61,8 +61,9 @@ class DeviceItem extends Component {
             <View style={styles.content}>
               <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
               { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
+              { request && requested && <Text style={styles.hint}>Friend request sent</Text> }
             </View>
-            { request &&
+            { request && !requested &&
               <Button
                 accent
                 caption="Request"

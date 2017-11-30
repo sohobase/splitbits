@@ -26,7 +26,7 @@ const DevicesList = ({
       <DeviceItem
         data={item}
         onPress={onItem}
-        onRequest={() => navigation.goBack()}
+        onRequest={onRefresh}
         request={request}
         selected={item.id === selected}
       />
