@@ -15,13 +15,8 @@ const ButtonSubmit = ({
   const editable = !item;
   const { balance, coin } = wallet;
   const cancel = !editable && wallet.address === item.to.address;
-  const valid =
-    (!editable)
-    ||
-    (
-      amount > 0 && concept && recipient &&
-      (type === TYPE.REQUEST || (type === TYPE.SEND && balance >= amount))
-    );
+  const disabled = !concept || !recipient ||
+    (((type === TYPE.REQUEST && item) || type === TYPE.SEND) && balance < amount);
 
   return (
     <View style={styles.wrapper}>
@@ -29,7 +24,7 @@ const ButtonSubmit = ({
         {...inherit}
         accent
         caption={cancel ? CANCEL_REQUEST : undefined}
-        disabled={!cancel && !valid}
+        disabled={!cancel && disabled}
         motion={{ animation: 'bounceInUp', delay: 600 }}
         onPress={cancel ? onCancel : onPress}
       >
