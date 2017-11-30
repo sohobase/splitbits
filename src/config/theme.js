@@ -1,12 +1,24 @@
 import Color from 'color';
-import { isIphoneX } from '../modules';
+import { Dimensions, Platform } from 'react-native';
 
 const UNIT = 10;
+const OFFSET = UNIT * 1.6;
 const WHITE = '#ffffff';
 const BLACK = '#000000';
 const DISABLED = 0.38;
 const IPHONEX_OFFSET = 28;
 const HEADER_SIZE = UNIT * 6;
+const FOOTER_SIZE = UNIT * 5.6;
+const isIphoneX = () => {
+  const { height, width } = Dimensions.get('window');
+
+  return (
+    Platform.OS === 'ios' &&
+    !Platform.isPad &&
+    !Platform.isTVOS &&
+    (height === 812 || width === 812)
+  );
+};
 
 export default {
   ANIMATION: {
@@ -58,14 +70,17 @@ export default {
       BOLD: '700',
     },
   },
-  FOOTER_SIZE: UNIT * 5.8,
+
+  FOOTER_OFFSET: isIphoneX() ? IPHONEX_OFFSET : 0,
+  FOOTER_SIZE,
 
   HEADER_SIZE: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
 
   ICON_SIZE: UNIT * 3.2,
-  IPHONEX_OFFSET,
 
-  OFFSET: UNIT * 1.6,
+  MODAL_PADDING_BOTTOM: (2 * OFFSET) + (isIphoneX() ? IPHONEX_OFFSET : 0),
+
+  OFFSET,
 
   QR_SIZE: 12.8 * UNIT,
 

@@ -4,7 +4,7 @@ import { Generator } from 'more-entropy';
 
 const sha256 = data => shajs('sha256').update(data).digest('hex');
 
-const getEntropyFromSQLite = () =>
+const sqlite = () =>
   new Promise((resolve, reject) => {
     const db = SQLite.openDatabase('_rnd', 0, '', 1);
     db.transaction((tx) => {
@@ -16,7 +16,7 @@ const getEntropyFromSQLite = () =>
     });
   });
 
-const getEntropyFromMathRandom = () =>
+const mathRandom = () =>
   new Promise((resolve) => {
     const arr = [];
     for (let i = 0; i < 32; i += 1) {
@@ -25,7 +25,7 @@ const getEntropyFromMathRandom = () =>
     resolve(sha256(JSON.stringify(arr)));
   });
 
-const getEntropyFromDeviceProperties = () =>
+const deviceProperties = () =>
   new Promise((resolve) => {
     resolve(sha256(sha256(JSON.stringify([
       Constants.deviceId,
@@ -37,7 +37,7 @@ const getEntropyFromDeviceProperties = () =>
     ]))));
   });
 
-const getEntropyFromGiroscope = () =>
+const giroscope = () =>
   new Promise((resolve) => {
     let entropy = '';
     const subscription = Gyroscope.addListener((pos) => {
@@ -52,7 +52,7 @@ const getEntropyFromGiroscope = () =>
     }, 500);
   });
 
-const getEntropyFromMagnetometer = () =>
+const magnetometer = () =>
   new Promise((resolve) => {
     let entropy = '';
     const subscription = MagnetometerUncalibrated.addListener((pos) => {
@@ -67,21 +67,19 @@ const getEntropyFromMagnetometer = () =>
     }, 500);
   });
 
-
-const getEntropyFromCPUTimming = () =>
+const cpuTiming = () =>
   new Promise((resolve) => {
-    (new Generator({ auto_stop_bits: 128 })).generate(128, (vals) => {
-      resolve(sha256(vals));
+    (new Generator({ auto_stop_bits: 128 })).generate(128, (values) => {
+      resolve(sha256(values));
     });
   });
 
-
 export default async() =>
   sha256(JSON.stringify(await Promise.all([
-    getEntropyFromMathRandom(),
-    // getEntropyFromSQLite(),
-    // getEntropyFromDeviceProperties(),
-    // getEntropyFromGiroscope(),
-    // getEntropyFromMagnetometer(),
-    // getEntropyFromCPUTimming(),
-  ])));
+    mathRandom(),
+    sqlite(),
+    deviceProperties(),
+    giroscope(),
+    magnetometer(),
+    cpuTiming(),
+  ]))).substring(0, 32);

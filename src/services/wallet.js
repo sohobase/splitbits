@@ -1,18 +1,17 @@
 import BitcoinJS from 'bitcoinjs-lib';
 import { C } from '../config';
-import { csprng } from '../modules';
 import { SecureStore } from '../store';
 import { service } from './modules';
-import { PushService } from './';
+import EntropyService from './entropy';
+import PushService from './push';
 
 const { CRYPTO: { BTC }, NETWORKS } = C;
 
 export default {
-  async create(params) {
-    const { coin, name } = params;
+  async create({ coin = BTC, name, ...props }) {
     const network = BitcoinJS.networks[NETWORKS[coin]];
-    const hexSeed = params.hexSeed || (await csprng()).substring(0, 32);
-    const address = params.address || BitcoinJS.HDNode.fromSeedHex(hexSeed, network).getAddress();
+    const hexSeed = props.hexSeed || await EntropyService();
+    const address = props.address || BitcoinJS.HDNode.fromSeedHex(hexSeed, network).getAddress();
 
     if (hexSeed) await SecureStore.set(`${coin}_${address}`, hexSeed);
     const wallet = service('wallet', {

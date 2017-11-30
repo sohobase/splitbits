@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
-import { isIphoneX } from '../../../modules';
 
-const { FOOTER_SIZE, IPHONEX_OFFSET } = THEME;
+const { FOOTER_OFFSET, FOOTER_SIZE } = THEME;
 
 export default StyleSheet.create({
   button: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: (FOOTER_SIZE * 0.25) + (isIphoneX() ? IPHONEX_OFFSET : 0),
+    bottom: (FOOTER_SIZE * 0.3) + FOOTER_OFFSET,
     elevation: 10,
   },
 });

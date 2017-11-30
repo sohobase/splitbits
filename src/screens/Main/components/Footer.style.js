@@ -1,13 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
-import { isIphoneX } from '../../../modules';
 
-const { COLOR, FOOTER_SIZE, IPHONEX_OFFSET } = THEME;
+const { COLOR, FOOTER_OFFSET, FOOTER_SIZE } = THEME;
 
 export default StyleSheet.create({
   footer: {
     backgroundColor: COLOR.WHITE,
-    height: FOOTER_SIZE + (isIphoneX() ? IPHONEX_OFFSET : 0),
+    height: FOOTER_SIZE + FOOTER_OFFSET,
     elevation: 0,
     alignItems: 'flex-start',
   },
@@ -18,5 +17,6 @@ export default StyleSheet.create({
 
   option: {
     minWidth: '50%',
+    height: FOOTER_SIZE,
   },
 });

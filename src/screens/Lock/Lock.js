@@ -1,11 +1,11 @@
-import { Fingerprint } from 'expo';
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Platform, Text, Vibration, View } from 'react-native';
+import { Text, Vibration, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Icon, Logo, Touchable } from '../../components';
 import { SHAPE, STYLE, TEXT } from '../../config';
+import { FingerprintService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import styles from './Lock.style';
 
@@ -29,11 +29,10 @@ class Lock extends Component {
   }
 
   async _onFingerprint() {
-    if (await Fingerprint.isEnrolledAsync()) {
+    if (await FingerprintService.isEnrolled()) {
       this.setState({ hasFingerprint: true });
-      const { success } = await Fingerprint.authenticateAsync(USE_FINGERPRINT);
-      if (success) {
-        if (Platform.OS !== 'ios') Fingerprint.cancelAuthenticate();
+      if (await FingerprintService.authenticate(USE_FINGERPRINT)) {
+        FingerprintService.cancel();
         this.props.navigation.navigate('Main');
       }
     }

@@ -1,9 +1,8 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
-import { isIphoneX } from '../modules';
 
 const {
-  COLOR, FONT, IPHONEX_OFFSET, OFFSET, UNIT,
+  COLOR, FONT, MODAL_PADDING_BOTTOM, OFFSET, UNIT,
 } = THEME;
 
 export default StyleSheet.create({
@@ -23,7 +22,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: UNIT,
     borderTopRightRadius: UNIT,
     marginBottom: -OFFSET,
-    paddingBottom: (2 * OFFSET) + (isIphoneX() ? IPHONEX_OFFSET : 0),
+    paddingBottom: MODAL_PADDING_BOTTOM,
   },
 
   header: {

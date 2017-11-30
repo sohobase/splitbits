@@ -1,9 +1,10 @@
+import nodeEnv from './nodeEnv';  // eslint-disable-line
+import FriendsScreen from './Friends';
 import LoadingScreen from './Loading';
-import OnboardingScreen from './Onboarding';
 import LockScreen from './Lock';
 import MainScreen from './Main';
+import OnboardingScreen from './Onboarding';
 import ProfileScreen from './Profile';
-import FriendsScreen from './Friends';
 import SettingsScreen from './Settings';
 import TransactionScreen from './Transaction';
 

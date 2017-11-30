@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
-import { nodeEnvironment } from './src/modules'; // eslint-disable-line
 import {
   LoadingScreen,
   LockScreen,
@@ -13,13 +12,7 @@ import {
   TransactionScreen,
 } from './src/screens';
 
-const navigationOptions = {
-  header: null,
-//   headerBackTitle: ' ',
-//   headerStyle: STYLE.HEADER,
-//   headerTitleStyle: STYLE.HEADER_TITLE,
-//   headerTintColor: THEME.COLOR.TEXT_HIGHLIGHT,
-};
+const navigationOptions = { header: null };
 
 const screens = {
   Lock: { screen: LockScreen, navigationOptions },
@@ -31,7 +24,7 @@ const screens = {
   Settings: { screen: SettingsScreen, navigationOptions },
 };
 
-const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Main' });
+const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Lock' });
 const NavigationOnboarding = StackNavigator({ ...screens }, { initialRouteName: 'Onboarding' });
 
 class App extends Component {

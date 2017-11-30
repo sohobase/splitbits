@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, DISABLED, FONT, FOOTER_SIZE, UNIT, OFFSET } = THEME;
+const {
+  COLOR, DISABLED, FONT, ROW_MIN_HEIGHT, UNIT, OFFSET,
+} = THEME;
 
 export default StyleSheet.create({
   option: {
-    minHeight: FOOTER_SIZE,
     backgroundColor: COLOR.WHITE,
   },
 
@@ -59,7 +60,6 @@ export default StyleSheet.create({
   row: {
     paddingLeft: OFFSET,
     paddingRight: OFFSET,
-    paddingBottom: UNIT,
-    paddingTop: UNIT,
+    height: ROW_MIN_HEIGHT,
   },
 });
