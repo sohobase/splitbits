@@ -84,7 +84,7 @@ class Friends extends Component {
             value={query}
           />
         </Header>
-        <DevicesList navigation={navigation} request={!selectMode} onItem={_onItem} {...state} />
+        <DevicesList navigation={navigation} onRefresh={() => _onQuery(query)} request={!selectMode} onItem={_onItem} {...state} />
         { !selectMode && <QRreader active={scanner} onClose={_onCamera} onRead={_onQRreader} /> }
       </View>
     );
