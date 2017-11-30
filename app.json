@@ -16,7 +16,7 @@
     },
     "notification": {
       "icon": "./assets/app-notification.png",
-      "color": "#FFFFFF",
+      "color": "#2d126c",
     },
     "ios": {
       "bundleIdentifier": "com.sohobase.splitbits",
