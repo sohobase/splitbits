@@ -3,8 +3,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Modal, Option } from '../components';
-import { SHAPE, STYLE, TEXT } from '../config';
+import { C, SHAPE, STYLE, TEXT } from '../config';
 
+const { TYPE: { REQUEST, SEND } } = C;
 const { DEVICE } = SHAPE;
 const {
   EN: {
@@ -13,17 +14,17 @@ const {
 } = TEXT;
 
 const ModalTransaction = ({
-  device: { devices = [] }, onClose, onRequest, onSend, visible,
+  device: { devices = [] }, onClose, onPress, visible,
 }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
-      <Option caption={SEND_MONEY} hint={SEND_MONEY_HINT} icon="arrowForward" onPress={onSend} />
+      <Option caption={SEND_MONEY} hint={SEND_MONEY_HINT} icon="arrowForward" onPress={() => onPress(SEND)} />
       <Option
         caption={REQUEST_MONEY}
         disabled={devices.length === 0}
         hint={REQUEST_MONEY_HINT}
         icon="arrowBack"
-        onPress={onRequest}
+        onPress={() => onPress(REQUEST)}
       />
     </View>
   </Modal>
@@ -32,15 +33,13 @@ const ModalTransaction = ({
 ModalTransaction.propTypes = {
   device: shape(DEVICE).isRequired,
   onClose: func,
-  onRequest: func,
-  onSend: func,
+  onPress: func,
   visible: bool,
 };
 
 ModalTransaction.defaultProps = {
   onClose: undefined,
-  onRequest: undefined,
-  onSend: undefined,
+  onPress() {},
   visible: false,
 };
 

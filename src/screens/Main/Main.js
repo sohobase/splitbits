@@ -42,7 +42,7 @@ class Main extends Component {
     console.log('[PUSH]', origin, data, this.state);
   }
 
-  _onNewTransaction(type) {
+  _onNewTransaction(type = SEND) {
     const {
       props: { navigation: { navigate }, wallets },
       state: { index = 0, showTransaction },
@@ -121,12 +121,7 @@ class Main extends Component {
           onPress={_onModal}
           visible={focus && wallet !== undefined && !readOnly}
         />
-        <ModalTransaction
-          visible={showTransaction}
-          onClose={_onModal}
-          onRequest={() => _onNewTransaction(REQUEST)}
-          onSend={() => _onNewTransaction(SEND)}
-        />
+        <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} />
         <ModalWalletNew
           visible={showWalletNew}
           camera={context === IMPORT}
