@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { C } from './src/config';
 import {
   LoadingScreen,
   LockScreen,
@@ -24,7 +25,7 @@ const screens = {
   Settings: { screen: SettingsScreen, navigationOptions },
 };
 
-const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Lock' });
+const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: C.DEV ? 'Main' : 'Lock' });
 const NavigationOnboarding = StackNavigator({ ...screens }, { initialRouteName: 'Onboarding' });
 
 class App extends Component {
