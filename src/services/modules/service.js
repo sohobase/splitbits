@@ -1,21 +1,25 @@
 import { C } from '../../config';
 
 const { Constants: { deviceId = 'unknown' } } = Expo || {}; // eslint-disable-line
-const headers = {
+const DEFAULT_HEADERS = {
   Accept: 'application/json',
-  'Content-Type': 'application/json',
   deviceId,
   token: deviceId,
   testnet: C.DEV,
 };
 const onError = error => console.log('module/service', error);
 
-export default async(endpoint, props = {}, multipart = false) => {
+export default async(endpoint, props = {}, multipart) => {
   const { method = 'GET' } = props;
 
-  if (multipart) headers['Content-Type'] = 'multipart/form-data';
-
-  const response = await fetch(`${C.SERVICE}${endpoint}`, { headers, ...props, method }).catch(onError); // eslint-disable-line
+  const response = await fetch(`${C.SERVICE}${endpoint}`, { // eslint-disable-line
+    headers: {
+      ...DEFAULT_HEADERS,
+      'Content-Type': multipart ? 'multipart/form-data' : 'application/json',
+    },
+    ...props,
+    method,
+  }).catch(onError); // eslint-disable-line
   if (!response) return undefined;
 
   const json = await response.json();
