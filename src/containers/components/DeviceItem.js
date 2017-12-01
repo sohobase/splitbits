@@ -54,7 +54,7 @@ class DeviceItem extends Component {
     }
 
     return (
-      <Swipeout right={options} backgroundColor={WHITE} >
+      <Swipeout right={options} autoClose backgroundColor={WHITE} >
         <TouchableWithoutFeedback onPress={onPress ? () => onPress(id) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
             <Avatar selected={selected} value={image} />
