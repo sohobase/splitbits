@@ -2,18 +2,10 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../config';
 
 const {
-  COLOR, FONT, HEADER_SIZE, OFFSET, WALLET_HEIGHT, UNIT,
+  COLOR, FONT, HEADER_SIZE, OFFSET, UNIT,
 } = THEME;
 
 export default StyleSheet.create({
-  wallets: {
-    height: WALLET_HEIGHT + (OFFSET * 4),
-  },
-
-  pagination: {
-    bottom: OFFSET,
-  },
-
   env: {
     position: 'absolute',
     alignSelf: 'flex-end',

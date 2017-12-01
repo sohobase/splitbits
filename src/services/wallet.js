@@ -52,6 +52,10 @@ export default {
     return wallet; // @TODO: Dispatch error if doesnt exist.
   },
 
+  state(walletId) {
+    return service(`wallet?id=${walletId}`);
+  },
+
   async archive(props) {
     return service('wallet', {
       method: 'DELETE',
