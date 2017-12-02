@@ -50,12 +50,21 @@ export default StyleSheet.create({
     margin: OFFSET,
   },
 
-  version: {
+  footer: {
     position: 'absolute',
     bottom: OFFSET + FOOTER_OFFSET,
-    left: OFFSET,
-    right: OFFSET,
+    maxWidth: '90%',
+    alignSelf: 'center',
+  },
+
+  text: {
+    color: COLOR.TEXT_SECONDARY,
+    fontSize: FONT.SIZE.SMALL,
     textAlign: 'center',
+    marginTop: UNIT / 2,
+  },
+
+  version: {
     color: COLOR.TEXT_DISABLED,
   },
 });

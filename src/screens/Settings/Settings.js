@@ -14,7 +14,7 @@ import styles from './Settings.style';
 const { SERVICE } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
-const { EN: { SETTINGS } } = TEXT;
+const { EN: { LOCAL_CURRENCY, NAME, SETTINGS } } = TEXT;
 let timeout;
 
 class Settings extends Component {
@@ -86,18 +86,24 @@ class Settings extends Component {
               <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
             </View>
             <View style={STYLE.LIST_ITEM}>
-              <Text style={styles.label}>Name</Text>
+              <Text style={styles.label}>{NAME}</Text>
               <Input onChangeText={_onName} placeholder="..." style={styles.input} value={name} />
             </View>
             <View style={STYLE.LIST_ITEM} >
-              <Text style={styles.label}>Currency</Text>
+              <Text style={styles.label}>{LOCAL_CURRENCY}</Text>
               <Text style={styles.input} onPress={_onModalCurrency}>{currency || device.currency}</Text>
             </View>
           </View>
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
         <ModalCurrency visible={currencies} onClose={_onModalCurrency} onValue={_onCurrency} />
-        <Text style={styles.version}>{`Version ${PKG.version}`}</Text>
+        <Motion animation="bounceInUp" delay={500} style={[STYLE.CENTERED, styles.footer]}>
+          <View>
+            <Text style={styles.text}>❤️</Text>
+            <Text style={styles.text}>Made by a small band of superheroes in London. Thank you for your support!</Text>
+            <Text style={[styles.text, styles.version]}>{`Version ${PKG.version}`}</Text>
+          </View>
+        </Motion>
       </View>
     );
   }
