@@ -62,6 +62,8 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.SMALL,
     textAlign: 'center',
     marginTop: UNIT / 2,
+    marginLeft: UNIT,
+    marginRight: UNIT,
   },
 
   version: {

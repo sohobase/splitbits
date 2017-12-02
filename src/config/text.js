@@ -9,13 +9,18 @@ export default {
     CHOOSE_A_FRIEND: 'Choose a friend',
     CHOOSE_EXISTING_PHOTO: 'Choose existing photo',
     CONCEPT: 'Concept',
+    COPYRIGHT: 'Made by a small band of superheroes in London. Thank you for your support!',
     CREATE: 'create',
 
     FEE: 'Fee',
     FRIENDS: 'Friends',
 
+    HINT_FIND_BY_NAME: 'Other people can only find you if you have defined your name.',
     IMPORT: 'import',
 
+    LOCAL_CURRENCY: 'Local currency',
+
+    NAME: 'Name',
     NEW_WALLET: 'New Wallet',
     NEXT: 'Next',
 

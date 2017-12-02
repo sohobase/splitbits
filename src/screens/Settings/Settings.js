@@ -14,7 +14,11 @@ import styles from './Settings.style';
 const { SERVICE } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
-const { EN: { LOCAL_CURRENCY, NAME, SETTINGS } } = TEXT;
+const {
+  EN: {
+    COPYRIGHT, HINT_FIND_BY_NAME, LOCAL_CURRENCY, NAME, SETTINGS,
+  },
+} = TEXT;
 let timeout;
 
 class Settings extends Component {
@@ -93,6 +97,7 @@ class Settings extends Component {
               <Text style={styles.label}>{LOCAL_CURRENCY}</Text>
               <Text style={styles.input} onPress={_onModalCurrency}>{currency || device.currency}</Text>
             </View>
+            <Text style={styles.text}>{HINT_FIND_BY_NAME}</Text>
           </View>
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
@@ -100,7 +105,7 @@ class Settings extends Component {
         <Motion animation="bounceInUp" delay={500} style={[STYLE.CENTERED, styles.footer]}>
           <View>
             <Text style={styles.text}>❤️</Text>
-            <Text style={styles.text}>Made by a small band of superheroes in London. Thank you for your support!</Text>
+            <Text style={styles.text}>{COPYRIGHT}</Text>
             <Text style={[styles.text, styles.version]}>{`Version ${PKG.version}`}</Text>
           </View>
         </Motion>
