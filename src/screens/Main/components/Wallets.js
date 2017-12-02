@@ -17,9 +17,6 @@ class Wallets extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onSwipe(this.props.wallets[0]);
-  }
   componentWillReceiveProps(nextProps) {
     const { wallets = [] } = this.props;
 
