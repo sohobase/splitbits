@@ -42,7 +42,7 @@ const TransactionInfo = (props) => {
 
         { hash && renderField('State', state, styles.half) }
         { hash && renderField('Confirmations', confirmations, styles.half) }
-        { renderField('Concept', concept) }
+        { concept && renderField('Concept', concept) }
         { hash && renderField('Hash', hash) }
         { renderField('Date', createdAt) }
       </View>
