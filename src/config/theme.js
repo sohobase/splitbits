@@ -32,10 +32,10 @@ export default {
 
   COLOR: {
     PRIMARY: '#2d126c',
-    ACCENT: '#5edeb3',
+    ACCENT: '#32dba8',
     BLUE: '#303498',
     PINK: '#ff4566',
-    ACCEPT: '#32dba8',
+    ACCEPT: '#5edeb3',
     RED: '#F44336',
     WHITE,
     BLACK,
