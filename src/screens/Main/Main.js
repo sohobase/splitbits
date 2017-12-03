@@ -95,10 +95,7 @@ class Main extends Component {
         </View>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />
-        <TransactionButton
-          onPress={_onModal}
-          visible={focus && wallet !== undefined}
-        />
+        <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined} />
         <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} wallet={wallet} />
         <ModalWalletNew
           visible={showWalletNew}
