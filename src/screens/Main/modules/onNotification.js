@@ -4,20 +4,21 @@ import { updateDeviceAction, updateTransactionsAction, updateWalletAction } from
 export default async({
   origin, title, body, data = {},
 }) => {
-  const { device, wallet } = data;
+  const { device, wallet: walletId } = data;
   let response;
-  console.log('{PUSH}', origin, title, body, origin, { device, wallet });
+  console.log('{PUSH}', origin, title, body, origin, { device, walletId });
 
   if (device) {
-    response = await DeviceService.state(wallet);
+    response = await DeviceService.state();
     if (response) updateDeviceAction(response);
   }
 
-  if (wallet) {
-    response = await WalletService.state(wallet);
-    if (response) updateWalletAction(response);
-
-    response = await TransactionService.list(wallet);
-    if (response) updateTransactionsAction(response);
+  if (walletId) {
+    const [wallet, transactions] = Promise.all([
+      WalletService.state(walletId),
+      TransactionService.list(walletId),
+    ]);
+    if (wallet) updateWalletAction(wallet);
+    if (transactions) updateTransactionsAction(transactions);
   }
 };

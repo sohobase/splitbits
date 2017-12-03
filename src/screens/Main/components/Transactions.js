@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { C, SHAPE, STYLE } from '../../../config';
-import { TransactionService } from '../../../services';
-import { updateTransactionsAction } from '../../../store/actions';
+import { TransactionService, WalletService } from '../../../services';
+import { updateTransactionsAction, updateWalletAction } from '../../../store/actions';
 import TransactionItem from './TransactionItem';
 import styles from './Transactions.style';
 
@@ -25,9 +25,14 @@ class Transactions extends Component {
   }
 
   async _onRefresh(wallet = this.props.wallet) {
-    const { updateTransactions } = this.props;
+    const { updateTransactions, updateWallet } = this.props;
     this.setState({ refreshing: true });
-    updateTransactions(await TransactionService.list(wallet.id));
+
+    await Promise.all([
+      WalletService.state(wallet.id).then(updateWallet),
+      TransactionService.list(wallet.id).then(updateTransactions),
+    ]);
+
     this.setState({ refreshing: false });
   }
 
@@ -84,6 +89,7 @@ const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
 
 const mapDispatchToProps = dispatch => ({
   updateTransactions: transactions => dispatch(updateTransactionsAction(transactions)),
+  updateWallet: wallet => dispatch(updateWalletAction(wallet)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
