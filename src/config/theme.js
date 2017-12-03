@@ -31,8 +31,14 @@ export default {
   BUTTON_CIRCLE_SIZE: UNIT * 6.4,
 
   COLOR: {
-    PRIMARY: '#2d126c', // '#303498'
-    ACCENT: '#5edeb3', // '#ff4566'
+    PRIMARY: '#2d126c',
+    ACCENT: '#5edeb3',
+    BLUE: '#303498',
+    PINK: '#ff4566',
+    ACCEPT: '#32dba8',
+    RED: '#F44336',
+    WHITE,
+    BLACK,
 
     BACKGROUND: Color(WHITE).darken(0.03),
     BACKGROUND_HIGHLIGHT: Color(WHITE).alpha(0.15),
@@ -49,10 +55,7 @@ export default {
     TEXT_HIGHLIGHT_DISABLED: Color(WHITE).alpha(0.45),
     PLACEHOLDER_HIGHLIGHT: Color(WHITE).alpha(0.225),
 
-    ACCEPT: '#32dba8',
-    CANCEL: '#F44336',
-    WHITE,
-    BLACK,
+
   },
 
   DISABLED,

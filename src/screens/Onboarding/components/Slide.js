@@ -2,23 +2,25 @@ import { node, string } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
-import { STYLE, THEME } from '../../../config';
+import { ASSETS, STYLE, THEME } from '../../../config';
 import styles from './Slide.style';
 
 const Slide = ({
-  backgroundColor, caption, children, image, text,
+  backgroundColor, caption, children, image, hint,
 }) => (
   <View style={[STYLE.SCREEN, STYLE.CENTERED, styles.slide, { backgroundColor }]}>
     <Motion animation="bounceInDown">
-      <Image style={styles.image} source={{ uri: image }} />
+      <Image style={styles.image} source={ASSETS[image]} />
     </Motion>
     <Motion animation="bounceInUp" delay={200}>
       <Text style={styles.caption}>{caption}</Text>
     </Motion>
     <Motion animation="bounceInUp" delay={300}>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.hint}>{hint}</Text>
     </Motion>
-    {children}
+    <Motion animation="bounceInUp" delay={400}>
+      {children}
+    </Motion>
   </View>
 );
 
@@ -27,15 +29,15 @@ Slide.propTypes = {
   caption: string,
   children: node,
   image: string,
-  text: string,
+  hint: string,
 };
 
 Slide.defaultProps = {
   backgroundColor: THEME.COLOR.PRIMARY,
   children: undefined,
-  caption: 'hello world',
+  caption: undefined,
   image: undefined,
-  text: 'consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  hint: undefined,
 };
 
 export default Slide;

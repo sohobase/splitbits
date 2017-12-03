@@ -24,6 +24,14 @@ const trendingDown = require('../../assets/icon-trending-down.png');
 const trendingUp = require('../../assets/icon-trending-up.png');
 const verified = require('../../assets/icon-verified.png');
 
+const exchange = require('../../assets/image-exchange.png');
+const key = require('../../assets/image-key.png');
+const network = require('../../assets/image-network.png');
+const privacy = require('../../assets/image-privacy.png');
+const rocket = require('../../assets/image-rocket.png');
+const trend = require('../../assets/image-trend.png');
+const wallet = require('../../assets/image-wallet.png');
+
 export default {
   add,
   addDevice,
@@ -52,4 +60,12 @@ export default {
   trendingDown,
   trendingUp,
   verified,
+
+  exchange,
+  key,
+  network,
+  privacy,
+  rocket,
+  trend,
+  wallet,
 };

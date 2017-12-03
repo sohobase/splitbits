@@ -27,4 +27,8 @@ export default StyleSheet.create({
     minWidth: '50%',
     alignItems: 'flex-end',
   },
+
+  button: {
+    marginTop: OFFSET,
+  },
 });

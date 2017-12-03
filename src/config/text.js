@@ -51,5 +51,24 @@ export default {
     USE_FINGERPRINT: 'Use fingerprint to unlock',
 
     WAIT_A_MOMENT: 'Wait a moment',
+
+    PORTFOLIO: 'Stay on top of your portfolio. Anytime. Anywhere.',
+
+    CAPTION: {
+      EXCHANGE: 'Use your local currency',
+      NETWORK: 'Your private network',
+      PRIVACY: 'Your privacy matters',
+      PRIVATE_KEYS: 'Owner of your keys',
+      WALLET: "Congrats, you're ready!",
+      WELCOME: 'Welcome to splitbits',
+    },
+    HINT: {
+      EXCHANGE: 'This world is still paid with local currencies. Do not worry we make your life easier when it comes to paying with your crypto coins.',
+      NETWORK: 'Forget public addresses or QR codes. You can create your own private network of friends to speed up your payments.',
+      PRIVACY: 'You do not need to give us your personal information. We do not want to know your email or social networks. We just want you to enjoy this wallet.',
+      PRIVATE_KEYS: 'Your private keys always go with you, we never save them in our cloud. We offer you tools so that you can recover them easily.',
+      WALLET: 'The last step is to create your first plitbits wallet. Later you can import or recover other wallets that you have.',
+      WELCOME: 'Swipe to learn more.',
+    },
   },
 };

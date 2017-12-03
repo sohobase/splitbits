@@ -5,7 +5,7 @@ const {
   COLOR, FONT, OFFSET, UNIT,
 } = THEME;
 
-const IMAGE_SIZE = UNIT * 19.2;
+const IMAGE_SIZE = UNIT * 16;
 
 export default StyleSheet.create({
   slide: {
@@ -13,11 +13,11 @@ export default StyleSheet.create({
   },
 
   image: {
-    marginBottom: OFFSET * 2,
+    marginBottom: OFFSET,
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
-    backgroundColor: COLOR.TEXT_HIGHLIGHT_DISABLED,
-    borderRadius: IMAGE_SIZE / 2,
+    tintColor: COLOR.WHITE,
+    resizeMode: 'contain',
   },
 
   caption: {
@@ -28,7 +28,7 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT,
   },
 
-  text: {
+  hint: {
     fontSize: FONT.SIZE.DEFAULT,
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
     textAlign: 'center',

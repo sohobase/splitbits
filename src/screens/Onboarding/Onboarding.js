@@ -10,7 +10,11 @@ import styles from './Onboarding.style';
 
 const { NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
-const { EN: { NEXT, SKIP, START } } = TEXT;
+const {
+  EN: {
+    NEXT, SKIP, CAPTION, HINT,
+  },
+} = TEXT;
 const SLIDES = 5;
 
 class Onboarding extends Component {
@@ -27,10 +31,6 @@ class Onboarding extends Component {
     this._onWallet = this._onWallet.bind(this);
   }
 
-  componentWillMount() {
-    // this.props.navigation.navigate('Main');
-  }
-
   _onNext() {
     const { swipper } = this;
     swipper.scrollBy(1);
@@ -38,7 +38,7 @@ class Onboarding extends Component {
 
   _onSkip() {
     const { swipper, state: { index } } = this;
-    swipper.scrollBy(SLIDES - (index + 1));
+    swipper.scrollBy(SLIDES - index);
   }
 
   _onSuccess() {
@@ -60,6 +60,7 @@ class Onboarding extends Component {
     const {
       _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, state: { index, modal },
     } = this;
+    const optionDisabled = (index + 1) > SLIDES;
 
     return (
       <View style={STYLE.SCREEN}>
@@ -71,11 +72,12 @@ class Onboarding extends Component {
           loop={false}
           onMomentumScrollEnd={_onSwipe}
         >
-          <Slide caption="Welcome" />
-          <Slide caption="Feature Number 1" />
-          <Slide caption="Feature Number 2" backgroundColor={COLOR.ACCENT} />
-          <Slide caption="Feature Number 3" />
-          <Slide caption="Your wallet">
+          <Slide caption={CAPTION.WELCOME} image="rocket" hint={HINT.WELCOME} />
+          <Slide backgroundColor={COLOR.ACCENT} caption={CAPTION.PRIVATE_KEYS} image="key" hint={HINT.PRIVATE_KEYS} />
+          <Slide backgroundColor={COLOR.PINK} caption={CAPTION.NETWORK} image="network" hint={HINT.NETWORK} />
+          <Slide backgroundColor={COLOR.BLUE} caption={CAPTION.PRIVACY} image="privacy" hint={HINT.PRIVACY} />
+          <Slide backgroundColor={COLOR.RED} caption={CAPTION.EXCHANGE} image="exchange" hint={HINT.EXCHANGE} />
+          <Slide caption={CAPTION.WALLET} image="wallet" hint={HINT.WALLET}>
             <Button accent caption="Create your first wallet" onPress={_onWallet} style={styles.button} />
           </Slide>
         </Swiper>
@@ -83,6 +85,7 @@ class Onboarding extends Component {
           <Button
             caption={SKIP.toUpperCase()}
             captionStyle={styles.option}
+            disabled={optionDisabled}
             onPress={_onSkip}
             raised
             style={styles.left}
@@ -90,7 +93,7 @@ class Onboarding extends Component {
           <Button
             caption={NEXT.toUpperCase()}
             captionStyle={styles.option}
-            disabled={(index + 1) === SLIDES}
+            disabled={optionDisabled}
             onPress={_onNext}
             raised
             style={styles.right}
