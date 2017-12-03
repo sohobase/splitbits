@@ -90,7 +90,13 @@ class AmountTransaction extends Component {
               {
                 state === undefined || state === REQUESTED
                 ? <Amount caption={`${BALANCE} `} coin={coin} style={[styles.label, styles.small]} value={balance} />
-                : <Amount caption={`${FEE} `} coin={coin} style={[styles.label, styles.small]} value={fee + charge} />
+                :
+                <Amount
+                  caption={`${FEE} `}
+                  coin={currency}
+                  style={[styles.label, styles.small]}
+                  value={(fee + charge) * currencies[coin]}
+                />
               }
             </View>
           </View>
