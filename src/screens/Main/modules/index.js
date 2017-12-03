@@ -1,5 +1,5 @@
 import onNotification from './onNotification';
 
 export {
-  onNotification,
+  onNotification, //eslint-disable-line
 };
