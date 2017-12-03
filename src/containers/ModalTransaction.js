@@ -10,19 +10,25 @@ const { DEVICE, WALLET } = SHAPE;
 const {
   EN: {
     REQUEST_MONEY, REQUEST_MONEY_HINT, REQUEST_MONEY_HINT_NO_FRIENDS,
-    SEND_MONEY, SEND_MONEY_HINT, SEND_MONEY_HINT_READ_ONLY,
+    SEND_MONEY, SEND_MONEY_HINT, SEND_MONEY_HINT_NO_BALANCE, SEND_MONEY_HINT_READ_ONLY,
   },
 } = TEXT;
 
+const sendMoneyHint = (emptyBalance, readOnly) => {
+  if (readOnly) return SEND_MONEY_HINT_READ_ONLY;
+  if (emptyBalance) return SEND_MONEY_HINT_NO_BALANCE;
+  return SEND_MONEY_HINT;
+};
+
 const ModalTransaction = ({
-  device: { devices = [] }, onClose, onPress, visible, wallet: { readOnly },
+  device: { devices = [] }, onClose, onPress, visible, wallet: { balance, readOnly },
 }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
       <Option
         caption={SEND_MONEY}
-        disabled={readOnly}
-        hint={readOnly ? SEND_MONEY_HINT_READ_ONLY : SEND_MONEY_HINT}
+        disabled={readOnly || balance === 0}
+        hint={sendMoneyHint(balance === 0, readOnly)}
         icon="arrowForward"
         onPress={() => onPress(SEND)}
       />
