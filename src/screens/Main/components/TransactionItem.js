@@ -38,7 +38,7 @@ const TransactionItem = (props) => {
   const emitter = address !== to.address;
   const concept = transactionData.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
 
-  let icon = 'settings';
+  let icon = 'operations';
   if ([CONFIRMED, REQUESTED].includes(state)) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
 
   return (

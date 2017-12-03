@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { COLOR, FONT, UNIT, OFFSET } = THEME;
-const ICON_DISABLED = '#666666';
+const {
+  COLOR, FONT, UNIT, OFFSET,
+} = THEME;
 
 export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BACKGROUND,
-    // alignItems: 'flex-start',
   },
 
   icon: {

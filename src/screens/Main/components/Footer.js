@@ -15,7 +15,7 @@ const Footer = ({ device: { requests = [] }, elevation, navigate }) => (
       activity={requests.length > 0}
       caption={FRIENDS}
       centered
-      icon="profile"
+      icon="face"
       onPress={() => navigate('Profile')}
       style={styles.option}
     />

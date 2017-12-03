@@ -12,17 +12,14 @@ const fingerprint = require('../../assets/icon-fingerprint.png');
 const gallery = require('../../assets/icon-gallery.png');
 const menu = require('../../assets/icon-menu.png');
 const operations = require('../../assets/icon-operations.png');
-const profile = require('../../assets/icon-profile.png');
 const remove = require('../../assets/icon-remove.png');
 const search = require('../../assets/icon-search.png');
-const security = require('../../assets/icon-security.png');
 const settings = require('../../assets/icon-settings.png');
 const split = require('../../assets/icon-split.png');
 const star = require('../../assets/icon-star.png');
 const swap = require('../../assets/icon-swap.png');
 const trendingDown = require('../../assets/icon-trending-down.png');
 const trendingUp = require('../../assets/icon-trending-up.png');
-const verified = require('../../assets/icon-verified.png');
 
 const exchange = require('../../assets/image-exchange.png');
 const key = require('../../assets/image-key.png');
@@ -48,18 +45,15 @@ export default {
   import: add,
   menu,
   operations,
-  profile,
   remove,
   recover: backup,
   search,
-  security,
   settings,
   split,
   star,
   swap,
   trendingDown,
   trendingUp,
-  verified,
 
   exchange,
   key,
