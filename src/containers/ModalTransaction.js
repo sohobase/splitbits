@@ -6,23 +6,30 @@ import { Modal, Option } from '../components';
 import { C, SHAPE, STYLE, TEXT } from '../config';
 
 const { TYPE: { REQUEST, SEND } } = C;
-const { DEVICE } = SHAPE;
+const { DEVICE, WALLET } = SHAPE;
 const {
   EN: {
-    REQUEST_MONEY, REQUEST_MONEY_HINT, SEND_MONEY, SEND_MONEY_HINT,
+    REQUEST_MONEY, REQUEST_MONEY_HINT, REQUEST_MONEY_HINT_NO_FRIENDS,
+    SEND_MONEY, SEND_MONEY_HINT, SEND_MONEY_HINT_READ_ONLY,
   },
 } = TEXT;
 
 const ModalTransaction = ({
-  device: { devices = [] }, onClose, onPress, visible,
+  device: { devices = [] }, onClose, onPress, visible, wallet: { readOnly },
 }) => (
   <Modal title="Type of transaction" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
-      <Option caption={SEND_MONEY} hint={SEND_MONEY_HINT} icon="arrowForward" onPress={() => onPress(SEND)} />
+      <Option
+        caption={SEND_MONEY}
+        disabled={readOnly}
+        hint={readOnly ? SEND_MONEY_HINT_READ_ONLY : SEND_MONEY_HINT}
+        icon="arrowForward"
+        onPress={() => onPress(SEND)}
+      />
       <Option
         caption={REQUEST_MONEY}
         disabled={devices.length === 0}
-        hint={REQUEST_MONEY_HINT}
+        hint={devices.length === 0 ? REQUEST_MONEY_HINT_NO_FRIENDS : REQUEST_MONEY_HINT}
         icon="arrowBack"
         onPress={() => onPress(REQUEST)}
       />
@@ -35,12 +42,14 @@ ModalTransaction.propTypes = {
   onClose: func,
   onPress: func,
   visible: bool,
+  wallet: shape(WALLET),
 };
 
 ModalTransaction.defaultProps = {
   onClose: undefined,
   onPress() {},
   visible: false,
+  wallet: {},
 };
 
 const mapStateToProps = ({ device }) => ({
