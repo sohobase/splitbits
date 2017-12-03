@@ -85,22 +85,18 @@ class Main extends Component {
     } = this;
     const wallet = wallets[walletIndex];
     const focus = !showTransaction && !showWallet && !showWalletNew;
-    const { readOnly, coin } = wallet || { readOnly: false };
 
     return (
       <View style={STYLE.SCREEN}>
-        <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[coin])]}>
+        <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]}>
           { DEV && <Text style={styles.env}>testnet</Text> }
           <Header />
           <Wallets onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
         </View>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />
-        <TransactionButton
-          onPress={_onModal}
-          visible={focus && wallet !== undefined && !readOnly}
-        />
-        <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} />
+        <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined} />
+        <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} wallet={wallet} />
         <ModalWalletNew
           visible={showWalletNew}
           camera={context === IMPORT}
