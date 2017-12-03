@@ -34,10 +34,13 @@ export default {
     REQUEST: 'Request',
     REQUEST_MONEY: 'Request Money',
     REQUEST_MONEY_HINT: 'You can ask money in your private network.',
+    REQUEST_MONEY_HINT_NO_FRIENDS: 'Add friends in order to request money.',
 
     SEND: 'Send',
     SEND_MONEY: 'Send Money',
     SEND_MONEY_HINT: 'Send money to any wallet in the world.',
+    SEND_MONEY_HINT_NO_BALANCE: 'Top-up your wallet to send money.',
+    SEND_MONEY_HINT_READ_ONLY: "You can't send money from a Read only wallet.",
     SETTINGS: 'Settings',
     SET_PIN_CODE: 'Set your PIN code',
     SKIP: 'Skip',
