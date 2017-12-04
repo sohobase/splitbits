@@ -2,6 +2,7 @@ const add = require('../../assets/icon-add.png');
 const addDevice = require('../../assets/icon-add-device.png');
 const arrowBack = require('../../assets/icon-arrow-back.png');
 const arrowForward = require('../../assets/icon-arrow-forward.png');
+const backspace = require('../../assets/icon-backspace.png');
 const backup = require('../../assets/icon-backup.png');
 const camera = require('../../assets/icon-camera.png');
 const check = require('../../assets/icon-check.png');
@@ -10,6 +11,7 @@ const create = require('../../assets/icon-create.png');
 const face = require('../../assets/icon-face.png');
 const fingerprint = require('../../assets/icon-fingerprint.png');
 const gallery = require('../../assets/icon-gallery.png');
+const help = require('../../assets/icon-help.png');
 const menu = require('../../assets/icon-menu.png');
 const operations = require('../../assets/icon-operations.png');
 const remove = require('../../assets/icon-remove.png');
@@ -34,6 +36,7 @@ export default {
   addDevice,
   arrowBack,
   arrowForward,
+  backspace,
   backup,
   camera,
   check,
@@ -42,6 +45,7 @@ export default {
   face,
   fingerprint,
   gallery,
+  help,
   import: add,
   menu,
   operations,

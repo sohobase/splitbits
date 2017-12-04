@@ -42,11 +42,16 @@ export default StyleSheet.create({
 
   keyPad: {
     width: UNIT * 10.6,
-    paddingTop: OFFSET,
-    paddingBottom: OFFSET,
+    height: UNIT * 5.6,
+  },
+
+  number: {
     color: COLOR.WHITE,
     fontSize: FONT.SIZE.LARGE,
-    textAlign: 'center',
+  },
+
+  icon: {
+    tintColor: COLOR.TEXT_HIGHLIGHT,
   },
 
   fingerPrint: {
@@ -58,8 +63,7 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
   },
 
-  icon: {
-    tintColor: COLOR.TEXT_HIGHLIGHT,
+  iconFingerprint: {
     marginRight: UNIT,
   },
 });

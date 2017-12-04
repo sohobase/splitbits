@@ -12,7 +12,9 @@ import styles from './Lock.style';
 const { DEVICE, NAVIGATION } = SHAPE;
 const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
 
-const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+const BACKSPACE = 'backspace';
+const HELP = 'help';
+const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, HELP, 0, BACKSPACE];
 
 class Lock extends Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class Lock extends Component {
 
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
+    this._onBackspace = this._onBackspace.bind(this);
     this._onFingerprint();
   }
 
@@ -38,24 +41,37 @@ class Lock extends Component {
     }
   }
 
-  _onPress(number) {
-    let { pin = '' } = this.state;
-    pin = `${pin}${number}`;
-    if (pin.length <= 4) this.setState({ pin, wrong: false });
+  _onPress(key) {
+    if ([BACKSPACE, HELP].includes(key)) {
+      this[(key === BACKSPACE) ? '_onBackspace' : '_onHelp']();
+    } else {
+      let { pin = '' } = this.state;
+      pin = `${pin}${key}`;
+      if (pin.length <= 4) this.setState({ pin, wrong: false });
 
-    if (pin.length === 4) {
-      const { device, navigation: { navigate }, updateDevice } = this.props;
+      if (pin.length === 4) {
+        const { device, navigation: { navigate }, updateDevice } = this.props;
 
-      if (!device.pin || pin === device.pin) {
-        if (!device.pin) updateDevice({ pin });
-        navigate('Main');
-      } else {
-        setTimeout(() => {
-          this.setState({ pin: '', wrong: true });
-          Vibration.vibrate(500);
-        }, 250);
+        if (!device.pin || pin === device.pin) {
+          if (!device.pin) updateDevice({ pin });
+          navigate('Main');
+        } else {
+          setTimeout(() => {
+            this.setState({ pin: '', wrong: true });
+            Vibration.vibrate(500);
+          }, 250);
+        }
       }
     }
+  }
+
+  _onBackspace() {
+    const { pin = '' } = this.state;
+    if (pin.length > 0) this.setState({ pin: pin.slice(0, -1) || '' });
+  }
+
+  _onHelp() {
+    // @TODO: Link to a website.
   }
 
   render() {
@@ -84,14 +100,12 @@ class Lock extends Component {
         </View>
         <Motion animation="bounceInUp" delay={200}>
           <View style={[STYLE.ROW, styles.padLock]}>
-            { NUMBERS.map(number => (
-              <Touchable
-                key={number}
-                onPress={() => _onPress(number)}
-                raised
-                style={STYLE.CENTERED}
-              >
-                <Text style={styles.keyPad}>{number}</Text>
+            { KEYS.map(key => (
+              <Touchable key={key} onPress={() => _onPress(key)} raised style={[STYLE.CENTERED, styles.keyPad]}>
+                { [BACKSPACE, HELP].includes(key)
+                  ? <Icon value={key} style={styles.icon} />
+                  : <Text style={styles.number}>{key}</Text>
+                }
               </Touchable>))}
           </View>
         </Motion>
@@ -99,7 +113,7 @@ class Lock extends Component {
           <Motion animation="bounceInUp" delay={400}>
             <Touchable raised onPress={_onFingerprint}>
               <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
-                <Icon value="fingerprint" style={styles.icon} />
+                <Icon value="fingerprint" style={[styles.icon, styles.iconFingerprint]} />
                 <Text style={styles.hint}>{USE_FINGERPRINT}</Text>
               </View>
             </Touchable>
