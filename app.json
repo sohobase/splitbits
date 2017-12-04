@@ -1,11 +1,11 @@
 {
    "expo": {
     "name": "Splitbits",
-    "description": "...",
+    "description": "Next-gen private & friendly mobile wallet for your cryptos.",
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
     "sdkVersion": "23.0.0",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "orientation": "portrait",
     "primaryColor": "#2d126c",
     "icon": "./assets/app-icon.png",
@@ -26,10 +26,11 @@
     "android": {
       "package": "com.sohobase.splitbits",
       "permissions": ["CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
-      "versionCode": 44
+      "versionCode": 45
     },
     "androidStatusBar": {
-      "backgroundColor": "#2d126c"
+      "backgroundColor": "#2d126c",
+      "barStyle": "light-content"
     }
    }
  }
