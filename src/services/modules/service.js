@@ -1,4 +1,6 @@
 import { C } from '../../config';
+import { instance } from '../../store';
+import { errorAction } from '../../store/actions';
 
 const { Constants: { deviceId = 'unknown' } } = Expo || {}; // eslint-disable-line
 const DEFAULT_HEADERS = {
@@ -7,7 +9,10 @@ const DEFAULT_HEADERS = {
   token: deviceId,
   testnet: C.DEV,
 };
-const onError = error => console.log('module/service', error);
+const onError = (error) => {
+  const { dispatch } = instance.get();
+  dispatch(errorAction(error));
+};
 
 export default async(endpoint, props = {}, multipart) => {
   const { method = 'GET' } = props;
@@ -24,7 +29,8 @@ export default async(endpoint, props = {}, multipart) => {
 
   const json = await response.json();
   if (response.status >= 400) {
-    console.log('@TODO', json); // @TODO: Send to redux an error
+    const { dispatch } = instance.get();
+    dispatch(errorAction({ ...json, code: response.status }));
     return undefined;
   }
 

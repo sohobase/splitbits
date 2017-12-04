@@ -3,6 +3,7 @@ import { createStore } from 'redux';
 import storage from 'redux-persist/es/storage';
 import { C } from '../config';
 import reducer from './reducer';
+import instance from './instance';
 
 const { SERVICE } = C;
 
@@ -16,5 +17,8 @@ const config = {
 export default async() =>
   new Promise((resolve) => {
     const store = createStore(persistReducer(config, reducer));
-    persistStore(store, null, () => resolve(store));
+    persistStore(store, null, () => {
+      instance.set(store);
+      resolve(store);
+    });
   });

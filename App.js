@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { C } from './src/config';
@@ -12,6 +13,7 @@ import {
   SettingsScreen,
   TransactionScreen,
 } from './src/screens';
+import { Error } from './src/containers';
 
 const navigationOptions = { header: null };
 
@@ -47,11 +49,14 @@ class App extends Component {
         <LoadingScreen onLoad={this._onLoad} />
         :
         <Provider store={store}>
-          {
-            store.getState().wallets.length > 0
-              ? <NavigationMain initialRouteName="Transaction" />
-              : <NavigationOnboarding />
-          }
+          <View style={{ height: '100%' }}>
+            {
+              store.getState().wallets.length > 0
+                ? <NavigationMain />
+                : <NavigationOnboarding />
+            }
+            <Error />
+          </View>
         </Provider>
     );
   }

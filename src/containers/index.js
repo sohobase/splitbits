@@ -1,4 +1,5 @@
 import DevicesList from './DevicesList';
+import Error from './Error';
 import ModalCamera from './ModalCamera';
 import ModalCurrency from './ModalCurrency';
 import ModalMnemonic from './ModalMnemonic';
@@ -8,6 +9,7 @@ import ModalWalletNew from './ModalWalletNew';
 
 export {
   DevicesList,
+  Error,
   ModalCamera,
   ModalCurrency,
   ModalMnemonic,

@@ -1,5 +1,6 @@
 export default {
   EN: {
+    ACCEPT: 'Accept',
     ADD_NOTE: 'Add note',
 
     BALANCE: 'Balance',

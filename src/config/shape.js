@@ -24,6 +24,11 @@ export default {
     token: string,
     createdAt: date,
   },
+  ERROR: {
+    code: number,
+    title: string,
+    message: string,
+  },
   NAVIGATION: {
     navigate: func,
     setParams: func,

@@ -4,6 +4,7 @@ import {
   UPDATE_CURRENCIES,
   UPDATE_DEVICE,
   SELECT_DEVICE,
+  ERROR,
   UPDATE_TRANSACTIONS,
   ADD_WALLET,
   REMOVE_WALLET,
@@ -26,6 +27,10 @@ export default function(state = DEFAULTS, action) {
 
     case SELECT_DEVICE:
       return { ...state, selectedDevice: action.deviceId };
+
+    // -- Error
+    case ERROR:
+      return { ...state, error: action.error };
 
     // -- Transaction
     case UPDATE_TRANSACTIONS: {
