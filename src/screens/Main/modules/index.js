@@ -1,5 +1,7 @@
+import onAppActive from './onAppActive';
 import onNotification from './onNotification';
 
 export {
-  onNotification, //eslint-disable-line
+  onAppActive,
+  onNotification,
 };

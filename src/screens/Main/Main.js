@@ -1,12 +1,12 @@
 import { arrayOf, shape } from 'prop-types';
 import { Notifications } from 'expo';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { AppState, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { C, SHAPE, STYLE, TEXT } from '../../config';
 import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '../../containers';
 import { Header, Footer, TransactionButton, Transactions, Wallets } from './components';
-import { onNotification } from './modules';
+import { onAppActive, onNotification } from './modules';
 import styles from './Main.style';
 
 const { DEV } = C;
@@ -32,6 +32,7 @@ class Main extends Component {
     this._onRecover = this._onRecover.bind(this);
     this._onSwipe = this._onSwipe.bind(this);
     this._onWallet = this._onWallet.bind(this);
+    AppState.addEventListener('change', state => onAppActive(props, state));
     Notifications.addListener(onNotification);
   }
 
