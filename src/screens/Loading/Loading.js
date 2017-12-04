@@ -47,7 +47,7 @@ class Loading extends Component {
 
     return (
       <View style={StyleSheet.flatten([STYLE.SCREEN, STYLE.CENTERED, styles.loading])}>
-        <StatusBar backgroundColor={COLOR.PRIMARY} barStyle="dark-content" />
+        <StatusBar backgroundColor={COLOR.PRIMARY} barStyle="light-content" />
         <Logo motion={motion} />
       </View>
     );

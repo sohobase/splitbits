@@ -15,7 +15,7 @@ const Header = ({
   <View style={[STYLE.ROW, styles.header, style]}>
     <StatusBar
       animated
-      backgroundColor={tintColor !== COLOR.WHITE ? COLOR.BLACK : COLOR.PRIMARY}
+      backgroundColor={tintColor !== COLOR.WHITE ? COLOR.WHITE : COLOR.PRIMARY}
       barStyle={tintColor !== COLOR.WHITE ? 'dark-content' : 'light-content'}
     />
     { navigation &&
