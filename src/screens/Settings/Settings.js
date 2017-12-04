@@ -81,7 +81,7 @@ class Settings extends Component {
     return (
       <View style={styles.screen}>
         <Header title={SETTINGS} navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
-        <Motion animation="bounceInUp" delay={400}>
+        <Motion animation="bounceInUp" delay={400} style={styles.form}>
           <View>
             <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.thumb]}>
               <View style={styles.image}>
@@ -100,8 +100,6 @@ class Settings extends Component {
             <Text style={styles.text}>{HINT_FIND_BY_NAME}</Text>
           </View>
         </Motion>
-        <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
-        <ModalCurrency visible={currencies} onClose={_onModalCurrency} onValue={_onCurrency} />
         <Motion animation="bounceInUp" delay={500} style={[STYLE.CENTERED, styles.footer]}>
           <View>
             <Text style={styles.text}>❤️</Text>
@@ -109,6 +107,8 @@ class Settings extends Component {
             <Text style={[styles.text, styles.version]}>{`Version ${PKG.version}`}</Text>
           </View>
         </Motion>
+        <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
+        <ModalCurrency visible={currencies} onClose={_onModalCurrency} onValue={_onCurrency} />
       </View>
     );
   }

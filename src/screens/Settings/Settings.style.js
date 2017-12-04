@@ -16,6 +16,12 @@ export default StyleSheet.create({
     borderBottomColor: COLOR.DIVIDER,
   },
 
+  form: {
+    zIndex: 1,
+    height: '75%',
+    backgroundColor: COLOR.WHITE,
+  },
+
   thumb: {
     height: (AVATAR_SIZE * 3) + (OFFSET * 2),
   },
@@ -52,6 +58,7 @@ export default StyleSheet.create({
 
   footer: {
     position: 'absolute',
+    zIndex: 0,
     bottom: OFFSET + FOOTER_OFFSET,
     maxWidth: '90%',
     alignSelf: 'center',
