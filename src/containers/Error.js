@@ -28,7 +28,7 @@ class Error extends Component {
     const visible = error !== undefined;
     const { code, title, message } = error || {};
 
-    console.log('[error]', this.props.error);
+    if (error) console.log('[error]', this.props.error); // eslint-disable-line
 
     return (
       <ReactNativeModal transparent visible={visible} onRequestClose={_onPress}>

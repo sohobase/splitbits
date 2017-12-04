@@ -9,7 +9,7 @@ const DEFAULT_HEADERS = {
   token: deviceId,
   testnet: C.DEV,
 };
-const onError = (error) => {
+const onError = (error = {}) => {
   const { dispatch } = instance.get();
   dispatch(errorAction(error));
 };
@@ -24,7 +24,7 @@ export default async(endpoint, props = {}, multipart) => {
     },
     ...props,
     method,
-  }).catch(onError); // eslint-disable-line
+  }).catch(onError, endpoint);
   if (!response) return undefined;
 
   const json = await response.json();
