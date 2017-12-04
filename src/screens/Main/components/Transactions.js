@@ -10,6 +10,8 @@ import styles from './Transactions.style';
 
 const { STATE: { ARCHIVED, REQUESTED } } = C;
 const { TRANSACTION, WALLET } = SHAPE;
+const DELAY_REFRESHING = 400;
+let timeout;
 
 class Transactions extends Component {
   constructor(props) {
@@ -26,9 +28,10 @@ class Transactions extends Component {
 
   async _onRefresh(wallet = this.props.wallet) {
     const { updateTransactions, updateWallet } = this.props;
-    this.setState({ refreshing: true });
+    timeout = setTimeout(() => this.setState({ refreshing: true }), DELAY_REFRESHING);
     WalletService.state(wallet.id).then(updateWallet);
     updateTransactions(await TransactionService.list(wallet.id));
+    clearTimeout(timeout);
     this.setState({ refreshing: false });
   }
 
