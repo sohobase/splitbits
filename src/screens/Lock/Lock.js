@@ -28,6 +28,9 @@ class Lock extends Component {
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
     this._onBackspace = this._onBackspace.bind(this);
+  }
+
+  componentWillMount() {
     this._onFingerprint();
   }
 

@@ -50,11 +50,7 @@ class App extends Component {
         :
         <Provider store={store}>
           <View style={{ height: '100%' }}>
-            {
-              store.getState().wallets.length > 0
-                ? <NavigationMain />
-                : <NavigationOnboarding />
-            }
+            { store.getState().wallets.length > 0 ? <NavigationMain /> : <NavigationOnboarding /> }
             <Error />
           </View>
         </Provider>
