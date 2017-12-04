@@ -27,12 +27,8 @@ class Transactions extends Component {
   async _onRefresh(wallet = this.props.wallet) {
     const { updateTransactions, updateWallet } = this.props;
     this.setState({ refreshing: true });
-
-    await Promise.all([
-      WalletService.state(wallet.id).then(updateWallet),
-      TransactionService.list(wallet.id).then(updateTransactions),
-    ]);
-
+    WalletService.state(wallet.id).then(updateWallet);
+    updateTransactions(await TransactionService.list(wallet.id));
     this.setState({ refreshing: false });
   }
 
