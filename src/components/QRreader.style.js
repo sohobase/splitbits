@@ -12,6 +12,7 @@ export default StyleSheet.create({
     right: 0,
     bottom: 0,
     height: '100%',
+    backgroundColor: COLOR.BLACK,
   },
 
   hint: {
