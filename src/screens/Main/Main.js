@@ -32,7 +32,10 @@ class Main extends Component {
     this._onRecover = this._onRecover.bind(this);
     this._onSwipe = this._onSwipe.bind(this);
     this._onWallet = this._onWallet.bind(this);
-    AppState.addEventListener('change', state => onAppActive(props, state));
+  }
+
+  componentWillMount() {
+    if (!DEV) AppState.addEventListener('change', state => onAppActive(this.props, state));
     Notifications.addListener(onNotification);
   }
 

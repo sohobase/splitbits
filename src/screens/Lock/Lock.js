@@ -1,16 +1,17 @@
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Text, Vibration, View } from 'react-native';
+import { BackHandler, StatusBar, Text, Vibration, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Icon, Logo, Touchable } from '../../components';
-import { SHAPE, STYLE, TEXT } from '../../config';
+import { SHAPE, STYLE, TEXT, THEME } from '../../config';
 import { FingerprintService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import styles from './Lock.style';
 
 const { DEVICE, NAVIGATION } = SHAPE;
 const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
+const { COLOR } = THEME;
 
 const BACKSPACE = 'backspace';
 const HELP = 'help';
@@ -32,6 +33,7 @@ class Lock extends Component {
 
   componentWillMount() {
     this._onFingerprint();
+    BackHandler.addEventListener('hardwareBackPress', BackHandler.exitApp);
   }
 
   async _onFingerprint() {
@@ -89,6 +91,7 @@ class Lock extends Component {
 
     return (
       <View style={[STYLE.SCREEN, STYLE.COL, styles.screen]}>
+        <StatusBar backgroundColor={COLOR.PRIMARY} barStyle="light-content" />
         <View style={[STYLE.CENTERED, styles.header]}>
           <Logo motion={{ animation: 'bounceInDown' }} />
           <Motion animation={animation} delay={100} style={styles.pin}>

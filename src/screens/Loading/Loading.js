@@ -1,6 +1,6 @@
 import { func } from 'prop-types';
 import React, { Component } from 'react';
-import { StatusBar, View, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE, THEME } from '../../config';

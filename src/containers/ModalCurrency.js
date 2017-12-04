@@ -7,8 +7,7 @@ import { C, STYLE } from '../config';
 const { FIAT, SYMBOL } = C;
 const values = Object.values(FIAT);
 
-
-const ModalCurrency = ({ onClose, onValue, visible }) =>  (
+const ModalCurrency = ({ onClose, onValue, visible }) => (
   <Modal title="Choose your currency" visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
       { values.map(item => (
