@@ -5,6 +5,7 @@ import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { SHAPE, STYLE } from '../../../config';
 import { Avatar } from '../../../components';
+import { DateService } from '../../../services';
 import styles from './Info.style';
 
 const { DEVICE, TRANSACTION } = SHAPE;
@@ -44,7 +45,7 @@ const TransactionInfo = (props) => {
         { hash && renderField('Confirmations', confirmations, styles.half) }
         { concept && renderField('Concept', concept) }
         { hash && renderField('Hash', hash) }
-        { renderField('Date', createdAt) }
+        { renderField('Date', DateService.locale(createdAt)) }
       </View>
     </Motion>
   );
