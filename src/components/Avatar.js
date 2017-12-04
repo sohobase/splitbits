@@ -13,7 +13,7 @@ const Avatar = ({ value, selected, style }) => (
       ?
         <Image
           style={[styles.avatar, styles.image]}
-          source={{ uri: `${SERVICE}public/${value}?timestamp=${new Date().getTime().toString()}` }}
+          source={{ uri: `${SERVICE}public/${value}?timestamp=${new Date().getTime().toString().substr(0, 8)}` }}
         />
       :
         <Icon value="face" style={[styles.avatar, styles.icon]} /> }
