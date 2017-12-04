@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
 
   title: {
-    fontSize: FONT.SIZE.LARGE,
+    fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
     color: COLOR.TEXT_HIGHLIGHT,
   },

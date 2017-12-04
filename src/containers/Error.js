@@ -39,8 +39,8 @@ class Error extends Component {
         >
           <View style={[STYLE.ROW, styles.error]}>
             <View style={styles.content}>
-              <Text style={styles.title}>{error ? `Error ${code}` : title}</Text>
-              <Text style={styles.body}>{message}</Text>
+              <Text style={styles.title}>{message}</Text>
+              <Text style={styles.body}>{error ? `Error ${code}` : title}</Text>
             </View>
             <Button caption={ACCEPT} onPress={_onPress} raised style={styles.button} />
           </View>
