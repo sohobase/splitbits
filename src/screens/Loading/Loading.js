@@ -4,7 +4,7 @@ import { StatusBar, StyleSheet, View } from 'react-native';
 import { updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE, THEME } from '../../config';
-import { StateService } from '../../services';
+import { CurrencyService, DeviceService, WalletService } from '../../services';
 import { initialize } from '../../store';
 import styles from './Loading.style';
 
@@ -21,20 +21,16 @@ class Loading extends Component {
   async componentWillMount() {
     const { onLoad } = this.props;
     const store = await initialize();
-    const { wallets: storeWallets } = store.getState();
+    const { dispatch } = store;
+    const { wallets = [] } = store.getState();
+    const ids = wallets.length > 0 ? wallets.map(({ id }) => id) : [];
 
-
-    if (storeWallets.length > 0) {
-      const response = await StateService.get(storeWallets.map(({ id }) => id));
-
-      if (response) {
-        const { currencies = {}, device = {}, wallets = [] } = response;
-
-        store.dispatch(updateCurrenciesAction(currencies));
-        store.dispatch(updateDeviceAction(device));
-        wallets.forEach(wallet => store.dispatch(updateWalletAction(wallet)));
-      }
-    }
+    await Promise.all([
+      CurrencyService.list().then(value => dispatch(updateCurrenciesAction(value))),
+      DeviceService.state().then(value => dispatch(updateDeviceAction(value))),
+      WalletService.state({ ids })
+        .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet)))),
+    ]);
     this.setState({ processing: false });
     setTimeout(() => { onLoad({ store }); }, 500);
   }

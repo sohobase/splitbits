@@ -13,7 +13,7 @@ export default async({ data = {} }) => {
 
   if (wallet) {
     await Promise.all([
-      WalletService.state(wallet).then(value => dispatch(updateWalletAction(value))),
+      WalletService.state({ id: wallet }).then(value => dispatch(updateWalletAction(value))),
       TransactionService.list(wallet).then(value => dispatch(updateTransactionsAction(value))),
     ]);
   }

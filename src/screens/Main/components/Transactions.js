@@ -29,7 +29,7 @@ class Transactions extends Component {
   async _onRefresh(wallet = this.props.wallet) {
     const { updateTransactions, updateWallet } = this.props;
     timeout = setTimeout(() => this.setState({ refreshing: true }), DELAY_REFRESHING);
-    WalletService.state(wallet.id).then(updateWallet);
+    WalletService.state({ id: wallet.id }).then(updateWallet);
     updateTransactions(await TransactionService.list(wallet.id));
     clearTimeout(timeout);
     this.setState({ refreshing: false });

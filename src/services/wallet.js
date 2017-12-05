@@ -52,8 +52,8 @@ export default {
     return wallet; // @TODO: Dispatch error if doesnt exist.
   },
 
-  state(walletId) {
-    return service(`wallet?id=${walletId}`);
+  state({ id, ids }) {
+    return service(`wallet?${id ? `id=${id}` : `ids=${ids}`}`);
   },
 
   async archive(props) {
