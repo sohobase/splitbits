@@ -25,11 +25,12 @@ class Loading extends Component {
     const { wallets = [] } = store.getState();
 
     if (wallets.length > 0) {
+      await WalletService.state({ ids: wallets.map(({ id }) => id) })
+        .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet))));
+    } else {
       await Promise.all([
         CurrencyService.list().then(value => dispatch(updateCurrenciesAction(value))),
         DeviceService.state().then(value => dispatch(updateDeviceAction(value))),
-        WalletService.state({ ids: wallets.map(({ id }) => id) })
-          .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet)))),
       ]);
     }
 

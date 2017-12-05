@@ -21,7 +21,7 @@ export default StyleSheet.create({
   error: {
     backgroundColor: COLOR.RED,
     padding: OFFSET,
-    paddingBottom: FOOTER_OFFSET,
+    paddingBottom: OFFSET + FOOTER_OFFSET,
   },
 
   content: {

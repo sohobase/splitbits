@@ -72,7 +72,7 @@ export default StyleSheet.create({
     zIndex: 1,
     width: UNIT * 0.6,
     height: UNIT * 0.6,
-    backgroundColor: COLOR.BACKGROUND_DARK,
+    backgroundColor: COLOR.BACKGROUND_DISABLED,
   },
 
   SWIPER_DOT_ACTIVE: {
