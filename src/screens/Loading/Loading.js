@@ -23,14 +23,16 @@ class Loading extends Component {
     const store = await initialize();
     const { dispatch } = store;
     const { wallets = [] } = store.getState();
-    const ids = wallets.length > 0 ? wallets.map(({ id }) => id) : [];
 
-    await Promise.all([
-      CurrencyService.list().then(value => dispatch(updateCurrenciesAction(value))),
-      DeviceService.state().then(value => dispatch(updateDeviceAction(value))),
-      WalletService.state({ ids })
-        .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet)))),
-    ]);
+    if (wallets.length > 0) {
+      await Promise.all([
+        CurrencyService.list().then(value => dispatch(updateCurrenciesAction(value))),
+        DeviceService.state().then(value => dispatch(updateDeviceAction(value))),
+        WalletService.state({ ids: wallets.map(({ id }) => id) })
+          .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet)))),
+      ]);
+    }
+
     this.setState({ processing: false });
     setTimeout(() => { onLoad({ store }); }, 500);
   }

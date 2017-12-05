@@ -5,8 +5,8 @@ import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Icon, Logo, Touchable } from '../../components';
 import { SHAPE, STYLE, TEXT, THEME } from '../../config';
-import { FingerprintService } from '../../services';
-import { updateDeviceAction } from '../../store/actions';
+import { CurrencyService, DeviceService, FingerprintService } from '../../services';
+import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Lock.style';
 
 const { DEVICE, NAVIGATION } = SHAPE;
@@ -26,9 +26,10 @@ class Lock extends Component {
       wrong: false,
     };
 
+    this._onBackspace = this._onBackspace.bind(this);
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
-    this._onBackspace = this._onBackspace.bind(this);
+    this._onSuccess = this._onSuccess.bind(this);
   }
 
   componentWillMount() {
@@ -41,7 +42,7 @@ class Lock extends Component {
       this.setState({ hasFingerprint: true });
       if (await FingerprintService.authenticate(USE_FINGERPRINT)) {
         FingerprintService.cancel();
-        this.props.navigation.navigate('Main');
+        this._onSuccess();
       }
     }
   }
@@ -55,11 +56,11 @@ class Lock extends Component {
       if (pin.length <= 4) this.setState({ pin, wrong: false });
 
       if (pin.length === 4) {
-        const { device, navigation: { navigate }, updateDevice } = this.props;
+        const { _onSuccess, props: { device, updateDevice } } = this;
 
         if (!device.pin || pin === device.pin) {
           if (!device.pin) updateDevice({ pin });
-          navigate('Main');
+          _onSuccess();
         } else {
           setTimeout(() => {
             this.setState({ pin: '', wrong: true });
@@ -77,6 +78,16 @@ class Lock extends Component {
 
   _onHelp() {
     // @TODO: Link to a website.
+  }
+
+  _onSuccess() {
+    const { props: { navigation: { navigate }, updateCurrencies, updateDevice } } = this;
+    Promise.all([
+      CurrencyService.list().then(updateCurrencies),
+      DeviceService.state().then(updateDevice),
+    ]);
+
+    navigate('Main');
   }
 
   render() {
@@ -132,12 +143,14 @@ class Lock extends Component {
 Lock.propTypes = {
   device: shape(DEVICE),
   navigation: shape(NAVIGATION),
+  updateCurrencies: func,
   updateDevice: func,
 };
 
 Lock.defaultProps = {
   device: {},
   navigation: undefined,
+  updateCurrencies() {},
   updateDevice() {},
 };
 
@@ -146,6 +159,7 @@ const mapStateToProps = ({ device }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  updateCurrencies: currencies => dispatch(updateCurrenciesAction(currencies)),
   updateDevice: device => dispatch(updateDeviceAction(device)),
 });
 
