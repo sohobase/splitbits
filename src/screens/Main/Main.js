@@ -35,8 +35,14 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    if (!DEV) AppState.addEventListener('change', state => onAppActive(this.props, state));
+    AppState.addEventListener('change', state => onAppActive(this.props, state));
     Notifications.addListener(onNotification);
+  }
+
+  componentWillReceiveProps({ wallets: nextWallets = [] }) {
+    const { wallets = [] } = this.props;
+    // @TODO: React-Native-Swiper is buggy with dynamic elements. we should focus in the last wallet created.
+    if (nextWallets.length !== wallets.length) this.setState({ walletIndex: 0 });
   }
 
   _onNewTransaction(type) {

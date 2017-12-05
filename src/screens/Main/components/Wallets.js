@@ -17,11 +17,10 @@ class Wallets extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps({ wallets: nextWallets = [] }) {
     const { wallets = [] } = this.props;
-
     // @TODO: React-Native-Swiper is buggy with dynamic elements.
-    if (nextProps.wallets.length !== wallets.length) {
+    if (nextWallets.length !== wallets.length) {
       this.setState({ processing: true });
       setTimeout(() => this.setState({ processing: false }), 500);
     }
