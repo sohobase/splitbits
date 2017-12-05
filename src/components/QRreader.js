@@ -1,6 +1,6 @@
 import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Vibration, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
 import { THEME } from '../config';
 import Button from './Button';
@@ -12,11 +12,10 @@ const { ANIMATION: { DURATION } } = THEME;
 class QRreader extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       hasCameraPermission: false,
     };
-    this._onBarCodeRead = this._onBarCodeRead.bind(this);
+    this._onRead = this._onRead.bind(this);
   }
 
   async componentWillReceiveProps(nextProps) {
@@ -26,46 +25,49 @@ class QRreader extends Component {
     }
   }
 
-  _onBarCodeRead = ({ data }) => {
-    this.props.onRead(data);
+  _onRead({ data, type }) {
+    const { onRead } = this.props;
+    Vibration.vibrate(500);
+    onRead(data, type);
   }
 
   render() {
-    const { active, onClose } = this.props;
-    const { hasCameraPermission } = this.state;
-
-    if (!active) return <View />;
+    const { _onRead, props: { active, onClose }, state: { hasCameraPermission } } = this;
 
     return (
-      <View style={styles.QRreader}>
-        { isDevice && hasCameraPermission &&
-          <BarCodeScanner
-            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-            onBarCodeRead={this._onBarCodeRead}
-            style={StyleSheet.absoluteFill}
-          /> }
-        <View style={styles.border}>
-          { hasCameraPermission
-              ? <Text style={styles.hint}>Place the code inside the frame</Text>
-              : <Text style={styles.hint}>Give the app camera permissions in order to read QR codes</Text>
-          }
-        </View>
-        <View style={styles.content} >
-          <View style={styles.border} />
-          <View style={styles.area} />
-          <View style={styles.border} />
-        </View>
-        <View style={styles.border}>
-          <Button
-            accent
-            motion={{ animation: 'bounceInUp', delay: 300, duration: DURATION }}
-            circle
-            icon="close"
-            onPress={onClose}
-            style={styles.button}
-          />
-        </View>
-      </View>
+      active
+        ?
+          <View style={styles.QRreader}>
+            { isDevice && hasCameraPermission &&
+              <BarCodeScanner
+                barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+                onBarCodeRead={_onRead}
+                style={StyleSheet.absoluteFill}
+              /> }
+            <View style={styles.border}>
+              { hasCameraPermission
+                  ? <Text style={styles.hint}>Place the code inside the frame</Text>
+                  : <Text style={styles.hint}>Give the app camera permissions in order to read QR codes</Text>
+              }
+            </View>
+            <View style={styles.content} >
+              <View style={styles.border} />
+              <View style={styles.area} />
+              <View style={styles.border} />
+            </View>
+            <View style={styles.border}>
+              <Button
+                accent
+                motion={{ animation: 'bounceInUp', delay: 300, duration: DURATION }}
+                circle
+                icon="close"
+                onPress={onClose}
+                style={styles.button}
+              />
+            </View>
+          </View>
+        :
+          <View />
     );
   }
 }
