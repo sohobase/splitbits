@@ -24,11 +24,10 @@ class Error extends Component {
   }
 
   render() {
-    const { _onPress, props: { error } } = this;
-    const visible = error !== undefined;
-    const { code, title, message } = error || {};
+    const { _onPress, props: { error: { code, message } = {} } } = this;
+    const visible = code !== undefined || message !== undefined;
 
-    if (error) console.log('[error]', this.props.error); // eslint-disable-line
+    if (visible) console.log('[error]', this.props.error); // eslint-disable-line
 
     return (
       <ReactNativeModal transparent visible={visible} onRequestClose={_onPress}>
@@ -39,8 +38,8 @@ class Error extends Component {
         >
           <View style={[STYLE.ROW, styles.error]}>
             <View style={styles.content}>
-              <Text style={styles.title}>{message}</Text>
-              <Text style={styles.body}>{error ? `Error ${code}` : title}</Text>
+              <Text style={styles.message}>{message}</Text>
+              { code && <Text style={styles.code}>{`Error ${code}`}</Text> }
             </View>
             <Button caption={ACCEPT} onPress={_onPress} raised style={styles.button} />
           </View>

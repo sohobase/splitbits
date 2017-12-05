@@ -26,15 +26,16 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
+    marginRight: OFFSET,
   },
 
-  title: {
+  message: {
     fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
     color: COLOR.TEXT_HIGHLIGHT,
   },
 
-  body: {
+  code: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
     fontSize: FONT.SIZE.SMALL,
   },

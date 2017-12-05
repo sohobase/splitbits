@@ -1,7 +1,8 @@
-import { C } from '../../config';
+import { C, TEXT } from '../../config';
 import { instance } from '../../store';
 import { errorAction } from '../../store/actions';
 
+const { EN: { ERROR_CONNECTION } } = TEXT;
 const { Constants: { deviceId = 'unknown' } } = Expo || {}; // eslint-disable-line
 const DEFAULT_HEADERS = {
   Accept: 'application/json',
@@ -9,30 +10,33 @@ const DEFAULT_HEADERS = {
   token: deviceId,
   testnet: C.DEV,
 };
-const onError = (error = {}) => {
+
+const TIMEOUT = 10000;
+const onError = (error = {}, reject) => {
   const { dispatch } = instance.get();
+
   dispatch(errorAction(error));
+  reject(error);
 };
 
 export default async(endpoint, props = {}, multipart) => {
   const { method = 'GET' } = props;
+  const headers = {
+    ...DEFAULT_HEADERS,
+    'Content-Type': multipart ? 'multipart/form-data' : 'application/json',
+  };
 
-  const response = await fetch(`${C.SERVICE}${endpoint}`, { // eslint-disable-line
-    headers: {
-      ...DEFAULT_HEADERS,
-      'Content-Type': multipart ? 'multipart/form-data' : 'application/json',
-    },
-    ...props,
-    method,
-  }).catch(onError, endpoint);
-  if (!response) return undefined;
+  return new Promise(async(resolve, reject) => {
+    const timeout = setTimeout(() => onError(new Error(ERROR_CONNECTION), reject), TIMEOUT);
 
-  const json = await response.json();
-  if (response.status >= 400) {
-    const { dispatch } = instance.get();
-    dispatch(errorAction({ ...json, code: response.status }));
-    return undefined;
-  }
+    const response = await fetch(`${C.SERVICE}${endpoint}`, { headers, ...props, method }) // eslint-disable-line
+      .catch(error => onError(error, reject));
 
-  return json;
+    if (response && response.json) {
+      clearTimeout(timeout);
+      const json = await response.json();
+      if (response.status >= 400) onError({ ...json, code: response.status }, reject);
+      resolve(json);
+    }
+  });
 };
