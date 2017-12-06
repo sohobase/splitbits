@@ -4,8 +4,8 @@ import { BackHandler, StatusBar, Text, Vibration, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Icon, Logo, Touchable } from '../../components';
-import { SHAPE, STYLE, TEXT, THEME } from '../../config';
-import { CurrencyService, DeviceService, FingerprintService } from '../../services';
+import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
+import { CurrenciesService, DeviceService, FingerprintService } from '../../services';
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Lock.style';
 
@@ -30,6 +30,8 @@ class Lock extends Component {
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
+
+    if (C.DEV) this._onSuccess();
   }
 
   componentWillMount() {
@@ -80,10 +82,10 @@ class Lock extends Component {
     // @TODO: Link to a website.
   }
 
-  _onSuccess() {
+  async _onSuccess() {
     const { props: { navigation: { navigate }, updateCurrencies, updateDevice } } = this;
-    Promise.all([
-      CurrencyService.list().then(updateCurrencies),
+    await Promise.all([
+      CurrenciesService.list().then(updateCurrencies),
       DeviceService.state().then(updateDevice),
     ]);
 
@@ -159,8 +161,8 @@ const mapStateToProps = ({ device }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateCurrencies: currencies => dispatch(updateCurrenciesAction(currencies)),
-  updateDevice: device => dispatch(updateDeviceAction(device)),
+  updateCurrencies: currencies => currencies && dispatch(updateCurrenciesAction(currencies)),
+  updateDevice: device => device && dispatch(updateDeviceAction(device)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lock);

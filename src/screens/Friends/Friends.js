@@ -41,15 +41,11 @@ class Friends extends Component {
 
   async _onQuery(query) {
     const { devices, selectMode } = this.props;
-    let data = [];
 
     this.setState({ refreshing: true, query });
-    if (selectMode) {
-      // data = devices.filter(({ id, name = '' }) => id === selected || name.toLowerCase().includes(query.toLowerCase())),
-      data = devices.filter(({ name = '' }) => name.toLowerCase().includes(query.toLowerCase()));
-    } else {
-      data = await DeviceService.search(query);
-    }
+    const data = selectMode
+      ? devices.filter(({ name = '' }) => name.toLowerCase().includes(query.toLowerCase()))
+      : await DeviceService.search(query);
 
     this.setState({ data, refreshing: false });
   }
@@ -58,7 +54,7 @@ class Friends extends Component {
     this.setState({ scanner: false });
     const { navigation, updateDevice } = this.props;
     await DeviceService.qr({ id, direct: true });
-    updateDevice(await DeviceService.state());
+    await DeviceService.state().then(updateDevice);
     navigation.goBack();
   }
 
@@ -112,7 +108,7 @@ const mapStateToProps = ({ device: { devices = [] } }, props) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateDevice: device => dispatch(updateDeviceAction(device)),
+  updateDevice: device => device && dispatch(updateDeviceAction(device)),
   selectDevice: deviceId => dispatch(selectDeviceAction(deviceId)),
 });
 

@@ -41,20 +41,23 @@ class Settings extends Component {
   }
 
   async _onCurrency(currency) {
+    const { updateDevice } = this.props;
     this.setState({ currencies: false, currency });
-    this.props.updateDevice(await DeviceService.update({ currency }));
+    DeviceService.update({ currency }).then(updateDevice);
   }
 
   async _onImage(image) {
+    const { updateDevice } = this.props;
     this.setState({ image: image.uri, camera: false, timestamp: new Date().getTime() });
-    this.props.updateDevice(await DeviceService.update({ image }));
+    DeviceService.update({ image }).then(updateDevice);
   }
 
   _onName(name) {
+    const { updateDevice } = this.props;
     this.setState({ name });
     clearTimeout(timeout);
-    timeout = setTimeout(async() => {
-      this.props.updateDevice(await DeviceService.update({ name }));
+    timeout = setTimeout(() => {
+      DeviceService.update({ name }).then(updateDevice);
     }, 1000);
   }
 
@@ -131,7 +134,7 @@ const mapStateToProps = ({ device }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateDevice: device => dispatch(updateDeviceAction(device)),
+  updateDevice: device => device && dispatch(updateDeviceAction(device)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

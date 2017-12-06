@@ -4,7 +4,7 @@ import { StatusBar, StyleSheet, View } from 'react-native';
 import { updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
 import { STYLE, THEME } from '../../config';
-import { CurrencyService, DeviceService, WalletService } from '../../services';
+import { CurrenciesService, DeviceService, WalletService } from '../../services';
 import { initialize } from '../../store';
 import styles from './Loading.style';
 
@@ -26,11 +26,11 @@ class Loading extends Component {
 
     if (wallets.length > 0) {
       await WalletService.state({ ids: wallets.map(({ id }) => id) })
-        .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet))));
+        .then(values => values && values.forEach(wallet => dispatch(updateWalletAction(wallet))));
     } else {
       await Promise.all([
-        CurrencyService.list().then(value => dispatch(updateCurrenciesAction(value))),
-        DeviceService.state().then(value => dispatch(updateDeviceAction(value))),
+        CurrenciesService.list().then(value => value && dispatch(updateCurrenciesAction(value))),
+        DeviceService.state().then(value => value && dispatch(updateDeviceAction(value))),
       ]);
     }
 

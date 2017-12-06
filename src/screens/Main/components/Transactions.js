@@ -30,7 +30,7 @@ class Transactions extends Component {
     const { updateTransactions, updateWallet } = this.props;
     timeout = setTimeout(() => this.setState({ refreshing: true }), DELAY_REFRESHING);
     WalletService.state({ id: wallet.id }).then(updateWallet);
-    updateTransactions(await TransactionService.list(wallet.id));
+    await TransactionService.list(wallet.id).then(updateTransactions);
     clearTimeout(timeout);
     this.setState({ refreshing: false });
   }
@@ -87,8 +87,8 @@ const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateTransactions: transactions => dispatch(updateTransactionsAction(transactions)),
-  updateWallet: wallet => dispatch(updateWalletAction(wallet)),
+  updateTransactions: transactions => transactions && dispatch(updateTransactionsAction(transactions)),
+  updateWallet: wallet => wallet && dispatch(updateWalletAction(wallet)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transactions);

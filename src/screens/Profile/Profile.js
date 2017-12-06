@@ -26,7 +26,7 @@ class Profile extends Component {
     const { props: { updateDevice } } = this;
 
     this.setState({ refreshing: true });
-    updateDevice(await DeviceService.state());
+    await DeviceService.state().then(updateDevice);
     this.setState({ refreshing: false });
   }
 
@@ -72,7 +72,7 @@ const mapStateToProps = ({ device }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateDevice: device => dispatch(updateDeviceAction(device)),
+  updateDevice: device => device && dispatch(updateDeviceAction(device)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

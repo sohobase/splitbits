@@ -1,4 +1,4 @@
-import CurrencyService from './currency';
+import CurrenciesService from './currencies';
 import DateService from './date';
 import DeviceService from './device';
 import EntropyService from './entropy';
@@ -9,7 +9,7 @@ import TransactionService from './transaction';
 import WalletService from './wallet';
 
 export {
-  CurrencyService,
+  CurrenciesService,
   DateService,
   DeviceService,
   EntropyService,

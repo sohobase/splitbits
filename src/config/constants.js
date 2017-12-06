@@ -1,4 +1,5 @@
 import { Constants } from 'expo';
+
 const DEV = __DEV__; //eslint-disable-line
 const LOGO = require('../../assets/app-brandname.png');
 
@@ -58,6 +59,8 @@ export default {
     ANDROID: 'http://',
     IOS: 'http://',
   },
+
+  TIMEOUT_SERVICE: 3000,
 
   TOKEN: 'sohobase-splitbits-dev',
 

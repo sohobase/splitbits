@@ -38,7 +38,11 @@ class DeviceItem extends Component {
     const {
       _onRelation, _onRequest,
       props: {
-        data: { id, image, name, requested }, device: { requests }, onPress, request, selected, style,
+        onPress, request, selected, style,
+        data: {
+          id, image, name, requested,
+        },
+        device: { requests },
       },
     } = this;
     const isRequest = requests.find(item => item.id === id);
