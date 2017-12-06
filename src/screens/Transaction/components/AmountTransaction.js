@@ -97,7 +97,7 @@ class AmountTransaction extends Component {
                   caption={`${FEE} `}
                   coin={currency}
                   style={[styles.label, styles.small]}
-                  value={(fee + charge) * currencies[coin]}
+                  value={((fee + charge) * SATOSHI) / currencies[coin]}
                 />
               }
             </View>
