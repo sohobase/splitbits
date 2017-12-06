@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
-const { COLOR, FONT, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   preview: {
@@ -18,10 +20,12 @@ export default StyleSheet.create({
     fontWeight: FONT.WEIGHT.LIGHT,
     textAlign: 'center',
     color: COLOR.TEXT_HIGHLIGHT,
+    backgroundColor: 'transparent',
   },
 
   label: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
+    backgroundColor: 'transparent',
   },
 
   small: {

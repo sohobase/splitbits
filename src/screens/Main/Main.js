@@ -1,17 +1,18 @@
 import { arrayOf, shape } from 'prop-types';
-import { Notifications } from 'expo';
+import { LinearGradient, Notifications } from 'expo';
 import React, { Component } from 'react';
 import { AppState, View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { C, SHAPE, STYLE, TEXT } from '../../config';
+import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
 import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '../../containers';
 import { Header, Footer, TransactionButton, Transactions, Wallets } from './components';
 import { onAppActive, onNotification } from './modules';
 import styles from './Main.style';
 
 const { DEV } = C;
-const { EN: { IMPORT, RECOVER } } = TEXT;
 const { NAVIGATION, WALLET } = SHAPE;
+const { EN: { IMPORT, RECOVER } } = TEXT;
+const { COLOR } = THEME;
 
 class Main extends Component {
   constructor(props) {
@@ -98,11 +99,11 @@ class Main extends Component {
 
     return (
       <View style={STYLE.SCREEN}>
-        <View style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]}>
+        <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]} >
           { DEV && <Text style={styles.env}>testnet</Text> }
           <Header />
           <Wallets onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
-        </View>
+        </LinearGradient>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />
         <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined} />

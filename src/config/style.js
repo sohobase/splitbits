@@ -37,7 +37,7 @@ export default StyleSheet.create({
   },
 
   LTC: {
-    backgroundColor: COLOR.ACCENT,
+    backgroundColor: COLOR.LTC,
   },
 
   LAYOUT_BOTTOM: {

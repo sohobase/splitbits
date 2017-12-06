@@ -39,6 +39,7 @@ export default {
     RED: '#F44336',
     WHITE,
     BLACK,
+    LTC: '#B6B6BA',
 
     BACKGROUND: Color(WHITE).darken(0.03),
     BACKGROUND_HIGHLIGHT: Color(WHITE).alpha(0.15),
@@ -46,6 +47,8 @@ export default {
     BACKGROUND_DISABLED: Color(BLACK).alpha(DISABLED),
 
     DIVIDER: Color(WHITE).darken(0.1),
+
+    GRADIENT: ['transparent', 'transparent', 'rgba(0,0,0,0.2)'],
 
     TEXT_DEFAULT: Color(BLACK).alpha(0.87),
     TEXT_SECONDARY: Color(BLACK).alpha(0.54),

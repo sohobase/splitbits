@@ -1,10 +1,11 @@
+import { LinearGradient } from 'expo';
 import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Header, Input } from '../../../components';
-import { C, SHAPE, STYLE, TEXT } from '../../../config';
+import { C, SHAPE, STYLE, TEXT, THEME } from '../../../config';
 import styles from './AmountTransaction.style';
 
 const { SATOSHI, STATE: { REQUESTED } } = C;
@@ -12,6 +13,7 @@ const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
 const { EN: { BALANCE, FEE } } = TEXT;
+const { COLOR } = THEME;
 
 class AmountTransaction extends Component {
   constructor(props) {
@@ -64,7 +66,7 @@ class AmountTransaction extends Component {
     }
 
     return (
-      <View style={STYLE.LAYOUT_TOP}>
+      <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, STYLE[coin]]}>
         <Header
           title={title}
           navigation={navigation}
@@ -101,7 +103,7 @@ class AmountTransaction extends Component {
             </View>
           </View>
         </Motion>
-      </View>
+      </LinearGradient>
     );
   }
 }

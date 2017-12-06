@@ -8,10 +8,12 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT,
     fontSize: FONT.SIZE.LARGE,
     fontWeight: FONT.WEIGHT.BOLD,
+    backgroundColor: 'transparent',
   },
 
   trend: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
     fontSize: FONT.SIZE.SMALL,
+    backgroundColor: 'transparent',
   },
 });
