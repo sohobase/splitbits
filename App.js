@@ -44,8 +44,8 @@ class App extends Component {
     const { store } = this.state;
 
     return (
-      !store ?
-        <LoadingScreen onLoad={this._onLoad} />
+      !store
+        ? <LoadingScreen onLoad={this._onLoad} />
         :
         <Provider store={store}>
           <View style={{ height: '100%' }}>

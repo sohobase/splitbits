@@ -35,7 +35,7 @@ export default {
     RECOVER_PAPER_WALLET: 'Recovering another wallet allows you to access and manage a different wallet on this device. Enter the Paper Key.',
     RECOVER: 'recover',
     REQUEST: 'Request',
-    REQUEST_MONEY: 'Request Money',
+    REQUEST_MONEY: 'Request funds',
     REQUEST_MONEY_HINT: 'You can ask money in your private network.',
     REQUEST_MONEY_HINT_NO_FRIENDS: 'Add friends in order to request money.',
 

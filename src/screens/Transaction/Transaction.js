@@ -41,9 +41,9 @@ class Transaction extends Component {
   }
 
   async componentWillMount() {
-    const { _updateFees, props: { selectDevice, item: { amount, state } = {} } } = this;
+    const { _updateFees, props: { selectDevice, item: { amount, state, to } = {}, wallet } } = this;
     selectDevice(undefined);
-    if (state === REQUESTED) _updateFees(amount);
+    if (state === REQUESTED && wallet.address !== to.address) _updateFees(amount);
   }
 
   _onAddress(address) {

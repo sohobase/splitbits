@@ -23,8 +23,8 @@ export default async(endpoint, props = {}, multipart) => {
 
   return new Promise((resolve) => {
     fetch(`${C.SERVICE}${endpoint}`, { headers, ...props, method })  // eslint-disable-line
-      .then((response) => {
-        const json = response.json();
+      .then(async(response) => {
+        const json = await response.json();
         if (response.status >= 400) {
           const error = new Error();
           error.response = response;

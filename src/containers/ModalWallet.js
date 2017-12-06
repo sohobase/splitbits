@@ -23,9 +23,7 @@ class ModalWallet extends Component {
 
   async _onArchive() {
     const { onClose, removeWallet, wallet } = this.props;
-
-    removeWallet(wallet);
-    await WalletService.archive({ id: wallet.id });
+    await WalletService.archive({ id: wallet.id }).then(() => removeWallet(wallet));
     onClose();
   }
 
