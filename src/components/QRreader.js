@@ -2,11 +2,11 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import { THEME } from '../config';
+import { C, THEME } from '../config';
 import Button from './Button';
 import styles from './QRreader.style';
 
-const { Constants: { isDevice } } = Expo; // eslint-disable-line
+const { IS_DEVICE } = C;
 const { ANIMATION: { DURATION } } = THEME;
 
 class QRreader extends Component {
@@ -38,7 +38,7 @@ class QRreader extends Component {
       active
         ?
           <View style={styles.QRreader}>
-            { isDevice && hasCameraPermission &&
+            { IS_DEVICE && hasCameraPermission &&
               <BarCodeScanner
                 barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
                 onBarCodeRead={_onRead}

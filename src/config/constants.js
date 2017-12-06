@@ -18,6 +18,8 @@ export default {
     JPY: 'JPY',
   },
 
+  IS_DEVICE: Constants.isDevice,
+
   MIN_CONFIRMATIONS: 3,
 
   NETWORKS: {

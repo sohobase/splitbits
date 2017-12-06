@@ -9,6 +9,7 @@ import { CurrenciesService, DeviceService, FingerprintService } from '../../serv
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Lock.style';
 
+const { DEV, IS_DEVICE } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
 const { COLOR } = THEME;
@@ -31,7 +32,7 @@ class Lock extends Component {
     this._onPress = this._onPress.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
 
-    if (C.DEV) this._onSuccess();
+    if (DEV && !IS_DEVICE) this._onSuccess();
   }
 
   componentWillMount() {
