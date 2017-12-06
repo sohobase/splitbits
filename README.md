@@ -65,17 +65,20 @@ Build Status Dependencies Status Known Vulnerabilities
 
 | Item                                       | Status   | Notes                            | Updated    |
 | ------------------------------------------ | -------- | -------------------------------- | ---------- |
-| BTC/LTC Wallet generation                  | Complete | Private key generated and stored | 2017-12-01 |
+| BTC Wallet support                         | Complete | Private key generated and stored | 2017-12-01 |
+| LTC Wallet support                         | Complete | Private key generated and stored | 2017-12-01 |
 | Mnemonic backup seed process               | Complete | Wrapping up confirmation process | 2017-12-01 |
 | BTC/LTC Wallet Import                      | Complete | Private key or Public stored     | 2017-12-01 |
-| Dynamic Fee estimation                     | Complete |                                  | 2017-12-01 |
-| Transaction signing                        | Complete |                                  | 2017-12-01 |
+| Dynamic Fee estimation                     | Complete | No charge for PRO wallets        | 2017-12-01 |
+| Transaction signing                        | Complete | All the process is on device     | 2017-12-01 |
 | Request coins in friends network           | Complete |                                  | 2017-12-01 |
-| Wallet PRO                                 | 50%      |                                  |            |
-| Language localization process              | 20%      |                                  |            |
-| ETH Wallet generation                      | Pending  |                                  |            |
-| External storage for Private Keys          | Pending  |                                  |            |
-| 2nd device for sign transactinos offline   | Pending  |                                  |            |
+| Blockchain activity & push notifications   | Complete |                                  | 2017-12-06 |
+| Wallet PRO                                 | 60%      |                                  |            |
+| Language localization process              | 50%      |                                  |            |
+| ETH Wallet support                         | 10%      |                                  |            |
+| Segwit wallets                             | Pending  |                                  |            |
+| External storage for Private Keys          | 5%       |                                  |            |
+| 2nd device for sign transactions offline   | Pending  |                                  |            |
 | Lightning Network for wallets (PRO)        | Pending  |                                  |            |
 | Atomic Swaps for (PRO)                     | Pending  |                                  |            |
 
