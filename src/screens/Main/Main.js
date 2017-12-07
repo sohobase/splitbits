@@ -101,7 +101,7 @@ class Main extends Component {
       <View style={STYLE.SCREEN}>
         <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]} >
           { DEV && <Text style={styles.env}>testnet</Text> }
-          <Header />
+          <Header wallet={wallet} />
           <Wallets onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
         </LinearGradient>
         <Transactions navigate={navigate} wallet={wallet} />

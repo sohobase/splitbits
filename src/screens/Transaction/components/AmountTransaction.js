@@ -68,9 +68,10 @@ class AmountTransaction extends Component {
     return (
       <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, STYLE[coin]]}>
         <Header
+          buttonRight={editable ? { icon: 'swap', onPress: _onSwap } : undefined}
+          coin={coin}
           title={title}
           navigation={navigation}
-          buttonRight={editable ? { icon: 'swap', onPress: _onSwap } : undefined}
         />
         <Motion animation="bounceIn" delay={400} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
