@@ -1,4 +1,5 @@
 import BitcoinJS from 'bitcoinjs-lib';
+import BitcoinMessage from 'bitcoinjs-message';
 import { C } from '../config';
 import { SecureStore } from '../store';
 import { service } from './modules';
@@ -7,11 +8,19 @@ import PushService from './push';
 
 const { CRYPTO: { BTC }, NETWORKS } = C;
 
+const getSignature = (ecPair) => {
+  const timestamp = (new Date()).getTime();
+  const signatureMessage = `SplitBits Add Wallet ${timestamp}$`;
+  const signature = BitcoinMessage.sign(signatureMessage, ecPair.d.toBuffer(32), ecPair.compressed).toString('base64');
+  return { signature, timestamp };
+};
+
 export default {
   async create({ coin = BTC, name, ...props }) {
     const network = BitcoinJS.networks[NETWORKS[coin]];
     const hexSeed = props.hexSeed || await EntropyService();
-    const address = props.address || BitcoinJS.HDNode.fromSeedHex(hexSeed, network).getAddress();
+    const hdNode = BitcoinJS.HDNode.fromSeedHex(hexSeed, network);
+    const address = hdNode.getAddress();
 
     if (hexSeed) await SecureStore.set(`${coin}_${address}`, hexSeed);
     const wallet = service('wallet', {
@@ -21,6 +30,7 @@ export default {
         coin,
         name,
         push: await PushService.getToken(),
+        payload: getSignature(hdNode.keyPair),
       }),
     });
 
@@ -35,7 +45,8 @@ export default {
       ...inherit
     } = props;
     const network = BitcoinJS.networks[NETWORKS[coin]];
-    const address = wif ? BitcoinJS.ECPair.fromWIF(wif, network).getAddress() : readOnlyAddress;
+    const ecPair = wif && BitcoinJS.ECPair.fromWIF(wif, network);
+    const address = wif ? ecPair.getAddress() : readOnlyAddress;
 
     if (wif) await SecureStore.set(`${coin}_${address}`, wif);
     const wallet = service('wallet', {
@@ -46,6 +57,7 @@ export default {
         address,
         imported: true,
         readOnly: (wif === undefined),
+        payload: wif && getSignature(ecPair),
       }),
     });
 
