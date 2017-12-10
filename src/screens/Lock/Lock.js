@@ -7,6 +7,7 @@ import { Icon, Logo, Touchable } from '../../components';
 import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
 import { CurrenciesService, DeviceService, FingerprintService } from '../../services';
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
+import { NumKeyboard, Pin } from './components';
 import styles from './Lock.style';
 
 const { DEV, IS_DEVICE } = C;
@@ -16,7 +17,6 @@ const { COLOR } = THEME;
 
 const BACKSPACE = 'backspace';
 const HELP = 'help';
-const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, HELP, 0, BACKSPACE];
 
 class Lock extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class Lock extends Component {
     this.state = {
       hasFingerprint: false,
       pin: undefined,
+      ready: true,
       wrong: false,
     };
 
@@ -31,8 +32,7 @@ class Lock extends Component {
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
-
-    if (DEV && !IS_DEVICE) this._onSuccess();
+    // if (DEV && !IS_DEVICE) this._onSuccess();
   }
 
   componentWillMount() {
@@ -97,7 +97,9 @@ class Lock extends Component {
     const {
       _onFingerprint, _onPress,
       props: { device },
-      state: { hasFingerprint, pin, wrong },
+      state: {
+        hasFingerprint, pin, ready, wrong,
+      },
     } = this;
     let animation;
     if (!pin) animation = 'bounceInDown';
@@ -108,28 +110,11 @@ class Lock extends Component {
         <StatusBar backgroundColor={COLOR.PRIMARY} barStyle="light-content" />
         <View style={[STYLE.CENTERED, styles.header]}>
           <Logo motion={{ animation: 'bounceInDown' }} />
-          <Motion animation={animation} delay={100} style={styles.pin}>
-            <View style={STYLE.ROW}>
-              <View style={[styles.code, (pin && pin.length >= 1 && styles.codeActive)]} />
-              <View style={[styles.code, (pin && pin.length >= 2 && styles.codeActive)]} />
-              <View style={[styles.code, (pin && pin.length >= 3 && styles.codeActive)]} />
-              <View style={[styles.code, (pin && pin.length >= 4 && styles.codeActive)]} />
-            </View>
-          </Motion>
-          { !device.pin && <Text style={styles.hint}>{SET_PIN_CODE}</Text> }
+          { ready && <Pin animation={animation} pin={pin} /> }
+          { ready && !device.pin && <Text style={styles.hint}>{SET_PIN_CODE}</Text> }
         </View>
-        <Motion animation="bounceInUp" delay={200}>
-          <View style={[STYLE.ROW, styles.padLock]}>
-            { KEYS.map(key => (
-              <Touchable key={key} onPress={() => _onPress(key)} raised style={[STYLE.CENTERED, styles.keyPad]}>
-                { [BACKSPACE, HELP].includes(key)
-                  ? <Icon value={key} style={styles.icon} />
-                  : <Text style={styles.number}>{key}</Text>
-                }
-              </Touchable>))}
-          </View>
-        </Motion>
-        { hasFingerprint &&
+        { ready && <NumKeyboard onPress={_onPress} /> }
+        { ready && hasFingerprint &&
           <Motion animation="bounceInUp" delay={400}>
             <Touchable raised onPress={_onFingerprint}>
               <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
