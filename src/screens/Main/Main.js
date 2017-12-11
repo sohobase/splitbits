@@ -39,7 +39,6 @@ class Main extends Component {
 
   componentWillMount() {
     const { props: { updateCurrencies, updateDevice } } = this;
-    console.log('>>>>');
     Promise.all([
       CurrenciesService.list().then(updateCurrencies),
       DeviceService.state().then(updateDevice),

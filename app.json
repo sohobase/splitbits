@@ -5,7 +5,7 @@
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
     "sdkVersion": "23.0.0",
-    "version": "0.4.7",
+    "version": "0.4.8",
     "orientation": "portrait",
     "primaryColor": "#2d126c",
     "icon": "./assets/app-icon.png",
@@ -26,7 +26,7 @@
     "android": {
       "package": "com.sohobase.splitbits",
       "permissions": ["CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
-      "versionCode": 47
+      "versionCode": 48
     },
     "androidStatusBar": {
       "backgroundColor": "#2d126c",
