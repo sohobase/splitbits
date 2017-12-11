@@ -8,7 +8,6 @@ const options = {
   day: 'numeric',
   hour: 'numeric',
   minute: 'numeric',
-  second: 'numeric',
   timeZone: 'UTC',
   timeZoneName: 'short',
 };
