@@ -18,6 +18,7 @@ export default {
   },
 
   locale(date, encode = 'en-US') {
-    return DateTimeFormat(encode, options).format(new Date(date));
+    if (Intl) return DateTimeFormat(encode, options).format(new Date(date));
+    return new Date(date).toLocaleString(encode);
   },
 };
