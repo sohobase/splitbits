@@ -32,4 +32,9 @@ export default StyleSheet.create({
   title: {
     fontWeight: FONT.WEIGHT.BOLD,
   },
+
+  input: {
+    width: '100%',
+    fontSize: FONT.SIZE.DEFAULT,
+  },
 });

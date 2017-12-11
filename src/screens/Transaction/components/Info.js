@@ -3,12 +3,21 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { SHAPE, STYLE } from '../../../config';
-import { Avatar } from '../../../components';
+import { SHAPE, STYLE, TEXT } from '../../../config';
+import { Avatar, Input } from '../../../components';
 import { DateService } from '../../../services';
 import styles from './Info.style';
 
 const { DEVICE, TRANSACTION } = SHAPE;
+const {
+  EN: {
+    ADDRESS, CONCEPT, CONFIRMATIONS, DATE, HASH, STATE,
+  },
+} = TEXT;
+
+const onConcept = (value) => {
+  console.log('onChange', value);
+};
 
 const renderField = (caption, value, style) => (
   <View style={[STYLE.LIST_ITEM, style]}>
@@ -39,13 +48,15 @@ const TransactionInfo = (props) => {
               </View>
             </View>
           :
-            renderField('Address', from.address)}
+            renderField(ADDRESS, from.address)}
 
-        { hash && renderField('State', state, styles.half) }
-        { hash && renderField('Confirmations', confirmations, styles.half) }
-        { concept && renderField('Concept', concept) }
-        { hash && renderField('Hash', hash) }
-        { renderField('Date', DateService.locale(createdAt)) }
+        { hash && renderField(STATE, state, styles.half) }
+        { hash && renderField(CONFIRMATIONS, confirmations, styles.half) }
+        { !concept
+          ? renderField(CONCEPT, concept)
+          : <Input onChangeText={onConcept} placeholder={`${CONCEPT}...`} style={[STYLE.LIST_ITEM, styles.input]} /> }
+        { hash && renderField(HASH, hash) }
+        { renderField(DATE, DateService.locale(createdAt)) }
       </View>
     </Motion>
   );
