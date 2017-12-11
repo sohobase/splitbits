@@ -4,8 +4,8 @@ import { BackHandler, Linking, StatusBar, Text, Vibration, View } from 'react-na
 import { connect } from 'react-redux';
 import { Logo } from '../../components';
 import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
-import { CurrenciesService, DeviceService, FingerprintService } from '../../services';
-import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
+import { FingerprintService } from '../../services';
+import { updateDeviceAction } from '../../store/actions';
 import { Fingerprint, NumKeyboard, Pin } from './components';
 import styles from './Lock.style';
 
@@ -82,12 +82,7 @@ class Lock extends Component {
   }
 
   _onSuccess() {
-    const { props: { navigation: { navigate }, updateCurrencies, updateDevice } } = this;
-    Promise.all([
-      CurrenciesService.list().then(updateCurrencies),
-      DeviceService.state().then(updateDevice),
-    ]);
-    navigate('Main');
+    this.props.navigation.navigate('Main');
   }
 
   render() {
@@ -118,14 +113,12 @@ class Lock extends Component {
 Lock.propTypes = {
   device: shape(DEVICE),
   navigation: shape(NAVIGATION),
-  updateCurrencies: func,
   updateDevice: func,
 };
 
 Lock.defaultProps = {
   device: {},
   navigation: undefined,
-  updateCurrencies() {},
   updateDevice() {},
 };
 
@@ -134,7 +127,6 @@ const mapStateToProps = ({ device }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateCurrencies: currencies => currencies && dispatch(updateCurrenciesAction(currencies)),
   updateDevice: device => device && dispatch(updateDeviceAction(device)),
 });
 
