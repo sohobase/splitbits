@@ -1,4 +1,4 @@
-import { arrayOf, shape } from 'prop-types';
+import { arrayOf, func, shape } from 'prop-types';
 import { LinearGradient, Notifications } from 'expo';
 import React, { Component } from 'react';
 import { AppState, View, Text } from 'react-native';
@@ -7,6 +7,8 @@ import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
 import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '../../containers';
 import { Header, Footer, TransactionButton, Transactions, Wallets } from './components';
 import { onAppActive, onNotification } from './modules';
+import { CurrenciesService, DeviceService } from '../../services';
+import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Main.style';
 
 const { DEV } = C;
@@ -36,6 +38,12 @@ class Main extends Component {
   }
 
   componentWillMount() {
+    const { props: { updateCurrencies, updateDevice } } = this;
+    console.log('>>>>');
+    Promise.all([
+      CurrenciesService.list().then(updateCurrencies),
+      DeviceService.state().then(updateDevice),
+    ]);
     AppState.addEventListener('change', state => onAppActive(this.props, state));
     Notifications.addListener(onNotification);
   }
@@ -126,15 +134,24 @@ class Main extends Component {
 Main.propTypes = {
   navigation: shape(NAVIGATION),
   wallets: arrayOf(shape(WALLET)),
+  updateCurrencies: func,
+  updateDevice: func,
 };
 
 Main.defaultProps = {
   navigation: undefined,
   wallets: [],
+  updateCurrencies() {},
+  updateDevice() {},
 };
 
 const mapStateToProps = ({ wallets }) => ({
   wallets,
 });
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = dispatch => ({
+  updateCurrencies: currencies => currencies && dispatch(updateCurrenciesAction(currencies)),
+  updateDevice: device => device && dispatch(updateDeviceAction(device)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
