@@ -1,16 +1,15 @@
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { BackHandler, StatusBar, Text, Vibration, View } from 'react-native';
-import { View as Motion } from 'react-native-animatable';
+import { BackHandler, Linking, StatusBar, Text, Vibration, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Icon, Logo, Touchable } from '../../components';
+import { Logo } from '../../components';
 import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
 import { CurrenciesService, DeviceService, FingerprintService } from '../../services';
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
-import { NumKeyboard, Pin } from './components';
+import { Fingerprint, NumKeyboard, Pin } from './components';
 import styles from './Lock.style';
 
-const { DEV, IS_DEVICE } = C;
+const { DEV, IS_DEVICE, SOHOBASE_SUPPORT } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
 const { COLOR } = THEME;
@@ -18,13 +17,14 @@ const { COLOR } = THEME;
 const BACKSPACE = 'backspace';
 const HELP = 'help';
 
+const onHelp = () => Linking.openURL(`mailto:${SOHOBASE_SUPPORT}?subject=Help&body=body`);
+
 class Lock extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hasFingerprint: false,
       pin: undefined,
-      ready: true,
       wrong: false,
     };
 
@@ -32,7 +32,7 @@ class Lock extends Component {
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
-    // if (DEV && !IS_DEVICE) this._onSuccess();
+    if (DEV && !IS_DEVICE) this._onSuccess();
   }
 
   componentWillMount() {
@@ -51,8 +51,10 @@ class Lock extends Component {
   }
 
   _onPress(key) {
-    if ([BACKSPACE, HELP].includes(key)) {
-      this[(key === BACKSPACE) ? '_onBackspace' : '_onHelp']();
+    if (key === HELP) {
+      onHelp();
+    } else if (key === BACKSPACE) {
+      this._onBackspace();
     } else {
       let { pin = '' } = this.state;
       pin = `${pin}${key}`;
@@ -79,17 +81,12 @@ class Lock extends Component {
     if (pin.length > 0) this.setState({ pin: pin.slice(0, -1) || '' });
   }
 
-  _onHelp() {
-    // @TODO: Link to a website.
-  }
-
-  async _onSuccess() {
+  _onSuccess() {
     const { props: { navigation: { navigate }, updateCurrencies, updateDevice } } = this;
-    await Promise.all([
+    Promise.all([
       CurrenciesService.list().then(updateCurrencies),
       DeviceService.state().then(updateDevice),
     ]);
-
     navigate('Main');
   }
 
@@ -97,9 +94,7 @@ class Lock extends Component {
     const {
       _onFingerprint, _onPress,
       props: { device },
-      state: {
-        hasFingerprint, pin, ready, wrong,
-      },
+      state: { hasFingerprint, pin, wrong },
     } = this;
     let animation;
     if (!pin) animation = 'bounceInDown';
@@ -110,19 +105,11 @@ class Lock extends Component {
         <StatusBar backgroundColor={COLOR.PRIMARY} barStyle="light-content" />
         <View style={[STYLE.CENTERED, styles.header]}>
           <Logo motion={{ animation: 'bounceInDown' }} />
-          { ready && <Pin animation={animation} pin={pin} /> }
-          { ready && !device.pin && <Text style={styles.hint}>{SET_PIN_CODE}</Text> }
+          <Pin animation={animation} pin={pin} />
+          { !device.pin && <Text style={styles.hint}>{SET_PIN_CODE}</Text> }
         </View>
-        { ready && <NumKeyboard onPress={_onPress} /> }
-        { ready && hasFingerprint &&
-          <Motion animation="bounceInUp" delay={400}>
-            <Touchable raised onPress={_onFingerprint}>
-              <View style={[STYLE.ROW, STYLE.CENTERED, styles.fingerPrint]}>
-                <Icon value="fingerprint" style={[styles.icon, styles.iconFingerprint]} />
-                <Text style={styles.hint}>{USE_FINGERPRINT}</Text>
-              </View>
-            </Touchable>
-          </Motion> }
+        <NumKeyboard onPress={_onPress} onHelp={onHelp} />
+        { hasFingerprint && <Fingerprint onSuccess={_onFingerprint} /> }
       </View>
     );
   }

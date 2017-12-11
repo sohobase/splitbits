@@ -45,6 +45,8 @@ export default {
     ? Constants.linkingUrl.replace(/^\w+:\/\/([^:/]+):\d+\/.*$/, 'http://$1:3000/')
     : 'https://splitbits.sohobase.co/',
 
+  SOHOBASE_SUPPORT: 'support@sohobase.co',
+
   STATE: {
     // -- Transactions
     REQUESTED: 'requested',
