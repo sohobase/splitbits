@@ -1,6 +1,5 @@
 import timeago from 'timeago.js';
 
-const { DateTimeFormat } = Intl;
 const options = {
   weekday: 'short',
   year: 'numeric',
@@ -18,7 +17,7 @@ export default {
   },
 
   locale(date, encode = 'en-US') {
-    if (Intl) return DateTimeFormat(encode, options).format(new Date(date));
+    if (Intl) return Intl.DateTimeFormat(encode, options).format(new Date(date));
     return new Date(date).toLocaleString(encode);
   },
 };
