@@ -37,6 +37,10 @@ export default {
   },
 
   archive(id, walletId) {
-    return service(`transaction/archive/${id}`, { method: 'DELETE', body: JSON.stringify({ walletId }) });
+    return service(`transaction/${id}`, { method: 'DELETE', body: JSON.stringify({ walletId }) });
+  },
+
+  update(id, props) {
+    return service(`transaction/${id}`, { method: 'PUT', body: JSON.stringify(props) });
   },
 };
