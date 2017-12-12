@@ -4,6 +4,9 @@ const DEV = __DEV__; //eslint-disable-line
 const LOGO = require('../../assets/app-brandname.png');
 
 export default {
+
+  BLOCKCHAIN_EXPLORER_URL: 'https://chain.so/address',
+
   CRYPTO: {
     BTC: 'BTC',
     LTC: 'LTC',

@@ -1,14 +1,15 @@
 import { arrayOf, func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Linking, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { SHAPE, STYLE, TEXT } from '../../../config';
-import { Avatar, Input } from '../../../components';
+import { C, SHAPE, STYLE, TEXT } from '../../../config';
+import { Avatar, Input, Touchable } from '../../../components';
 import { DateService, TransactionService } from '../../../services';
 import { updateTransactionsAction } from '../../../store/actions';
 import styles from './Info.style';
 
+const { BLOCKCHAIN_EXPLORER_URL } = C;
 const { DEVICE, TRANSACTION } = SHAPE;
 const {
   EN: {
@@ -44,7 +45,7 @@ class TransactionInfo extends Component {
       props: {
         devices,
         item: {
-          confirmations = 0, concept, createdAt, from, hash, to, state,
+          confirmations = 0, coin, concept, createdAt, from, hash, to, state,
         },
       },
     } = this;
@@ -75,7 +76,16 @@ class TransactionInfo extends Component {
               placeholder={`${CONCEPT}...`}
               style={[STYLE.LIST_ITEM, styles.input]}
             /> }
-          { hash && renderField(HASH, hash) }
+          { hash &&
+            <Touchable
+              style={STYLE.LIST_ITEM}
+              onPress={() => Linking.openURL(`${BLOCKCHAIN_EXPLORER_URL}/${coin}/${hash}`)}
+            >
+              <View>
+                <Text style={styles.label}>{HASH}</Text>
+                <Text style={styles.value}>{hash}</Text>
+              </View>
+            </Touchable>}
           { renderField(DATE, DateService.locale(createdAt)) }
         </View>
       </Motion>
