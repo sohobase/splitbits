@@ -38,7 +38,7 @@ export default {
     GBP: '£',
     JPY: '¥',
 
-    BTC: '฿', // ₿
+    BTC: 'Ƀ', // ₿
     LTC: 'Ł',
   },
 
