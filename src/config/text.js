@@ -2,6 +2,7 @@ export default {
   EN: {
     ACCEPT: 'Accept',
     ADD_NOTE: 'Add note',
+    ADDRESS: 'Address',
 
     BALANCE: 'Balance',
 
@@ -10,14 +11,18 @@ export default {
     CHOOSE_A_FRIEND: 'Choose a friend',
     CHOOSE_EXISTING_PHOTO: 'Choose existing photo',
     CONCEPT: 'Concept',
+    CONFIRMATIONS: 'Comfirmations',
     COPYRIGHT: 'Made by a small band of superheroes in London. Thank you for your support!',
     CREATE: 'create',
+
+    DATE: 'Date',
 
     ERROR_CONNECTION: 'Oops, seems you are not connected to splitbits server.',
 
     FEE: 'Fee',
     FRIENDS: 'Friends',
 
+    HASH: 'Hash',
     HINT_FIND_BY_NAME: 'Other people can only find you if you have defined your name.',
     IMPORT: 'import',
 
@@ -29,6 +34,7 @@ export default {
 
     PAPER_WALLET: 'Your paper key is the only way to restore your wallet if your phone is lost, stolen, broken, or upgraded. This is your list of words to write down on a piece of paper and keep safe.',
     PAY: 'Pay',
+    PORTFOLIO: 'Stay on top of your portfolio. Anytime. Anywhere.',
     PROCESSING: 'Processing...',
 
     READ_ONLY: 'Watch only',
@@ -48,6 +54,7 @@ export default {
     SET_PIN_CODE: 'Set your PIN code',
     SKIP: 'Skip',
     START: 'Start',
+    STATE: 'State',
 
     TAKE_PHOTO: 'Take photo',
     TO: 'to',
@@ -57,8 +64,6 @@ export default {
     USE_FINGERPRINT: 'Use fingerprint to unlock',
 
     WAIT_A_MOMENT: 'Wait a moment',
-
-    PORTFOLIO: 'Stay on top of your portfolio. Anytime. Anywhere.',
 
     CAPTION: {
       EXCHANGE: 'Use your local currency',
