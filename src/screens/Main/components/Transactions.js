@@ -81,7 +81,13 @@ const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
     state !== ARCHIVED &&
     (
       [from.address, to.address].includes(wallet.address) ||
-      (!wallet.readOnly && state === REQUESTED && [from.device, to.device].includes(device.id))
+      (
+        state === REQUESTED &&
+        (
+          to.wallet === wallet.id || // Request from me: Only from the wallet I requested from
+          (from.device === device.id && !wallet.readOnly) // Request to me: show in all non-read-only wallets
+        )
+      )
     )
   )).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
 });
