@@ -3,16 +3,13 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal, Option, QRreader } from '../components';
-import { C, STYLE, TEXT } from '../config';
+import { ASSETS, C, STYLE, TEXT } from '../config';
 import { WalletService } from '../services';
 import { addWalletAction } from '../store/actions';
 import { validateAddress } from './modules';
 import styles from './ModalWalletNew.style';
 
-const imageBTC = require('../../assets/coin-bitcoin.png');
-const imageLTC = require('../../assets/coin-litecoin.png');
-
-const { CRYPTO: { BTC, LTC }, DEV } = C;
+const { CRYPTO: { BTC, ETH, LTC }, DEV } = C;
 const {
   EN: {
     CREATE, IMPORT, RECOVER, TYPE_OF_WALLET,
@@ -101,14 +98,21 @@ class ModalWalletNew extends Component {
           <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
             <Option
               centered
-              image={imageBTC}
+              image={ASSETS.btc}
               caption="Bitcoin"
               onPress={() => _onCoin(BTC)}
               style={[styles.coin, coin === BTC && styles.coinActive]}
             />
             <Option
               centered
-              image={imageLTC}
+              image={ASSETS.eth}
+              caption="Ethereum"
+              onPress={() => _onCoin(ETH)}
+              style={[styles.coin, coin === ETH && styles.coinActive]}
+            />
+            <Option
+              centered
+              image={ASSETS.ltc}
               caption="Litecoin"
               onPress={() => _onCoin(LTC)}
               style={[styles.coin, coin === LTC && styles.coinActive]}

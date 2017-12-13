@@ -36,6 +36,14 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
+  BTC: {
+    backgroundColor: COLOR.BTC,
+  },
+
+  ETH: {
+    backgroundColor: COLOR.ETH,
+  },
+
   LTC: {
     backgroundColor: COLOR.LTC,
   },

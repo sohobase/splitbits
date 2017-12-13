@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
 
   coin: {
-    minWidth: '50%',
+    minWidth: '33%',
     opacity: 0.5,
   },
 

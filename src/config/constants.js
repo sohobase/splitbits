@@ -9,6 +9,7 @@ export default {
 
   CRYPTO: {
     BTC: 'BTC',
+    ETH: 'ETH',
     LTC: 'LTC',
   },
 
@@ -28,6 +29,7 @@ export default {
   NETWORKS: {
     BTC: DEV ? 'testnet' : 'bitcoin',
     LTC: DEV ? 'testnet' : 'litecoin',
+    ETH: DEV ? 'testnet' : 'ethereum',
   },
 
   LOGO,
@@ -39,6 +41,7 @@ export default {
     JPY: '¥',
 
     BTC: 'Ƀ', // ₿
+    ETH: 'Ξ',
     LTC: 'Ł',
   },
 

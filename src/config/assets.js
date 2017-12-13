@@ -1,3 +1,7 @@
+const btc = require('../../assets/coin-btc.png');
+const eth = require('../../assets/coin-eth.png');
+const ltc = require('../../assets/coin-ltc.png');
+
 const add = require('../../assets/icon-add.png');
 const addDevice = require('../../assets/icon-add-device.png');
 const arrowBack = require('../../assets/icon-arrow-back.png');
@@ -32,6 +36,10 @@ const trend = require('../../assets/image-trend.png');
 const wallet = require('../../assets/image-wallet.png');
 
 export default {
+  btc,
+  eth,
+  ltc,
+
   add,
   addDevice,
   arrowBack,
