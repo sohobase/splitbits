@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import timeago from 'timeago.js';
 
 const options = {
@@ -17,7 +18,8 @@ export default {
   },
 
   locale(date, encode = 'en-US') {
-    if (Intl) return Intl.DateTimeFormat(encode, options).format(new Date(date));
-    return new Date(date).toLocaleString(encode);
+    return (Platform.OS === 'ios' && Intl)
+      ? Intl.DateTimeFormat(encode, options).format(new Date(date))
+      : new Date(date).toLocaleString(encode);
   },
 };
