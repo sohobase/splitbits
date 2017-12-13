@@ -81,7 +81,7 @@ class TransactionInfo extends Component {
               style={STYLE.LIST_ITEM}
               onPress={() => Linking.openURL(`${BLOCKCHAIN_EXPLORER_URL}/${coin}/${hash}`)}
             >
-              <View>
+              <View style={STYLE.LIST_ITEM}>
                 <Text style={styles.label}>{HASH}</Text>
                 <Text style={styles.value}>{hash}</Text>
               </View>
