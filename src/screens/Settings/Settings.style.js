@@ -18,7 +18,8 @@ export default StyleSheet.create({
 
   form: {
     zIndex: 1,
-    height: '75%',
+    minHeight: '65%',
+    height: '65%',
     backgroundColor: COLOR.WHITE,
   },
 
@@ -62,6 +63,13 @@ export default StyleSheet.create({
     bottom: OFFSET + FOOTER_OFFSET,
     maxWidth: '90%',
     alignSelf: 'center',
+  },
+
+  sohobase: {
+    height: FONT.SIZE.DEFAULT,
+    resizeMode: 'contain',
+    tintColor: COLOR.BLACK,
+    marginBottom: UNIT / 2,
   },
 
   text: {

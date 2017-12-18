@@ -3,13 +3,11 @@ import React from 'react';
 import { Image } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import styles from './Logo.style';
-import { C } from '../config';
-
-const { LOGO } = C;
+import { ASSETS } from '../config';
 
 const Logo = ({ motion, style }) => (
   <Motion {...motion}>
-    <Image style={[styles.logo, style]} source={LOGO} />
+    <Image style={[styles.logo, style]} source={ASSETS.brandname} />
   </Motion>
 );
 

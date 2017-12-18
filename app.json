@@ -10,7 +10,7 @@
     "primaryColor": "#2d126c",
     "icon": "./assets/app-icon.png",
     "loading": {
-      "icon": "./assets/app-loading.png",
+      "icon": "./assets/app-sohobase.png",
       "hideExponentText": true,
       "backgroundColor": "#2d126c"
     },
