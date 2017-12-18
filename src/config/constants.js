@@ -1,7 +1,6 @@
 import { Constants } from 'expo';
 
 const DEV = __DEV__; //eslint-disable-line
-const LOGO = require('../../assets/app-brandname.png');
 
 export default {
 
@@ -31,8 +30,6 @@ export default {
     LTC: DEV ? 'testnet' : 'litecoin',
     ETH: DEV ? 'testnet' : 'ethereum',
   },
-
-  LOGO,
 
   SYMBOL: {
     EUR: '€',

@@ -5,7 +5,7 @@ import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
 import { ModalCamera, ModalCurrency } from '../../containers';
-import { C, SHAPE, STYLE, THEME, TEXT } from '../../config';
+import { ASSETS, C, SHAPE, STYLE, THEME, TEXT } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
@@ -104,6 +104,7 @@ class Settings extends Component {
           </View>
         </Motion>
         <Motion animation="bounceInUp" delay={500} style={[STYLE.CENTERED, styles.footer]}>
+          <Image source={ASSETS.sohobase} style={styles.sohobase} />
           <View>
             <Text style={styles.text}>❤️</Text>
             <Text style={styles.text}>{COPYRIGHT}</Text>

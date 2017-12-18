@@ -16,7 +16,7 @@ const COIN_FRIENDLY = {
   LTC: 0.001,
 };
 
-const renderSymbol = ({ coin, style }, SYMBOLS = SYMBOL) => (
+const renderSymbol = ({ coin, style }, SYMBOLS = SYMBOL) => ( // eslint-disable-line
   <Text style={[styles.amount, styles.symbol, style]}>
     {Object.keys(SYMBOLS).includes(coin) ? SYMBOLS[coin] : SYMBOL[coin.toUpperCase()] || coin.toUpperCase()}
   </Text>
