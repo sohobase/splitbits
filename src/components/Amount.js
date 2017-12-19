@@ -4,17 +4,9 @@ import { Text, View } from 'react-native';
 import { C, STYLE } from '../config';
 import styles from './Amount.style';
 
-const { FIAT, SATOSHI, SYMBOL } = C;
-
-const SYMBOL_FRIENDLY = {
-  BTC: ' Bits',
-  LTC: ' Lites',
-};
-
-const COIN_FRIENDLY = {
-  BTC: 0.000001,
-  LTC: 0.001,
-};
+const {
+  CONVERSION, FIAT, SATOSHI, SYMBOL,
+} = C;
 
 const renderSymbol = ({ coin, style }, SYMBOLS = SYMBOL) => ( // eslint-disable-line
   <Text style={[styles.amount, styles.symbol, style]}>
@@ -33,8 +25,8 @@ const Amount = (props) => {
   } else {
     const satoshis = value * SATOSHI;
     if (satoshis > 0 && satoshis < 0.1) {
-      value = parseInt(satoshis / COIN_FRIENDLY[coin], 10);
-      symbols = SYMBOL_FRIENDLY;
+      value = parseInt(satoshis / CONVERSION[coin], 10);
+      symbols = SYMBOL.FRIENDLY;
     } else {
       value = Math.round(satoshis * 10000) / 10000;
       fixed = (value.toString().split('.')[1] || []).length;

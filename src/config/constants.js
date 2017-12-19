@@ -6,6 +6,11 @@ export default {
 
   BLOCKCHAIN_EXPLORER_URL: 'https://chain.so/address',
 
+  CONVERSION: {
+    BTC: 0.000001,
+    LTC: 0.001,
+  },
+
   CRYPTO: {
     BTC: 'BTC',
     ETH: 'ETH',
@@ -40,6 +45,11 @@ export default {
     BTC: 'Ƀ', // ₿
     ETH: 'Ξ',
     LTC: 'Ł',
+
+    FRIENDLY: {
+      BTC: 'bits',
+      LTC: 'lites',
+    },
   },
 
   SATOSHI: 0.00000001,
