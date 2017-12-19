@@ -4,11 +4,6 @@ import { Dimensions, Platform } from 'react-native';
 const UNIT = 10;
 const OFFSET = UNIT * 1.6;
 const PRIMARY = '#2d126c';
-const ACCENT = '#32dba8';
-const BLUE = '#303498';
-const PINK = '#ff4566';
-const ACCEPT = '#5edeb3';
-const RED = '#F44336';
 const WHITE = '#ffffff';
 const BLACK = '#000000';
 const DISABLED = 0.38;
@@ -38,15 +33,16 @@ export default {
 
   COLOR: {
     PRIMARY,
-    ACCENT,
-    BLUE,
-    PINK,
-    ACCEPT,
-    RED,
+    ACCENT: '#32dba8',
+    BLUE: '#303498',
+    PINK: '#ff4566',
+    ACCEPT: '#5edeb3',
+    RED: '#F44336',
+    TRANSPARENT: 'transparent',
     WHITE,
     BLACK,
     BTC: PRIMARY,
-    ETH: BLUE,
+    ETH: 'transparent',
     LTC: '#B6B6BA',
 
     BACKGROUND: Color(WHITE).darken(0.03),
@@ -79,8 +75,8 @@ export default {
     },
     WEIGHT: {
       LIGHT: '200',
-      DEFAULT: '400',
-      BOLD: '700',
+      DEFAULT: 'normal',
+      BOLD: '800',
     },
   },
 

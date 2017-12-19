@@ -20,12 +20,12 @@ export default StyleSheet.create({
     fontWeight: FONT.WEIGHT.LIGHT,
     textAlign: 'center',
     color: COLOR.TEXT_HIGHLIGHT,
-    backgroundColor: 'transparent',
+    backgroundColor: COLOR.TRANSPARENT,
   },
 
   label: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
-    backgroundColor: 'transparent',
+    backgroundColor: COLOR.TRANSPARENT,
   },
 
   small: {

@@ -9,6 +9,6 @@ export default StyleSheet.create({
   },
 
   symbol: {
-    fontWeight: FONT.WEIGHT.LIGHT,
+    transform: [{ scale: 0.9 }],
   },
 });

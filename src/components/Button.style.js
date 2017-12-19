@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
 
   raised: {
-    backgroundColor: 'transparent',
+    backgroundColor: COLOR.TRANSPARENT,
   },
 
   primary: {
@@ -52,7 +52,7 @@ export default StyleSheet.create({
     color: COLOR.TEXT_HIGHLIGHT,
     fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
-    backgroundColor: 'transparent',
+    backgroundColor: COLOR.TRANSPARENT,
   },
 
   captionProcessing: {
