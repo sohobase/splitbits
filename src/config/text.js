@@ -9,7 +9,9 @@ export default {
     CANCEL_REQUEST: 'Cancel request',
     CHANGE_YOUR_AVATAR: 'Change your avatar',
     CHOOSE_A_FRIEND: 'Choose a friend',
+    CHOOSE_CURRENCY: 'Choose your local currency',
     CHOOSE_EXISTING_PHOTO: 'Choose existing photo',
+    CHOOSE_LANGUAGE: 'Choose your language',
     CONCEPT: 'Concept',
     CONFIRMATIONS: 'Comfirmations',
     COPYRIGHT: 'Made by a small band of superheroes in London. Thank you for your support!',
@@ -26,6 +28,7 @@ export default {
     HINT_FIND_BY_NAME: 'Other people can only find you if you have defined your name.',
     IMPORT: 'import',
 
+    LANGUAGE: 'Language',
     LOCAL_CURRENCY: 'Local currency',
 
     NAME: 'Name',

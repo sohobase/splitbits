@@ -4,19 +4,19 @@ import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
-import { ModalCamera, ModalCurrency } from '../../containers';
+import { ModalCamera, ModalValues } from '../../containers';
 import { ASSETS, C, SHAPE, STYLE, THEME, TEXT } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
 import styles from './Settings.style';
 
-const { SERVICE } = C;
+const { FIAT, LANGUAGES, SERVICE } = C;
 const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 const {
   EN: {
-    COPYRIGHT, HINT_FIND_BY_NAME, LOCAL_CURRENCY, NAME, SETTINGS,
+    CHOOSE_CURRENCY, CHOOSE_LANGUAGE, COPYRIGHT, HINT_FIND_BY_NAME, LANGUAGE, LOCAL_CURRENCY, NAME, SETTINGS,
   },
 } = TEXT;
 let timeout;
@@ -24,32 +24,36 @@ let timeout;
 class Settings extends Component {
   constructor(props) {
     super(props);
-    const { device: { currency, image, name } } = props;
+    const {
+      currency, image, language = LANGUAGES[0], name,
+    } = props.device;
     this.state = {
       image,
       camera: false,
+      context: undefined,
       currency,
-      currencies: false,
+      language,
+      modal: false,
       name,
       timestamp: new Date().getTime(),
     };
-    this._onCurrency = this._onCurrency.bind(this);
     this._onImage = this._onImage.bind(this);
-    this._onModalCurrency = this._onModalCurrency.bind(this);
+    this._onModal = this._onModal.bind(this);
     this._onModalImage = this._onModalImage.bind(this);
+    this._onModalValue = this._onModalValue.bind(this);
     this._onName = this._onName.bind(this);
-  }
-
-  async _onCurrency(currency) {
-    const { updateDevice } = this.props;
-    this.setState({ currencies: false, currency });
-    DeviceService.update({ currency }).then(updateDevice);
   }
 
   async _onImage(image) {
     const { updateDevice } = this.props;
     this.setState({ image: image.uri, camera: false, timestamp: new Date().getTime() });
     DeviceService.update({ image }).then(updateDevice);
+  }
+
+  async _onLanguage(language) {
+    const { updateDevice } = this.props;
+    this.setState({ language });
+    DeviceService.update({ language }).then(updateDevice);
   }
 
   _onName(name) {
@@ -61,20 +65,30 @@ class Settings extends Component {
     }, 1000);
   }
 
-  _onModalCurrency() {
-    this.setState({ currencies: !this.state.currencies });
+  _onModal(context) {
+    this.setState({
+      modal: !this.state.modal,
+      context: (typeof context === 'string') ? context : undefined,
+    });
   }
 
   _onModalImage() {
     this.setState({ camera: !this.state.camera });
   }
 
+  async _onModalValue(value) {
+    const { params = {}, props: { updateDevice }, state: { context } } = this;
+    params[context] = value;
+    this.setState({ modal: false, ...params });
+    DeviceService.update(params).then(updateDevice);
+  }
+
   render() {
     const {
-      _onCurrency, _onImage, _onName, _onModalCurrency, _onModalImage,
+      _onModalValue, _onImage, _onName, _onModal, _onModalImage,
       props: { device, navigation },
       state: {
-        camera, currencies, currency, image, name, timestamp,
+        camera, context, currency, image, language, modal, name, timestamp,
       },
     } = this;
     const imageUrl = image && !image.startsWith('file:')
@@ -98,7 +112,11 @@ class Settings extends Component {
             </View>
             <View style={STYLE.LIST_ITEM} >
               <Text style={styles.label}>{LOCAL_CURRENCY}</Text>
-              <Text style={styles.input} onPress={_onModalCurrency}>{currency || device.currency}</Text>
+              <Text style={styles.input} onPress={() => _onModal('currency')}>{currency || device.currency}</Text>
+            </View>
+            <View style={STYLE.LIST_ITEM}>
+              <Text style={styles.label}>{LANGUAGE}</Text>
+              <Text style={styles.input} onPress={() => _onModal('language')}>{language || device.language}</Text>
             </View>
             <Text style={styles.text}>{HINT_FIND_BY_NAME}</Text>
           </View>
@@ -112,7 +130,13 @@ class Settings extends Component {
           </View>
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
-        <ModalCurrency visible={currencies} onClose={_onModalCurrency} onValue={_onCurrency} />
+        <ModalValues
+          title={context === 'language' ? CHOOSE_LANGUAGE : CHOOSE_CURRENCY}
+          values={context === 'language' ? LANGUAGES : Object.values(FIAT)}
+          visible={modal}
+          onClose={_onModal}
+          onValue={_onModalValue}
+        />
       </View>
     );
   }

@@ -28,6 +28,8 @@ export default {
 
   IS_DEVICE: Constants.isDevice,
 
+  LANGUAGES: ['English', 'Español'],
+
   MIN_CONFIRMATIONS: 3,
 
   NETWORKS: {
