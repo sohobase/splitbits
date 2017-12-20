@@ -104,7 +104,7 @@ export default {
     },
   },
 
-  ES: {
+  Español: {
     ACCEPT: 'Aceptar',
     ADD_NOTE: 'Añadir nota',
     ADDRESS: 'Direccion',

@@ -5,20 +5,14 @@ import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
 import { ModalCamera, ModalValues } from '../../containers';
-import { ASSETS, C, SHAPE, STYLE, THEME, TEXT } from '../../config';
-import { DeviceService } from '../../services';
+import { ASSETS, C, SHAPE, STYLE, THEME } from '../../config';
+import { DeviceService, i18nService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
 import styles from './Settings.style';
 
 const { FIAT, LANGUAGES, SERVICE } = C;
-const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
-const {
-  EN: {
-    CHOOSE_CURRENCY, CHOOSE_LANGUAGE, COPYRIGHT, HINT_FIND_BY_NAME, LANGUAGE, LOCAL_CURRENCY, NAME, SETTINGS,
-  },
-} = TEXT;
 let timeout;
 
 class Settings extends Component {
@@ -86,7 +80,7 @@ class Settings extends Component {
   render() {
     const {
       _onModalValue, _onImage, _onName, _onModal, _onModalImage,
-      props: { device, navigation },
+      props: { device, i18n, navigation },
       state: {
         camera, context, currency, image, language, modal, name, timestamp,
       },
@@ -97,7 +91,7 @@ class Settings extends Component {
 
     return (
       <View style={styles.screen}>
-        <Header title={SETTINGS} navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
+        <Header title={i18n.SETTINGS} navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
         <Motion animation="bounceInUp" delay={400} style={styles.form}>
           <View>
             <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.thumb]}>
@@ -107,31 +101,31 @@ class Settings extends Component {
               <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
             </View>
             <View style={STYLE.LIST_ITEM}>
-              <Text style={STYLE.LABEL}>{NAME}</Text>
+              <Text style={STYLE.LABEL}>{i18n.NAME}</Text>
               <Input onChangeText={_onName} placeholder="..." style={styles.input} value={name} />
             </View>
             <View style={STYLE.LIST_ITEM} >
-              <Text style={STYLE.LABEL}>{LOCAL_CURRENCY}</Text>
+              <Text style={STYLE.LABEL}>{i18n.LOCAL_CURRENCY}</Text>
               <Text style={styles.input} onPress={() => _onModal('currency')}>{currency || device.currency}</Text>
             </View>
             <View style={STYLE.LIST_ITEM}>
-              <Text style={STYLE.LABEL}>{LANGUAGE}</Text>
+              <Text style={STYLE.LABEL}>{i18n.LANGUAGE}</Text>
               <Text style={styles.input} onPress={() => _onModal('language')}>{language || device.language}</Text>
             </View>
-            <Text style={styles.text}>{HINT_FIND_BY_NAME}</Text>
+            <Text style={styles.text}>{i18n.HINT_FIND_BY_NAME}</Text>
           </View>
         </Motion>
         <Motion animation="bounceInUp" delay={500} style={[STYLE.CENTERED, styles.footer]}>
           <Image source={ASSETS.sohobase} style={styles.sohobase} />
           <View>
             <Text style={styles.text}>❤️</Text>
-            <Text style={styles.text}>{COPYRIGHT}</Text>
+            <Text style={styles.text}>{i18n.COPYRIGHT}</Text>
             <Text style={[styles.text, styles.version]}>{`Version ${PKG.version}`}</Text>
           </View>
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
         <ModalValues
-          title={context === 'language' ? CHOOSE_LANGUAGE : CHOOSE_CURRENCY}
+          title={context === 'language' ? i18n.CHOOSE_LANGUAGE : i18n.CHOOSE_CURRENCY}
           values={context === 'language' ? LANGUAGES : Object.values(FIAT)}
           visible={modal}
           onClose={_onModal}
@@ -143,19 +137,19 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  device: shape(DEVICE),
-  navigation: shape(NAVIGATION),
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape({}).isRequired,
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
   updateDevice: func,
 };
 
 Settings.defaultProps = {
-  device: {},
-  navigation: undefined,
   updateDevice() {},
 };
 
 const mapStateToProps = ({ device }) => ({
   device,
+  ...i18nService(device),
 });
 
 const mapDispatchToProps = dispatch => ({
