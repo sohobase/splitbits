@@ -20,7 +20,7 @@ let timeout;
 
 const renderField = (caption, value, style) => (
   <View style={[STYLE.LIST_ITEM, style]}>
-    <Text style={styles.label}>{caption}</Text>
+    <Text style={STYLE.LABEL}>{caption}</Text>
     <Text style={styles.value}>{value}</Text>
   </View>
 );
@@ -60,7 +60,7 @@ class TransactionInfo extends Component {
                 <Avatar value={device.image} style={styles.avatar} />
                 <View>
                   <Text style={[styles.value, styles.title]}>{device.name}</Text>
-                  { from.address && <Text style={styles.label}>{from.address}</Text> }
+                  { from.address && <Text style={STYLE.LABEL}>{from.address}</Text> }
                 </View>
               </View>
             :
@@ -77,12 +77,9 @@ class TransactionInfo extends Component {
               style={[STYLE.LIST_ITEM, styles.input]}
             /> }
           { hash &&
-            <Touchable
-              style={STYLE.LIST_ITEM}
-              onPress={() => Linking.openURL(`${BLOCKCHAIN_EXPLORER_URL}/${coin}/${hash}`)}
-            >
+            <Touchable onPress={() => Linking.openURL(`${BLOCKCHAIN_EXPLORER_URL}/${coin}/${hash}`)}>
               <View style={STYLE.LIST_ITEM}>
-                <Text style={styles.label}>{HASH}</Text>
+                <Text style={STYLE.LABEL}>{HASH}</Text>
                 <Text style={styles.value}>{hash}</Text>
               </View>
             </Touchable>}

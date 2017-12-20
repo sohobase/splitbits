@@ -21,14 +21,13 @@ const verboseTitle = ({
   return `${payment ? 'To' : 'From'} ${name}`;
 };
 
-const TransactionItem = (props) => {
-  const {
-    currencies,
-    data: transactionData,
-    device: { currency, devices },
-    onPress,
-    wallet: { address } = {},
-  } = props;
+const TransactionItem = ({
+  currencies,
+  data: transactionData,
+  device: { currency, devices },
+  onPress,
+  wallet: { address } = {},
+}) => {
   const {
     amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
   } = transactionData;

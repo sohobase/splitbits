@@ -107,15 +107,15 @@ class Settings extends Component {
               <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
             </View>
             <View style={STYLE.LIST_ITEM}>
-              <Text style={styles.label}>{NAME}</Text>
+              <Text style={STYLE.LABEL}>{NAME}</Text>
               <Input onChangeText={_onName} placeholder="..." style={styles.input} value={name} />
             </View>
             <View style={STYLE.LIST_ITEM} >
-              <Text style={styles.label}>{LOCAL_CURRENCY}</Text>
+              <Text style={STYLE.LABEL}>{LOCAL_CURRENCY}</Text>
               <Text style={styles.input} onPress={() => _onModal('currency')}>{currency || device.currency}</Text>
             </View>
             <View style={STYLE.LIST_ITEM}>
-              <Text style={styles.label}>{LANGUAGE}</Text>
+              <Text style={STYLE.LABEL}>{LANGUAGE}</Text>
               <Text style={styles.input} onPress={() => _onModal('language')}>{language || device.language}</Text>
             </View>
             <Text style={styles.text}>{HINT_FIND_BY_NAME}</Text>

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import THEME from './theme';
 
 const {
-  COLOR, HEADER_SIZE, UNIT, OFFSET, ROW_MIN_HEIGHT, WALLET_HEIGHT,
+  COLOR, FONT, HEADER_SIZE, UNIT, OFFSET, ROW_MIN_HEIGHT, WALLET_HEIGHT,
 } = THEME;
 
 export default StyleSheet.create({
@@ -42,6 +42,12 @@ export default StyleSheet.create({
 
   ETH: {
     backgroundColor: COLOR.ETH,
+  },
+
+  LABEL: {
+    color: COLOR.TEXT_SECONDARY,
+    fontSize: FONT.SIZE.SMALL,
+    marginBottom: UNIT / 4,
   },
 
   LTC: {

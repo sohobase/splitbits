@@ -20,11 +20,6 @@ export default StyleSheet.create({
     width: '50%',
   },
 
-  label: {
-    color: COLOR.TEXT_SECONDARY,
-    fontSize: FONT.SIZE.SMALL,
-  },
-
   value: {
     fontSize: FONT.SIZE.DEFAULT,
   },

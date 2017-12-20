@@ -44,13 +44,9 @@ export default StyleSheet.create({
 
   input: {
     fontSize: FONT.SIZE.LARGE,
-    paddingTop: UNIT,
+    padding: 0,
     paddingBottom: 0,
-  },
-
-  label: {
-    color: COLOR.TEXT_SECONDARY,
-    fontSize: FONT.SIZE.SMALL,
+    paddingTop: 0,
   },
 
   button: {
