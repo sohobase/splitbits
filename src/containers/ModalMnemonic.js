@@ -10,7 +10,11 @@ import { updateWalletAction } from '../store/actions';
 import styles from './ModalMnemonic.style';
 
 const { WALLET } = SHAPE;
-const { EN: { NEXT, PAPER_WALLET, RECOVER_PAPER_WALLET } } = TEXT;
+const {
+  EN: {
+    NEXT, PAPER_KEY, PAPER_KEY_DONE, PAPER_WALLET, RECOVER_PAPER_WALLET, WORD,
+  },
+} = TEXT;
 const WORDS_LENGTH = 12;
 
 class ModalMnemonic extends Component {
@@ -63,7 +67,7 @@ class ModalMnemonic extends Component {
         hint={readOnly ? PAPER_WALLET : RECOVER_PAPER_WALLET}
         onClose={onClose}
         style={STYLE.CENTERED}
-        title="Paper key"
+        title={PAPER_KEY}
         visible={visible}
       >
         <View style={[STYLE.ROW, styles.words]}>
@@ -72,7 +76,7 @@ class ModalMnemonic extends Component {
               editable={!readOnly}
               key={i.toString()}
               onChangeText={text => _onValue(i, text)}
-              placeholder={`Word ${i + 1}`}
+              placeholder={`${WORD} ${i + 1}`}
               style={[styles.word, (!readOnly && styles.input)]}
               value={value}
             />)) }
@@ -80,7 +84,7 @@ class ModalMnemonic extends Component {
 
         <Button
           accent
-          caption={readOnly ? 'Already written my paper key' : NEXT}
+          caption={readOnly ? PAPER_KEY_DONE : NEXT}
           disabled={!readOnly && !MnemonicService.validate(words)}
           onPress={readOnly ? _onBackup : _onRecover}
           style={styles.button}

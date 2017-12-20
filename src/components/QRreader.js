@@ -2,11 +2,12 @@ import { bool, func } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import { C, THEME } from '../config';
+import { C, TEXT, THEME } from '../config';
 import Button from './Button';
 import styles from './QRreader.style';
 
 const { IS_DEVICE } = C;
+const { EN: { CAPTION: { CAMERA_PERMISSION, QR_CODE } } } = TEXT;
 const { ANIMATION: { DURATION } } = THEME;
 
 class QRreader extends Component {
@@ -45,10 +46,7 @@ class QRreader extends Component {
                 style={StyleSheet.absoluteFill}
               /> }
             <View style={styles.border}>
-              { hasCameraPermission
-                  ? <Text style={styles.hint}>Place the code inside the frame</Text>
-                  : <Text style={styles.hint}>Give the app camera permissions in order to read QR codes</Text>
-              }
+              <Text style={styles.hint}>{hasCameraPermission ? QR_CODE : CAMERA_PERMISSION}</Text>
             </View>
             <View style={styles.content} >
               <View style={styles.border} />

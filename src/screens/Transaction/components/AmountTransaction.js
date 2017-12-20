@@ -10,9 +10,13 @@ import styles from './AmountTransaction.style';
 
 const { SATOSHI, STATE: { REQUESTED } } = C;
 const {
-  CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
+  CURRENCIES, DEVICE, NAVIGATION, WALLET,
 } = SHAPE;
-const { EN: { BALANCE, FEE } } = TEXT;
+const {
+  EN: {
+    BALANCE, DEPOSIT, FEE, PAYMENT, PAYMENT_REQUEST, TRANSACTION,
+  },
+} = TEXT;
 const { COLOR } = THEME;
 
 class AmountTransaction extends Component {
@@ -59,10 +63,10 @@ class AmountTransaction extends Component {
     } else {
       conversion = (amount * SATOSHI) / currencies[coin];
     }
-    let title = 'Transaction';
+    let title = TRANSACTION;
     if (state) {
-      title = payment ? 'Payment' : 'Deposit';
-      if (state === REQUESTED) title = 'Payment Request';
+      title = payment ? PAYMENT : DEPOSIT;
+      if (state === REQUESTED) title = PAYMENT_REQUEST;
     }
 
     return (
@@ -114,7 +118,7 @@ AmountTransaction.propTypes = {
   currencies: shape(CURRENCIES),
   device: shape(DEVICE),
   editable: bool,
-  item: shape(TRANSACTION),
+  item: shape(SHAPE.TRANSACTION),
   navigation: shape(NAVIGATION),
   onAmount: func,
   wallet: shape(WALLET),

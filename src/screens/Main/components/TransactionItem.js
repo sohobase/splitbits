@@ -11,14 +11,18 @@ const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
 const {
   CURRENCIES, DEVICE, TRANSACTION, WALLET,
 } = SHAPE;
-const { EN: { PAY, REQUEST, TO } } = TEXT;
+const {
+  EN: {
+    FROM, PAY, REQUEST, TO,
+  },
+} = TEXT;
 
 const verboseTitle = ({
   emitter, concept, other: { name = '' }, state, payment,
 }) => {
   if (!name) return concept;
   if (state === REQUESTED) return `${emitter ? PAY : REQUEST} ${TO} ${name.split(' ')[0]}`;
-  return `${payment ? 'To' : 'From'} ${name}`;
+  return `${payment ? TO : FROM} ${name}`;
 };
 
 const TransactionItem = ({

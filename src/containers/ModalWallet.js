@@ -4,13 +4,17 @@ import { Text, View } from 'react-native';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { Modal, Option } from '../components';
-import { C, SHAPE, STYLE, THEME } from '../config';
+import { C, SHAPE, STYLE, TEXT, THEME } from '../config';
 import { WalletService } from '../services';
 import { removeWalletAction } from '../store/actions';
 import styles from './ModalWallet.style';
 
 const { TYPE: { PRO } } = C;
-const { WALLET } = SHAPE;
+const {
+  EN: {
+    ARCHIVE_WALLET, CAPTION, CREATE_BACKUP, SWITCH_PRO, WALLET,
+  },
+} = TEXT;
 const { QR_SIZE } = THEME;
 
 class ModalWallet extends Component {
@@ -51,34 +55,23 @@ class ModalWallet extends Component {
     const created = !imported && !readOnly;
 
     return (
-      <Modal title="Wallet" visible={visible} onClose={onClose}>
+      <Modal title={WALLET} visible={visible} onClose={onClose}>
         <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.info]}>
           <QRCode value={address} size={QR_SIZE} style={styles.qr} />
           <Text style={styles.address}>{address}</Text>
         </View>
         <View style={[STYLE.COL]}>
           { created &&
-            <Option
-              caption="Create a backup"
-              hint="The simplest way to have control of your wallet."
-              icon="backup"
-              onPress={_onBackup}
-            /> }
+            <Option caption={CREATE_BACKUP} hint={CAPTION.CREATE_BACKUP} icon="backup" onPress={_onBackup} /> }
           <Option
-            caption="Archive this wallet"
-            hint="If you do not want to use this wallet anymore."
+            caption={ARCHIVE_WALLET}
+            hint={CAPTION.ARCHIVE_WALLET}
             icon="remove"
             disabled={created && !backup}
             onPress={_onArchive}
           />
           { type !== PRO &&
-            <Option
-              caption="Switch to PRO"
-              hint="Super powers for your wallet."
-              icon="star"
-              onPress={_onPro}
-              disabled
-            /> }
+            <Option caption={SWITCH_PRO} hint={CAPTION.SWITCH_PRO} icon="star" onPress={_onPro} disabled /> }
         </View>
       </Modal>
     );
@@ -90,7 +83,7 @@ ModalWallet.propTypes = {
   onClose: func,
   removeWallet: func,
   visible: bool,
-  wallet: shape(WALLET),
+  wallet: shape(SHAPE.WALLET),
 };
 
 ModalWallet.defaultProps = {

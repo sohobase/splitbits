@@ -84,8 +84,11 @@ export default {
   TOKEN: 'sohobase-splitbits-dev',
 
   TYPE: {
+    CREATE: 'create',
     DEFAULT: 'default',
+    IMPORT: 'import',
     PRO: 'pro',
+    RECOVER: 'recover',
     REQUEST: 'request',
     SEND: 'send',
   },

@@ -7,7 +7,7 @@ import { C, SHAPE, STYLE, TEXT, THEME } from '../../../config';
 import { Amount, Button, Icon } from '../../../components';
 import styles from './WalletItem.style';
 
-const { SATOSHI, TYPE: { PRO } } = C;
+const { SATOSHI, TYPE } = C;
 const {
   EN: {
     CREATE, IMPORT, NEW_WALLET, READ_ONLY, RECOVER,
@@ -16,10 +16,12 @@ const {
 const { CURRENCIES, DEVICE, WALLET } = SHAPE;
 const { ANIMATION: { DURATION } } = THEME;
 
-const WalletOption = ({ type, onPress }) => ( // eslint-disable-line
+const WalletOption = ({
+  caption, onPress, type, //eslint-disable-line
+}) => (
   <View style={[STYLE.CENTERED, styles.option]}>
     <Button icon={type} circle onPress={() => onPress(type)} style={styles.button} captionStyle={styles.caption} />
-    <Text style={[styles.label, styles.highlight]}>{type}</Text>
+    <Text style={[styles.label, styles.highlight]}>{caption}</Text>
   </View>
 );
 
@@ -56,7 +58,8 @@ const WalletItem = ({
               <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
               <View style={styles.tags}>
                 { readOnly && <View style={styles.tag}><Text style={styles.tagLabel}>{READ_ONLY}</Text></View> }
-                { type === PRO && <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
+                { type === TYPE.PRO &&
+                  <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
               </View>
             </View>
           </View>
@@ -64,9 +67,9 @@ const WalletItem = ({
           <View style={[STYLE.CENTERED, styles.options]}>
             <Text style={[styles.name, styles.highlight]}>{NEW_WALLET}</Text>
             <View style={[STYLE.ROW]}>
-              <WalletOption type={CREATE} onPress={onOption} />
-              <WalletOption type={IMPORT} onPress={onOption} />
-              <WalletOption type={RECOVER} onPress={onOption} />
+              <WalletOption caption={CREATE} onPress={onOption} type={TYPE.CREATE} />
+              <WalletOption caption={IMPORT} onPress={onOption} type={TYPE.IMPORT} />
+              <WalletOption caption={RECOVER} onPress={onOption} type={TYPE.RECOVER} />
             </View>
           </View>
       }

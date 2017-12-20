@@ -34,8 +34,7 @@ const Button = ({
     >
       { icon &&
         <Icon value={icon} style={[styles.icon, captionStyle]} /> }
-      { caption && !processing &&
-        <Text style={[styles.caption, captionStyle]}>{caption.replace(/\b\w/g, l => l.toUpperCase())}</Text> }
+      { caption && !processing && <Text style={[styles.caption, captionStyle]}>{caption}</Text> }
       { processing &&
         <Motion animation="flash" iterationCount="infinite">
           <Text style={[styles.caption, styles.captionProcessing, captionStyle]}>{WAIT_A_MOMENT}</Text>

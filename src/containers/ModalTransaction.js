@@ -11,6 +11,7 @@ const {
   EN: {
     REQUEST_MONEY, REQUEST_MONEY_HINT, REQUEST_MONEY_HINT_NO_FRIENDS,
     SEND_MONEY, SEND_MONEY_HINT, SEND_MONEY_HINT_NO_BALANCE, SEND_MONEY_HINT_READ_ONLY,
+    TYPE_OF_TRANSACTION,
   },
 } = TEXT;
 
@@ -22,7 +23,7 @@ const ModalTransaction = ({
   else if (balance === 0) hint = SEND_MONEY_HINT_NO_BALANCE;
 
   return (
-    <Modal title="Type of transaction" visible={visible} onClose={onClose}>
+    <Modal title={TYPE_OF_TRANSACTION} visible={visible} onClose={onClose}>
       <View style={[STYLE.COL]}>
         <Option
           caption={SEND_MONEY}

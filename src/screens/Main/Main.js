@@ -11,7 +11,7 @@ import { CurrenciesService, DeviceService } from '../../services';
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Main.style';
 
-const { DEV } = C;
+const { DEV, TYPE } = C;
 const { NAVIGATION, WALLET } = SHAPE;
 const { EN: { IMPORT, RECOVER } } = TEXT;
 const { COLOR } = THEME;
@@ -69,7 +69,7 @@ class Main extends Component {
 
   _onModalWallet(context) {
     const nextState = { context, hexSeed: undefined };
-    if (context !== RECOVER) {
+    if (context !== TYPE.RECOVER) {
       nextState.showWalletNew = !this.state.showWalletNew;
     } else {
       nextState.showMnemonic = !this.state.showMnemonic;
@@ -117,7 +117,7 @@ class Main extends Component {
         <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} wallet={wallet} />
         <ModalWalletNew
           visible={showWalletNew}
-          camera={context === IMPORT}
+          camera={context === TYPE.IMPORT}
           hexSeed={hexSeed}
           onClose={_onModalWallet}
           onSuccess={_onModalWallet}
