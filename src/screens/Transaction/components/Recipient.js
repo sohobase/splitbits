@@ -3,31 +3,29 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Touchable } from '../../../components';
-import { C, SHAPE, STYLE, TEXT } from '../../../config';
+import { C, SHAPE, STYLE } from '../../../config';
 import { DeviceItem } from '../../../containers/components';
 import styles from './Recipient.style';
 
 const { TYPE: { SEND } } = C;
-const { DEVICE, NAVIGATION } = SHAPE;
-const { EN: { ADD_NOTE, CHOOSE_A_FRIEND, USE_PUBLIC_ADDRESS } } = TEXT;
 
 const Recipient = ({
-  address, concept, device, deviceId, navigation: { navigate }, onCamera, onConcept, type,
+  address, concept, device, deviceId, i18n, navigation: { navigate }, onCamera, onConcept, type,
 }) => (
   <View>
     <Input
       editable={onConcept !== undefined}
       onChangeText={onConcept}
-      placeholder={`${ADD_NOTE}...`}
+      placeholder={`${i18n.ADD_NOTE}...`}
       style={[STYLE.ROW, STYLE.LIST_ITEM]}
       value={concept}
     />
-    <View style={[STYLE.ROW, STYLE.LIST_ITEM, { alignItems: 'center', justifyContent: 'center'} ]}>
+    <View style={[STYLE.ROW, STYLE.LIST_ITEM, { alignItems: 'center', justifyContent: 'center' }]}>
       { deviceId
         ? <DeviceItem data={device} style={styles.device} />
         :
         <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.input}>
-          <Text style={[styles.hint, styles.input]}>{`${CHOOSE_A_FRIEND}...`}</Text>
+          <Text style={[styles.hint, styles.input]}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
         </Touchable>
       }
       <Button
@@ -41,7 +39,7 @@ const Recipient = ({
       <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
         <Input
           editable={false}
-          placeholder={`...${USE_PUBLIC_ADDRESS}`}
+          placeholder={`...${i18n.USE_PUBLIC_ADDRESS}`}
           style={styles.input}
           value={deviceId ? undefined : address}
         />
@@ -54,9 +52,10 @@ const Recipient = ({
 Recipient.propTypes = {
   address: string,
   concept: string,
-  device: shape(DEVICE),
+  device: shape(SHAPE.DEVICE),
   deviceId: string,
-  navigation: shape(NAVIGATION),
+  i18n: shape(SHAPE.I18N).isRequired,
+  navigation: shape(SHAPE.NAVIGATION),
   onCamera: func,
   onConcept: func,
   type: string,
@@ -73,10 +72,10 @@ Recipient.defaultProps = {
   type: undefined,
 };
 
-const mapStateToProps = ({ device: { devices } }, { deviceId }) => {
+const mapStateToProps = ({ device: { devices }, i18n }, { deviceId }) => {
   const device = devices.find(({ id }) => id === deviceId);
 
-  return { devices, device };
+  return { devices, device, i18n };
 };
 
 export default connect(mapStateToProps)(Recipient);

@@ -1,13 +1,13 @@
-import { bool, func } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
+import { connect } from 'react-redux';
 import { BarCodeScanner, Permissions } from 'expo';
-import { C, TEXT, THEME } from '../config';
+import { C, SHAPE, THEME } from '../config';
 import Button from './Button';
 import styles from './QRreader.style';
 
 const { IS_DEVICE } = C;
-const { EN: { CAPTION: { CAMERA_PERMISSION, QR_CODE } } } = TEXT;
 const { ANIMATION: { DURATION } } = THEME;
 
 class QRreader extends Component {
@@ -33,7 +33,7 @@ class QRreader extends Component {
   }
 
   render() {
-    const { _onRead, props: { active, onClose }, state: { hasCameraPermission } } = this;
+    const { _onRead, props: { active, i18n, onClose }, state: { hasCameraPermission } } = this;
 
     return (
       active
@@ -46,7 +46,7 @@ class QRreader extends Component {
                 style={StyleSheet.absoluteFill}
               /> }
             <View style={styles.border}>
-              <Text style={styles.hint}>{hasCameraPermission ? QR_CODE : CAMERA_PERMISSION}</Text>
+              <Text style={styles.hint}>{i18n.CAPTION[hasCameraPermission ? 'QR_CODE' : 'CAMERA_PERMISSION']}</Text>
             </View>
             <View style={styles.content} >
               <View style={styles.border} />
@@ -72,6 +72,7 @@ class QRreader extends Component {
 
 QRreader.propTypes = {
   active: bool,
+  i18n: shape(SHAPE.I18N).isRequired,
   onClose: func,
   onRead: func,
 };
@@ -82,4 +83,8 @@ QRreader.defaultProps = {
   onRead() {},
 };
 
-export default QRreader;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
+export default connect(mapStateToProps)(QRreader);

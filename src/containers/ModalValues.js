@@ -1,4 +1,4 @@
-import { arrayOf, bool, func, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { Modal, Option } from '../components';
@@ -11,7 +11,14 @@ const ModalValues = ({
 }) => (
   <Modal title={title} visible={visible} onClose={onClose}>
     <View style={[STYLE.COL]}>
-      { values.map(value => <Option key={value} hint={value} caption={SYMBOL[value]} onPress={() => onValue(value)} />)}
+      { Object.keys(values).map(key => (
+        <Option
+          key={key}
+          hint={SYMBOL[key] && values[key]}
+          caption={SYMBOL[key] ? SYMBOL[key] : values[key]}
+          onPress={() => onValue(key)}
+        />
+      ))}
     </View>
   </Modal>
 );
@@ -20,7 +27,7 @@ ModalValues.propTypes = {
   onClose: func,
   onValue: func,
   title: string,
-  values: arrayOf(string),
+  values: shape({}).isRequired,
   visible: bool,
 };
 
@@ -28,7 +35,6 @@ ModalValues.defaultProps = {
   onClose() {},
   onValue() {},
   title: undefined,
-  values: [],
   visible: false,
 };
 

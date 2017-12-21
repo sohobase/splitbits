@@ -4,7 +4,7 @@ import { View as Motion } from 'react-native-animatable';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, QRreader } from '../../components';
-import { C, SHAPE, STYLE, TEXT } from '../../config';
+import { C, SHAPE, STYLE } from '../../config';
 import { TransactionService } from '../../services';
 import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
 import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
@@ -15,7 +15,6 @@ const { SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST } } = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
-const { EN: { FEE } } = TEXT;
 let timeout;
 
 class Transaction extends Component {
@@ -103,7 +102,7 @@ class Transaction extends Component {
     const {
       _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onSubmit,
       props: {
-        currencies, device: { currency }, deviceId, item, navigation, type, wallet,
+        currencies, device: { currency }, deviceId, i18n, item, navigation, type, wallet,
       },
       state: {
         amount = 0, address, camera, concept, fees = {}, processing,
@@ -141,7 +140,7 @@ class Transaction extends Component {
           { fee > 0 &&
             <Motion animation="bounceIn" style={styles.fee}>
               <Amount
-                caption={`${FEE} `}
+                caption={`${i18n.FEE} `}
                 coin={currency}
                 value={(fee * SATOSHI) / currencies[currency][coin]}
                 style={styles.feeCaption}
@@ -158,6 +157,7 @@ Transaction.propTypes = {
   currencies: shape(CURRENCIES).isRequired,
   device: shape(DEVICE).isRequired,
   deviceId: string,
+  i18n: shape({}).isRequired,
   item: shape(TRANSACTION),
   navigation: shape(NAVIGATION).isRequired,
   selectDevice: func.isRequired,
@@ -171,11 +171,13 @@ Transaction.defaultProps = {
   item: undefined,
 };
 
-const mapStateToProps = ({ currencies, device, selectedDevice }, props) => {
+const mapStateToProps = ({
+  currencies, device, i18n, selectedDevice,
+}, props) => {
   const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
   return {
-    currencies, device, deviceId: selectedDevice, item, type, wallet,
+    currencies, device, deviceId: selectedDevice, i18n, item, type, wallet,
   };
 };
 

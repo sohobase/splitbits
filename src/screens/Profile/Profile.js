@@ -5,15 +5,13 @@ import { View as Motion } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 import { Header } from '../../components';
-import { SHAPE, STYLE, THEME, TEXT } from '../../config';
+import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import styles from './Profile.style';
 
-const { DEVICE, NAVIGATION } = SHAPE;
 const { COLOR, QR_SIZE } = THEME;
-const { EN: { FRIENDS } } = TEXT;
 
 class Profile extends Component {
   constructor(props) {
@@ -33,7 +31,7 @@ class Profile extends Component {
   render() {
     const {
       _onRefresh,
-      props: { device: { id }, navigation },
+      props: { device: { id }, i18n, navigation },
       state: { refreshing },
     } = this;
 
@@ -43,12 +41,12 @@ class Profile extends Component {
           buttonRight={{ icon: 'addDevice', onPress: () => navigation.navigate('Friends') }}
           navigation={navigation}
           tintColor={COLOR.TEXT_DEFAULT}
-          title={FRIENDS}
+          title={i18n.FRIENDS}
         />
         <Motion animation="bounceInUp" delay={400}>
           <View style={[STYLE.CENTERED, styles.summary]}>
             <QRCode value={id} size={QR_SIZE} />
-            <Text style={styles.hint}>This QR will help your friends to find you easily.</Text>
+            <Text style={styles.hint}>{i18n.PROFILE_QR}</Text>
           </View>
           <DevicesList onRefresh={_onRefresh} refreshing={refreshing} style={styles.friends} />
         </Motion>
@@ -58,17 +56,17 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  device: shape(DEVICE),
-  navigation: shape(NAVIGATION),
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.DEVICE).isRequired,
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
 };
 
 Profile.defaultProps = {
-  device: {},
-  navigation: undefined,
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({

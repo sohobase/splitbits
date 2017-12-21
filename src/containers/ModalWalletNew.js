@@ -1,20 +1,15 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal, Option, QRreader } from '../components';
-import { ASSETS, C, STYLE, TEXT } from '../config';
+import { ASSETS, C, SHAPE, STYLE } from '../config';
 import { WalletService } from '../services';
 import { addWalletAction } from '../store/actions';
 import { validateAddress } from './modules';
 import styles from './ModalWalletNew.style';
 
 const { CRYPTO: { BTC, ETH, LTC }, DEV } = C;
-const {
-  EN: {
-    CREATE, IMPORT, RECOVER, TYPE_OF_WALLET,
-  },
-} = TEXT;
 
 class ModalWalletNew extends Component {
   constructor(props) {
@@ -82,19 +77,19 @@ class ModalWalletNew extends Component {
     const {
       _onCoin, _onQR, _onSubmit,
       props: {
-        camera, hexSeed, onClose, visible,
+        camera, i18n, hexSeed, onClose, visible,
       },
       state: {
         address, cameraActive, coin, name, processing, wif,
       },
     } = this;
-    let buttonCaption = camera ? IMPORT : CREATE;
-    if (hexSeed) buttonCaption = RECOVER;
+    let buttonCaption = camera ? i18n.IMPORT : i18n.CREATE;
+    if (hexSeed) buttonCaption = i18n.RECOVER;
 
     return (
       <View style={styles.container} pointerEvents={visible ? 'auto' : 'none'}>
         <QRreader active={cameraActive} onClose={onClose} onRead={_onQR} />
-        <Modal title={TYPE_OF_WALLET} visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
+        <Modal title={i18n.TYPE_OF_WALLET} visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
           <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
             <Option
               centered
@@ -144,6 +139,7 @@ class ModalWalletNew extends Component {
 ModalWalletNew.propTypes = {
   addWallet: func,
   camera: bool,
+  i18n: shape(SHAPE.I18N).isRequired,
   hexSeed: string,
   onClose: func,
   onSuccess: func,
@@ -159,7 +155,10 @@ ModalWalletNew.defaultProps = {
   visible: false,
 };
 
-const mapStateToProps = undefined;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
 const mapDispatchToProps = dispatch => ({
   addWallet: wallet => dispatch(addWalletAction(wallet)),
 });

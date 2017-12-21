@@ -1,3 +1,4 @@
+import { TEXT } from '../config';
 import DEFAULTS from './defaults';
 import {
   ADD_TOKEN,
@@ -22,8 +23,12 @@ export default function(state = DEFAULTS, action) {
       return { ...state, currencies: action.currencies };
 
     // -- Device
-    case UPDATE_DEVICE:
-      return { ...state, device: { ...state.device, ...action.device } };
+    case UPDATE_DEVICE: {
+      const device = { ...state.device, ...action.device };
+      return {
+        ...state, device, i18n: TEXT[device.language],
+      };
+    }
 
     case SELECT_DEVICE:
       return { ...state, selectedDevice: action.deviceId };

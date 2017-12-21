@@ -28,7 +28,10 @@ export default {
 
   IS_DEVICE: Constants.isDevice,
 
-  LANGUAGES: ['English', 'Español'],
+  LANGUAGES: {
+    EN: 'English',
+    ES: 'Español',
+  },
 
   MIN_CONFIRMATIONS: 3,
 

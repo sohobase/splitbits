@@ -3,19 +3,13 @@ import React, { Component } from 'react';
 import { Linking, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { C, SHAPE, STYLE, TEXT } from '../../../config';
+import { C, SHAPE, STYLE } from '../../../config';
 import { Avatar, Input, Touchable } from '../../../components';
 import { DateService, TransactionService } from '../../../services';
 import { updateTransactionsAction } from '../../../store/actions';
 import styles from './Info.style';
 
 const { BLOCKCHAIN_EXPLORER_URL } = C;
-const { DEVICE, TRANSACTION } = SHAPE;
-const {
-  EN: {
-    ADDRESS, CONCEPT, CONFIRMATIONS, DATE, HASH, STATE,
-  },
-} = TEXT;
 let timeout;
 
 const renderField = (caption, value, style) => (
@@ -44,6 +38,7 @@ class TransactionInfo extends Component {
       _onConcept,
       props: {
         devices,
+        i18n,
         item: {
           confirmations = 0, coin, concept, createdAt, from, hash, to, state,
         },
@@ -64,26 +59,26 @@ class TransactionInfo extends Component {
                 </View>
               </View>
             :
-              renderField(ADDRESS, from.address)}
+              renderField(i18n.ADDRESS, from.address)}
 
-          { hash && renderField(STATE, state, styles.half) }
-          { hash && renderField(CONFIRMATIONS, confirmations, styles.half) }
+          { hash && renderField(i18n.STATE, state, styles.half) }
+          { hash && renderField(i18n.CONFIRMATIONS, confirmations, styles.half) }
           { concept
-            ? renderField(CONCEPT, concept)
+            ? renderField(i18n.CONCEPT, concept)
             :
             <Input
               onChangeText={_onConcept}
-              placeholder={`${CONCEPT}...`}
+              placeholder={`${i18n.CONCEPT}...`}
               style={[STYLE.LIST_ITEM, styles.input]}
             /> }
           { hash &&
             <Touchable onPress={() => Linking.openURL(`${BLOCKCHAIN_EXPLORER_URL}/${coin}/${hash}`)}>
               <View style={STYLE.LIST_ITEM}>
-                <Text style={STYLE.LABEL}>{HASH}</Text>
+                <Text style={STYLE.LABEL}>{i18n.HASH}</Text>
                 <Text style={styles.value}>{hash}</Text>
               </View>
             </Touchable>}
-          { renderField(DATE, DateService.locale(createdAt)) }
+          { renderField(i18n.DATE, DateService.locale(createdAt)) }
         </View>
       </Motion>
     );
@@ -91,8 +86,9 @@ class TransactionInfo extends Component {
 }
 
 TransactionInfo.propTypes = {
-  devices: arrayOf(shape(DEVICE)),
-  item: shape(TRANSACTION),
+  devices: arrayOf(shape(SHAPE.DEVICE)),
+  i18n: shape(SHAPE.I18N).isRequired,
+  item: shape(SHAPE.TRANSACTION),
   updateTransaction: func,
 };
 
@@ -102,9 +98,10 @@ TransactionInfo.defaultProps = {
   updateTransaction() {},
 };
 
-const mapStateToProps = ({ currencies, device }) => ({
-  currencies: currencies[device.currency],
-  devices: device.devices,
+const mapStateToProps = ({ currencies, device: { currency, devices }, i18n }) => ({
+  currencies: currencies[currency],
+  devices,
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({

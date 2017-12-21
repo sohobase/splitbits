@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Option } from '../../../components';
 import { SHAPE, STYLE } from '../../../config';
-import { i18nService } from '../../../services';
 import styles from './Footer.style';
 
 const Footer = ({
@@ -41,9 +40,9 @@ Footer.defaultProps = {
   navigate: undefined,
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
-  ...i18nService(device),
+  i18n,
 });
 
 export default connect(mapStateToProps)(Footer);

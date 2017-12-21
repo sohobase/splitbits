@@ -3,15 +3,13 @@ import React, { Component } from 'react';
 import { BackHandler, Linking, StatusBar, Text, Vibration, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Logo } from '../../components';
-import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
+import { C, SHAPE, STYLE, THEME } from '../../config';
 import { FingerprintService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import { Fingerprint, NumKeyboard, Pin } from './components';
 import styles from './Lock.style';
 
 const { DEV, IS_DEVICE, SOHOBASE_SUPPORT } = C;
-const { DEVICE, NAVIGATION } = SHAPE;
-const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
 const { COLOR } = THEME;
 
 const BACKSPACE = 'backspace';
@@ -41,9 +39,11 @@ class Lock extends Component {
   }
 
   async _onFingerprint() {
+    const { props: { i18n } } = this;
+
     if (await FingerprintService.isEnrolled()) {
       this.setState({ hasFingerprint: true });
-      if (await FingerprintService.authenticate(USE_FINGERPRINT)) {
+      if (await FingerprintService.authenticate(i18n.USE_FINGERPRINT)) {
         FingerprintService.cancel();
         this._onSuccess();
       }
@@ -88,7 +88,7 @@ class Lock extends Component {
   render() {
     const {
       _onFingerprint, _onPress,
-      props: { device },
+      props: { device, i18n },
       state: { hasFingerprint, pin, wrong },
     } = this;
     let animation;
@@ -101,7 +101,7 @@ class Lock extends Component {
         <View style={[STYLE.CENTERED, styles.header]}>
           <Logo motion={{ animation: 'bounceInDown' }} />
           <Pin animation={animation} pin={pin} />
-          { !device.pin && <Text style={styles.hint}>{SET_PIN_CODE}</Text> }
+          { !device.pin && <Text style={styles.hint}>{i18n.SET_PIN_CODE}</Text> }
         </View>
         <NumKeyboard onPress={_onPress} onHelp={onHelp} />
         { hasFingerprint && <Fingerprint onSuccess={_onFingerprint} /> }
@@ -111,19 +111,19 @@ class Lock extends Component {
 }
 
 Lock.propTypes = {
-  device: shape(DEVICE),
-  navigation: shape(NAVIGATION),
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
   updateDevice: func,
 };
 
 Lock.defaultProps = {
-  device: {},
-  navigation: undefined,
   updateDevice() {},
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -103,6 +103,10 @@ class Main extends Component {
     const wallet = wallets[walletIndex];
     const focus = !showTransaction && !showWallet && !showWalletNew;
 
+    // console.log('>', await Expo.Util.getCurrentDeviceCountryAsync());
+    // console.log('>', await Expo.Util.getCurrentLocaleAsync());
+    // console.log('>', await Expo.Util.getCurrentTimeZoneAsync());
+
     return (
       <View style={STYLE.SCREEN}>
         <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]} >

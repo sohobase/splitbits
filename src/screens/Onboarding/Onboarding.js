@@ -2,19 +2,14 @@ import { shape } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { SHAPE, STYLE, TEXT, THEME } from '../../config';
+import { connect } from 'react-redux';
+import { SHAPE, STYLE, THEME } from '../../config';
 import { Button } from '../../components';
 import { ModalWalletNew } from '../../containers';
 import { Slide } from './components';
 import styles from './Onboarding.style';
 
-const { NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
-const {
-  EN: {
-    NEXT, SKIP, CAPTION, HINT,
-  },
-} = TEXT;
 const SLIDES = 5;
 
 class Onboarding extends Component {
@@ -58,7 +53,7 @@ class Onboarding extends Component {
 
   render() {
     const {
-      _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, state: { index, modal },
+      _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, props: { i18n }, state: { index, modal },
     } = this;
     const optionDisabled = (index + 1) > SLIDES;
 
@@ -72,18 +67,18 @@ class Onboarding extends Component {
           loop={false}
           onMomentumScrollEnd={_onSwipe}
         >
-          <Slide caption={CAPTION.WELCOME} image="rocket" hint={HINT.WELCOME} />
-          <Slide backgroundColor={COLOR.ACCENT} caption={CAPTION.PRIVATE_KEYS} image="key" hint={HINT.PRIVATE_KEYS} />
-          <Slide backgroundColor={COLOR.PINK} caption={CAPTION.NETWORK} image="network" hint={HINT.NETWORK} />
-          <Slide backgroundColor={COLOR.BLUE} caption={CAPTION.PRIVACY} image="privacy" hint={HINT.PRIVACY} />
-          <Slide backgroundColor={COLOR.RED} caption={CAPTION.EXCHANGE} image="exchange" hint={HINT.EXCHANGE} />
-          <Slide caption={CAPTION.WALLET} image="wallet" hint={HINT.WALLET}>
+          <Slide caption={i18n.CAPTION.WELCOME} image="rocket" hint={i18n.HINT.WELCOME} />
+          <Slide backgroundColor={COLOR.ACCENT} caption={i18n.CAPTION.PRIVATE_KEYS} image="key" hint={i18n.HINT.PRIVATE_KEYS} />
+          <Slide backgroundColor={COLOR.PINK} caption={i18n.CAPTION.NETWORK} image="network" hint={i18n.HINT.NETWORK} />
+          <Slide backgroundColor={COLOR.BLUE} caption={i18n.CAPTION.PRIVACY} image="privacy" hint={i18n.HINT.PRIVACY} />
+          <Slide backgroundColor={COLOR.RED} caption={i18n.CAPTION.EXCHANGE} image="exchange" hint={i18n.HINT.EXCHANGE} />
+          <Slide caption={i18n.CAPTION.WALLET} image="wallet" hint={i18n.HINT.WALLET}>
             <Button accent caption="Create your first wallet" onPress={_onWallet} style={styles.button} />
           </Slide>
         </Swiper>
         <View style={[STYLE.ROW, styles.options]}>
           <Button
-            caption={SKIP.toUpperCase()}
+            caption={i18n.SKIP.toUpperCase()}
             captionStyle={styles.option}
             disabled={optionDisabled}
             onPress={_onSkip}
@@ -91,7 +86,7 @@ class Onboarding extends Component {
             style={styles.left}
           />
           <Button
-            caption={NEXT.toUpperCase()}
+            caption={i18n.NEXT.toUpperCase()}
             captionStyle={styles.option}
             disabled={optionDisabled}
             onPress={_onNext}
@@ -106,11 +101,15 @@ class Onboarding extends Component {
 }
 
 Onboarding.propTypes = {
-  navigation: shape(NAVIGATION),
+  i18n: shape(SHAPE.I18N).isRequired,
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
 };
 
 Onboarding.defaultProps = {
-  navigation: undefined,
 };
 
-export default Onboarding;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
+export default connect(mapStateToProps)(Onboarding);

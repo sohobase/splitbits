@@ -47,6 +47,7 @@ export default {
     PAYMENT_REQUEST: 'Payment requests',
     PORTFOLIO: 'Stay on top of your portfolio. Anytime. Anywhere.',
     PROCESSING: 'Processing...',
+    PROFILE_QR: 'This QR will help your friends to find you easily.',
 
     READ_ONLY: 'Watch only',
     RECOVER_PAPER_WALLET: 'Recovering another wallet allows you to access and manage a different wallet on this device. Enter the Paper Key.',
@@ -56,6 +57,7 @@ export default {
     REQUEST_MONEY_HINT: 'You can ask money in your private network.',
     REQUEST_MONEY_HINT_NO_FRIENDS: 'Add friends in order to request money.',
 
+    SEARCH: 'Search...',
     SEND: 'Send',
     SEND_MONEY: 'Send Money',
     SEND_MONEY_HINT: 'Send money to any wallet in the world.',
@@ -104,7 +106,7 @@ export default {
     },
   },
 
-  Español: {
+  ES: {
     ACCEPT: 'Aceptar',
     ADD_NOTE: 'Añadir nota',
     ADDRESS: 'Direccion',
@@ -152,6 +154,7 @@ export default {
     PAYMENT_REQUEST: 'Solicitud de Pago',
     PORTFOLIO: 'Mantente al tanto de tu cartera. En cualquier momento. En cualquier lugar.',
     PROCESSING: 'Procesando...',
+    PROFILE_QR: 'Este QR ayudará a tus amigos a encontrarte fácilmente.',
 
     READ_ONLY: 'Solo lectura',
     RECOVER_PAPER_WALLET: 'Recuperar otra cartera le permite acceder y administrar una billetera diferente en este dispositivo. Ingrese la clave de papel.',
@@ -161,6 +164,7 @@ export default {
     REQUEST_MONEY_HINT: 'Puedes pedir dinero en tu red privada.',
     REQUEST_MONEY_HINT_NO_FRIENDS: 'Debes añadir amigos para poder pedir dinero.',
 
+    SEARCH: 'Buscar...',
     SEND: 'Enviar',
     SEND_MONEY: 'Enviar dinero',
     SEND_MONEY_HINT: 'Envía dinero a cualquier cartera en el mundo.',

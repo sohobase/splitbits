@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Button, Header, Input } from '../../components';
 import { ModalCamera, ModalValues } from '../../containers';
 import { ASSETS, C, SHAPE, STYLE, THEME } from '../../config';
-import { DeviceService, i18nService } from '../../services';
+import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
 import styles from './Settings.style';
@@ -82,7 +82,7 @@ class Settings extends Component {
       _onModalValue, _onImage, _onName, _onModal, _onModalImage,
       props: { device, i18n, navigation },
       state: {
-        camera, context, currency, image, language, modal, name, timestamp,
+        camera, context, currency, image, language = this.props.device.language, modal, name, timestamp,
       },
     } = this;
     const imageUrl = image && !image.startsWith('file:')
@@ -110,7 +110,7 @@ class Settings extends Component {
             </View>
             <View style={STYLE.LIST_ITEM}>
               <Text style={STYLE.LABEL}>{i18n.LANGUAGE}</Text>
-              <Text style={styles.input} onPress={() => _onModal('language')}>{language || device.language}</Text>
+              <Text style={styles.input} onPress={() => _onModal('language')}>{LANGUAGES[language]}</Text>
             </View>
             <Text style={styles.text}>{i18n.HINT_FIND_BY_NAME}</Text>
           </View>
@@ -126,7 +126,7 @@ class Settings extends Component {
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
         <ModalValues
           title={context === 'language' ? i18n.CHOOSE_LANGUAGE : i18n.CHOOSE_CURRENCY}
-          values={context === 'language' ? LANGUAGES : Object.values(FIAT)}
+          values={context === 'language' ? LANGUAGES : FIAT}
           visible={modal}
           onClose={_onModal}
           onValue={_onModalValue}
@@ -138,7 +138,7 @@ class Settings extends Component {
 
 Settings.propTypes = {
   device: shape(SHAPE.DEVICE).isRequired,
-  i18n: shape({}).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
   navigation: shape(SHAPE.NAVIGATION).isRequired,
   updateDevice: func,
 };
@@ -147,9 +147,9 @@ Settings.defaultProps = {
   updateDevice() {},
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
-  ...i18nService(device),
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({
