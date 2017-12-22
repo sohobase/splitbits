@@ -18,6 +18,7 @@ export default {
     COPYRIGHT: 'Made by a small band of superheroes in London. Thank you for your support!',
     CREATE: 'create',
     CREATE_BACKUP: 'Create a backup',
+    CREATE_FIRST_WALLET: 'Create your first wallet',
 
     DATE: 'Date',
     DEPOSIT: 'Deposit',
@@ -125,6 +126,7 @@ export default {
     COPYRIGHT: 'Creado por una banda de superheroes desde Londres. Gracias por tu apoyo!',
     CREATE: 'Crear',
     CREATE_BACKUP: 'Crea una copia de seguridad',
+    CREATE_FIRST_WALLET: 'Crea tu primera cartera',
 
     DATE: 'Fecha',
     DEPOSIT: 'Deposito',
@@ -204,12 +206,12 @@ export default {
       WELCOME: 'Bienvenido a Splitbits',
     },
     HINT: {
-      EXCHANGE: 'This world is still paid with local currencies. Do not worry we make your life easier when it comes to paying with your crypto coins.',
-      NETWORK: 'Forget public addresses or QR codes. You can create your own private network of friends to speed up your payments.',
-      PRIVACY: 'You do not need to give us your personal information. We do not want to know your email or social networks. We just want you to enjoy this wallet.',
-      PRIVATE_KEYS: 'Your private keys always go with you, we never save them in our cloud. We offer you tools so that you can recover them easily.',
-      WALLET: 'The last step is to create your first splitbits wallet. Later you can import or recover other wallets that you have.',
-      WELCOME: 'Swipe to learn more.',
+      EXCHANGE: 'Este mundo todavía se paga con monedas locales. No te preocupes, te hacemos la vida más fácil a la hora de pagar con tus cripto-monedas.',
+      NETWORK: 'Olvidate de direcciones públicas o códigos QR. Puedes crear tu propia red privada de amigos para acelerar todas tus pagos.',
+      PRIVACY: 'No necesitamos tus datos personales. No queremos saber tu email o tus redes sociales. Solo queremos que disfrutes de Splitbits.',
+      PRIVATE_KEYS: 'Tus claves privadas siempre van contigo, nunca las guardamos en nuestra nube. Te ofrecemos herramientas para que pueda recuperarlas fácilmente.',
+      WALLET: 'El último paso es crear tu primera cartera Splitbits. Mas tarde podras importar o recuperar otras carteras que tengas.',
+      WELCOME: 'Desliza para obtener más información.',
     },
   },
 };
