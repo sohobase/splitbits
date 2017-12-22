@@ -33,7 +33,13 @@ class QRreader extends Component {
   }
 
   render() {
-    const { _onRead, props: { active, i18n, onClose }, state: { hasCameraPermission } } = this;
+    const {
+      _onRead,
+      props: {
+        active, i18n, importing, onClose,
+      },
+      state: { hasCameraPermission },
+    } = this;
 
     return (
       active
@@ -46,7 +52,10 @@ class QRreader extends Component {
                 style={StyleSheet.absoluteFill}
               /> }
             <View style={styles.border}>
-              <Text style={styles.hint}>{i18n.CAPTION[hasCameraPermission ? 'QR_CODE' : 'CAMERA_PERMISSION']}</Text>
+              <Text style={[styles.hint, styles.bold]}>
+                {i18n.CAPTION[hasCameraPermission ? 'QR_CODE' : 'CAMERA_PERMISSION']}
+              </Text>
+              { importing && <Text style={styles.hint}>{i18n.IMPORT_ADDRESS}</Text> }
             </View>
             <View style={styles.content} >
               <View style={styles.border} />
@@ -73,12 +82,14 @@ class QRreader extends Component {
 QRreader.propTypes = {
   active: bool,
   i18n: shape(SHAPE.I18N).isRequired,
+  importing: bool,
   onClose: func,
   onRead: func,
 };
 
 QRreader.defaultProps = {
   active: false,
+  importing: false,
   onClose() {},
   onRead() {},
 };

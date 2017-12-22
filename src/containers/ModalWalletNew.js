@@ -9,7 +9,12 @@ import { addWalletAction } from '../store/actions';
 import { validateAddress } from './modules';
 import styles from './ModalWalletNew.style';
 
-const { CRYPTO: { BTC, ETH, LTC }, DEV } = C;
+const { CRYPTO: { BTC }, DEV } = C;
+const CRYPTOS = {
+  BTC: 'Bitcoin',
+  ETH: 'Ethereum',
+  LTC: 'Litecoin',
+};
 
 class ModalWalletNew extends Component {
   constructor(props) {
@@ -88,34 +93,24 @@ class ModalWalletNew extends Component {
 
     return (
       <View style={styles.container} pointerEvents={visible ? 'auto' : 'none'}>
-        <QRreader active={cameraActive} onClose={onClose} onRead={_onQR} />
+        <QRreader active={cameraActive} importing onClose={onClose} onRead={_onQR} />
         <Modal title={i18n.TYPE_OF_WALLET} visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
           <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
-            <Option
-              centered
-              image={ASSETS.btc}
-              caption="Bitcoin"
-              onPress={() => _onCoin(BTC)}
-              style={[styles.coin, coin === BTC && styles.coinActive]}
-            />
-            <Option
-              centered
-              image={ASSETS.eth}
-              caption="Ethereum"
-              onPress={() => _onCoin(ETH)}
-              style={[styles.coin, coin === ETH && styles.coinActive]}
-            />
-            <Option
-              centered
-              image={ASSETS.ltc}
-              caption="Litecoin"
-              onPress={() => _onCoin(LTC)}
-              style={[styles.coin, coin === LTC && styles.coinActive]}
-            />
+            {
+              Object.keys(CRYPTOS).map(key => (
+                <Option
+                  centered
+                  key={key}
+                  image={ASSETS[key]}
+                  caption={CRYPTOS[key]}
+                  onPress={() => _onCoin(key)}
+                  style={[styles.coin, coin === key && styles.coinActive]}
+                />
+              ))}
           </View>
           <Input
             onChangeText={text => this.setState({ name: text })}
-            placeholder="Choose a name..."
+            placeholder={`${i18n.NAME}...`}
             style={styles.input}
             value={name}
           />

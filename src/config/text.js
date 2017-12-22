@@ -31,7 +31,9 @@ export default {
 
     HASH: 'Hash',
     HINT_FIND_BY_NAME: 'Other people can only find you if you have defined your name.',
+
     IMPORT: 'import',
+    IMPORT_ADDRESS: 'If you import a public address your wallet will be in watch only mode.',
 
     LANGUAGE: 'Language',
     LOCAL_CURRENCY: 'Local currency',
@@ -139,7 +141,9 @@ export default {
 
     HASH: 'Hash',
     HINT_FIND_BY_NAME: 'Otras personas solo te encontraran si has definido un nombre.',
+
     IMPORT: 'Importar',
+    IMPORT_ADDRESS: 'Si importas una direccion publica tu cartera sera de solo lectura',
 
     LANGUAGE: 'Idioma',
     LOCAL_CURRENCY: 'Moneda local',

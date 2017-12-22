@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
-const { COLOR, FONT } = THEME;
+const { COLOR, FONT, UNIT } = THEME;
 
 export default StyleSheet.create({
   QRreader: {
@@ -18,6 +18,12 @@ export default StyleSheet.create({
   hint: {
     color: COLOR.WHITE,
     fontSize: FONT.SIZE.SMALL,
+    marginVertical: UNIT / 4,
+    maxWidth: '90%',
+    textAlign: 'center',
+  },
+
+  bold: {
     fontWeight: FONT.WEIGHT.BOLD,
   },
 
