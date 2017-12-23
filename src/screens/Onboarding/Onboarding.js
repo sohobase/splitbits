@@ -1,15 +1,20 @@
-import { shape } from 'prop-types';
+import { Util } from 'expo';
+import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
-import { SHAPE, STYLE, THEME } from '../../config';
+import { C, SHAPE, STYLE, THEME } from '../../config';
 import { Button } from '../../components';
 import { ModalWalletNew } from '../../containers';
+import { updateDeviceAction } from '../../store/actions';
 import { Slide } from './components';
 import styles from './Onboarding.style';
 
-const { COLOR: { ACCENT, BLUE, RED, PINK } } = THEME;
+const { LANGUAGES } = C;
+const {
+  ACCENT, BLUE, RED, PINK,
+} = THEME.COLOR;
 const SLIDES = 5;
 
 class Onboarding extends Component {
@@ -24,6 +29,13 @@ class Onboarding extends Component {
     this._onSuccess = this._onSuccess.bind(this);
     this._onSwipe = this._onSwipe.bind(this);
     this._onWallet = this._onWallet.bind(this);
+  }
+
+  async componentWillMount() {
+    const { props: { updateDevice } } = this;
+    const language = (await Util.getCurrentLocaleAsync()).toUpperCase();
+
+    updateDevice({ language: LANGUAGES[language] ? language : 'EN' });
   }
 
   _onNext() {
@@ -53,7 +65,9 @@ class Onboarding extends Component {
 
   render() {
     const {
-      _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess, props: { i18n }, state: { index, modal },
+      _onNext, _onSwipe, _onSkip, _onWallet, _onSuccess,
+      props: { i18n },
+      state: { index, modal },
     } = this;
     const optionDisabled = (index + 1) > SLIDES;
 
@@ -103,13 +117,16 @@ class Onboarding extends Component {
 Onboarding.propTypes = {
   i18n: shape(SHAPE.I18N).isRequired,
   navigation: shape(SHAPE.NAVIGATION).isRequired,
-};
-
-Onboarding.defaultProps = {
+  updateDevice: func,
 };
 
 const mapStateToProps = ({ i18n }) => ({
   i18n,
+  updateDevice() {},
 });
 
-export default connect(mapStateToProps)(Onboarding);
+const mapDispatchToProps = dispatch => ({
+  updateDevice: device => device && dispatch(updateDeviceAction(device)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Onboarding);
