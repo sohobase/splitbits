@@ -3,7 +3,10 @@ import { Dimensions, Platform } from 'react-native';
 
 const UNIT = 10;
 const OFFSET = UNIT * 1.6;
-const PRIMARY = '#2d126c';
+// const PRIMARY = '#2d126c';
+const PRIMARY = '#2f2bad';
+// const ACCENT = '#32dba8';
+const ACCENT = '#f71568';
 const WHITE = '#ffffff';
 const BLACK = '#000000';
 const DISABLED = 0.38;
@@ -33,7 +36,7 @@ export default {
 
   COLOR: {
     PRIMARY,
-    ACCENT: '#32dba8',
+    ACCENT,
     BLUE: '#303498',
     PINK: '#ff4566',
     ACCEPT: '#5edeb3',
