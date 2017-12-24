@@ -1,3 +1,4 @@
+import ConnectionService from './connection';
 import CurrenciesService from './currencies';
 import DateService from './date';
 import DeviceService from './device';
@@ -9,6 +10,7 @@ import TransactionService from './transaction';
 import WalletService from './wallet';
 
 export {
+  ConnectionService,
   CurrenciesService,
   DateService,
   DeviceService,
