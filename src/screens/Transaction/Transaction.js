@@ -1,17 +1,19 @@
 import { func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { View as Motion } from 'react-native-animatable';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
-import { TransactionService } from '../../services';
+import { ConnectionService, TransactionService } from '../../services';
 import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
 import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
 import { submit } from './modules';
 import styles from './Transaction.style';
 
-const { SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST } } = C;
+const {
+  CONNECTION: { WIFI }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
+} = C;
 const {
   CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
 } = SHAPE;
@@ -24,9 +26,10 @@ class Transaction extends Component {
 
     this.state = {
       amount: item.amount,
-      address: undefined, //eslint-disable-line
+      address: undefined,
       camera: false,
       concept: undefined,
+      connection: undefined,
       fees: {},
       processing: false,
     };
@@ -43,6 +46,7 @@ class Transaction extends Component {
     const { _updateFees, props: { selectDevice, item: { amount, state, to } = {}, wallet } } = this;
     selectDevice(undefined);
     if (state === REQUESTED && wallet.address !== to.address) _updateFees(amount);
+    this.setState({ connection: await ConnectionService.get() });
   }
 
   _onAddress(address) {
@@ -105,7 +109,7 @@ class Transaction extends Component {
         currencies, device: { currency }, deviceId, i18n, item, navigation, type, wallet,
       },
       state: {
-        amount = 0, address, camera, concept, fees = {}, processing,
+        amount = 0, address, camera, concept, connection, fees = {}, processing,
       },
     } = this;
     const { coin } = wallet;
@@ -138,13 +142,17 @@ class Transaction extends Component {
               wallet={wallet}
             /> }
           { fee > 0 &&
-            <Motion animation="bounceIn" style={styles.fee}>
+            <Motion animation="bounceIn" style={styles.centered}>
               <Amount
                 caption={`${i18n.FEE} `}
                 coin={currency}
                 value={(fee * SATOSHI) / currencies[currency][coin]}
-                style={styles.feeCaption}
+                style={styles.caption}
               />
+            </Motion> }
+          { editable && connection === WIFI &&
+            <Motion animation="bounceIn" delay={700} style={styles.centered}>
+              <Text style={styles.caption}>{i18n.UNSECURED_CONNECTION}</Text>
             </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />

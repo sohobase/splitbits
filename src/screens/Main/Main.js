@@ -45,7 +45,7 @@ class Main extends Component {
     ]);
     AppState.addEventListener('change', state => onAppActive(this.props, state));
     Notifications.addListener(onNotification);
-    this.setState({ connection: await ConnectionService.type() });
+    this.setState({ connection: await ConnectionService.get() });
     ConnectionService.listen(type => this.setState({ connection: type }));
   }
 
