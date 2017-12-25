@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
-import { DeviceItem } from '../../../containers/components';
+import { DeviceItem } from '../../../containers';
 import styles from './Recipient.style';
 
 const { TYPE: { SEND } } = C;
