@@ -6,6 +6,11 @@ export default {
 
   BLOCKCHAIN_EXPLORER_URL: 'https://chain.so/address',
 
+  CONNECTION: {
+    CELLULAR: 'cellular',
+    WIFI: 'wifi',
+  },
+
   CONVERSION: {
     BTC: 0.000001,
     LTC: 0.001,

@@ -7,7 +7,7 @@ import { C, SHAPE, STYLE, THEME } from '../../config';
 import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '../../containers';
 import { Header, Footer, TransactionButton, Transactions, Wallets } from './components';
 import { onAppActive, onNotification } from './modules';
-import { CurrenciesService, DeviceService } from '../../services';
+import { ConnectionService, CurrenciesService, DeviceService } from '../../services';
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Main.style';
 
@@ -19,6 +19,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      connection: undefined,
       context: undefined,
       hexSeed: undefined,
       showTransaction: false,
@@ -36,7 +37,7 @@ class Main extends Component {
     this._onWallet = this._onWallet.bind(this);
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     const { props: { updateCurrencies, updateDevice } } = this;
     Promise.all([
       CurrenciesService.list().then(updateCurrencies),
@@ -44,6 +45,8 @@ class Main extends Component {
     ]);
     AppState.addEventListener('change', state => onAppActive(this.props, state));
     Notifications.addListener(onNotification);
+    this.setState({ connection: await ConnectionService.type() });
+    ConnectionService.listen(type => this.setState({ connection: type }));
   }
 
   componentWillReceiveProps({ wallets: nextWallets = [] }) {
@@ -97,26 +100,24 @@ class Main extends Component {
       _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipe, _onWallet,
       props: { navigation: { navigate }, wallets },
       state: {
-        context, hexSeed, showMnemonic, showTransaction, showWalletNew, showWallet, walletIndex,
+        connection, context, hexSeed, showMnemonic, showTransaction, showWalletNew, showWallet, walletIndex,
       },
     } = this;
     const wallet = wallets[walletIndex];
     const focus = !showTransaction && !showWallet && !showWalletNew;
-
-    // console.log('>', await Expo.Util.getCurrentDeviceCountryAsync());
-    // console.log('>', await Expo.Util.getCurrentLocaleAsync());
-    // console.log('>', await Expo.Util.getCurrentTimeZoneAsync());
+    const isOffline = connection === undefined;
 
     return (
       <View style={STYLE.SCREEN}>
         <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]} >
-          { DEV && <Text style={styles.env}>testnet</Text> }
+          { connection && <Text style={[styles.env, styles.left]}>{connection}</Text> }
+          { DEV && <Text style={[styles.env, styles.right]}>testnet</Text> }
           <Header wallet={wallet} />
           <Wallets onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
         </LinearGradient>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />
-        <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined} />
+        <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined && !isOffline} />
         <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} wallet={wallet} />
         <ModalWalletNew
           visible={showWalletNew}

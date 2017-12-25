@@ -1,15 +1,27 @@
-import { NetInfo } from 'react-native';
+import { NetInfo, Platform } from 'react-native';
+import { C } from '../config';
+
+const { CONNECTION: { CELLULAR, WIFI } } = C;
+const onConnection = type => (
+  [CELLULAR, WIFI].includes(type) ? type : undefined
+);
 
 export default {
   get() {
     return new Promise((resolve) => {
-      NetInfo.addEventListener('connectionChange', ({ type }) => resolve(type));
+      if (Platform.OS === 'ios') {
+        NetInfo.removeEventListener('connectionChange');
+        NetInfo.addEventListener('connectionChange', ({ type }) => resolve(onConnection(type)));
+      } else {
+        NetInfo.getConnectionInfo().then(({ type }) => resolve(onConnection(type)));
+      }
     });
   },
-};
 
-// Cross platform values for ConnectionType:
-// none - device is offline
-// wifi - device is online and connected via wifi, or is the iOS simulator
-// cellular - device is connected via Edge, 3G, WiMax, or LTE
-// unknown - error case and the network status is unknown
+  listen(callback) {
+    if (Platform.OS === 'ios') {
+      NetInfo.removeEventListener('connectionChange');
+      NetInfo.addEventListener('connectionChange', ({ type }) => callback(onConnection(type)));
+    }
+  },
+};
