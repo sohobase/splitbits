@@ -1,8 +1,10 @@
 import Color from 'color';
 import { StyleSheet } from 'react-native';
-import { THEME } from '../../config';
+import { THEME } from '../config';
 
-const { AVATAR_SIZE, COLOR, FONT, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   selected: {

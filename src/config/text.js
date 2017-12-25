@@ -7,6 +7,7 @@ export default {
 
     BALANCE: 'Balance',
 
+    CANCEL: 'Cancel',
     CANCEL_REQUEST: 'Cancel request',
     CHANGE_YOUR_AVATAR: 'Change your avatar',
     CHOOSE_A_FRIEND: 'Choose a friend',
@@ -27,6 +28,8 @@ export default {
 
     FEE: 'Fee',
     FRIENDS: 'Friends',
+    FRIEND_REQUEST_SWIPE: 'Request friendship, swipe left...',
+    FRIEND_REQUEST_SENT: 'Friend request already sent',
     FROM: 'From',
 
     HASH: 'Hash',
@@ -55,6 +58,7 @@ export default {
     READ_ONLY: 'Watch only',
     RECOVER_PAPER_WALLET: 'Recovering another wallet allows you to access and manage a different wallet on this device. Enter the Paper Key.',
     RECOVER: 'recover',
+    REMOVE: 'Remove',
     REQUEST: 'Request',
     REQUEST_MONEY: 'Request funds',
     REQUEST_MONEY_HINT: 'You can ask money in your private network.',
@@ -79,6 +83,7 @@ export default {
     TYPE_OF_TRANSACTION: 'Type of transaction',
     TYPE_OF_WALLET: 'Type of wallet',
 
+    UNKNOWN: 'Unknown',
     USE_PUBLIC_ADDRESS: 'or use a public address',
     USE_FINGERPRINT: 'Use fingerprint to unlock',
 
@@ -117,6 +122,7 @@ export default {
 
     BALANCE: 'Balance',
 
+    CANCEL: 'Cancelar',
     CANCEL_REQUEST: 'Cancelar peticion',
     CHANGE_YOUR_AVATAR: 'Cambia tu avatar',
     CHOOSE_A_FRIEND: 'Selecciona un amigo',
@@ -137,6 +143,8 @@ export default {
 
     FEE: 'Comision',
     FRIENDS: 'Amigos',
+    FRIEND_REQUEST_SWIPE: 'Solicitud de amistad, desliza a la izquierda...',
+    FRIEND_REQUEST_SENT: 'Solicitud de amistad ya enviada',
     FROM: 'De',
 
     HASH: 'Hash',
@@ -165,6 +173,7 @@ export default {
     READ_ONLY: 'Solo lectura',
     RECOVER_PAPER_WALLET: 'Recuperar otra cartera le permite acceder y administrar una billetera diferente en este dispositivo. Ingrese la clave de papel.',
     RECOVER: 'Recuperar',
+    REMOVE: 'Eliminar',
     REQUEST: 'Solicitar',
     REQUEST_MONEY: 'Pedir dinero',
     REQUEST_MONEY_HINT: 'Puedes pedir dinero en tu red privada.',
@@ -189,6 +198,7 @@ export default {
     TYPE_OF_TRANSACTION: 'Tipo de transaccion',
     TYPE_OF_WALLET: 'Tipo de cartera',
 
+    UNKNOWN: 'Desconocido',
     USE_PUBLIC_ADDRESS: 'o una direccion publica',
     USE_FINGERPRINT: 'Usa tu huella para desbloquear',
 

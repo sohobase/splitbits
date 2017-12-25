@@ -4,16 +4,15 @@ import React, { Component } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
-import { Avatar, Button } from '../../components';
-import { SHAPE, STYLE, THEME } from '../../config';
-import { DeviceService } from '../../services';
-import { updateDeviceAction } from '../../store/actions';
+import { Avatar, Button } from '../components';
+import { SHAPE, STYLE, THEME } from '../config';
+import { DeviceService } from '../services';
+import { updateDeviceAction } from '../store/actions';
 import styles from './DeviceItem.style';
 
-const { DEVICE } = SHAPE;
-const { COLOR: { GREEN, RED, WHITE } } = THEME;
+const { COLOR: { ACCEPT, RED, WHITE } } = THEME;
 
-const BUTTON_ACCEPT = { backgroundColor: GREEN, underlayColor: Color(GREEN).darken(0.1).string(), type: 'delete' };
+const BUTTON_ACCEPT = { backgroundColor: ACCEPT, underlayColor: Color(ACCEPT).darken(0.1).string(), type: 'delete' };
 const BUTTON_CANCEL = { backgroundColor: RED, underlayColor: Color(RED).darken(0.1).string() };
 
 class DeviceItem extends Component {
@@ -38,7 +37,7 @@ class DeviceItem extends Component {
     const {
       _onRelation, _onRequest,
       props: {
-        onPress, request, selected, style,
+        i18n, onPress, request, selected, style,
         data: {
           id, image, name, requested,
         },
@@ -50,10 +49,10 @@ class DeviceItem extends Component {
 
     if (!request && !onPress) {
       options = (!isRequest)
-        ? [{ ...BUTTON_CANCEL, text: 'Remove', onPress: () => _onRelation('remove') }]
+        ? [{ ...BUTTON_CANCEL, text: i18n.REMOVE, onPress: () => _onRelation('remove') }]
         : [
-          { ...BUTTON_ACCEPT, text: 'Accept', onPress: () => _onRelation('accept') },
-          { ...BUTTON_CANCEL, text: 'Cancel', onPress: () => _onRelation('cancel') },
+          { ...BUTTON_ACCEPT, text: i18n.ACCEPT, onPress: () => _onRelation('accept') },
+          { ...BUTTON_CANCEL, text: i18n.CANCEL, onPress: () => _onRelation('cancel') },
         ];
     }
 
@@ -63,14 +62,14 @@ class DeviceItem extends Component {
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
             <Avatar selected={selected} value={image} />
             <View style={styles.content}>
-              <Text style={[styles.name, (!name && styles.private)]}>{name || 'Private Name'}</Text>
-              { !request && isRequest && <Text style={styles.hint}>Request friendship, swipe right...</Text> }
-              { request && requested && <Text style={styles.hint}>Friend request sent</Text> }
+              <Text style={[styles.name, (!name && styles.private)]}>{name || i18n.UNKNOWN}</Text>
+              { !request && isRequest && <Text style={styles.hint}>{i18n.FRIEND_REQUEST_SWIPE}</Text> }
+              { request && requested && <Text style={styles.hint}>{i18n.FRIEND_REQUEST_SENT}</Text> }
             </View>
             { request && !requested &&
               <Button
                 accent
-                caption="Request"
+                caption={i18n.REQUEST}
                 style={styles.button}
                 captionStyle={styles.buttonCaption}
                 onPress={_onRequest}
@@ -83,8 +82,9 @@ class DeviceItem extends Component {
 }
 
 DeviceItem.propTypes = {
-  data: shape(DEVICE),
-  device: shape(DEVICE),
+  data: shape(SHAPE.DEVICE),
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
   onPress: func,
   onRequest: func,
   request: bool,
@@ -95,7 +95,6 @@ DeviceItem.propTypes = {
 
 DeviceItem.defaultProps = {
   data: {},
-  device: {},
   onPress: undefined,
   onRequest: undefined,
   request: false,
@@ -104,8 +103,9 @@ DeviceItem.defaultProps = {
   style: [],
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({
