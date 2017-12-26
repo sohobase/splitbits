@@ -1,10 +1,3 @@
-// -- Token
-export const ADD_TOKEN = '@splitbits/ADD_TOKEN';
-export const addTokenAction = token => ({
-  type: ADD_TOKEN,
-  token,
-});
-
 // -- Currencies
 export const UPDATE_CURRENCIES = '@splitbits/UPDATE_CURRENCIES';
 export const updateCurrenciesAction = currencies => ({
@@ -32,6 +25,19 @@ export const errorAction = error => ({
   error,
 });
 
+// -- Reset
+export const RESET = '@splitbits/RESET';
+export const resetAction = () => ({
+  type: RESET,
+});
+
+// -- Token
+export const ADD_TOKEN = '@splitbits/ADD_TOKEN';
+export const addTokenAction = token => ({
+  type: ADD_TOKEN,
+  token,
+});
+
 // -- Transaction
 export const UPDATE_TRANSACTIONS = '@splitbits/UPDATE_TRANSACTIONS';
 export const updateTransactionsAction = transactions => ({
@@ -52,7 +58,6 @@ export const removeWalletAction = wallet => ({
   wallet,
 });
 
-// --
 export const UPDATE_WALLET = '@splitbits/UPDATE_WALLET';
 export const updateWalletAction = wallet => ({
   type: UPDATE_WALLET,

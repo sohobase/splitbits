@@ -5,7 +5,7 @@ export default {
   device: {},
   devices: [],
   i18n: TEXT.EN,
-  pushToken: undefined,
+  token: undefined,
   selectedDevice: undefined,
   transactions: [],
   wallets: [],

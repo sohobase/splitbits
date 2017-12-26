@@ -39,6 +39,7 @@ export default {
     IMPORT_ADDRESS: 'If you import a public address your wallet will be in watch only mode.',
 
     LANGUAGE: 'Language',
+    LAST_INTENT: 'Last intent, if you fail again all your data will be deleted.',
     LOCAL_CURRENCY: 'Local currency',
 
     NAME: 'Name',
@@ -155,6 +156,7 @@ export default {
     IMPORT_ADDRESS: 'Si importas una direccion publica tu cartera sera de solo lectura',
 
     LANGUAGE: 'Idioma',
+    LAST_INTENT: 'Ultimo intento, si falla todos sus datos se eliminaran.',
     LOCAL_CURRENCY: 'Moneda local',
 
     NAME: 'Nombre',
