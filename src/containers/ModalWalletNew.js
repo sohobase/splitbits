@@ -12,7 +12,7 @@ import styles from './ModalWalletNew.style';
 const { CRYPTO: { BTC }, DEV } = C;
 const CRYPTOS = {
   BTC: 'Bitcoin',
-  ETH: 'Ethereum',
+  // ETH: 'Ethereum', @TODO: Disabled meanwhile we don't have a full node
   LTC: 'Litecoin',
 };
 
