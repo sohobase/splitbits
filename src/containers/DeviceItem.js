@@ -10,9 +10,9 @@ import { DeviceService } from '../services';
 import { updateDeviceAction } from '../store/actions';
 import styles from './DeviceItem.style';
 
-const { COLOR: { ACCEPT, RED, WHITE } } = THEME;
+const { COLOR: { GREEN, RED, WHITE } } = THEME;
 
-const BUTTON_ACCEPT = { backgroundColor: ACCEPT, underlayColor: Color(ACCEPT).darken(0.1).string(), type: 'delete' };
+const BUTTON_ACCEPT = { backgroundColor: GREEN, underlayColor: Color(GREEN).darken(0.1).string(), type: 'delete' };
 const BUTTON_CANCEL = { backgroundColor: RED, underlayColor: Color(RED).darken(0.1).string() };
 
 class DeviceItem extends Component {

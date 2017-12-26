@@ -13,7 +13,7 @@ import styles from './Onboarding.style';
 
 const { LANGUAGES } = C;
 const {
-  ACCENT, BLUE, RED, PINK,
+  ACCENT, GREEN, BLUE, RED, PINK,
 } = THEME.COLOR;
 const SLIDES = 5;
 
@@ -82,10 +82,10 @@ class Onboarding extends Component {
           onMomentumScrollEnd={_onSwipe}
         >
           <Slide caption={i18n.CAPTION.WELCOME} image="rocket" hint={i18n.HINT.WELCOME} />
-          <Slide backgroundColor={ACCENT} caption={i18n.CAPTION.PRIVATE_KEYS} image="key" hint={i18n.HINT.PRIVATE_KEYS} />
-          <Slide backgroundColor={PINK} caption={i18n.CAPTION.NETWORK} image="network" hint={i18n.HINT.NETWORK} />
-          <Slide backgroundColor={BLUE} caption={i18n.CAPTION.PRIVACY} image="privacy" hint={i18n.HINT.PRIVACY} />
-          <Slide backgroundColor={RED} caption={i18n.CAPTION.EXCHANGE} image="exchange" hint={i18n.HINT.EXCHANGE} />
+          <Slide backgroundColor={PINK} caption={i18n.CAPTION.PRIVATE_KEYS} image="key" hint={i18n.HINT.PRIVATE_KEYS} />
+          <Slide backgroundColor={GREEN} caption={i18n.CAPTION.NETWORK} image="network" hint={i18n.HINT.NETWORK} />
+          <Slide backgroundColor={RED} caption={i18n.CAPTION.PRIVACY} image="privacy" hint={i18n.HINT.PRIVACY} />
+          <Slide backgroundColor={ACCENT} caption={i18n.CAPTION.EXCHANGE} image="exchange" hint={i18n.HINT.EXCHANGE} />
           <Slide caption={i18n.CAPTION.WALLET} image="wallet" hint={i18n.HINT.WALLET}>
             <Button accent caption={i18n.CREATE_FIRST_WALLET} onPress={_onWallet} style={styles.button} />
           </Slide>
