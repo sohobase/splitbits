@@ -5,7 +5,7 @@
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
     "sdkVersion": "24.0.0",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "orientation": "portrait",
     "primaryColor": "#2f2bad",
     "icon": "./assets/app-icon.png",
@@ -20,14 +20,14 @@
     },
     "ios": {
       "bundleIdentifier": "com.sohobase.splitbits",
-      "buildNumber": "60",
+      "buildNumber": "61",
       "supportsTablet": false,
       "bundleIdentifier": "com.sohobase.xcryptos",
     },
     "android": {
       "package": "com.sohobase.splitbits",
       "permissions": ["ACCESS_NETWORK_STATE", "CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
-      "versionCode": 60
+      "versionCode": 61
     },
     "androidStatusBar": {
       "backgroundColor": "#2f2bad",

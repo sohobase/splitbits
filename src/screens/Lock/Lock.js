@@ -1,3 +1,4 @@
+import { Util } from 'expo';
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { BackHandler, Linking, StatusBar, Text, Vibration, View } from 'react-native';
@@ -10,7 +11,9 @@ import { resetAction, updateDeviceAction } from '../../store/actions';
 import { Fingerprint, NumKeyboard, Pin } from './components';
 import styles from './Lock.style';
 
-const { DEV, IS_DEVICE, SOHOBASE_SUPPORT } = C;
+const {
+  DEV, IS_DEVICE, LANGUAGES, SOHOBASE_SUPPORT,
+} = C;
 const { COLOR } = THEME;
 
 const MAX_INTENTS = 3;
@@ -34,12 +37,16 @@ class Lock extends Component {
     this._onPress = this._onPress.bind(this);
     this._onReset = this._onReset.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
-    // if (DEV && !IS_DEVICE) this._onSuccess();
+    if (DEV && !IS_DEVICE) this._onSuccess();
   }
 
-  componentWillMount() {
-    this._onFingerprint();
+  async componentWillMount() {
+    const { _onFingerprint, props: { updateDevice } } = this;
+    const language = (await Util.getCurrentLocaleAsync()).toUpperCase();
+
+    _onFingerprint();
     BackHandler.addEventListener('hardwareBackPress', BackHandler.exitApp);
+    updateDevice({ language: LANGUAGES[language] ? language : 'EN' });
   }
 
   async _onFingerprint() {

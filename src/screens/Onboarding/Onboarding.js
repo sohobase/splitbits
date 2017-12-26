@@ -13,7 +13,7 @@ import styles from './Onboarding.style';
 
 const { LANGUAGES } = C;
 const {
-  ACCENT, GREEN, BLUE, RED, PINK,
+  ACCENT, GREEN, RED, PINK,
 } = THEME.COLOR;
 const SLIDES = 5;
 
