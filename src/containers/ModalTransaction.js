@@ -3,38 +3,31 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Modal, Option } from '../components';
-import { C, SHAPE, STYLE, TEXT } from '../config';
+import { C, SHAPE, STYLE } from '../config';
 
 const { TYPE: { REQUEST, SEND } } = C;
-const { DEVICE, WALLET } = SHAPE;
-const {
-  EN: {
-    REQUEST_MONEY, REQUEST_MONEY_HINT, REQUEST_MONEY_HINT_NO_FRIENDS,
-    SEND_MONEY, SEND_MONEY_HINT, SEND_MONEY_HINT_NO_BALANCE, SEND_MONEY_HINT_READ_ONLY,
-  },
-} = TEXT;
 
 const ModalTransaction = ({
-  device: { devices = [] }, onClose, onPress, visible, wallet: { balance, readOnly },
+  device: { devices = [] }, i18n, onClose, onPress, visible, wallet: { balance, readOnly },
 }) => {
-  let hint = SEND_MONEY_HINT;
-  if (readOnly) hint = SEND_MONEY_HINT_READ_ONLY;
-  else if (balance === 0) hint = SEND_MONEY_HINT_NO_BALANCE;
+  let hint = i18n.SEND_MONEY_HINT;
+  if (readOnly) hint = i18n.SEND_MONEY_HINT_READ_ONLY;
+  else if (balance === 0) hint = i18n.SEND_MONEY_HINT_NO_BALANCE;
 
   return (
-    <Modal title="Type of transaction" visible={visible} onClose={onClose}>
+    <Modal title={i18n.TYPE_OF_TRANSACTION} visible={visible} onClose={onClose}>
       <View style={[STYLE.COL]}>
         <Option
-          caption={SEND_MONEY}
+          caption={i18n.SEND_MONEY}
           disabled={readOnly || balance === 0}
           hint={hint}
           icon="arrowForward"
           onPress={() => onPress(SEND)}
         />
         <Option
-          caption={REQUEST_MONEY}
+          caption={i18n.REQUEST_MONEY}
           disabled={devices.length === 0}
-          hint={devices.length === 0 ? REQUEST_MONEY_HINT_NO_FRIENDS : REQUEST_MONEY_HINT}
+          hint={devices.length === 0 ? i18n.REQUEST_MONEY_HINT_NO_FRIENDS : i18n.REQUEST_MONEY_HINT}
           icon="arrowBack"
           onPress={() => onPress(REQUEST)}
         />
@@ -44,11 +37,12 @@ const ModalTransaction = ({
 };
 
 ModalTransaction.propTypes = {
-  device: shape(DEVICE).isRequired,
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
   onClose: func,
   onPress: func,
   visible: bool,
-  wallet: shape(WALLET),
+  wallet: shape(SHAPE.WALLET),
 };
 
 ModalTransaction.defaultProps = {
@@ -58,8 +52,9 @@ ModalTransaction.defaultProps = {
   wallet: {},
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 export default connect(mapStateToProps)(ModalTransaction);

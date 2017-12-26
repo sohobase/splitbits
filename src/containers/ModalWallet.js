@@ -10,7 +10,6 @@ import { removeWalletAction } from '../store/actions';
 import styles from './ModalWallet.style';
 
 const { TYPE: { PRO } } = C;
-const { WALLET } = SHAPE;
 const { QR_SIZE } = THEME;
 
 class ModalWallet extends Component {
@@ -42,7 +41,7 @@ class ModalWallet extends Component {
     const {
       _onArchive, _onBackup, _onPro,
       props: {
-        onClose, visible,
+        i18n, onClose, visible,
         wallet: {
           address, backup, imported, readOnly, type,
         },
@@ -51,34 +50,23 @@ class ModalWallet extends Component {
     const created = !imported && !readOnly;
 
     return (
-      <Modal title="Wallet" visible={visible} onClose={onClose}>
+      <Modal title={i18n.WALLET} visible={visible} onClose={onClose}>
         <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.info]}>
           <QRCode value={address} size={QR_SIZE} style={styles.qr} />
           <Text style={styles.address}>{address}</Text>
         </View>
         <View style={[STYLE.COL]}>
           { created &&
-            <Option
-              caption="Create a backup"
-              hint="The simplest way to have control of your wallet."
-              icon="backup"
-              onPress={_onBackup}
-            /> }
+            <Option caption={i18n.CREATE_BACKUP} hint={i18n.CAPTION.CREATE_BACKUP} icon="backup" onPress={_onBackup} /> }
           <Option
-            caption="Archive this wallet"
-            hint="If you do not want to use this wallet anymore."
+            caption={i18n.ARCHIVE_WALLET}
+            hint={i18n.CAPTION.ARCHIVE_WALLET}
             icon="remove"
             disabled={created && !backup}
             onPress={_onArchive}
           />
           { type !== PRO &&
-            <Option
-              caption="Switch to PRO"
-              hint="Super powers for your wallet."
-              icon="star"
-              onPress={_onPro}
-              disabled
-            /> }
+            <Option caption={i18n.SWITCH_PRO} hint={i18n.CAPTION.SWITCH_PRO} icon="star" onPress={_onPro} disabled /> }
         </View>
       </Modal>
     );
@@ -86,11 +74,12 @@ class ModalWallet extends Component {
 }
 
 ModalWallet.propTypes = {
+  i18n: shape(SHAPE.I18N).isRequired,
   onBackup: func,
   onClose: func,
   removeWallet: func,
   visible: bool,
-  wallet: shape(WALLET),
+  wallet: shape(SHAPE.WALLET),
 };
 
 ModalWallet.defaultProps = {
@@ -101,7 +90,10 @@ ModalWallet.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = undefined;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
 const mapDispatchToProps = dispatch => ({
   removeWallet: wallet => dispatch(removeWalletAction(wallet)),
 });

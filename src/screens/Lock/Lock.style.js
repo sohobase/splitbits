@@ -26,6 +26,8 @@ export default StyleSheet.create({
 
   hint: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
+    textAlign: 'center',
+    marginHorizontal: OFFSET,
   },
 
   iconFingerprint: {

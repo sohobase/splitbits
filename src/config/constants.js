@@ -6,8 +6,19 @@ export default {
 
   BLOCKCHAIN_EXPLORER_URL: 'https://chain.so/address',
 
+  CONNECTION: {
+    CELLULAR: 'cellular',
+    WIFI: 'wifi',
+  },
+
+  CONVERSION: {
+    BTC: 0.000001,
+    LTC: 0.001,
+  },
+
   CRYPTO: {
     BTC: 'BTC',
+    ETH: 'ETH',
     LTC: 'LTC',
   },
 
@@ -22,11 +33,17 @@ export default {
 
   IS_DEVICE: Constants.isDevice,
 
+  LANGUAGES: {
+    EN: 'English',
+    ES: 'Español',
+  },
+
   MIN_CONFIRMATIONS: 3,
 
   NETWORKS: {
     BTC: DEV ? 'testnet' : 'bitcoin',
     LTC: DEV ? 'testnet' : 'litecoin',
+    ETH: DEV ? 'testnet' : 'ethereum',
   },
 
   SYMBOL: {
@@ -36,7 +53,13 @@ export default {
     JPY: '¥',
 
     BTC: 'Ƀ', // ₿
+    ETH: 'Ξ',
     LTC: 'Ł',
+
+    FRIENDLY: {
+      BTC: 'bits',
+      LTC: 'lites',
+    },
   },
 
   SATOSHI: 0.00000001,
@@ -69,8 +92,11 @@ export default {
   TOKEN: 'sohobase-splitbits-dev',
 
   TYPE: {
+    CREATE: 'create',
     DEFAULT: 'default',
+    IMPORT: 'import',
     PRO: 'pro',
+    RECOVER: 'recover',
     REQUEST: 'request',
     SEND: 'send',
   },

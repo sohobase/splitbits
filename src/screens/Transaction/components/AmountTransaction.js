@@ -5,14 +5,10 @@ import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Amount, Header, Input } from '../../../components';
-import { C, SHAPE, STYLE, TEXT, THEME } from '../../../config';
+import { C, SHAPE, STYLE, THEME } from '../../../config';
 import styles from './AmountTransaction.style';
 
 const { SATOSHI, STATE: { REQUESTED } } = C;
-const {
-  CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
-} = SHAPE;
-const { EN: { BALANCE, FEE } } = TEXT;
 const { COLOR } = THEME;
 
 class AmountTransaction extends Component {
@@ -44,6 +40,7 @@ class AmountTransaction extends Component {
       props: {
         coin, currencies, editable, navigation,
         device: { currency },
+        i18n,
         item: {
           charge = 0, fee = 0, payment = false, state,
         } = {},
@@ -59,10 +56,10 @@ class AmountTransaction extends Component {
     } else {
       conversion = (amount * SATOSHI) / currencies[coin];
     }
-    let title = 'Transaction';
+    let title = i18n.TRANSACTION;
     if (state) {
-      title = payment ? 'Payment' : 'Deposit';
-      if (state === REQUESTED) title = 'Payment Request';
+      title = payment ? i18n.PAYMENT : i18n.DEPOSIT;
+      if (state === REQUESTED) title = i18n.PAYMENT_REQUEST;
     }
 
     return (
@@ -92,10 +89,10 @@ class AmountTransaction extends Component {
             <View style={styles.balance}>
               {
                 state === undefined || state === REQUESTED
-                ? <Amount caption={`${BALANCE} `} coin={coin} style={[styles.label, styles.small]} value={balance} />
+                ? <Amount caption={`${i18n.BALANCE} `} coin={coin} style={[styles.label, styles.small]} value={balance} />
                 :
                 <Amount
-                  caption={`${FEE} `}
+                  caption={`${i18n.FEE} `}
                   coin={currency}
                   style={[styles.label, styles.small]}
                   value={((fee + charge) * SATOSHI) / currencies[coin]}
@@ -111,29 +108,29 @@ class AmountTransaction extends Component {
 
 AmountTransaction.propTypes = {
   coin: string,
-  currencies: shape(CURRENCIES),
-  device: shape(DEVICE),
+  currencies: shape(SHAPE.CURRENCIES),
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
   editable: bool,
-  item: shape(TRANSACTION),
-  navigation: shape(NAVIGATION),
+  item: shape(SHAPE.TRANSACTION),
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
   onAmount: func,
-  wallet: shape(WALLET),
+  wallet: shape(SHAPE.WALLET),
 };
 
 AmountTransaction.defaultProps = {
   coin: undefined,
   currencies: {},
-  device: {},
   editable: true,
   item: undefined,
-  navigation: undefined,
   onAmount() {},
   wallet: {},
 };
 
-const mapStateToProps = ({ currencies, device }) => ({
+const mapStateToProps = ({ currencies, device, i18n }) => ({
   currencies: currencies[device.currency],
   device,
+  i18n,
 });
 
 export default connect(mapStateToProps)(AmountTransaction);

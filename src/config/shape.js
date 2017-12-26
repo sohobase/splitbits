@@ -9,16 +9,17 @@ export default {
   CURRENCIES: {
     BTC: number,
     LTC: number,
+    ETH: number,
   },
   DEVICE: {
     id: string,
     currency: string,
     devices: array,
     image: string,
+    language: string,
     name: string,
     push: string,
     pin: string,
-    private: object, // { capture: string, passport: string, phone: string },
     requests: array,
     state: string,
     token: string,
@@ -29,6 +30,7 @@ export default {
     title: string,
     message: string,
   },
+  I18N: {},
   NAVIGATION: {
     navigate: func,
     setParams: func,

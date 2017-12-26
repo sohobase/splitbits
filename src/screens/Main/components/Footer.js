@@ -3,24 +3,23 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Option } from '../../../components';
-import { SHAPE, STYLE, TEXT } from '../../../config';
+import { SHAPE, STYLE } from '../../../config';
 import styles from './Footer.style';
 
-const { DEVICE } = SHAPE;
-const { EN: { FRIENDS, SETTINGS } } = TEXT;
-
-const Footer = ({ device: { requests = [] }, elevation, navigate }) => (
+const Footer = ({
+  device: { requests = [] }, i18n, elevation, navigate,
+}) => (
   <View style={[STYLE.ROW, STYLE.CENTERED, STYLE.ELEVATION, styles.footer, (elevation && styles.elevation)]}>
     <Option
       activity={requests.length > 0}
-      caption={FRIENDS}
+      caption={i18n.FRIENDS}
       centered
       icon="face"
       onPress={() => navigate('Profile')}
       style={styles.option}
     />
     <Option
-      caption={SETTINGS}
+      caption={i18n.SETTINGS}
       centered
       icon="settings"
       onPress={() => navigate('Settings')}
@@ -30,8 +29,9 @@ const Footer = ({ device: { requests = [] }, elevation, navigate }) => (
 );
 
 Footer.propTypes = {
-  device: shape(DEVICE).isRequired,
+  device: shape(SHAPE.DEVICE).isRequired,
   elevation: bool,
+  i18n: shape({}).isRequired,
   navigate: func,
 };
 
@@ -40,8 +40,9 @@ Footer.defaultProps = {
   navigate: undefined,
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 export default connect(mapStateToProps)(Footer);

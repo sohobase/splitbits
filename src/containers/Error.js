@@ -4,12 +4,10 @@ import { Modal as ReactNativeModal, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Button } from '../components';
-import { SHAPE, STYLE, TEXT, THEME } from '../config';
+import { SHAPE, STYLE, THEME } from '../config';
 import { errorAction } from '../store/actions';
 import styles from './Error.style';
 
-const { ERROR } = SHAPE;
-const { EN: { ACCEPT } } = TEXT;
 const { ANIMATION: { DURATION } } = THEME;
 
 class Error extends Component {
@@ -24,7 +22,7 @@ class Error extends Component {
   }
 
   render() {
-    const { _onPress, props: { error: { code, message } = {} } } = this;
+    const { _onPress, props: { error: { code, message } = {}, i18n } } = this;
     const visible = code !== undefined || message !== undefined;
 
     if (visible) console.log('[error]', this.props.error); // eslint-disable-line
@@ -41,7 +39,7 @@ class Error extends Component {
               <Text style={styles.message}>{message}</Text>
               { code && <Text style={styles.code}>{`Error ${code}`}</Text> }
             </View>
-            <Button caption={ACCEPT} onPress={_onPress} raised style={styles.button} />
+            <Button caption={i18n.ACCEPT} onPress={_onPress} raised style={styles.button} />
           </View>
         </Motion>
       </ReactNativeModal>
@@ -50,7 +48,8 @@ class Error extends Component {
 }
 
 Error.propTypes = {
-  error: shape(ERROR),
+  error: shape(SHAPE.ERROR),
+  i18n: shape(SHAPE.I18N).isRequired,
   removeError: func,
 };
 
@@ -59,8 +58,9 @@ Error.defaultProps = {
   removeError() {},
 };
 
-const mapStateToProps = ({ error }) => ({
+const mapStateToProps = ({ error, i18n }) => ({
   error,
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({

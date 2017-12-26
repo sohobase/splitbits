@@ -3,32 +3,28 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Amount, Avatar, Icon, Touchable } from '../../../components';
-import { C, SHAPE, STYLE, TEXT } from '../../../config';
+import { C, SHAPE, STYLE } from '../../../config';
 import { DateService } from '../../../services';
 import styles from './TransactionItem.style';
 
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
-const {
-  CURRENCIES, DEVICE, TRANSACTION, WALLET,
-} = SHAPE;
-const { EN: { PAY, REQUEST, TO } } = TEXT;
 
 const verboseTitle = ({
-  emitter, concept, other: { name = '' }, state, payment,
+  emitter, concept, i18n, other: { name = '' }, state, payment,
 }) => {
   if (!name) return concept;
-  if (state === REQUESTED) return `${emitter ? PAY : REQUEST} ${TO} ${name.split(' ')[0]}`;
-  return `${payment ? 'To' : 'From'} ${name}`;
+  if (state === REQUESTED) return `${emitter ? i18n.PAY : i18n.REQUEST} ${i18n.TO} ${name.split(' ')[0]}`;
+  return `${payment ? i18n.TO : i18n.FROM} ${name}`;
 };
 
-const TransactionItem = (props) => {
-  const {
-    currencies,
-    data: transactionData,
-    device: { currency, devices },
-    onPress,
-    wallet: { address } = {},
-  } = props;
+const TransactionItem = ({
+  currencies,
+  data: transactionData,
+  device: { currency, devices },
+  i18n,
+  onPress,
+  wallet: { address } = {},
+}) => {
   const {
     amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
   } = transactionData;
@@ -53,7 +49,7 @@ const TransactionItem = (props) => {
         <View style={styles.info}>
           <Text style={styles.title}>
             {verboseTitle({
-              emitter, concept, other, state, payment,
+              concept, emitter, i18n, other, payment, state,
             })}
           </Text>
           <Text style={[styles.label, styles.date]}>{DateService.ago(createdAt)}</Text>
@@ -74,20 +70,22 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
-  currencies: shape(CURRENCIES).isRequired,
-  data: shape(TRANSACTION).isRequired,
-  device: shape(DEVICE).isRequired,
+  currencies: shape(SHAPE.CURRENCIES).isRequired,
+  data: shape(SHAPE.TRANSACTION).isRequired,
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
   onPress: func,
-  wallet: shape(WALLET).isRequired,
+  wallet: shape(SHAPE.WALLET).isRequired,
 };
 
 TransactionItem.defaultProps = {
   onPress() {},
 };
 
-const mapStateToProps = ({ currencies, device }) => ({
+const mapStateToProps = ({ currencies, device, i18n }) => ({
   currencies: currencies[device.currency],
   device,
+  i18n,
 });
 
 export default connect(mapStateToProps)(TransactionItem);

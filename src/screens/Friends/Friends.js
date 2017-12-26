@@ -61,7 +61,7 @@ class Friends extends Component {
   render() {
     const {
       _onCamera, _onItem, _onQuery, _onQRreader,
-      props: { navigation, selectMode },
+      props: { i18n, navigation, selectMode },
       state: { query, scanner, ...state },
     } = this;
     const headerProps = {
@@ -75,12 +75,18 @@ class Friends extends Component {
           <Input
             autoFocus={!selectMode}
             onChangeText={_onQuery}
-            placeholder="Search friends..."
+            placeholder={i18n.SEARCH}
             style={styles.input}
             value={query}
           />
         </Header>
-        <DevicesList navigation={navigation} onRefresh={() => _onQuery(query)} request={!selectMode} onItem={_onItem} {...state} />
+        <DevicesList
+          navigation={navigation}
+          onRefresh={() => _onQuery(query)}
+          request={!selectMode}
+          onItem={_onItem}
+          {...state}
+        />
         { !selectMode && <QRreader active={scanner} onClose={_onCamera} onRead={_onQRreader} /> }
       </View>
     );
@@ -89,7 +95,8 @@ class Friends extends Component {
 
 Friends.propTypes = {
   devices: arrayOf(shape(DEVICE)),
-  navigation: shape(NAVIGATION),
+  i18n: shape(SHAPE.DEVICE).isRequired,
+  navigation: shape(NAVIGATION).isRequired,
   selectMode: bool,
   selectDevice: func.isRequired,
   updateDevice: func.isRequired,
@@ -97,14 +104,13 @@ Friends.propTypes = {
 
 Friends.defaultProps = {
   devices: [],
-  navigation: undefined,
   selectMode: false,
 };
 
-const mapStateToProps = ({ device: { devices = [] } }, props) => {
+const mapStateToProps = ({ device: { devices = [] }, i18n }, props) => {
   const { selectMode = false } = props.navigation.state.params || {};
 
-  return { devices, selectMode };
+  return { devices, i18n, selectMode };
 };
 
 const mapDispatchToProps = dispatch => ({

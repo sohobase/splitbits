@@ -10,7 +10,6 @@ export default StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-end',
     top: HEADER_SIZE - (2.5 * OFFSET),
-    right: OFFSET,
     backgroundColor: COLOR.ACCENT,
     color: COLOR.WHITE,
     fontSize: FONT.SIZE.TINY,
@@ -19,5 +18,13 @@ export default StyleSheet.create({
     paddingBottom: UNIT / 4,
     paddingLeft: UNIT / 2,
     paddingRight: UNIT / 2,
+  },
+
+  left: {
+    left: OFFSET,
+  },
+
+  right: {
+    right: OFFSET,
   },
 });

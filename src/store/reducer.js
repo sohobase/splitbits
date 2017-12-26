@@ -1,10 +1,12 @@
+import { TEXT } from '../config';
 import DEFAULTS from './defaults';
 import {
-  ADD_TOKEN,
   UPDATE_CURRENCIES,
   UPDATE_DEVICE,
   SELECT_DEVICE,
   ERROR,
+  RESET,
+  ADD_TOKEN,
   UPDATE_TRANSACTIONS,
   ADD_WALLET,
   REMOVE_WALLET,
@@ -13,17 +15,17 @@ import {
 
 export default function(state = DEFAULTS, action) {
   switch (action.type) {
-    // -- token
-    case ADD_TOKEN:
-      return { ...state, token: action.token };
-
     // -- Currencies
     case UPDATE_CURRENCIES:
       return { ...state, currencies: action.currencies };
 
     // -- Device
-    case UPDATE_DEVICE:
-      return { ...state, device: { ...state.device, ...action.device } };
+    case UPDATE_DEVICE: {
+      const device = { ...state.device, ...action.device };
+      return {
+        ...state, device, i18n: TEXT[device.language],
+      };
+    }
 
     case SELECT_DEVICE:
       return { ...state, selectedDevice: action.deviceId };
@@ -31,6 +33,14 @@ export default function(state = DEFAULTS, action) {
     // -- Error
     case ERROR:
       return { ...state, error: action.error };
+
+    // -- Reset
+    case RESET:
+      return { ...DEFAULTS };
+
+    // -- token
+    case ADD_TOKEN:
+      return { ...state, token: action.token };
 
     // -- Transaction
     case UPDATE_TRANSACTIONS: {

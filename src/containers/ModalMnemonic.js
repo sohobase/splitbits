@@ -4,13 +4,12 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal } from '../components';
-import { SHAPE, STYLE, TEXT } from '../config';
+import { SHAPE, STYLE } from '../config';
 import { MnemonicService } from '../services';
 import { updateWalletAction } from '../store/actions';
 import styles from './ModalMnemonic.style';
 
 const { WALLET } = SHAPE;
-const { EN: { NEXT, PAPER_WALLET, RECOVER_PAPER_WALLET } } = TEXT;
 const WORDS_LENGTH = 12;
 
 class ModalMnemonic extends Component {
@@ -54,16 +53,20 @@ class ModalMnemonic extends Component {
 
   render() {
     const {
-      _onBackup, _onRecover, _onValue, props: { onClose, visible, wallet: { address } }, state: { words = [] },
+      _onBackup, _onRecover, _onValue,
+      props: {
+        i18n, onClose, visible, wallet: { address },
+      },
+      state: { words = [] },
     } = this;
     const readOnly = !!address;
 
     return (
       <Modal
-        hint={readOnly ? PAPER_WALLET : RECOVER_PAPER_WALLET}
+        hint={readOnly ? i18n.PAPER_WALLET : i18n.RECOVER_PAPER_WALLET}
         onClose={onClose}
         style={STYLE.CENTERED}
-        title="Paper key"
+        title={i18n.PAPER_KEY}
         visible={visible}
       >
         <View style={[STYLE.ROW, styles.words]}>
@@ -72,7 +75,7 @@ class ModalMnemonic extends Component {
               editable={!readOnly}
               key={i.toString()}
               onChangeText={text => _onValue(i, text)}
-              placeholder={`Word ${i + 1}`}
+              placeholder={`${i18n.WORD} ${i + 1}`}
               style={[styles.word, (!readOnly && styles.input)]}
               value={value}
             />)) }
@@ -80,7 +83,7 @@ class ModalMnemonic extends Component {
 
         <Button
           accent
-          caption={readOnly ? 'Already written my paper key' : NEXT}
+          caption={readOnly ? i18n.PAPER_KEY_DONE : i18n.NEXT}
           disabled={!readOnly && !MnemonicService.validate(words)}
           onPress={readOnly ? _onBackup : _onRecover}
           style={styles.button}
@@ -91,6 +94,7 @@ class ModalMnemonic extends Component {
 }
 
 ModalMnemonic.propTypes = {
+  i18n: shape({}).isRequired,
   onClose: func,
   onRecover: func,
   visible: bool,
@@ -106,7 +110,10 @@ ModalMnemonic.defaultProps = {
   wallet: {},
 };
 
-const mapStateToProps = undefined;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
 const mapDispatchToProps = dispatch => ({
   updateWallet: wallet => dispatch(updateWalletAction(wallet)),
 });

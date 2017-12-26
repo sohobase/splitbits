@@ -3,6 +3,8 @@ import { Dimensions, Platform } from 'react-native';
 
 const UNIT = 10;
 const OFFSET = UNIT * 1.6;
+const PRIMARY = '#2F2BAD';
+const ACCENT = '#F71568';
 const WHITE = '#ffffff';
 const BLACK = '#000000';
 const DISABLED = 0.38;
@@ -31,14 +33,17 @@ export default {
   BUTTON_CIRCLE_SIZE: UNIT * 6.4,
 
   COLOR: {
-    PRIMARY: '#2d126c',
-    ACCENT: '#32dba8',
+    PRIMARY,
+    ACCENT,
     BLUE: '#303498',
     PINK: '#ff4566',
-    ACCEPT: '#5edeb3',
+    GREEN: '#5edeb3',
     RED: '#F44336',
+    TRANSPARENT: 'transparent',
     WHITE,
     BLACK,
+    BTC: PRIMARY,
+    ETH: 'transparent',
     LTC: '#B6B6BA',
 
     BACKGROUND: Color(WHITE).darken(0.03),
@@ -71,8 +76,8 @@ export default {
     },
     WEIGHT: {
       LIGHT: '200',
-      DEFAULT: '400',
-      BOLD: '700',
+      DEFAULT: 'normal',
+      BOLD: '800',
     },
   },
 

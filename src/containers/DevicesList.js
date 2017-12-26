@@ -3,10 +3,8 @@ import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { SHAPE } from '../config';
-import { DeviceItem } from './components';
+import DeviceItem from './DeviceItem';
 import styles from './DevicesList.style';
-
-const { DEVICE, NAVIGATION } = SHAPE;
 
 const consolidate = (a = [], b = []) => {
   const dataSource = [];
@@ -16,7 +14,7 @@ const consolidate = (a = [], b = []) => {
 };
 
 const DevicesList = ({
-  data, device: { devices, requests }, navigation, onItem, onRefresh, refreshing, request, selected, style,
+  data, device: { devices, requests }, onItem, onRefresh, refreshing, request, selected, style,
 }) => (
   <FlatList
     data={data || consolidate(requests, devices)}
@@ -36,9 +34,8 @@ const DevicesList = ({
 );
 
 DevicesList.propTypes = {
-  data: arrayOf(shape(DEVICE)),
-  device: shape(DEVICE).isRequired,
-  navigation: shape(NAVIGATION),
+  data: arrayOf(shape(SHAPE.DEVICE)),
+  device: shape(SHAPE.DEVICE).isRequired,
   onItem: func,
   onRefresh: func,
   refreshing: bool,
@@ -49,7 +46,6 @@ DevicesList.propTypes = {
 
 DevicesList.defaultProps = {
   data: undefined,
-  navigation: undefined,
   onItem: undefined,
   onRefresh() {},
   refreshing: false,
@@ -58,8 +54,9 @@ DevicesList.defaultProps = {
   style: undefined,
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 export default connect(mapStateToProps)(DevicesList);

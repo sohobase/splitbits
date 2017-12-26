@@ -1,19 +1,19 @@
 import { func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { BackHandler, Linking, StatusBar, Text, Vibration, View } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../../components';
-import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
+import { C, SHAPE, STYLE, THEME } from '../../config';
 import { FingerprintService } from '../../services';
-import { updateDeviceAction } from '../../store/actions';
+import { resetAction, updateDeviceAction } from '../../store/actions';
 import { Fingerprint, NumKeyboard, Pin } from './components';
 import styles from './Lock.style';
 
 const { DEV, IS_DEVICE, SOHOBASE_SUPPORT } = C;
-const { DEVICE, NAVIGATION } = SHAPE;
-const { EN: { SET_PIN_CODE, USE_FINGERPRINT } } = TEXT;
 const { COLOR } = THEME;
 
+const MAX_INTENTS = 3;
 const BACKSPACE = 'backspace';
 const HELP = 'help';
 
@@ -24,6 +24,7 @@ class Lock extends Component {
     super(props);
     this.state = {
       hasFingerprint: false,
+      intents: 0,
       pin: undefined,
       wrong: false,
     };
@@ -31,8 +32,9 @@ class Lock extends Component {
     this._onBackspace = this._onBackspace.bind(this);
     this._onFingerprint = this._onFingerprint.bind(this);
     this._onPress = this._onPress.bind(this);
+    this._onReset = this._onReset.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
-    if (DEV && !IS_DEVICE) this._onSuccess();
+    // if (DEV && !IS_DEVICE) this._onSuccess();
   }
 
   componentWillMount() {
@@ -41,9 +43,11 @@ class Lock extends Component {
   }
 
   async _onFingerprint() {
+    const { props: { i18n } } = this;
+
     if (await FingerprintService.isEnrolled()) {
       this.setState({ hasFingerprint: true });
-      if (await FingerprintService.authenticate(USE_FINGERPRINT)) {
+      if (await FingerprintService.authenticate(i18n.USE_FINGERPRINT)) {
         FingerprintService.cancel();
         this._onSuccess();
       }
@@ -56,21 +60,26 @@ class Lock extends Component {
     } else if (key === BACKSPACE) {
       this._onBackspace();
     } else {
-      let { pin = '' } = this.state;
+      let { intents, pin = '' } = this.state;
       pin = `${pin}${key}`;
       if (pin.length <= 4) this.setState({ pin, wrong: false });
 
       if (pin.length === 4) {
-        const { _onSuccess, props: { device, updateDevice } } = this;
+        const { _onReset, _onSuccess, props: { device, updateDevice } } = this;
 
         if (!device.pin || pin === device.pin) {
           if (!device.pin) updateDevice({ pin });
           _onSuccess();
         } else {
-          setTimeout(() => {
-            this.setState({ pin: '', wrong: true });
-            Vibration.vibrate(500);
-          }, 250);
+          intents += 1;
+          if (intents === MAX_INTENTS) {
+            _onReset();
+          } else {
+            setTimeout(() => {
+              this.setState({ intents, pin: '', wrong: true });
+              Vibration.vibrate(500);
+            }, 100);
+          }
         }
       }
     }
@@ -82,14 +91,26 @@ class Lock extends Component {
   }
 
   _onSuccess() {
+    this.setState({ wrong: false, pin: '0000' });
     this.props.navigation.navigate('Main');
+  }
+
+  _onReset() {
+    const { props: { navigation, reset } } = this;
+    reset();
+    navigation.dispatch(NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Onboarding' })],
+    }));
   }
 
   render() {
     const {
       _onFingerprint, _onPress,
-      props: { device },
-      state: { hasFingerprint, pin, wrong },
+      props: { device, i18n },
+      state: {
+        hasFingerprint, intents, pin, wrong,
+      },
     } = this;
     let animation;
     if (!pin) animation = 'bounceInDown';
@@ -101,7 +122,10 @@ class Lock extends Component {
         <View style={[STYLE.CENTERED, styles.header]}>
           <Logo motion={{ animation: 'bounceInDown' }} />
           <Pin animation={animation} pin={pin} />
-          { !device.pin && <Text style={styles.hint}>{SET_PIN_CODE}</Text> }
+          <Text style={styles.hint}>
+            { !device.pin && i18n.SET_PIN_CODE }
+            { intents === (MAX_INTENTS - 1) && i18n.LAST_INTENT }
+          </Text>
         </View>
         <NumKeyboard onPress={_onPress} onHelp={onHelp} />
         { hasFingerprint && <Fingerprint onSuccess={_onFingerprint} /> }
@@ -111,22 +135,25 @@ class Lock extends Component {
 }
 
 Lock.propTypes = {
-  device: shape(DEVICE),
-  navigation: shape(NAVIGATION),
+  device: shape(SHAPE.DEVICE).isRequired,
+  i18n: shape(SHAPE.I18N).isRequired,
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
+  reset: func,
   updateDevice: func,
 };
 
 Lock.defaultProps = {
-  device: {},
-  navigation: undefined,
+  reset() {},
   updateDevice() {},
 };
 
-const mapStateToProps = ({ device }) => ({
+const mapStateToProps = ({ device, i18n }) => ({
   device,
+  i18n,
 });
 
 const mapDispatchToProps = dispatch => ({
+  reset: () => dispatch(resetAction()),
   updateDevice: device => device && dispatch(updateDeviceAction(device)),
 });
 

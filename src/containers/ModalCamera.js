@@ -1,13 +1,14 @@
-import { bool, func } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 import { FileSystem, ImagePicker } from 'expo';
 import { Modal, Option } from '../components';
-import { STYLE, TEXT } from '../config';
+import { SHAPE, STYLE } from '../config';
 
-const { EN: { CHANGE_YOUR_AVATAR, CHOOSE_EXISTING_PHOTO, TAKE_PHOTO } } = TEXT;
-
-const ModalCamera = ({ onClose, onFile, visible }) => {
+const ModalCamera = ({
+  i18n, onClose, onFile, visible,
+}) => {
   const launch = async(isCamera) => {
     const method = isCamera ? 'launchCameraAsync' : 'launchImageLibraryAsync';
     const { uri, cancelled } = await ImagePicker[method]({
@@ -32,16 +33,17 @@ const ModalCamera = ({ onClose, onFile, visible }) => {
   const launchImageLibrary = () => launch(false);
 
   return (
-    <Modal title={CHANGE_YOUR_AVATAR} visible={visible} onClose={onClose}>
+    <Modal title={i18n.CHANGE_YOUR_AVATAR} visible={visible} onClose={onClose}>
       <View style={[STYLE.COL]}>
-        <Option caption={TAKE_PHOTO} icon="camera" onPress={launchCamera} />
-        <Option caption={CHOOSE_EXISTING_PHOTO} icon="gallery" onPress={launchImageLibrary} />
+        <Option caption={i18n.TAKE_PHOTO} icon="camera" onPress={launchCamera} />
+        <Option caption={i18n.CHOOSE_EXISTING_PHOTO} icon="gallery" onPress={launchImageLibrary} />
       </View>
     </Modal>
   );
 };
 
 ModalCamera.propTypes = {
+  i18n: shape(SHAPE.I18N).isRequired,
   onClose: func,
   onFile: func,
   visible: bool,
@@ -53,4 +55,8 @@ ModalCamera.defaultProps = {
   visible: false,
 };
 
-export default ModalCamera;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
+export default connect(mapStateToProps)(ModalCamera);

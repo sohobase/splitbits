@@ -1,23 +1,20 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Input, Modal, Option, QRreader } from '../components';
-import { C, STYLE, TEXT } from '../config';
+import { ASSETS, C, SHAPE, STYLE } from '../config';
 import { WalletService } from '../services';
 import { addWalletAction } from '../store/actions';
 import { validateAddress } from './modules';
 import styles from './ModalWalletNew.style';
 
-const imageBTC = require('../../assets/coin-bitcoin.png');
-const imageLTC = require('../../assets/coin-litecoin.png');
-
-const { CRYPTO: { BTC, LTC }, DEV } = C;
-const {
-  EN: {
-    CREATE, IMPORT, RECOVER, TYPE_OF_WALLET,
-  },
-} = TEXT;
+const { CRYPTO: { BTC }, DEV } = C;
+const CRYPTOS = {
+  BTC: 'Bitcoin',
+  // ETH: 'Ethereum', @TODO: Disabled meanwhile we don't have a full node
+  LTC: 'Litecoin',
+};
 
 class ModalWalletNew extends Component {
   constructor(props) {
@@ -85,38 +82,35 @@ class ModalWalletNew extends Component {
     const {
       _onCoin, _onQR, _onSubmit,
       props: {
-        camera, hexSeed, onClose, visible,
+        camera, i18n, hexSeed, onClose, visible,
       },
       state: {
         address, cameraActive, coin, name, processing, wif,
       },
     } = this;
-    let buttonCaption = camera ? IMPORT : CREATE;
-    if (hexSeed) buttonCaption = RECOVER;
+    let buttonCaption = camera ? i18n.IMPORT : i18n.CREATE;
+    if (hexSeed) buttonCaption = i18n.RECOVER;
 
     return (
       <View style={styles.container} pointerEvents={visible ? 'auto' : 'none'}>
-        <QRreader active={cameraActive} onClose={onClose} onRead={_onQR} />
-        <Modal title={TYPE_OF_WALLET} visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
+        <QRreader active={cameraActive} importing onClose={onClose} onRead={_onQR} />
+        <Modal title={i18n.TYPE_OF_WALLET} visible={visible && !cameraActive} onClose={onClose} style={STYLE.CENTERED}>
           <View style={[STYLE.ROW, STYLE.CENTERED, styles.coins]}>
-            <Option
-              centered
-              image={imageBTC}
-              caption="Bitcoin"
-              onPress={() => _onCoin(BTC)}
-              style={[styles.coin, coin === BTC && styles.coinActive]}
-            />
-            <Option
-              centered
-              image={imageLTC}
-              caption="Litecoin"
-              onPress={() => _onCoin(LTC)}
-              style={[styles.coin, coin === LTC && styles.coinActive]}
-            />
+            {
+              Object.keys(CRYPTOS).map(key => (
+                <Option
+                  centered
+                  key={key}
+                  image={ASSETS[key]}
+                  caption={CRYPTOS[key]}
+                  onPress={() => _onCoin(key)}
+                  style={[styles.coin, coin === key && styles.coinActive]}
+                />
+              ))}
           </View>
           <Input
             onChangeText={text => this.setState({ name: text })}
-            placeholder="Choose a name..."
+            placeholder={`${i18n.NAME}...`}
             style={styles.input}
             value={name}
           />
@@ -140,6 +134,7 @@ class ModalWalletNew extends Component {
 ModalWalletNew.propTypes = {
   addWallet: func,
   camera: bool,
+  i18n: shape(SHAPE.I18N).isRequired,
   hexSeed: string,
   onClose: func,
   onSuccess: func,
@@ -155,7 +150,10 @@ ModalWalletNew.defaultProps = {
   visible: false,
 };
 
-const mapStateToProps = undefined;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
 const mapDispatchToProps = dispatch => ({
   addWallet: wallet => dispatch(addWalletAction(wallet)),
 });

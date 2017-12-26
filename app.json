@@ -4,33 +4,37 @@
     "description": "Next-gen private & friendly mobile wallet for your cryptos.",
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
-    "sdkVersion": "23.0.0",
+    "sdkVersion": "24.0.0",
     "version": "0.5.2",
     "orientation": "portrait",
-    "primaryColor": "#2d126c",
+    "primaryColor": "#2f2bad",
     "icon": "./assets/app-icon.png",
     "loading": {
       "icon": "./assets/app-sohobase.png",
       "hideExponentText": true,
-      "backgroundColor": "#2d126c"
+      "backgroundColor": "#2f2bad"
     },
     "notification": {
       "icon": "./assets/app-notification.png",
-      "color": "#2d126c"
+      "color": "#2f2bad"
     },
     "ios": {
       "bundleIdentifier": "com.sohobase.splitbits",
-      "buildNumber": "1",
-      "supportsTablet": false
+      "buildNumber": "52",
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sohobase.xcryptos",
     },
     "android": {
       "package": "com.sohobase.splitbits",
-      "permissions": ["CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
+      "permissions": ["ACCESS_NETWORK_STATE", "CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
       "versionCode": 52
     },
     "androidStatusBar": {
-      "backgroundColor": "#2d126c",
+      "backgroundColor": "#2f2bad",
       "barStyle": "light-content"
-    }
+    },
+    "assetBundlePatterns": [
+      "assets/*"
+    ],
    }
  }

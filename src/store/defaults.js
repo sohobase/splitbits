@@ -1,8 +1,11 @@
+import { TEXT } from '../config';
+
 export default {
   currencies: {},
   device: {},
   devices: [],
-  pushToken: undefined,
+  i18n: TEXT.EN,
+  token: undefined,
   selectedDevice: undefined,
   transactions: [],
   wallets: [],

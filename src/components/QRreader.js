@@ -1,8 +1,9 @@
-import { bool, func } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
+import { connect } from 'react-redux';
 import { BarCodeScanner, Permissions } from 'expo';
-import { C, THEME } from '../config';
+import { C, SHAPE, THEME } from '../config';
 import Button from './Button';
 import styles from './QRreader.style';
 
@@ -32,7 +33,13 @@ class QRreader extends Component {
   }
 
   render() {
-    const { _onRead, props: { active, onClose }, state: { hasCameraPermission } } = this;
+    const {
+      _onRead,
+      props: {
+        active, i18n, importing, onClose,
+      },
+      state: { hasCameraPermission },
+    } = this;
 
     return (
       active
@@ -45,10 +52,10 @@ class QRreader extends Component {
                 style={StyleSheet.absoluteFill}
               /> }
             <View style={styles.border}>
-              { hasCameraPermission
-                  ? <Text style={styles.hint}>Place the code inside the frame</Text>
-                  : <Text style={styles.hint}>Give the app camera permissions in order to read QR codes</Text>
-              }
+              <Text style={[styles.hint, styles.bold]}>
+                {i18n.CAPTION[hasCameraPermission ? 'QR_CODE' : 'CAMERA_PERMISSION']}
+              </Text>
+              { importing && <Text style={styles.hint}>{i18n.IMPORT_ADDRESS}</Text> }
             </View>
             <View style={styles.content} >
               <View style={styles.border} />
@@ -74,14 +81,21 @@ class QRreader extends Component {
 
 QRreader.propTypes = {
   active: bool,
+  i18n: shape(SHAPE.I18N).isRequired,
+  importing: bool,
   onClose: func,
   onRead: func,
 };
 
 QRreader.defaultProps = {
   active: false,
+  importing: false,
   onClose() {},
   onRead() {},
 };
 
-export default QRreader;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
+export default connect(mapStateToProps)(QRreader);
