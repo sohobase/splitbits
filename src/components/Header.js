@@ -10,12 +10,12 @@ const { BUTTON, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 
 const Header = ({
-  animation, buttonRight, children, coin, navigation, style, tintColor, title,
+  animation, buttonRight, children, navigation, style, tintColor, title,
 }) => (
   <View style={[STYLE.ROW, styles.header, style]}>
     <StatusBar
       animated
-      backgroundColor={tintColor !== COLOR.WHITE ? COLOR.WHITE : (COLOR[coin] || COLOR.PRIMARY)}
+      backgroundColor={tintColor !== COLOR.WHITE ? COLOR.WHITE : COLOR.PRIMARY}
       barStyle={tintColor !== COLOR.WHITE ? 'dark-content' : 'light-content'}
     />
     { navigation &&
@@ -48,7 +48,6 @@ Header.propTypes = {
   animation: string,
   buttonRight: shape(BUTTON),
   children: oneOfType([array, node]),
-  coin: string,
   navigation: shape(NAVIGATION),
   style: oneOfType([array, number]),
   tintColor: oneOfType([string, object]),
@@ -58,7 +57,6 @@ Header.propTypes = {
 Header.defaultProps = {
   animation: 'bounceInDown',
   buttonRight: undefined,
-  coin: undefined,
   navigation: undefined,
   children: undefined,
   style: [],

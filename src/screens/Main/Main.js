@@ -109,10 +109,10 @@ class Main extends Component {
 
     return (
       <View style={STYLE.SCREEN}>
-        <LinearGradient colors={COLOR.GRADIENT} style={[STYLE.LAYOUT_TOP, (wallet && STYLE[wallet.coin])]} >
+        <LinearGradient colors={COLOR.GRADIENT} style={STYLE.LAYOUT_TOP} >
           { connection && <Text style={[styles.env, styles.left]}>{connection}</Text> }
           { DEV && <Text style={[styles.env, styles.right]}>testnet</Text> }
-          <Header wallet={wallet} />
+          <Header />
           <Wallets onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
         </LinearGradient>
         <Transactions navigate={navigate} wallet={wallet} />

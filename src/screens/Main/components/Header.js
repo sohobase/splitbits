@@ -9,7 +9,7 @@ const { SATOSHI } = C;
 const { CURRENCIES, DEVICE, WALLET } = SHAPE;
 
 const HeaderTitle = ({
-  currencies, device, wallet, wallets,
+  currencies, device, wallets,
 }) => {
   const { currency } = device;
   let totalBalance = 0;
@@ -22,7 +22,7 @@ const HeaderTitle = ({
   });
 
   return (
-    <Header coin={wallet ? wallet.coin : undefined}>
+    <Header>
       <Amount coin={currency} value={totalBalance} style={styles.amount} />
       <Amount coin={currency} value={totalTrend} style={styles.trend} />
     </Header>
@@ -32,14 +32,12 @@ const HeaderTitle = ({
 HeaderTitle.propTypes = {
   currencies: shape(CURRENCIES),
   device: shape(DEVICE),
-  wallet: shape(WALLET),
   wallets: arrayOf(shape(WALLET)),
 };
 
 HeaderTitle.defaultProps = {
   currencies: {},
   device: undefined,
-  wallet: undefined,
   wallets: [],
 };
 
