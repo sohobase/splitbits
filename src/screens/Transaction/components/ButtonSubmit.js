@@ -46,7 +46,7 @@ ButtonSubmit.propTypes = {
   item: shape(SHAPE.TRANSACTION),
   onCancel: func,
   onPress: func,
-  recipient: string,
+  recipient: shape(SHAPE.RECIPIENT),
   type: string,
   wallet: shape(SHAPE.WALLET),
 };
@@ -62,8 +62,8 @@ ButtonSubmit.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = ({ i18n }) => ({
-  i18n,
+const mapStateToProps = ({ i18n, recipient }) => ({
+  i18n, recipient,
 });
 
 export default connect(mapStateToProps)(ButtonSubmit);

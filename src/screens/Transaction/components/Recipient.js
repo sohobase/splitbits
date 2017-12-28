@@ -40,7 +40,7 @@ const Recipient = ({
             ? <WalletItem data={recipient.wallet} style={styles.item} />
             :
             <Text style={[styles.value, (!recipient.wallet && styles.placeholder)]}>
-              {recipient.wallet ? recipient.wallet.name : `...${i18n.CHOOSE_A_WALLET}...`}
+              {recipient.wallet ? recipient.wallet.name : `...${i18n.CHOOSE_YOUR_WALLET}...`}
             </Text>
           }
           <Icon style={styles.icon} value="operations" />

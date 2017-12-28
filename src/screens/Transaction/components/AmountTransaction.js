@@ -42,14 +42,14 @@ class AmountTransaction extends Component {
         device: { currency },
         i18n,
         item: {
-          charge = 0, fee = 0, payment = false, state,
+          charge = 0, fee = 0, payment = false, state, from = {}, to = {},
         } = {},
         wallet: { balance },
       },
       state: { amount, swap },
     } = this;
-    const from = swap ? currency : coin;
-    const to = swap ? coin : currency;
+    const fromCoin = swap ? currency : coin;
+    const toCoin = swap ? coin : currency;
     let conversion;
     if (editable) {
       conversion = swap ? ((amount || 0) / SATOSHI) * currencies[coin] : (amount || 0) / currencies[coin];
@@ -60,6 +60,7 @@ class AmountTransaction extends Component {
     if (state) {
       title = payment ? i18n.PAYMENT : i18n.DEPOSIT;
       if (state === REQUESTED) title = i18n.PAYMENT_REQUEST;
+      if (from.device === to.device) title = i18n.TRANSFER;
     }
 
     return (
@@ -71,7 +72,7 @@ class AmountTransaction extends Component {
         />
         <Motion animation="bounceIn" delay={400} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
-            <Text style={[styles.label]}>{from}</Text>
+            <Text style={[styles.label]}>{fromCoin}</Text>
             { editable
               ? <Input
                 autoFocus={editable}
@@ -84,7 +85,7 @@ class AmountTransaction extends Component {
               />
               : <Amount coin={coin} style={styles.input} value={amount} />
             }
-            <Amount coin={to} value={conversion} style={[styles.label]} />
+            <Amount coin={toCoin} value={conversion} style={[styles.label]} />
             <View style={styles.balance}>
               {
                 state === undefined || state === REQUESTED

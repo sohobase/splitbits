@@ -12,10 +12,20 @@ import styles from './Info.style';
 const { BLOCKCHAIN_EXPLORER_URL } = C;
 let timeout;
 
-const renderField = (caption, value, style) => (
+const Field = ({ caption, value, style }) => ( //eslint-disable-line
   <View style={[STYLE.LIST_ITEM, style]}>
     <Text style={STYLE.LABEL}>{caption}</Text>
     <Text style={styles.value}>{value}</Text>
+  </View>
+);
+
+const AddressField = ({ value, image, title }) => ( //eslint-disable-line
+  <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
+    <Avatar value={image} style={styles.avatar} />
+    <View>
+      <Text style={[styles.value, styles.title]}>{title}</Text>
+      <Text style={STYLE.LABEL}>{value}</Text>
+    </View>
   </View>
 );
 
@@ -45,26 +55,19 @@ class TransactionInfo extends Component {
       },
     } = this;
     const device = devices.find(({ id }) => id === from.device || id === to.device);
+    const isTransfer = from.device === to.device;
 
     return (
       <Motion animation="bounceInUp" delay={500}>
         <View style={styles.container}>
           { device
-            ?
-              <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
-                <Avatar value={device.image} style={styles.avatar} />
-                <View>
-                  <Text style={[styles.value, styles.title]}>{device.name}</Text>
-                  { from.address && <Text style={STYLE.LABEL}>{from.address}</Text> }
-                </View>
-              </View>
-            :
-              renderField(i18n.ADDRESS, from.address)}
-
-          { hash && renderField(i18n.STATE, state, styles.half) }
-          { hash && renderField(i18n.CONFIRMATIONS, confirmations, styles.half) }
+            ? <AddressField image={device.image} title={device.name} value={from.address} />
+            : <Field caption={isTransfer ? i18n.FROM : i18n.ADDRESS} value={from.address} /> }
+          { isTransfer && <Field caption={i18n.TO} value={to.address} /> }
+          { hash && <Field caption={i18n.STATE} value={state} style={styles.half} /> }
+          { hash && <Field caption={i18n.CONFIRMATIONS} value={confirmations} style={styles.half} /> }
           { concept
-            ? renderField(i18n.CONCEPT, concept)
+            ? <Field caption={i18n.CONCEPT} value={concept} />
             :
             <Input
               onChangeText={_onConcept}
@@ -78,7 +81,7 @@ class TransactionInfo extends Component {
                 <Text style={styles.value}>{hash}</Text>
               </View>
             </Touchable>}
-          { renderField(i18n.DATE, DateService.locale(createdAt)) }
+          <Field caption={i18n.DATE} value={DateService.locale(createdAt)} />
         </View>
       </Motion>
     );
