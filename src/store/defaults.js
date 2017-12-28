@@ -5,8 +5,8 @@ export default {
   device: {},
   devices: [],
   i18n: TEXT.EN,
+  recipient: undefined,
   token: undefined,
-  selectedDevice: undefined,
   transactions: [],
   wallets: [],
 };

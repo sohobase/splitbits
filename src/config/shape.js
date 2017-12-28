@@ -35,6 +35,11 @@ export default {
     navigate: func,
     setParams: func,
   },
+  RECIPIENT: {
+    device: object,
+    wallet: object,
+    address: string,
+  },
   TRANSACTION: {
     id: string,
     amount: number,
