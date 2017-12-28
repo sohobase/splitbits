@@ -43,6 +43,7 @@ export default {
   TRANSACTION: {
     id: string,
     amount: number,
+    blockHeight: number,
     charge: number,
     coin: string,
     concept: string,
