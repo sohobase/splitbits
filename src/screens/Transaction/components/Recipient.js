@@ -2,15 +2,15 @@ import { func, shape, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Input, Touchable } from '../../../components';
+import { Icon, Input, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
-import { DeviceItem } from '../../../containers';
+import { DeviceItem, WalletItem } from '../../../containers';
 import styles from './Recipient.style';
 
 const { TYPE: { SEND } } = C;
 
 const Recipient = ({
-  address, concept, device, deviceId, i18n, navigation: { navigate }, onCamera, onConcept, type,
+  concept, i18n, navigation: { navigate }, onCamera, onConcept, recipient = {}, type, wallet,
 }) => (
   <View>
     <Input
@@ -20,62 +20,68 @@ const Recipient = ({
       style={[STYLE.ROW, STYLE.LIST_ITEM]}
       value={concept}
     />
-    <View style={[STYLE.ROW, STYLE.LIST_ITEM, { alignItems: 'center', justifyContent: 'center' }]}>
-      { deviceId
-        ? <DeviceItem data={device} style={styles.device} />
-        :
-        <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.input}>
-          <Text style={[styles.hint, styles.input]}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
-        </Touchable>
-      }
-      <Button
-        captionStyle={styles.icon}
-        icon="add"
-        onPress={() => navigate('Friends', { selectMode: true })}
-        raised
-      />
-    </View>
-    { type === SEND &&
-      <View style={[STYLE.ROW, STYLE.LIST_ITEM]}>
-        <Input
-          editable={false}
-          placeholder={`...${i18n.USE_PUBLIC_ADDRESS}`}
-          style={styles.input}
-          value={deviceId ? undefined : address}
-        />
-        <Button icon="camera" raised onPress={onCamera} captionStyle={styles.icon} />
+    <Touchable onPress={() => navigate('Friends', { selectMode: true })}>
+      <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
+        { recipient.device
+          ? <DeviceItem data={recipient.device} style={styles.item} />
+          :
+          <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.friend}>
+            <Text style={[styles.value, styles.placeholder]}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
+          </Touchable>
+        }
+        <Icon style={styles.icon} value="add" />
       </View>
+    </Touchable>
+
+    { type === SEND &&
+      <Touchable onPress={() => navigate('Wallets', { wallet })}>
+        <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
+          { recipient.wallet
+            ? <WalletItem data={recipient.wallet} style={styles.item} />
+            :
+            <Text style={[styles.value, (!recipient.wallet && styles.placeholder)]}>
+              {recipient.wallet ? recipient.wallet.name : `...${i18n.CHOOSE_A_WALLET}...`}
+            </Text>
+          }
+          <Icon style={styles.icon} value="operations" />
+        </View>
+      </Touchable>
+    }
+    { type === SEND &&
+      <Touchable onPress={onCamera}>
+        <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
+          <Text style={[styles.value, (!recipient.address && styles.placeholder)]}>
+            {recipient.address || `...${i18n.USE_PUBLIC_ADDRESS}`}
+          </Text>
+          <Icon style={styles.icon} value="camera" />
+        </View>
+      </Touchable>
     }
   </View>
 );
 
 Recipient.propTypes = {
-  address: string,
   concept: string,
-  device: shape(SHAPE.DEVICE),
-  deviceId: string,
   i18n: shape(SHAPE.I18N).isRequired,
   navigation: shape(SHAPE.NAVIGATION),
   onCamera: func,
   onConcept: func,
+  recipient: shape(SHAPE.RECIPIENT),
   type: string,
+  wallet: shape(SHAPE.WALLET).isRequired,
 };
 
 Recipient.defaultProps = {
-  address: undefined,
   concept: undefined,
-  device: undefined,
-  deviceId: undefined,
   navigation: undefined,
   onCamera() {},
   onConcept: undefined,
+  recipient: undefined,
   type: undefined,
 };
 
-const mapStateToProps = ({ device: { devices }, i18n }, { deviceId }) => {
-  const device = devices.find(({ id }) => id === deviceId);
-
-  return { devices, device, i18n };
-};
+const mapStateToProps = ({ i18n, recipient }) => ({
+  i18n, recipient,
+});
 
 export default connect(mapStateToProps)(Recipient);

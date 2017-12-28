@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
 import { Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
-// import { DeviceService } from '../../services';
-// import { selectDeviceAction, updateDeviceAction } from '../../store/actions';
-import { WalletItem } from './components';
+import { WalletItem } from '../../containers';
+import { updateRecipientAction } from '../../store/actions';
 import styles from './Wallets.style';
 
 const { COLOR } = THEME;
@@ -17,10 +16,10 @@ class Wallets extends Component {
     this._onItem = this._onItem.bind(this);
   }
 
-  _onItem(walletId) {
-    const { navigation } = this.props;
+  _onItem(wallet) {
+    const { navigation, updateRecipient } = this.props;
     navigation.goBack();
-    // selectWallet(walletId);
+    updateRecipient({ wallet });
   }
 
   render() {
@@ -48,22 +47,24 @@ Wallets.propTypes = {
   wallets: arrayOf(shape(SHAPE.WALLET)),
   i18n: shape(SHAPE.DEVICE).isRequired,
   navigation: shape(SHAPE.NAVIGATION).isRequired,
-  // selectDevice: func.isRequired,
-  // updateDevice: func.isRequired,
+  updateRecipient: func.isRequired,
 };
 
 Wallets.defaultProps = {
   wallets: [],
 };
 
-const mapStateToProps = ({ wallets, i18n }, { wallet = {} }) => ({
-  // wallets: wallets.filter(({ id, coin }) => id !== wallet.id && coin === wallet.coin),
-  wallets,
-  i18n,
-});
+const mapStateToProps = ({ wallets, i18n }, props) => {
+  const { wallet = {} } = props.navigation.state.params;
+
+  return {
+    wallets: wallets.filter(({ id, coin }) => id !== wallet.id && coin === wallet.coin),
+    i18n,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
-  // selectDevice: deviceId => dispatch(selectDeviceAction(deviceId)),
+  updateRecipient: recipient => dispatch(updateRecipientAction(recipient)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallets);
