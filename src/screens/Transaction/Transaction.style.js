@@ -15,6 +15,10 @@ export default StyleSheet.create({
   caption: {
     fontSize: FONT.SIZE.SMALL,
     color: COLOR.TEXT_DISABLED,
+    marginBottom: OFFSET,
+  },
+
+  error: {
     textAlign: 'center',
     marginHorizontal: OFFSET,
   },

@@ -152,7 +152,7 @@ class Transaction extends Component {
             </Motion> }
           { editable && connection === WIFI &&
             <Motion animation="bounceIn" delay={700} style={styles.centered}>
-              <Text style={styles.caption}>{i18n.UNSECURED_CONNECTION}</Text>
+              <Text style={[styles.caption, styles.error]}>{i18n.UNSECURED_CONNECTION}</Text>
             </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
