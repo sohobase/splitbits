@@ -11,6 +11,7 @@ import {
   FriendsScreen,
   SettingsScreen,
   TransactionScreen,
+  WalletsScreen,
 } from './src/screens';
 import { Error } from './src/containers';
 
@@ -24,6 +25,7 @@ const screens = {
   Profile: { screen: ProfileScreen, navigationOptions },
   Friends: { screen: FriendsScreen, navigationOptions },
   Settings: { screen: SettingsScreen, navigationOptions },
+  Wallets: { screen: WalletsScreen, navigationOptions },
 };
 
 const NavigationMain = StackNavigator({ ...screens }, { initialRouteName: 'Lock' });
