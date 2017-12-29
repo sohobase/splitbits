@@ -18,15 +18,14 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
   },
 
-  error: {
+  content: {
     backgroundColor: COLOR.RED,
     padding: OFFSET,
     paddingBottom: OFFSET + FOOTER_OFFSET,
   },
 
-  content: {
+  info: {
     flex: 1,
-    marginRight: OFFSET,
   },
 
   message: {

@@ -30,17 +30,24 @@ class Error extends Component {
     return (
       <ReactNativeModal transparent visible={visible} onRequestClose={_onPress}>
         <Motion
-          animation={visible ? 'bounceInUp' : 'bounceOutDown'}
-          duration={DURATION}
-          style={[STYLE.ELEVATION, styles.container]}
+          animation={visible ? 'fadeIn' : 'fadeOut'}
+          delay={visible ? 0 : DURATION / 2}
+          duration={DURATION / 2}
+          style={styles.container}
         >
-          <View style={[STYLE.ROW, styles.error]}>
-            <View style={styles.content}>
-              <Text style={styles.message}>{message}</Text>
-              { code && <Text style={styles.code}>{`Error ${code}`}</Text> }
+          <Motion
+            animation={visible ? 'bounceInUp' : 'bounceOutDown'}
+            duration={DURATION}
+            style={[STYLE.ELEVATION, styles.content]}
+          >
+            <View style={STYLE.ROW}>
+              <View style={styles.info}>
+                <Text style={styles.message}>{message}</Text>
+                { code && <Text style={styles.code}>{`Error ${code}`}</Text> }
+              </View>
+              <Button caption={i18n.ACCEPT} onPress={_onPress} raised style={styles.button} />
             </View>
-            <Button caption={i18n.ACCEPT} onPress={_onPress} raised style={styles.button} />
-          </View>
+          </Motion>
         </Motion>
       </ReactNativeModal>
     );
