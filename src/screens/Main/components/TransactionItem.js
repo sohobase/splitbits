@@ -34,7 +34,6 @@ const TransactionItem = ({
   const other = isTransfer
     ? device
     : (devices.find(({ id }) => id === from.device || id === to.device) || {});
-  const symbol = payment ? '-' : '+';
   const emitter = address !== to.address;
   const concept = transactionData.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
 
@@ -60,12 +59,17 @@ const TransactionItem = ({
           { other.name && <Text style={[styles.label]}>{concept}</Text> }
         </View>
         <View style={styles.amounts}>
-          <Amount caption={symbol} coin={coin} value={amount} style={[styles.amount]} />
           <Amount
-            caption={symbol}
+            coin={coin}
+            value={(payment ? -1 : 1) * amount}
+            style={[styles.amount]}
+            symbol
+          />
+          <Amount
             coin={currency}
-            value={amount / (currencies[coin] / SATOSHI)}
+            value={(payment ? -1 : 1) * (amount / (currencies[coin] / SATOSHI))}
             style={[styles.label, styles.fiat]}
+            symbol
           />
         </View>
       </View>
