@@ -11,7 +11,7 @@ const TransactionButton = ({ onPress, visible }) => (
     accent
     motion={{
       animation: (visible ? 'bounceInUp' : 'bounceOutDown'),
-      delay: (visible ? DURATION / 2 : 0),
+      delay: (visible ? 400 : 100),
       duration: DURATION,
     }}
     circle
