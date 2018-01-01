@@ -37,13 +37,13 @@ class DeviceItem extends Component {
     const {
       _onRelation, _onRequest,
       props: {
-        i18n, onPress, request, selected, style,
-        data: {
-          id, image, name, requested,
-        },
+        i18n, onPress, request, selected, style, data,
         device: { requests },
       },
     } = this;
+    const {
+      id, image, name, requested,
+    } = data;
     const isRequest = requests.find(item => item.id === id);
     let options;
 
@@ -58,7 +58,7 @@ class DeviceItem extends Component {
 
     return (
       <Swipeout right={options} autoClose backgroundColor={WHITE} >
-        <TouchableWithoutFeedback onPress={onPress ? () => onPress(id) : undefined}>
+        <TouchableWithoutFeedback onPress={onPress ? () => onPress(data) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
             <Avatar selected={selected} value={image} />
             <View style={styles.content}>

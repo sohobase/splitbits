@@ -3,11 +3,11 @@ import DEFAULTS from './defaults';
 import {
   UPDATE_CURRENCIES,
   UPDATE_DEVICE,
-  SELECT_DEVICE,
   ERROR,
   RESET,
   ADD_TOKEN,
   UPDATE_TRANSACTIONS,
+  UPDATE_RECIPIENT,
   ADD_WALLET,
   REMOVE_WALLET,
   UPDATE_WALLET,
@@ -27,12 +27,13 @@ export default function(state = DEFAULTS, action) {
       };
     }
 
-    case SELECT_DEVICE:
-      return { ...state, selectedDevice: action.deviceId };
-
     // -- Error
     case ERROR:
       return { ...state, error: action.error };
+
+    // -- Recipient
+    case UPDATE_RECIPIENT:
+      return { ...state, recipient: action.recipient ? { ...action.recipient } : undefined };
 
     // -- Reset
     case RESET:

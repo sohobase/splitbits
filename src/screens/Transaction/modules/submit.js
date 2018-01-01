@@ -6,21 +6,21 @@ const { SATOSHI, TYPE: { REQUEST } } = C;
 export default async(component) => {
   const {
     props: {
-      deviceId, type, wallet,
+      recipient = {}, type, wallet,
       item: { id, amount: itemAmount } = {},
     },
-    state: { address, amount, concept },
+    state: { amount, concept },
   } = component;
   const { coin, id: walletId } = wallet;
 
   const isRequest = type === REQUEST;
   const method = isRequest && !id ? 'request' : 'send';
   const params = {
-    address,
+    address: recipient.wallet ? recipient.wallet.address : recipient.address,
     amount: itemAmount || parseInt(amount / SATOSHI, 10),
     coin,
     concept,
-    deviceId,
+    deviceId: recipient.device ? recipient.device.id : undefined,
     id,
     walletId,
   };

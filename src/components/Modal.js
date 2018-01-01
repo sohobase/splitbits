@@ -14,8 +14,8 @@ const Modal = ({
   <ReactNativeModal transparent visible={visible} onRequestClose={onClose}>
     <Motion
       animation={visible ? 'fadeIn' : 'fadeOut'}
-      duration={DURATION / 2}
       delay={visible ? 0 : DURATION / 2}
+      duration={DURATION / 2}
       style={styles.container}
     >
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : undefined}>

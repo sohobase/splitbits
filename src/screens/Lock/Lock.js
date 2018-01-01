@@ -37,16 +37,16 @@ class Lock extends Component {
     this._onPress = this._onPress.bind(this);
     this._onReset = this._onReset.bind(this);
     this._onSuccess = this._onSuccess.bind(this);
-    if (DEV && !IS_DEVICE) this._onSuccess();
   }
 
   async componentWillMount() {
-    const { _onFingerprint, props: { updateDevice } } = this;
+    const { _onFingerprint, _onSuccess, props: { updateDevice } } = this;
     const language = (await Util.getCurrentLocaleAsync()).toUpperCase();
 
-    _onFingerprint();
-    BackHandler.addEventListener('hardwareBackPress', BackHandler.exitApp);
     updateDevice({ language: LANGUAGES[language] ? language : 'EN' });
+    BackHandler.addEventListener('hardwareBackPress', BackHandler.exitApp);
+
+    if (DEV && !IS_DEVICE) _onSuccess(); else _onFingerprint();
   }
 
   async _onFingerprint() {

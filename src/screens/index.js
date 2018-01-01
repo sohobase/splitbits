@@ -7,6 +7,7 @@ import OnboardingScreen from './Onboarding';
 import ProfileScreen from './Profile';
 import SettingsScreen from './Settings';
 import TransactionScreen from './Transaction';
+import WalletsScreen from './Wallets';
 
 export {
   FriendsScreen,
@@ -17,4 +18,5 @@ export {
   ProfileScreen,
   SettingsScreen,
   TransactionScreen,
+  WalletsScreen,
 };

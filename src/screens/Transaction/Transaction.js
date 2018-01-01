@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Amount, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { ConnectionService, TransactionService } from '../../services';
-import { selectDeviceAction, updateTransactionsAction } from '../../store/actions';
+import { updateRecipientAction, updateTransactionsAction } from '../../store/actions';
 import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
 import { submit } from './modules';
 import styles from './Transaction.style';
@@ -14,9 +14,6 @@ import styles from './Transaction.style';
 const {
   CONNECTION: { WIFI }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
 } = C;
-const {
-  CURRENCIES, DEVICE, NAVIGATION, TRANSACTION, WALLET,
-} = SHAPE;
 let timeout;
 
 class Transaction extends Component {
@@ -26,7 +23,6 @@ class Transaction extends Component {
 
     this.state = {
       amount: item.amount,
-      address: undefined,
       camera: false,
       concept: undefined,
       connection: undefined,
@@ -43,16 +39,15 @@ class Transaction extends Component {
   }
 
   async componentWillMount() {
-    const { _updateFees, props: { selectDevice, item: { amount, state, to } = {}, wallet } } = this;
-    selectDevice(undefined);
+    const { _updateFees, props: { updateRecipient, item: { amount, state, to } = {}, wallet } } = this;
+    updateRecipient();
     if (state === REQUESTED && wallet.address !== to.address) _updateFees(amount);
     this.setState({ connection: await ConnectionService.get() });
   }
 
   _onAddress(address) {
-    this.props.selectDevice(undefined);
-    // @TODO validate address
-    this.setState({ address, camera: false }); //eslint-disable-line
+    this.props.updateRecipient({ address });
+    this.setState({ camera: false });
   }
 
   _onAmount(amount) {
@@ -66,7 +61,6 @@ class Transaction extends Component {
   }
 
   _onCamera() {
-    this.props.selectDevice(undefined);
     this.setState({ camera: !this.state.camera });
   }
 
@@ -106,10 +100,10 @@ class Transaction extends Component {
     const {
       _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onSubmit,
       props: {
-        currencies, device: { currency }, deviceId, i18n, item, navigation, type, wallet,
+        currencies, device: { currency }, i18n, item, navigation, type, wallet,
       },
       state: {
-        amount = 0, address, camera, concept, connection, fees = {}, processing,
+        amount = 0, camera, concept, connection, fees = {}, processing,
       },
     } = this;
     const { coin } = wallet;
@@ -119,16 +113,14 @@ class Transaction extends Component {
       coin, editable, item, navigation, wallet,
     };
     const recipientProps = {
-      concept, deviceId, navigation, type, address,
+      concept, navigation, onCamera: _onCamera, onConcept: _onConcept, type, wallet,
     };
 
     return (
       <View style={STYLE.SCREEN}>
         <AmountTransaction {...amountProps} onAmount={_onAmount} />
         <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
-          { editable
-            ? <Recipient {...recipientProps} onCamera={_onCamera} onConcept={_onConcept} />
-            : <Info item={item} /> }
+          { editable ? <Recipient {...recipientProps} /> : <Info item={item} /> }
           { (editable || item.state === REQUESTED) &&
             <ButtonSubmit
               amount={editable ? amount / SATOSHI : item.amount}
@@ -137,7 +129,6 @@ class Transaction extends Component {
               onCancel={_onCancel}
               onPress={_onSubmit}
               processing={processing}
-              recipient={deviceId || address}
               type={type}
               wallet={wallet}
             /> }
@@ -152,7 +143,7 @@ class Transaction extends Component {
             </Motion> }
           { editable && connection === WIFI &&
             <Motion animation="bounceIn" delay={700} style={styles.centered}>
-              <Text style={styles.caption}>{i18n.UNSECURED_CONNECTION}</Text>
+              <Text style={[styles.caption, styles.error]}>{i18n.UNSECURED_CONNECTION}</Text>
             </Motion> }
         </View>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
@@ -162,35 +153,38 @@ class Transaction extends Component {
 }
 
 Transaction.propTypes = {
-  currencies: shape(CURRENCIES).isRequired,
-  device: shape(DEVICE).isRequired,
-  deviceId: string,
+  currencies: shape(SHAPE.CURRENCIES).isRequired,
+  device: shape(SHAPE.DEVICE).isRequired,
   i18n: shape({}).isRequired,
-  item: shape(TRANSACTION),
-  navigation: shape(NAVIGATION).isRequired,
-  selectDevice: func.isRequired,
+  item: shape(SHAPE.TRANSACTION),
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
+  recipient: shape(SHAPE.RECIPIENT),
   type: string.isRequired,
+  updateRecipient: func.isRequired,
   updateTransactions: func.isRequired,
-  wallet: shape(WALLET).isRequired,
+  wallet: shape(SHAPE.WALLET).isRequired,
 };
 
 Transaction.defaultProps = {
-  deviceId: undefined,
   item: undefined,
+  recipient: undefined,
 };
 
-const mapStateToProps = ({
-  currencies, device, i18n, selectedDevice,
-}, props) => {
+const mapStateToProps = (
+  {
+    currencies, device, i18n, recipient,
+  },
+  props,
+) => {
   const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
   return {
-    currencies, device, deviceId: selectedDevice, i18n, item, type, wallet,
+    currencies, device, i18n, item, recipient, type, wallet,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  selectDevice: deviceId => dispatch(selectDeviceAction(deviceId)),
+  updateRecipient: recipient => dispatch(updateRecipientAction(recipient)),
   updateTransactions: transaction => dispatch(updateTransactionsAction([transaction])),
 });
 

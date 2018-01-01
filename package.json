@@ -1,7 +1,7 @@
 {
   "name": "Splitbits",
   "description": "Next-gen private & friendly mobile wallet for your cryptos.",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "author": {
     "name": "Javi Jimenez",
     "email": "javi@sohobase.co",
@@ -20,8 +20,8 @@
     }
   ],
   "devDependencies": {
-    "babel-eslint": "8.0.3",
-    "eslint": "4.13.1",
+    "babel-eslint": "8.1.2",
+    "eslint": "4.14.0",
     "eslint-config-airbnb": "16.1.0",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
@@ -46,7 +46,7 @@
     "assert": "1.4.1",
     "bigi": "1.4.2",
     "bip39": "2.4.0",
-    "bitcoinjs-lib": "3.3.1",
+    "bitcoinjs-lib": "3.3.2",
     "bitcoinjs-message": "2.0.0",
     "bs58check": "2.1.1",
     "buffer": "5.0.8",

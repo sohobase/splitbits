@@ -6,7 +6,7 @@ import { Header, Input, QRreader } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';
 import { DeviceService } from '../../services';
-import { selectDeviceAction, updateDeviceAction } from '../../store/actions';
+import { updateRecipientAction, updateDeviceAction } from '../../store/actions';
 import styles from './Friends.style';
 
 const { DEVICE, NAVIGATION } = SHAPE;
@@ -33,10 +33,10 @@ class Friends extends Component {
     this.setState(({ scanner }) => ({ scanner: !scanner }));
   }
 
-  _onItem(deviceId) {
-    const { navigation, selectDevice } = this.props;
+  _onItem(device) {
+    const { navigation, updateRecipient } = this.props;
     navigation.goBack();
-    selectDevice(deviceId);
+    updateRecipient({ device });
   }
 
   async _onQuery(query) {
@@ -98,8 +98,8 @@ Friends.propTypes = {
   i18n: shape(SHAPE.DEVICE).isRequired,
   navigation: shape(NAVIGATION).isRequired,
   selectMode: bool,
-  selectDevice: func.isRequired,
   updateDevice: func.isRequired,
+  updateRecipient: func.isRequired,
 };
 
 Friends.defaultProps = {
@@ -115,7 +115,7 @@ const mapStateToProps = ({ device: { devices = [] }, i18n }, props) => {
 
 const mapDispatchToProps = dispatch => ({
   updateDevice: device => device && dispatch(updateDeviceAction(device)),
-  selectDevice: deviceId => dispatch(selectDeviceAction(deviceId)),
+  updateRecipient: recipient => dispatch(updateRecipientAction(recipient)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

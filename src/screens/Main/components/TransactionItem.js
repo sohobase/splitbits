@@ -10,8 +10,9 @@ import styles from './TransactionItem.style';
 const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
 
 const verboseTitle = ({
-  emitter, concept, i18n, other: { name = '' }, state, payment,
+  emitter, concept, i18n, isTransfer, other: { name = '' }, state, payment,
 }) => {
+  if (isTransfer) return i18n.TRANSFER;
   if (!name) return concept;
   if (state === REQUESTED) return `${emitter ? i18n.PAY : i18n.REQUEST} ${i18n.TO} ${name.split(' ')[0]}`;
   return `${payment ? i18n.TO : i18n.FROM} ${name}`;
@@ -20,22 +21,24 @@ const verboseTitle = ({
 const TransactionItem = ({
   currencies,
   data: transactionData,
-  device: { currency, devices },
+  device,
   i18n,
   onPress,
   wallet: { address } = {},
 }) => {
+  const { currency, devices } = device;
   const {
     amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
   } = transactionData;
-
-  const other = devices.find(({ id }) => id === from.device || id === to.device) || {};
-  const symbol = payment ? '-' : '+';
+  const isTransfer = from.device === to.device;
+  const other = isTransfer
+    ? device
+    : (devices.find(({ id }) => id === from.device || id === to.device) || {});
   const emitter = address !== to.address;
   const concept = transactionData.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
 
   let icon = 'operations';
-  if ([CONFIRMED, REQUESTED].includes(state)) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
+  if ([CONFIRMED, REQUESTED].includes(state) && !isTransfer) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
 
   return (
     <Touchable onPress={() => onPress(payment)} activeOpacity={0.95}>
@@ -49,19 +52,24 @@ const TransactionItem = ({
         <View style={styles.info}>
           <Text style={styles.title}>
             {verboseTitle({
-              concept, emitter, i18n, other, payment, state,
+              concept, emitter, i18n, isTransfer, other, payment, state,
             })}
           </Text>
           <Text style={[styles.label, styles.date]}>{DateService.ago(createdAt)}</Text>
           { other.name && <Text style={[styles.label]}>{concept}</Text> }
         </View>
         <View style={styles.amounts}>
-          <Amount caption={symbol} coin={coin} value={amount} style={[styles.amount]} />
           <Amount
-            caption={symbol}
+            coin={coin}
+            value={(payment ? -1 : 1) * amount}
+            style={[styles.amount]}
+            symbol
+          />
+          <Amount
             coin={currency}
-            value={amount / (currencies[coin] / SATOSHI)}
+            value={(payment ? -1 : 1) * (amount / (currencies[coin] / SATOSHI))}
             style={[styles.label, styles.fiat]}
+            symbol
           />
         </View>
       </View>

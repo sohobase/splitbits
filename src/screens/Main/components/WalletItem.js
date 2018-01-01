@@ -29,6 +29,7 @@ const WalletItem = ({
   return (
     <Motion
       animation="bounceIn"
+      delay={300}
       duration={DURATION}
       style={[STYLE.ELEVATION, styles.container, (!data ? styles.empty : undefined), style]}
     >
@@ -49,7 +50,7 @@ const WalletItem = ({
             </View>
             <View style={STYLE.ROW}>
               <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
-              <Text style={[styles.label]}>{`${trend.toFixed(2)}%`}</Text>
+              <Text style={styles.label}>{`${trend.toFixed(2)}%`}</Text>
               <View style={styles.tags}>
                 { readOnly && <View style={styles.tag}><Text style={styles.tagLabel}>{i18n.READ_ONLY}</Text></View> }
                 { type === TYPE.PRO &&

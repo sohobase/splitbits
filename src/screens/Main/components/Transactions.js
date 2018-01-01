@@ -1,8 +1,9 @@
 import { arrayOf, func, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
+import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { C, SHAPE, STYLE } from '../../../config';
+import { C, SHAPE, STYLE, THEME } from '../../../config';
 import { TransactionService, WalletService } from '../../../services';
 import { updateTransactionsAction, updateWalletAction } from '../../../store/actions';
 import TransactionItem from './TransactionItem';
@@ -10,7 +11,7 @@ import styles from './Transactions.style';
 
 const { STATE: { ARCHIVED, REQUESTED } } = C;
 const { TRANSACTION, WALLET } = SHAPE;
-const DELAY_REFRESHING = 400;
+const { ANIMATION: { DURATION } } = THEME;
 let timeout;
 
 class Transactions extends Component {
@@ -21,16 +22,22 @@ class Transactions extends Component {
     this._renderTransaction = this._renderTransaction.bind(this);
   }
 
+  componentWillMount() {
+    this._onRefresh();
+  }
+
   componentWillReceiveProps({ wallet }) {
     const { wallet: { id } = {} } = this.props;
     if (wallet !== undefined && wallet.id !== id) this._onRefresh(wallet);
   }
 
   async _onRefresh(wallet = this.props.wallet) {
-    const { updateTransactions, updateWallet } = this.props;
-    timeout = setTimeout(() => this.setState({ refreshing: true }), DELAY_REFRESHING);
+    const { props: { transactions = [], updateTransactions, updateWallet } } = this;
+    const { blockHeight: lastBlock } = transactions[0] || {};
+
+    timeout = setTimeout(() => this.setState({ refreshing: true }), DURATION / 2);
     WalletService.state({ id: wallet.id }).then(updateWallet);
-    await TransactionService.list(wallet.id).then(updateTransactions);
+    await TransactionService.list({ walletId: wallet.id, lastBlock }).then(updateTransactions);
     clearTimeout(timeout);
     this.setState({ refreshing: false });
   }
@@ -48,13 +55,16 @@ class Transactions extends Component {
     } = this;
 
     return (
-      <FlatList
-        data={transactions}
-        keyExtractor={item => item.id}
-        refreshControl={<RefreshControl onRefresh={_onRefresh} refreshing={refreshing} />}
-        renderItem={_renderTransaction}
-        style={[STYLE.LAYOUT_BOTTOM, styles.container]}
-      />
+      <View style={[STYLE.LAYOUT_BOTTOM, styles.container]}>
+        <Motion animation="bounceInUp" delay={400} duration={DURATION}>
+          <FlatList
+            data={transactions}
+            keyExtractor={item => item.id}
+            refreshControl={<RefreshControl onRefresh={_onRefresh} refreshing={refreshing} />}
+            renderItem={_renderTransaction}
+          />
+        </Motion>
+      </View>
     );
   }
 }

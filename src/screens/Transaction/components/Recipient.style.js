@@ -4,8 +4,7 @@ import { THEME } from '../../../config';
 const { COLOR, FONT } = THEME;
 
 export default StyleSheet.create({
-
-  device: {
+  item: {
     borderBottomWidth: 0,
     width: '100%',
     minWidth: '90%',
@@ -16,16 +15,20 @@ export default StyleSheet.create({
     paddingRight: 0,
   },
 
-  hint: {
+  friend: {
+    flex: 1,
+  },
+
+  value: {
+    flex: 1,
     fontSize: FONT.SIZE.LARGE,
-    color: COLOR.TEXT_DISABLED,
-    opacity: 0.675,
     lineHeight: FONT.SIZE.LARGE,
     maxHeight: FONT.SIZE.LARGE,
   },
 
-  input: {
-    flex: 1,
+  placeholder: {
+    color: COLOR.TEXT_DISABLED,
+    //   opacity: 0.675,
   },
 
   icon: {

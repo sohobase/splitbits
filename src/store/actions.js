@@ -12,17 +12,18 @@ export const updateDeviceAction = device => ({
   device,
 });
 
-export const SELECT_DEVICE = '@splitbits/SELECT_DEVICE';
-export const selectDeviceAction = deviceId => ({
-  type: SELECT_DEVICE,
-  deviceId,
-});
-
 // -- Error
 export const ERROR = '@splitbits/ERROR';
 export const errorAction = error => ({
   type: ERROR,
   error,
+});
+
+// -- Recipient
+export const UPDATE_RECIPIENT = '@splitbits/UPDATE_RECIPIENT';
+export const updateRecipientAction = recipient => ({
+  type: UPDATE_RECIPIENT,
+  recipient,
 });
 
 // -- Reset

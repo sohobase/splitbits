@@ -24,7 +24,7 @@ const HeaderTitle = ({
   return (
     <Header>
       <Amount coin={currency} value={totalBalance} style={styles.amount} />
-      <Amount coin={currency} value={totalTrend} style={styles.trend} />
+      <Amount coin={currency} value={totalTrend} style={styles.trend} symbol />
     </Header>
   );
 };
