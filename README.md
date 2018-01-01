@@ -6,7 +6,9 @@
 [![Donate](https://img.shields.io/badge/donate-₿-yellow.svg?style=for-the-badge)](https://chart.googleapis.com/chart?chs=320x320&cht=qr&chl=bitcoin:19hdnHUYwTSCffNKazV379r9HrwNwEfeeA?amount=0.001) [![Donate](https://img.shields.io/badge/donate-Ł-lightgrey.svg?style=for-the-badge)]()
 [![become](https://img.shields.io/badge/become-sponsor-brightgreen.svg?style=for-the-badge)](https://chart.googleapis.com/chart?chs=320x320&cht=qr&chl=bitcoin:19hdnHUYwTSCffNKazV379r9HrwNwEfeeA?amount=0.01)
 
-Finally, a Bitcoin cold storage wallet that doesn’t require sight. From seed to spend, IcyWallet aims to be the simplest and most secure Bitcoin cold storage solution—with a total emphasis on accessibility. Just plug in headphones and a keyboard, or a refreshable braille display, and get going.
+Finally, a Cryptocurrency software wallet that doesn’t require sight. From seed to spend, Splitbits aims to be the simplest and most secure Crypto storage solution—with a total emphasis on accessibility.
+
+<img src='https://i.imgur.com/yvvnqp8.png' center width='360'>
 
 ## Table of Contents
 * [Introduction](#introduction)
@@ -27,8 +29,6 @@ Finally, a Bitcoin cold storage wallet that doesn’t require sight. From seed t
 * [License](#license)
 
 ## Introduction
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
 The world is going to run on Blockchains and the number of digital coins and assets are exploding. Splitbits is your book keeping app for Blockchain assets that helps you to track all your digital wealth, income and expenses.
 
  - **Maximum Privacy**: Splitbit's zero access architecture means that your addresses and meta data are encrypted in a way, that makes it inaccessible to us or anyone else.
@@ -72,12 +72,13 @@ Build Status Dependencies Status Known Vulnerabilities
 | Dynamic Fee estimation                     | Complete | No charge for PRO wallets        | 2017-12-01 |
 | Transaction signing                        | Complete | All the process is on device     | 2017-12-01 |
 | Request coins in friends network           | Complete |                                  | 2017-12-01 |
-| Blockchain activity & push notifications   | Complete |                                  | 2017-12-06 |
-| Wallet PRO                                 | 60%      |                                  |            |
-| Language localization process              | 50%      |                                  |            |
+| Blockchain activity & push notifications   | Complete | In BETA for all kinds of wallets | 2017-12-06 |
+| Language localization process              | Complete | Available languages EN & ES      | 2017-12-18 |
+| Wallet PRO                                 | 50%      |                                  |            |
+| Transfer coins between wallets             | 20%      |                                  |            |
 | ETH Wallet support                         | 10%      |                                  |            |
-| Segwit wallets                             | Pending  |                                  |            |
 | External storage for Private Keys          | 5%       |                                  |            |
+| Segwit wallets                             | Pending  |                                  |            |
 | 2nd device for sign transactions offline   | Pending  |                                  |            |
 | Lightning Network for wallets (PRO)        | Pending  |                                  |            |
 | Atomic Swaps for (PRO)                     | Pending  |                                  |            |
