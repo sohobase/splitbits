@@ -15,6 +15,7 @@ export default {
     CHOOSE_CURRENCY: 'Choose your local currency',
     CHOOSE_EXISTING_PHOTO: 'Choose existing photo',
     CHOOSE_LANGUAGE: 'Choose your language',
+    CHOOSE_TREND: 'Choose trend range',
     CHOOSE_WALLET: 'Choose a wallet',
     CONCEPT: 'Concept',
     CONFIRMATIONS: 'Confirmations',
@@ -84,6 +85,12 @@ export default {
     TO: 'To',
     TRANSACTION: 'Transaction',
     TRANSFER: 'Transfer',
+    TREND: 'Trend',
+    TRENDS: {
+      daily: 'Daily',
+      weekly: 'Weekly',
+      monthly: 'Monthly',
+    },
     TYPE_OF_TRANSACTION: 'Type of transaction',
     TYPE_OF_WALLET: 'Type of wallet',
 
@@ -134,6 +141,7 @@ export default {
     CHOOSE_CURRENCY: 'Selecciona tu moneda local',
     CHOOSE_EXISTING_PHOTO: 'Elige una foto existente',
     CHOOSE_LANGUAGE: 'Elige tu idioma',
+    CHOOSE_TREND: 'Elige rango de tendencia',
     CHOOSE_YOUR_WALLET: 'elige una de tus carteras',
     CHOOSE_WALLET: 'Elige una cartera',
     CONCEPT: 'Concepto',
@@ -204,6 +212,12 @@ export default {
     TO: 'Para',
     TRANSACTION: 'Transaccion',
     TRANSFER: 'Transferencia',
+    TREND: 'Tendencia',
+    TRENDS: {
+      daily: 'Diaria',
+      weekly: 'Semanal',
+      monthly: 'Mensual',
+    },
     TYPE_OF_TRANSACTION: 'Tipo de transaccion',
     TYPE_OF_WALLET: 'Tipo de cartera',
 

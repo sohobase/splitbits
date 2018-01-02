@@ -23,6 +23,7 @@ export default {
     requests: array,
     state: string,
     token: string,
+    trend: string,
     createdAt: date,
   },
   ERROR: {

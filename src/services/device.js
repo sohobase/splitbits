@@ -10,7 +10,7 @@ const relationship = async(endpoint, props, action, method = 'POST') => {
 export default {
 
   async update({
-    currency, image, language, name,
+    currency, image, language, name, trend,
   }) {
     const body = new FormData(); // eslint-disable-line
 
@@ -24,8 +24,9 @@ export default {
       });
     }
     if (currency) body.append('currency', currency);
-    if (name) body.append('name', name);
     if (language) body.append('language', language);
+    if (name) body.append('name', name);
+    if (trend) body.append('trend', trend);
 
     return service('device', { method: 'PUT', body }, true);
   },

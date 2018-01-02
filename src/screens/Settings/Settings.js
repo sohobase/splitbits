@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
-import { Button, Header, Input } from '../../components';
+import { Button, Header } from '../../components';
 import { ModalCamera, ModalValues } from '../../containers';
 import { ASSETS, C, SHAPE, STYLE, THEME } from '../../config';
 import { DeviceService } from '../../services';
 import { updateDeviceAction } from '../../store/actions';
 import PKG from '../../../package.json';
+import { Fieldset } from './components';
 import styles from './Settings.style';
 
 const { FIAT, LANGUAGES, SERVICE } = C;
@@ -80,14 +81,27 @@ class Settings extends Component {
   render() {
     const {
       _onModalValue, _onImage, _onName, _onModal, _onModalImage,
-      props: { device, i18n, navigation },
-      state: {
-        camera, context, currency, image, language = this.props.device.language, modal, name, timestamp,
-      },
     } = this;
+    const { device, i18n, navigation } = this.props;
+    const {
+      camera, context, image, modal, name, timestamp,
+      currency = device.currency,
+      language = device.language,
+      trend = device.trend || 'daily',
+    } = this.state;
     const imageUrl = image && !image.startsWith('file:')
       ? `${SERVICE}public/${image}?timestamp=${timestamp}`
       : image;
+
+    let modalTitle = i18n.CHOOSE_CURRENCY;
+    let modalValues = FIAT;
+    if (context === 'language') {
+      modalTitle = i18n.CHOOSE_LANGUAGE;
+      modalValues = LANGUAGES;
+    } else if (context === 'trend') {
+      modalTitle = i18n.CHOOSE_TREND;
+      modalValues = i18n.TRENDS;
+    }
 
     return (
       <View style={styles.screen}>
@@ -100,18 +114,10 @@ class Settings extends Component {
               </View>
               <Button circle icon="camera" onPress={_onModalImage} style={styles.buttonCamera} />
             </View>
-            <View style={STYLE.LIST_ITEM}>
-              <Text style={STYLE.LABEL}>{i18n.NAME}</Text>
-              <Input onChangeText={_onName} placeholder="..." style={styles.input} value={name} />
-            </View>
-            <View style={STYLE.LIST_ITEM} >
-              <Text style={STYLE.LABEL}>{i18n.LOCAL_CURRENCY}</Text>
-              <Text style={styles.input} onPress={() => _onModal('currency')}>{currency || device.currency}</Text>
-            </View>
-            <View style={STYLE.LIST_ITEM}>
-              <Text style={STYLE.LABEL}>{i18n.LANGUAGE}</Text>
-              <Text style={styles.input} onPress={() => _onModal('language')}>{LANGUAGES[language]}</Text>
-            </View>
+            <Fieldset input label={i18n.NAME} value={name} onChange={_onName} />
+            <Fieldset label={i18n.LOCAL_CURRENCY} value={currency} onChange={() => _onModal('currency')} />
+            <Fieldset label={i18n.TREND} value={i18n.TRENDS[trend]} onChange={() => _onModal('trend')} />
+            <Fieldset label={i18n.LANGUAGE} value={LANGUAGES[language]} onChange={() => _onModal('language')} />
             <Text style={styles.text}>{i18n.HINT_FIND_BY_NAME}</Text>
           </View>
         </Motion>
@@ -125,8 +131,8 @@ class Settings extends Component {
         </Motion>
         <ModalCamera visible={camera} onClose={_onModalImage} onFile={_onImage} />
         <ModalValues
-          title={context === 'language' ? i18n.CHOOSE_LANGUAGE : i18n.CHOOSE_CURRENCY}
-          values={context === 'language' ? LANGUAGES : FIAT}
+          title={modalTitle}
+          values={modalValues}
           visible={modal}
           onClose={_onModal}
           onValue={_onModalValue}
