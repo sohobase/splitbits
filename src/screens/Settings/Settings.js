@@ -1,4 +1,4 @@
-import { func, shape } from 'prop-types';
+import { arrayOf, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { Button, Header } from '../../components';
 import { ModalCamera, ModalValues } from '../../containers';
 import { ASSETS, C, SHAPE, STYLE, THEME } from '../../config';
-import { DeviceService } from '../../services';
-import { updateDeviceAction } from '../../store/actions';
+import { DeviceService, WalletService } from '../../services';
+import { updateDeviceAction, updateWalletAction } from '../../store/actions';
 import PKG from '../../../package.json';
 import { Fieldset } from './components';
 import styles from './Settings.style';
@@ -45,12 +45,6 @@ class Settings extends Component {
     DeviceService.update({ image }).then(updateDevice);
   }
 
-  async _onLanguage(language) {
-    const { updateDevice } = this.props;
-    this.setState({ language });
-    DeviceService.update({ language }).then(updateDevice);
-  }
-
   _onName(name) {
     const { updateDevice } = this.props;
     this.setState({ name });
@@ -72,10 +66,17 @@ class Settings extends Component {
   }
 
   async _onModalValue(value) {
-    const { params = {}, props: { updateDevice }, state: { context } } = this;
+    const { 
+      params = {}, 
+      props: { updateDevice, updateWallet, wallets }, 
+      state: { context }, 
+    } = this;
     params[context] = value;
     this.setState({ modal: false, ...params });
-    DeviceService.update(params).then(updateDevice);
+    await DeviceService.update(params).then(updateDevice);
+    WalletService
+      .state({ ids: wallets.map(({ id }) => id) })
+      .then((values = []) => values.forEach(wallet => updateWallet(wallet)));
   }
 
   render() {
@@ -147,19 +148,24 @@ Settings.propTypes = {
   i18n: shape(SHAPE.I18N).isRequired,
   navigation: shape(SHAPE.NAVIGATION).isRequired,
   updateDevice: func,
+  updateWallet: func,
+  wallets: arrayOf(shape(SHAPE.WALLET)),
 };
 
 Settings.defaultProps = {
   updateDevice() {},
+  updateWallet() {},
 };
 
-const mapStateToProps = ({ device, i18n }) => ({
+const mapStateToProps = ({ device, i18n, wallets }) => ({
   device,
   i18n,
+  wallets,
 });
 
 const mapDispatchToProps = dispatch => ({
   updateDevice: device => device && dispatch(updateDeviceAction(device)),
+  updateWallet: device => device && dispatch(updateWalletAction(device)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
