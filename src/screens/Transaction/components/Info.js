@@ -50,20 +50,21 @@ class TransactionInfo extends Component {
         devices,
         i18n,
         item: {
-          confirmations = 0, coin, concept, createdAt, from, hash, to, state,
+          confirmations = 0, coin, concept, createdAt, from, hash, payment, state, to,
         },
       },
     } = this;
     const device = devices.find(({ id }) => id === from.device || id === to.device);
     const isTransfer = from.device === to.device;
+    const address = payment || isTransfer ? to.address : from.address;
 
     return (
       <Motion animation="bounceInUp" delay={500}>
         <View style={styles.container}>
+          { isTransfer && <Field caption={i18n.FROM} value={from.address} /> }
           { device
-            ? <AddressField image={device.image} title={device.name} value={from.address} />
-            : <Field caption={isTransfer ? i18n.FROM : i18n.ADDRESS} value={from.address} /> }
-          { isTransfer && <Field caption={i18n.TO} value={to.address} /> }
+            ? <AddressField image={device.image} title={device.name} value={address} />
+            : <Field caption={isTransfer ? i18n.TO : i18n.ADDRESS} value={address} /> }
           { hash && <Field caption={i18n.STATE} value={state} style={styles.half} /> }
           { hash && <Field caption={i18n.CONFIRMATIONS} value={confirmations} style={styles.half} /> }
           { concept
