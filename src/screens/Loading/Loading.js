@@ -6,6 +6,7 @@ import { Logo } from '../../components';
 import { STYLE, THEME } from '../../config';
 import { CurrenciesService, DeviceService, WalletService } from '../../services';
 import { initialize } from '../../store';
+import { errorAction } from '../../store/actions';
 import styles from './Loading.style';
 
 const { COLOR } = THEME;
@@ -24,6 +25,7 @@ class Loading extends Component {
     const { dispatch } = store;
     const { wallets = [] } = store.getState();
 
+    dispatch(errorAction());
     if (wallets.length > 0) {
       await WalletService.state({ ids: wallets.map(({ id }) => id) })
         .then(values => values && values.forEach(wallet => dispatch(updateWalletAction(wallet))));
