@@ -10,9 +10,6 @@ export default StyleSheet.create({
     width: WALLET_WIDTH,
     height: WALLET_HEIGHT,
     backgroundColor: COLOR.WHITE,
-    marginTop: OFFSET,
-    marginBottom: OFFSET,
-    alignSelf: 'center',
     borderRadius: BORDER_RADIUS,
   },
 

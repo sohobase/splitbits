@@ -20,21 +20,24 @@ const WalletOption = ({
 );
 
 const WalletItem = ({
-  currencies, data, device: { currency }, i18n, onOption, onPress, style,
+  currencies,
+  data: {
+    balance = 0, coin, id, name = '', readOnly, trend = 0, type,
+  } = {},
+  device: { currency },
+  i18n,
+  onPress,
+  style,
 }) => {
-  const {
-    balance = 0, coin = 'BTC', name = '', readOnly, trend = 0, type,
-  } = data || {};
-
   return (
     <Motion
       animation="bounceIn"
       delay={300}
       duration={DURATION}
-      style={[STYLE.ELEVATION, styles.container, (!data ? styles.empty : undefined), style]}
+      style={[STYLE.ELEVATION, styles.container, (!id ? styles.empty : undefined), style]}
     >
       {
-        data ?
+        id ?
           <View style={styles.content}>
             <View style={[STYLE.ROW, styles.info]}>
               <View style={styles.info}>
@@ -62,9 +65,9 @@ const WalletItem = ({
           <View style={[STYLE.CENTERED, styles.options]}>
             <Text style={[styles.name, styles.highlight]}>{i18n.NEW_WALLET}</Text>
             <View style={[STYLE.ROW]}>
-              <WalletOption caption={i18n.CREATE} onPress={onOption} type={TYPE.CREATE} />
-              <WalletOption caption={i18n.IMPORT} onPress={onOption} type={TYPE.IMPORT} />
-              <WalletOption caption={i18n.RECOVER} onPress={onOption} type={TYPE.RECOVER} />
+              <WalletOption caption={i18n.CREATE} onPress={onPress} type={TYPE.CREATE} />
+              <WalletOption caption={i18n.IMPORT} onPress={onPress} type={TYPE.IMPORT} />
+              <WalletOption caption={i18n.RECOVER} onPress={onPress} type={TYPE.RECOVER} />
             </View>
           </View>
       }
@@ -74,18 +77,15 @@ const WalletItem = ({
 
 WalletItem.propTypes = {
   currencies: shape(SHAPE.CURRENCIES),
-  data: shape(SHAPE.WALLET),
+  data: shape(SHAPE.WALLET).isRequired,
   device: shape(SHAPE.DEVICE).isRequired,
   i18n: shape(SHAPE.I18N).isRequired,
-  onOption: func,
   onPress: func,
   style: oneOfType([array, number]),
 };
 
 WalletItem.defaultProps = {
   currencies: {},
-  data: undefined,
-  onOption: undefined,
   onPress: undefined,
   style: [],
 };
