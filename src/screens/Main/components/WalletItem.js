@@ -73,7 +73,7 @@ const WalletItem = ({
 };
 
 WalletItem.propTypes = {
-  currencies: shape(SHAPE.CURRENCIES).isRequired,
+  currencies: shape(SHAPE.CURRENCIES),
   data: shape(SHAPE.WALLET),
   device: shape(SHAPE.DEVICE).isRequired,
   i18n: shape(SHAPE.I18N).isRequired,
@@ -83,6 +83,7 @@ WalletItem.propTypes = {
 };
 
 WalletItem.defaultProps = {
+  currencies: {},
   data: undefined,
   onOption: undefined,
   onPress: undefined,
