@@ -20,9 +20,13 @@ export default async(endpoint, props = {}, multipart) => {
     ...DEFAULT_HEADERS,
     'Content-Type': multipart ? 'multipart/form-data' : 'application/json',
   };
+  const url = `${C.SERVICE}${endpoint}`;
+
+  dispatch(errorAction());
+  if (DEV) console.log(`[${method}] ${url}`);
 
   return new Promise((resolve) => {
-    fetch(`${C.SERVICE}${endpoint}`, { headers, ...props, method })  // eslint-disable-line
+    fetch(url, { headers, ...props, method })  // eslint-disable-line
       .then(async(response) => {
         const json = await response.json();
         if (response.status >= 400) {

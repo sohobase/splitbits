@@ -11,7 +11,7 @@ export default {
     return service(`transaction/fee?walletId=${walletId}&amount=${amount}`);
   },
 
-  list({ walletId, lastBlock }) {
+  list({ walletId, lastBlock = 0 }) {
     return service(`transaction/list?walletId=${walletId}&lastBlock=${lastBlock}`);
   },
 

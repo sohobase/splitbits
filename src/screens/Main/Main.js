@@ -49,12 +49,6 @@ class Main extends Component {
     ConnectionService.listen(type => this.setState({ connection: type }));
   }
 
-  componentWillReceiveProps({ wallets: nextWallets = [] }) {
-    const { wallets = [] } = this.props;
-    // @TODO: React-Native-Swiper is buggy with dynamic elements. we should focus in the last wallet created.
-    if (nextWallets.length !== wallets.length) this.setState({ walletIndex: 0 });
-  }
-
   _onNewTransaction(type) {
     const {
       props: { navigation: { navigate }, wallets },
@@ -113,7 +107,7 @@ class Main extends Component {
           { connection && <Text style={[styles.env, styles.left]}>{connection}</Text> }
           { DEV && <Text style={[styles.env, styles.right]}>testnet</Text> }
           <Header />
-          <Wallets onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
+          <Wallets index={walletIndex} onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
         </LinearGradient>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />

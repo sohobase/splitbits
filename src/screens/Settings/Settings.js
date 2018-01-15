@@ -66,12 +66,13 @@ class Settings extends Component {
   }
 
   async _onModalValue(value) {
-    const { 
-      params = {}, 
-      props: { updateDevice, updateWallet, wallets }, 
-      state: { context }, 
+    const {
+      params = {},
+      props: { updateDevice, updateWallet, wallets },
+      state: { context },
     } = this;
     params[context] = value;
+
     this.setState({ modal: false, ...params });
     await DeviceService.update(params).then(updateDevice);
     WalletService
@@ -155,6 +156,7 @@ Settings.propTypes = {
 Settings.defaultProps = {
   updateDevice() {},
   updateWallet() {},
+  wallets: [],
 };
 
 const mapStateToProps = ({ device, i18n, wallets }) => ({

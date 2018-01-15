@@ -5,10 +5,12 @@ const { OFFSET, WALLET_HEIGHT } = THEME;
 
 export default StyleSheet.create({
   wallets: {
-    height: WALLET_HEIGHT + (OFFSET * 4),
+    height: '100%',
+    marginBottom: OFFSET,
+    minHeight: WALLET_HEIGHT + (OFFSET * 2),
   },
 
-  pagination: {
-    bottom: OFFSET,
+  item: {
+    alignSelf: 'center',
   },
 });

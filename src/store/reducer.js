@@ -22,8 +22,9 @@ export default function(state = DEFAULTS, action) {
     // -- Device
     case UPDATE_DEVICE: {
       const device = { ...state.device, ...action.device };
+
       return {
-        ...state, device, i18n: TEXT[device.language],
+        ...state, device, i18n: TEXT[device.language] || TEXT.EN,
       };
     }
 
