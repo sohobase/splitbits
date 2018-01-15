@@ -35,18 +35,26 @@ class Main extends Component {
     this._onRecover = this._onRecover.bind(this);
     this._onSwipe = this._onSwipe.bind(this);
     this._onWallet = this._onWallet.bind(this);
+    this._setConnection = this._setConnection.bind(this);
   }
 
   async componentWillMount() {
-    const { props: { updateCurrencies, updateDevice } } = this;
+    const { _setConnection, props: { updateCurrencies, updateDevice } } = this;
     Promise.all([
       CurrenciesService.list().then(updateCurrencies),
       DeviceService.state().then(updateDevice),
     ]);
-    AppState.addEventListener('change', state => onAppActive(this.props, state));
+    AppState.addEventListener('change', async(state) => {
+      _setConnection();
+      onAppActive(this.props, state);
+    });
+    _setConnection();
+    ConnectionService.listen(_setConnection);
     Notifications.addListener(onNotification);
-    this.setState({ connection: await ConnectionService.get() });
-    ConnectionService.listen(type => this.setState({ connection: type }));
+  }
+
+  async _setConnection(connection) {
+    this.setState({ connection: connection || await ConnectionService.get() });
   }
 
   _onNewTransaction(type) {

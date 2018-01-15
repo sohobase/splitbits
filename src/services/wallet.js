@@ -29,8 +29,8 @@ export default {
         address,
         coin,
         name,
-        push: await PushService.getToken(),
         payload: getSignature(hdNode.keyPair),
+        push: await PushService.getToken(),
       }),
     });
 
