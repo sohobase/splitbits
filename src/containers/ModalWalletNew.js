@@ -55,10 +55,9 @@ class ModalWalletNew extends Component {
   }
 
   _onQR(value) {
-    this.setState({
-      ...validateAddress(value),
-      cameraActive: false,
-    });
+    const { address, type } = validateAddress(value) || {};
+
+    this.setState({ address, type, cameraActive: !address && !type });
   }
 
   async _onSubmit() {

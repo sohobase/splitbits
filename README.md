@@ -1,6 +1,6 @@
 # <a href='http://sohobase.co/splitbits/'><img src='https://i.imgur.com/ABE1Otk.png' height='64'></a>
 
-[![version](https://img.shields.io/badge/v-0.7.3-blue.svg?style=for-the-badge)]()
+[![version](https://img.shields.io/badge/v-0.7.6-blue.svg?style=for-the-badge)]()
 [![slack](https://img.shields.io/badge/slack--blue.svg?style=for-the-badge)](https://sohobase.slack.com/join/shared_invite/enQtMjUxMjI4MjEyNjQ2LTNkYWRjY2VkMmEwNzRkYjg3Y2JmOTU5ODliMDBiODgwZWQ3MjcwM2IwOWIyYTAxODkyYWQ2NDY4N2ZiOGMxZjc)
 [![support](https://img.shields.io/badge/support--blue.svg?style=for-the-badge)](support@sohobase.co)
 [![Donate](https://img.shields.io/badge/donate-₿-yellow.svg?style=for-the-badge)](https://chart.googleapis.com/chart?chs=320x320&cht=qr&chl=bitcoin:19hdnHUYwTSCffNKazV379r9HrwNwEfeeA?amount=0.001) [![Donate](https://img.shields.io/badge/donate-Ł-lightgrey.svg?style=for-the-badge)]()
@@ -74,8 +74,10 @@ Build Status Dependencies Status Known Vulnerabilities
 | Request coins in friends network           | Complete |                                  | 2017-12-01 |
 | Blockchain activity & push notifications   | Complete | In BETA for all kinds of wallets | 2017-12-06 |
 | Language localization process              | Complete | Available languages EN & ES      | 2017-12-18 |
+| Transfer coins between wallets             | Complete |                                  | 2018-01-07 |
+| Segwit wallets as watch-only mode          | 50%      |                                  | 2018-01-17 |
 | Wallet PRO                                 | 50%      |                                  |            |
-| Transfer coins between wallets             | 20%      |                                  |            |
+| Convert coins between wallets              | 20%      |                                  |            |
 | ETH Wallet support                         | 10%      |                                  |            |
 | External storage for Private Keys          | 5%       |                                  |            |
 | Segwit wallets                             | Pending  |                                  |            |

@@ -104,6 +104,7 @@ export default {
   WALLET: {
     ADDRESS: {
       BTC: 0,
+      BTC_SEGWIT: 169,
       BTC_TESTNET: 111,
       LTC: 48,
     },
