@@ -167,7 +167,7 @@ const mapStateToProps = ({ device, i18n, wallets }) => ({
 
 const mapDispatchToProps = dispatch => ({
   updateDevice: device => device && dispatch(updateDeviceAction(device)),
-  updateWallet: device => device && dispatch(updateWalletAction(device)),
+  updateWallet: wallet => wallet && dispatch(updateWalletAction(wallet)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -74,10 +74,7 @@ export default function(state = DEFAULTS, action) {
 
       return {
         ...state,
-        wallets: state.wallets.map((wallet) => {
-          if (wallet.id === id) return { ...wallet, ...props };
-          return wallet;
-        }),
+        wallets: state.wallets.map(wallet => ({ ...wallet, ...(wallet.id === id ? props : {}) })),
       };
     }
 

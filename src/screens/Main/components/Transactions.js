@@ -56,12 +56,13 @@ class Transactions extends Component {
 
     return (
       <View style={[STYLE.LAYOUT_BOTTOM, styles.container]}>
-        <Motion animation="bounceInUp" delay={400} duration={DURATION}>
+        <Motion animation="bounceInUp" delay={DURATION / 2} duration={DURATION}>
           <FlatList
             data={transactions}
             keyExtractor={item => item.id}
             refreshControl={<RefreshControl onRefresh={_onRefresh} refreshing={refreshing} />}
             renderItem={_renderTransaction}
+            style={styles.list}
           />
         </Motion>
       </View>

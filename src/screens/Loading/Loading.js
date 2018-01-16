@@ -28,7 +28,7 @@ class Loading extends Component {
     dispatch(errorAction());
     if (wallets.length > 0) {
       await WalletService.state({ ids: wallets.map(({ id }) => id) })
-        .then(values => values && values.forEach(wallet => dispatch(updateWalletAction(wallet))));
+        .then((values = []) => values.forEach(wallet => dispatch(updateWalletAction(wallet))));
     }
     if (token) {
       await Promise.all([

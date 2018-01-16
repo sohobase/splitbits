@@ -7,4 +7,8 @@ export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BACKGROUND,
   },
+
+  list: {
+    height: '100%',
+  },
 });
