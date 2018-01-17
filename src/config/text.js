@@ -39,7 +39,7 @@ export default {
     HINT_FIND_BY_NAME: 'Other people can only find you if you have defined your name.',
 
     IMPORT: 'import',
-    IMPORT_ADDRESS: 'If you import a public address your wallet will be in watch only mode.',
+    IMPORT_ADDRESS: 'Importing a public address makes your wallet in watch-only mode.',
 
     LANGUAGE: 'Language',
     LAST_INTENT: 'Last intent, if you fail again all your data will be deleted.',

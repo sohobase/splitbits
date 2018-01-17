@@ -1,7 +1,7 @@
 {
   "name": "Splitbits",
   "description": "Next-gen private & friendly mobile wallet for your cryptos.",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "author": {
     "name": "Javi Jimenez",
     "email": "javi@sohobase.co",
@@ -45,7 +45,7 @@
   "dependencies": {
     "assert": "1.4.1",
     "bigi": "1.4.2",
-    "bip39": "2.4.0",
+    "bip39": "2.5.0",
     "bitcoinjs-lib": "3.3.2",
     "bitcoinjs-message": "2.0.0",
     "bs58check": "2.1.1",

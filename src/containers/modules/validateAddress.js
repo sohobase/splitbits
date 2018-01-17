@@ -10,19 +10,15 @@ export default (address) => {
 
   try {
     const script = BitcoinJS.address.toOutputScript(address);
-    if (script[0] === 169) version = script[0];
+    if (script[0] === 169) version = script[0]; // eslint-disable-line
   } catch (e) { version = undefined; }
-
-  console.log('1', version);
 
   if (!version) {
     try {
       const buffer = bs58check.decode(address) || [];
-      version = buffer[0];
+      version = buffer[0]; // eslint-disable-line
     } catch (e) { version = undefined; }
   }
-
-  console.log('2', version);
 
   if ([WIF.BTC, WIF.BTC_TESTNET].includes(version)) {
     type = { wif: address, coin: BTC };
