@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Modal as ReactNativeModal, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
+
 import { Button } from '../components';
 import { SHAPE, STYLE, THEME } from '../config';
 import { errorAction } from '../store/actions';

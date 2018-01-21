@@ -1,5 +1,6 @@
 import BitcoinJS from 'bitcoinjs-lib';
 import BitcoinMessage from 'bitcoinjs-message';
+
 import { C } from '../config';
 import { SecureStore } from '../store';
 import { service } from './modules';

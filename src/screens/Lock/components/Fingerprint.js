@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
+
 import { SHAPE, STYLE } from '../../../config';
 import { Icon, Touchable } from '../../../components';
 import styles from './Fingerprint.style';

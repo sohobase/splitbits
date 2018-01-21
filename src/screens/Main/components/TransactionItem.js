@@ -2,6 +2,7 @@ import { func, shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Amount, Avatar, Icon, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
 import { DateService } from '../../../services';

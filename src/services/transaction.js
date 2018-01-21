@@ -1,4 +1,5 @@
 import BitcoinJS from 'bitcoinjs-lib';
+
 import { C } from '../config';
 import { SecureStore } from '../store';
 import { service } from './modules';

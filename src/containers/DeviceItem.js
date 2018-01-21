@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
+
 import { Avatar, Button } from '../components';
 import { SHAPE, STYLE, THEME } from '../config';
 import { DeviceService } from '../services';
@@ -11,7 +12,6 @@ import { updateDeviceAction } from '../store/actions';
 import styles from './DeviceItem.style';
 
 const { COLOR: { GREEN, RED, WHITE } } = THEME;
-
 const BUTTON_ACCEPT = { backgroundColor: GREEN, underlayColor: Color(GREEN).darken(0.1).string(), type: 'delete' };
 const BUTTON_CANCEL = { backgroundColor: RED, underlayColor: Color(RED).darken(0.1).string() };
 

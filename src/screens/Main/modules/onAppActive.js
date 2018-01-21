@@ -1,4 +1,5 @@
 import { NavigationActions } from 'react-navigation';
+
 import { C } from '../../../config';
 
 const { STATE: { ACTIVE } } = C;

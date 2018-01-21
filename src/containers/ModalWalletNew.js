@@ -2,6 +2,7 @@ import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Button, Input, Modal, Option, QRreader } from '../components';
 import { ASSETS, C, SHAPE, STYLE } from '../config';
 import { WalletService } from '../services';
@@ -55,9 +56,8 @@ class ModalWalletNew extends Component {
   }
 
   _onQR(value) {
-    const { address, coin } = validateAddress(value) || {};
-
-    this.setState({ address, coin, cameraActive: !address && !coin });
+    const { coin, ...props } = validateAddress(value) || {};
+    this.setState({ ...props, coin, cameraActive: !coin });
   }
 
   async _onSubmit() {

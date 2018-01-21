@@ -1,5 +1,6 @@
 import BitcoinJS from 'bitcoinjs-lib';
 import bs58check from 'bs58check';
+
 import { C } from '../../config';
 
 const { CRYPTO: { BTC, LTC }, WALLET: { ADDRESS, WIF } } = C;
@@ -9,7 +10,7 @@ export default (address) => {
   let version;
 
   try {
-    const script = BitcoinJS.address.toOutputScript(address);
+    const script = BitcoinJS.address.toOutputScript(address) || [];
     if (script[0] === 169) version = script[0]; // eslint-disable-line
   } catch (e) { version = undefined; }
 

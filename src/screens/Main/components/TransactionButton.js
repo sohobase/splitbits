@@ -1,5 +1,6 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
+
 import { Button } from '../../../components';
 import { THEME } from '../../../config';
 import styles from './TransactionButton.style';

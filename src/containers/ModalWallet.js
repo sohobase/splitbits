@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
+
 import { Modal, Option } from '../components';
 import { C, SHAPE, STYLE, THEME } from '../config';
 import { WalletService } from '../services';

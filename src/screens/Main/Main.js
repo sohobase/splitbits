@@ -3,6 +3,7 @@ import { LinearGradient, Notifications } from 'expo';
 import React, { Component } from 'react';
 import { AppState, View, Text } from 'react-native';
 import { connect } from 'react-redux';
+
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '../../containers';
 import { Header, Footer, TransactionButton, Transactions, Wallets } from './components';

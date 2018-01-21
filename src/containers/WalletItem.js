@@ -1,6 +1,7 @@
 import { array, func, oneOfType, number, shape } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
+
 import { Amount, Touchable } from '../components';
 import { SHAPE, STYLE } from '../config';
 import styles from './WalletItem.style';

@@ -1,14 +1,16 @@
 import { persistStore, persistReducer } from 'redux-persist';
 import { createStore } from 'redux';
 import storage from 'redux-persist/es/storage';
+
 import { C } from '../config';
 import reducer from './reducer';
 import instance from './instance';
 
-const { SERVICE } = C;
+const { DEV, SERVICE } = C;
 
 const config = {
-  key: SERVICE,
+  // key: SERVICE,
+  key: DEV ? 'localhost' : SERVICE,
   rehydrated: true,
   storage,
   version: 2,

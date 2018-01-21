@@ -2,6 +2,7 @@ import { node, string } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
+
 import { ASSETS, STYLE, THEME } from '../../../config';
 import styles from './Slide.style';
 

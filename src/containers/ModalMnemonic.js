@@ -3,6 +3,7 @@ import { bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Button, Input, Modal } from '../components';
 import { SHAPE, STYLE } from '../config';
 import { MnemonicService } from '../services';

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
+
 import { C, SHAPE, STYLE, THEME } from '../../../config';
 import { TransactionService, WalletService } from '../../../services';
 import { updateTransactionsAction, updateWalletAction } from '../../../store/actions';

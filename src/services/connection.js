@@ -1,4 +1,5 @@
 import { NetInfo, Platform } from 'react-native';
+
 import { C } from '../config';
 
 const { CONNECTION: { CELLULAR, WIFI } } = C;

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
+
 import { Button, Header } from '../../components';
 import { ModalCamera, ModalValues } from '../../containers';
 import { ASSETS, C, SHAPE, STYLE, THEME } from '../../config';

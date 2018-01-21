@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { THEME } from '../../../config';
 
 const { OFFSET, WALLET_HEIGHT } = THEME;

@@ -1,5 +1,6 @@
 import Color from 'color';
 import { StyleSheet } from 'react-native';
+
 import { THEME } from '../config';
 
 const {

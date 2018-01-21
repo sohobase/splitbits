@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Linking, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
+
 import { C, SHAPE, STYLE } from '../../../config';
 import { Avatar, Input, Touchable } from '../../../components';
 import { DateService, TransactionService } from '../../../services';

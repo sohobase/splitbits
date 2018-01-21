@@ -2,6 +2,7 @@ import { arrayOf, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
+
 import { Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { WalletItem } from '../../containers';

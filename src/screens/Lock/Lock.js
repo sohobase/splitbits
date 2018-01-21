@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { BackHandler, Linking, StatusBar, Text, Vibration, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
+
 import { Logo } from '../../components';
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { FingerprintService } from '../../services';

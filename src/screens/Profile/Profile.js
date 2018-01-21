@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
+
 import { Header } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';

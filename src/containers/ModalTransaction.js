@@ -2,6 +2,7 @@ import { bool, func, shape } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Modal, Option } from '../components';
 import { C, SHAPE, STYLE } from '../config';
 

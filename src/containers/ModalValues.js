@@ -1,6 +1,7 @@
 import { bool, func, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
+
 import { Modal, Option } from '../components';
 import { C, STYLE } from '../config';
 

@@ -3,6 +3,7 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { connect } from 'react-redux';
+
 import { SHAPE, THEME } from '../../../config';
 import WalletItem from './WalletItem';
 import styles from './Wallets.style';

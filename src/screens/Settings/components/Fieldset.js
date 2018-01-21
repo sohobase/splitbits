@@ -1,6 +1,7 @@
 import { bool, func, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
+
 import { Input } from '../../../components';
 import { STYLE } from '../../../config';
 import styles from './Fieldset.style';

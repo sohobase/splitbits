@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
 import { connect } from 'react-redux';
 import { BarCodeScanner, Permissions } from 'expo';
+
 import { C, SHAPE, THEME } from '../config';
 import Button from './Button';
 import styles from './QRreader.style';

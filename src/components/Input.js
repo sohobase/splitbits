@@ -1,6 +1,7 @@
 import { array, bool, number, oneOfType } from 'prop-types';
 import React from 'react';
 import { TextInput } from 'react-native';
+
 import { THEME } from '../config';
 import styles from './Input.style';
 

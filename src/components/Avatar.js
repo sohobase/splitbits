@@ -1,6 +1,7 @@
 import { array, bool, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
+
 import { C } from '../config';
 import Icon from './Icon';
 import styles from './Avatar.style';

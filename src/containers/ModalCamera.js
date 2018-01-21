@@ -3,6 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { FileSystem, ImagePicker } from 'expo';
+
 import { Modal, Option } from '../components';
 import { SHAPE, STYLE } from '../config';
 

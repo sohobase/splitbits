@@ -2,6 +2,7 @@ import { array, arrayOf, bool, func, number, oneOfType, shape, string } from 'pr
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
+
 import { SHAPE } from '../config';
 import DeviceItem from './DeviceItem';
 import styles from './DevicesList.style';

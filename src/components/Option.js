@@ -1,6 +1,7 @@
 import { array, bool, func, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
+
 import { STYLE } from '../config';
 import Icon from './Icon';
 import Touchable from './Touchable';

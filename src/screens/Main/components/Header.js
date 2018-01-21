@@ -1,6 +1,7 @@
 import { arrayOf, shape } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { Amount, Header } from '../../../components';
 import { C, SHAPE } from '../../../config';
 import styles from './Header.style';

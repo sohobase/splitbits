@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
+
 import { Amount, Header, Input } from '../../../components';
 import { C, SHAPE, STYLE, THEME } from '../../../config';
 import styles from './AmountTransaction.style';

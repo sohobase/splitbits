@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
+
 import { C, SHAPE, STYLE, TEXT, THEME } from '../../config';
 import { Button } from '../../components';
 import { ModalWalletNew } from '../../containers';

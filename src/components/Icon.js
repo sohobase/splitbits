@@ -1,6 +1,7 @@
 import { array, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
+
 import { ASSETS } from '../config';
 import styles from './Icon.style';
 

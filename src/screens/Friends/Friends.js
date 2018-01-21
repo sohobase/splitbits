@@ -2,6 +2,7 @@ import { arrayOf, bool, func, shape } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Keyboard, View } from 'react-native';
+
 import { Header, Input, QRreader } from '../../components';
 import { SHAPE, STYLE, THEME } from '../../config';
 import { DevicesList } from '../../containers';

@@ -2,6 +2,7 @@ import { array, node, number, object, oneOfType, shape, string } from 'prop-type
 import React from 'react';
 import { StatusBar, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
+
 import { SHAPE, STYLE, THEME } from '../config';
 import Button from './Button';
 import styles from './Header.style';

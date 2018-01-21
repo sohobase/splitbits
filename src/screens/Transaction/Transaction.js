@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View as Motion } from 'react-native-animatable';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Amount, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { ConnectionService, TransactionService } from '../../services';

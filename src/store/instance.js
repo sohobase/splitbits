@@ -1,4 +1,3 @@
-
 export default {
   get() {
     return this.store;

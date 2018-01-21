@@ -2,6 +2,7 @@ import { number, func, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Amount, Button } from '../../../components';
 import { C, SHAPE } from '../../../config';
 import styles from './ButtonSubmit.style';
