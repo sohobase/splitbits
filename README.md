@@ -59,9 +59,9 @@ Development is underway and you can view the master branch commits for the lates
 Build Status Dependencies Status Known Vulnerabilities
 
 ### Progress
-[![Build Status](https://travis-ci.org/sohobase/splitbits.svg?style=for-the-badge&branch=master)](https://travis-ci.org/sohobase/splitbits)
-[![devDependency Status](https://img.shields.io/david/sohobase/splitbits.svg?style=for-the-badge)](https://david-dm.org/sohobase/splitbits#info=dependencies)
-[![Known Vulnerabilities](https://snyk.io/test/github/sohobase/splitbits/badge.svg)](https://snyk.io/test/sohobase/splitbits)
+[![Build Status](https://travis-ci.org/sohobase/splitbits.svg?branch=master&style=flat-square)](https://travis-ci.org/sohobase/splitbits)
+[![devDependency Status](https://img.shields.io/david/sohobase/splitbits.svg?style=flat-square)](https://david-dm.org/sohobase/splitbits#info=dependencies)
+[![Known Vulnerabilities](https://snyk.io/test/github/sohobase/splitbits/badge.svg?style=flat-square)](https://snyk.io/test/sohobase/splitbits)
 
 | Item                                       | Status   | Notes                            | Updated    |
 | ------------------------------------------ | -------- | -------------------------------- | ---------- |
