@@ -1,74 +1,90 @@
 import { array, func, number, oneOfType, shape } from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 
-import { C, SHAPE, STYLE, THEME } from '../../../config';
-import { Amount, Button, Icon } from '../../../components';
+import { ASSETS, C, SHAPE, STYLE, THEME } from '../../../config';
+import { Amount, Button, Touchable } from '../../../components';
 import styles from './WalletItem.style';
 
 const { SATOSHI, TYPE } = C;
 const { ANIMATION: { DURATION } } = THEME;
-
-const WalletOption = ({
-  caption, onPress, type, //eslint-disable-line
-}) => (
-  <View style={[STYLE.CENTERED, styles.option]}>
-    <Button icon={type} circle onPress={() => onPress(type)} style={styles.button} captionStyle={styles.caption} />
-    <Text style={[styles.label, styles.highlight]}>{caption}</Text>
-  </View>
-);
+const NEW_WALLET_OPTIONS = ['CREATE', 'IMPORT', 'RECOVER'];
 
 const WalletItem = ({
   currencies,
   data: {
-    balance = 0, coin, id, name = '', readOnly, trend = 0, type,
+    address, balance = 0, coin, id, name = '', readOnly, type,
   } = {},
   device: { currency },
   i18n,
   onPress,
   style,
 }) => {
+  const isPRO = type === TYPE.PRO;
+  const styleText = isPRO || readOnly ? styles.textHighlight : styles.text;
+
   return (
     <Motion
       animation="bounceIn"
       delay={300}
       duration={DURATION}
-      style={[STYLE.ELEVATION, styles.container, (!id ? styles.empty : undefined), style]}
+      style={[
+        STYLE.ELEVATION,
+        styles.container,
+        isPRO ? styles.containerPRO : undefined,
+        (!id || readOnly) ? styles.containerEmpty : undefined,
+        style]}
     >
       {
         id ?
-          <View style={styles.content}>
-            <View style={[STYLE.ROW, styles.info]}>
-              <View style={styles.info}>
-                <Text style={[styles.name, styles.label]}>{name.toUpperCase()}</Text>
-                <Amount coin={coin} value={balance} style={[styles.text, styles.amount]} />
+          <Touchable onPress={onPress}>
+            <View style={styles.content}>
+              <View style={styles.amounts}>
+                <View style={STYLE.ROW}>
+                  <Amount coin={coin} value={balance} style={[styleText, styles.amount]} />
+                  <View style={styles.tags}>
+                    { isPRO && !readOnly && <View style={styles.tag}><Text style={styles.tagLabel}>PRO</Text></View> }
+                    { readOnly &&
+                      <View style={styles.tag}><Text style={styles.tagLabel}>{i18n.READ_ONLY}</Text></View> }
+                  </View>
+                </View>
                 <Amount
                   coin={currency}
                   value={balance / (currencies[coin] / SATOSHI)}
-                  style={[styles.label, styles.fiat]}
+                  style={[styleText, styles.fiat]}
                 />
               </View>
-              <Button captionStyle={styles.menuIcon} icon="menu" onPress={onPress} raised style={styles.menu} />
-            </View>
-            <View style={STYLE.ROW}>
-              <Icon value={trend > 0 ? 'trendingUp' : 'trendingDown'} style={styles.trend} />
-              <Text style={styles.label}>{`${trend.toFixed(2)}%`}</Text>
-              <View style={styles.tags}>
-                { readOnly && <View style={styles.tag}><Text style={styles.tagLabel}>{i18n.READ_ONLY}</Text></View> }
-                { type === TYPE.PRO &&
-                  <View style={[styles.tag, styles.pro]}><Text style={styles.tagLabel}>PRO</Text></View> }
+
+              <Text style={[styleText, styles.typeWriter]}>{name.toUpperCase()}</Text>
+              <View style={[STYLE.ROW, styles.address]}>
+                <Text style={[styleText, styles.typeWriter]}>●●●●</Text>
+                <Text style={[styleText, styles.typeWriter]}>●●●●</Text>
+                <Text style={[styleText, styles.typeWriter]}>●●●●</Text>
+                <Text style={[styleText, styles.typeWriter]}>{address.slice(-4).toUpperCase()}</Text>
+              </View>
+              <View style={STYLE.ROW}>
+                <Text style={[styleText, styles.typeWriter, styles.date]}>??/??</Text>
+                <Image source={ASSETS[coin]} style={styles.coinLogo} />
               </View>
             </View>
-          </View>
+          </Touchable>
           :
-          <View style={[STYLE.CENTERED, styles.options]}>
-            <Text style={[styles.name, styles.highlight]}>{i18n.NEW_WALLET}</Text>
-            <View style={[STYLE.ROW]}>
-              <WalletOption caption={i18n.CREATE} onPress={onPress} type={TYPE.CREATE} />
-              <WalletOption caption={i18n.IMPORT} onPress={onPress} type={TYPE.IMPORT} />
-              <WalletOption caption={i18n.RECOVER} onPress={onPress} type={TYPE.RECOVER} />
+          <View style={[STYLE.CENTERED, styles.content]}>
+            <Text style={[styles.bold, styles.highlight]}>{i18n.NEW_WALLET}</Text>
+            <View style={STYLE.ROW}>
+              { NEW_WALLET_OPTIONS.map(key => (
+                <View key={key} style={[STYLE.CENTERED, styles.option]}>
+                  <Button
+                    icon={TYPE[key]}
+                    circle
+                    onPress={() => onPress(TYPE[key])}
+                    style={styles.button}
+                    captionStyle={styles.buttonCaption}
+                  />
+                  <Text style={styles.tagLabel}>{i18n[key]}</Text>
+                </View>)) }
             </View>
           </View>
       }

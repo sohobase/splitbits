@@ -3,42 +3,71 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
 const {
-  BORDER_RADIUS, COLOR, FONT, OFFSET, UNIT, WALLET_HEIGHT, WALLET_WIDTH,
+  BORDER_RADIUS, COLOR, FONT, LAYOUT, OFFSET, UNIT,
 } = THEME;
 
 export default StyleSheet.create({
+  address: {
+    justifyContent: 'space-between',
+    paddingVertical: UNIT / 2,
+  },
+
+  amount: {
+    fontSize: FONT.SIZE.LARGE,
+    fontWeight: FONT.WEIGHT.BOLD,
+  },
+
+  amounts: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+
+  bold: {
+    fontWeight: FONT.WEIGHT.BOLD,
+  },
+
+  date: {
+    flex: 1,
+  },
+
+  typeWriter: {
+    fontFamily: 'pt-mono-regular',
+    fontSize: UNIT * 1.4,
+    letterSpacing: UNIT / 3.5,
+  },
+
+  coinLogo: {
+    alignSelf: 'flex-end',
+    width: FONT.SIZE.LARGE,
+    height: FONT.SIZE.LARGE,
+  },
+
   container: {
-    width: WALLET_WIDTH,
-    height: WALLET_HEIGHT,
+    width: LAYOUT.WALLET_WIDTH,
+    height: LAYOUT.WALLET_HEIGHT,
     backgroundColor: COLOR.WHITE,
     borderRadius: BORDER_RADIUS,
   },
 
-  empty: {
+  containerPRO: {
+    backgroundColor: COLOR.ACCENT,
+  },
+
+  containerEmpty: {
     backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
     elevation: 0,
   },
 
   content: {
-    paddingTop: UNIT,
+    paddingTop: OFFSET,
     paddingBottom: UNIT,
-    paddingLeft: OFFSET,
-    paddingRight: OFFSET / 2,
-    height: WALLET_HEIGHT,
+    paddingHorizontal: OFFSET,
+    height: '100%',
   },
 
-  info: {
-    flex: 1,
-    alignItems: 'flex-start',
-  },
-
-  name: {
-    fontWeight: FONT.WEIGHT.BOLD,
-  },
-
-  label: {
-    color: COLOR.TEXT_SECONDARY,
+  fiat: {
     fontSize: FONT.SIZE.SMALL,
+    opacity: 0.75,
   },
 
   tags: {
@@ -48,10 +77,9 @@ export default StyleSheet.create({
   },
 
   tag: {
-    marginLeft: UNIT / 2,
     padding: UNIT / 2,
     borderRadius: BORDER_RADIUS,
-    backgroundColor: COLOR.TEXT_SECONDARY,
+    backgroundColor: COLOR.PLACEHOLDER_HIGHLIGHT,
   },
 
   tagLabel: {
@@ -60,53 +88,25 @@ export default StyleSheet.create({
     fontSize: FONT.SIZE.TINY,
   },
 
-  pro: {
-    backgroundColor: COLOR.ACCENT,
+  text: {
+    color: COLOR.DEFAULT,
   },
 
-  amount: {
-    color: COLOR.TEXT_DEFAULT,
-    fontSize: FONT.SIZE.LARGE,
-    fontWeight: FONT.WEIGHT.BOLD,
-  },
-
-  fiat: {
-    fontSize: FONT.SIZE.DEFAULT,
-  },
-
-  trend: {
-    width: FONT.SIZE.LARGE,
-    height: FONT.SIZE.LARGE,
-    tintColor: COLOR.TEXT_DISABLED,
-    marginRight: UNIT / 2,
-  },
-
-  menu: {
-    alignSelf: 'flex-end',
-  },
-
-  menuIcon: {
-    tintColor: COLOR.TEXT_SECONDARY,
-  },
-
-  options: {
-    paddingTop: UNIT,
-    alignSelf: 'center',
+  textHighlight: {
+    color: COLOR.TEXT_HIGHLIGHT,
   },
 
   option: {
-    paddingTop: UNIT,
-    paddingLeft: UNIT / 4,
-    paddingRight: UNIT / 4,
+    marginVertical: UNIT,
+    marginHorizontal: UNIT / 4,
   },
 
   button: {
     backgroundColor: COLOR.WHITE,
-    marginBottom: UNIT / 2,
     transform: [{ scale: 0.75 }],
   },
 
-  caption: {
+  buttonCaption: {
     tintColor: COLOR.PRIMARY,
   },
 

@@ -9,7 +9,7 @@ import WalletItem from './WalletItem';
 import styles from './Wallets.style';
 
 const { WALLET } = SHAPE;
-const { WALLET_WIDTH } = THEME;
+const { LAYOUT } = THEME;
 
 const Wallets = ({
   index, onSwipe, onNew, onOptions, wallets,
@@ -22,7 +22,7 @@ const Wallets = ({
     firstItem={index}
     inactiveSlideOpacity={0.75}
     inactiveSlideScale={0.75}
-    itemWidth={WALLET_WIDTH}
+    itemWidth={LAYOUT.WALLET_WIDTH}
     onSnapToItem={onSwipe}
     renderItem={({ item }) =>
       <WalletItem key={item.key || item.address} data={item} onPress={item.key ? onNew : onOptions} />}

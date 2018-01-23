@@ -98,6 +98,9 @@ export default {
 
   UNIT,
 
-  WALLET_HEIGHT: UNIT * 14.4,
-  WALLET_WIDTH: UNIT * 22.4,
+  LAYOUT: {
+    WALLET_HEIGHT: UNIT * 15.6,
+    WALLET_WIDTH: UNIT * 23.2,
+  },
+
 };

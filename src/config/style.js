@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import THEME from './theme';
 
 const {
-  COLOR, FONT, HEADER_SIZE, UNIT, OFFSET, ROW_MIN_HEIGHT, WALLET_HEIGHT,
+  COLOR, FONT, HEADER_SIZE, LAYOUT, UNIT, OFFSET, ROW_MIN_HEIGHT,
 } = THEME;
 
 export default StyleSheet.create({
@@ -30,12 +30,6 @@ export default StyleSheet.create({
     borderBottomColor: COLOR.DIVIDER,
   },
 
-  LAYOUT_TOP: {
-    flex: 0,
-    height: WALLET_HEIGHT + HEADER_SIZE + (OFFSET * 4),
-    backgroundColor: COLOR.PRIMARY,
-  },
-
   BTC: {
     backgroundColor: COLOR.BTC,
   },
@@ -52,6 +46,12 @@ export default StyleSheet.create({
 
   LTC: {
     backgroundColor: COLOR.LTC,
+  },
+
+  LAYOUT_TOP: {
+    flex: 0,
+    height: LAYOUT.WALLET_HEIGHT + HEADER_SIZE + (OFFSET * 2.5),
+    backgroundColor: COLOR.PRIMARY,
   },
 
   LAYOUT_BOTTOM: {
