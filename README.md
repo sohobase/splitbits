@@ -8,7 +8,8 @@
 
 Finally, a Cryptocurrency software wallet that doesn’t require sight. From seed to spend, Splitbits aims to be the simplest and most secure Crypto storage solution—with a total emphasis on accessibility.
 
-<img src='https://i.imgur.com/yvvnqp8.png' center width='360'>
+<img src='http://sohobase.co/assets/images/app-splitbits.png' center width='448'>
+
 
 ## Table of Contents
 * [Introduction](#introduction)
