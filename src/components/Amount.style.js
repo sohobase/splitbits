@@ -10,6 +10,6 @@ export default StyleSheet.create({
   },
 
   symbol: {
-    transform: [{ scale: 0.9 }],
+    transform: [{ scale: 0.85 }],
   },
 });

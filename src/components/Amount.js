@@ -10,7 +10,7 @@ const {
 } = C;
 
 const renderSymbol = ({ coin, style }, SYMBOLS = SYMBOL) => ( // eslint-disable-line
-  <Text style={[styles.amount, styles.symbol, style]}>
+  <Text style={[styles.amount, style, styles.symbol]}>
     {Object.keys(SYMBOLS).includes(coin) ? SYMBOLS[coin] : SYMBOL[coin.toUpperCase()] || coin.toUpperCase()}
   </Text>
 );
