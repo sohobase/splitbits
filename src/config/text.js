@@ -95,7 +95,8 @@ export default {
     TYPE_OF_WALLET: 'Type of wallet',
 
     UNKNOWN: 'Unknown',
-    UNSECURED_CONNECTION: 'Warning! You are using an unsecured WIFI connection We recommend you use your own 3G/4G connection.',
+    UNSECURED_CONNECTION: 'You are using an unsecured WIFI connection.',
+
     USE_PUBLIC_ADDRESS: 'or use a public address',
     USE_FINGERPRINT: 'Use fingerprint to unlock',
 
@@ -222,7 +223,7 @@ export default {
     TYPE_OF_WALLET: 'Tipo de cartera',
 
     UNKNOWN: 'Desconocido',
-    UNSECURED_CONNECTION: '¡Advertencia! Estás utilizando una conexión WIFI no segura. Te recomendamos que uses tu conexión 3G/4G.',
+    UNSECURED_CONNECTION: 'Estás utilizando una conexión WIFI no segura.',
     USE_PUBLIC_ADDRESS: 'o una direccion publica',
     USE_FINGERPRINT: 'Usa tu huella para desbloquear',
 
