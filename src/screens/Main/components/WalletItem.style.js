@@ -45,8 +45,11 @@ export default StyleSheet.create({
   container: {
     width: LAYOUT.WALLET_WIDTH,
     height: LAYOUT.WALLET_HEIGHT,
-    backgroundColor: COLOR.WHITE,
     borderRadius: BORDER_RADIUS,
+  },
+
+  containerDefault: {
+    backgroundColor: COLOR.WHITE,
   },
 
   containerPRO: {

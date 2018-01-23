@@ -1,11 +1,11 @@
 import Color from 'color';
 import { array, bool, func, number, oneOfType, shape } from 'prop-types';
 import React, { Component } from 'react';
-import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
 
-import { Avatar, Button } from '../components';
+import { Avatar, Button, Touchable } from '../components';
 import { SHAPE, STYLE, THEME } from '../config';
 import { DeviceService } from '../services';
 import { updateDeviceAction } from '../store/actions';
@@ -57,8 +57,8 @@ class DeviceItem extends Component {
     }
 
     return (
-      <Swipeout right={options} autoClose backgroundColor={WHITE} >
-        <TouchableWithoutFeedback onPress={onPress ? () => onPress(data) : undefined}>
+      <Swipeout right={options} autoClose backgroundColor={WHITE}>
+        <Touchable onPress={onPress ? () => onPress(data) : undefined}>
           <View style={[STYLE.ROW, STYLE.LIST_ITEM, (selected && styles.selected), style]}>
             <Avatar selected={selected} value={image} />
             <View style={styles.content}>
@@ -75,7 +75,7 @@ class DeviceItem extends Component {
                 onPress={_onRequest}
               /> }
           </View>
-        </TouchableWithoutFeedback>
+        </Touchable>
       </Swipeout>
     );
   }

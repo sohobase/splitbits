@@ -33,13 +33,14 @@ const WalletItem = ({
       style={[
         STYLE.ELEVATION,
         styles.container,
+        !isPRO && !readOnly ? styles.containerDefault : undefined,
         isPRO ? styles.containerPRO : undefined,
         (!id || readOnly) ? styles.containerEmpty : undefined,
         style]}
     >
       {
         id ?
-          <Touchable onPress={onPress}>
+          <Touchable onPress={onPress} style={styles.container}>
             <View style={styles.content}>
               <View style={styles.amounts}>
                 <View style={STYLE.ROW}>

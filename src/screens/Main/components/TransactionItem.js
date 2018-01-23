@@ -42,7 +42,7 @@ const TransactionItem = ({
   if ([CONFIRMED, REQUESTED].includes(state) && !isTransfer) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
 
   return (
-    <Touchable onPress={() => onPress(payment)} activeOpacity={0.95}>
+    <Touchable onPress={() => onPress(payment)}>
       <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
         <View>
           <Avatar value={other.image} />
