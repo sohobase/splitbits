@@ -109,8 +109,6 @@ class Main extends Component {
     const focus = !showTransaction && !showWallet && !showWalletNew;
     const isOffline = connection === undefined;
 
-    console.log('<<<', connection);
-
 
     return (
       <View style={STYLE.SCREEN}>
