@@ -38,6 +38,8 @@ const rocket = require('../../assets/image-rocket.png');
 const trend = require('../../assets/image-trend.png');
 const wallet = require('../../assets/image-wallet.png');
 
+const PTMonoRegular = require('../../assets/pt-mono-regular.ttf');
+
 export default {
   BTC,
   ETH,
@@ -80,4 +82,6 @@ export default {
   rocket,
   trend,
   wallet,
+
+  PTMonoRegular,
 };

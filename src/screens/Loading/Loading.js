@@ -1,10 +1,11 @@
+import { Font } from 'expo';
 import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 
 import { updateCurrenciesAction, updateDeviceAction, updateWalletAction } from '../../store/actions';
 import { Logo } from '../../components';
-import { STYLE, THEME } from '../../config';
+import { ASSETS, STYLE, THEME } from '../../config';
 import { CurrenciesService, DeviceService, WalletService } from '../../services';
 import { initialize } from '../../store';
 import { errorAction } from '../../store/actions';
@@ -37,6 +38,8 @@ class Loading extends Component {
         DeviceService.state().then(value => value && dispatch(updateDeviceAction(value))),
       ]);
     }
+
+    await Font.loadAsync({ 'pt-mono-regular': ASSETS.PTMonoRegular });
 
     this.setState({ processing: false });
     setTimeout(() => { onLoad({ store }); }, 500);
