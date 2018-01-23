@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
+import C from './constants';
 import THEME from './theme';
 
+const { DEV } = C;
 const {
   COLOR, FONT, HEADER_SIZE, LAYOUT, UNIT, OFFSET, ROW_MIN_HEIGHT,
 } = THEME;
@@ -51,7 +53,7 @@ export default StyleSheet.create({
   LAYOUT_TOP: {
     flex: 0,
     height: LAYOUT.WALLET_HEIGHT + HEADER_SIZE + (OFFSET * 2.5),
-    backgroundColor: COLOR.PRIMARY,
+    backgroundColor: DEV ? COLOR.BACKGROUND_DISABLED : COLOR.PRIMARY,
   },
 
   LAYOUT_BOTTOM: {
@@ -79,7 +81,6 @@ export default StyleSheet.create({
 
   SCREEN: {
     flex: 1,
-    backgroundColor: COLOR.PRIMARY,
   },
 
   SWIPER_DOT: {

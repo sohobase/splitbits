@@ -12,8 +12,7 @@ import { ConnectionService, CurrenciesService, DeviceService } from '../../servi
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
 import styles from './Main.style';
 
-const { DEV, TYPE } = C;
-const { NAVIGATION, WALLET } = SHAPE;
+const { CONNECTION: { WIFI }, TYPE } = C;
 const { COLOR } = THEME;
 
 class Main extends Component {
@@ -101,7 +100,7 @@ class Main extends Component {
   render() {
     const {
       _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipe, _onWallet,
-      props: { navigation: { navigate }, wallets },
+      props: { i18n, navigation: { navigate }, wallets },
       state: {
         connection, context, hexSeed, showMnemonic, showTransaction, showWalletNew, showWallet, walletIndex,
       },
@@ -110,13 +109,15 @@ class Main extends Component {
     const focus = !showTransaction && !showWallet && !showWalletNew;
     const isOffline = connection === undefined;
 
+    console.log('<<<', connection);
+
+
     return (
       <View style={STYLE.SCREEN}>
         <LinearGradient colors={COLOR.GRADIENT} style={STYLE.LAYOUT_TOP} >
-          { connection && <Text style={[styles.env, styles.left]}>{connection}</Text> }
-          { DEV && <Text style={[styles.env, styles.right]}>testnet</Text> }
           <Header />
           <Wallets index={walletIndex} onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
+          { connection === WIFI && <Text style={styles.warning}>{i18n.UNSECURED_CONNECTION}</Text> }
         </LinearGradient>
         <Transactions navigate={navigate} wallet={wallet} />
         <Footer navigate={navigate} elevation={focus} />
@@ -138,21 +139,20 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  navigation: shape(NAVIGATION),
-  wallets: arrayOf(shape(WALLET)),
+  i18n: shape({}).isRequired,
+  navigation: shape(SHAPE.NAVIGATION).isRequired,
   updateCurrencies: func,
   updateDevice: func,
+  wallets: arrayOf(shape(SHAPE.WALLET)).isRequired,
 };
 
 Main.defaultProps = {
-  navigation: undefined,
-  wallets: [],
   updateCurrencies() {},
   updateDevice() {},
 };
 
-const mapStateToProps = ({ wallets }) => ({
-  wallets,
+const mapStateToProps = ({ i18n, wallets }) => ({
+  i18n, wallets,
 });
 
 const mapDispatchToProps = dispatch => ({

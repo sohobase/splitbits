@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../config';
 
-const { COLOR, FONT, OFFSET } = THEME;
+const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   content: {
@@ -16,7 +16,7 @@ export default StyleSheet.create({
   caption: {
     fontSize: FONT.SIZE.SMALL,
     color: COLOR.TEXT_DISABLED,
-    marginBottom: OFFSET,
+    marginBottom: UNIT,
   },
 
   error: {

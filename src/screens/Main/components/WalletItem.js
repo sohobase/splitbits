@@ -81,6 +81,7 @@ const WalletItem = ({
                     icon={TYPE[key]}
                     circle
                     onPress={() => onPress(TYPE[key])}
+                    raised
                     style={styles.button}
                     captionStyle={styles.buttonCaption}
                   />
