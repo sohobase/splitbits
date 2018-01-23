@@ -1,4 +1,5 @@
 import { Constants } from 'expo';
+import { Platform } from 'react-native';
 
 const DEV = __DEV__; //eslint-disable-line
 
@@ -52,7 +53,7 @@ export default {
     GBP: '£',
     JPY: '¥',
 
-    BTC: 'Ƀ', // ₿
+    BTC: Platform.OS === 'android' && Platform.Version < 26 ? 'Ƀ' : '₿',
     ETH: 'Ξ',
     LTC: 'Ł',
 
