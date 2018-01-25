@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { C, SHAPE, STYLE, THEME } from '../../../config';
 import { TransactionService, WalletService } from '../../../services';
 import { updateTransactionsAction, updateWalletAction } from '../../../store/actions';
+import { walletTransactions } from '../modules';
 import TransactionItem from './TransactionItem';
 import styles from './Transactions.style';
 
@@ -85,23 +86,8 @@ Transactions.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = ({ device, transactions = [] }, { wallet = {} }) => ({
-  transactions: transactions.filter(({
-    coin, from, state, to,
-  }) => (
-    coin === wallet.coin &&
-    state !== ARCHIVED &&
-    (
-      [from.address, to.address].includes(wallet.address) ||
-      (
-        state === REQUESTED &&
-        (
-          to.wallet === wallet.id || // Request from me: Only from the wallet I requested from
-          (from.device === device.id && !wallet.readOnly) // Request to me: show in all non-read-only wallets
-        )
-      )
-    )
-  )).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+const mapStateToProps = ({ transactions }, { wallet }) => ({
+  transactions: walletTransactions(wallet, transactions),
 });
 
 const mapDispatchToProps = dispatch => ({
