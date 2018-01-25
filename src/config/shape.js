@@ -61,6 +61,7 @@ export default {
     address: string,
     balance: number,
     coin: string,
+    deviceId: string,
     imported: bool,
     name: string,
     lastBlockheight: string,
