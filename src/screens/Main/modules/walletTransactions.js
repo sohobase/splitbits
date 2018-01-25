@@ -2,7 +2,7 @@ import { C } from '../../../config';
 
 const { STATE: { ARCHIVED, REQUESTED } } = C;
 
-export default (wallet = {}, txs = []) => (
+export default (device = {}, wallet = {}, txs = []) => (
   txs.filter(({
     coin, from, state, to,
   }) => (
@@ -14,7 +14,7 @@ export default (wallet = {}, txs = []) => (
         state === REQUESTED &&
         (
           to.wallet === wallet.id || // Request from me: Only from the wallet I requested from
-          (from.device === wallet.deviceId && !wallet.readOnly) // Request to me: show in all non-read-only wallets
+          (from.device === device.id && !wallet.readOnly) // Request to me: show in all non-read-only wallets
         )
       )
     )

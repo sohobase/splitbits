@@ -125,7 +125,7 @@ WalletItem.defaultProps = {
 const mapStateToProps = ({
   currencies, device, i18n, transactions,
 }, { data: wallet }) => {
-  const storeTransactions = walletTransactions(wallet, transactions) || [];
+  const storeTransactions = walletTransactions(device, wallet, transactions) || [];
 
   return ({
     currencies: currencies[device.currency],

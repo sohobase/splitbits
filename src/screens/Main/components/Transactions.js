@@ -86,8 +86,8 @@ Transactions.defaultProps = {
   wallet: undefined,
 };
 
-const mapStateToProps = ({ transactions }, { wallet }) => ({
-  transactions: walletTransactions(wallet, transactions),
+const mapStateToProps = ({ device, transactions }, { wallet }) => ({
+  transactions: walletTransactions(device, wallet, transactions),
 });
 
 const mapDispatchToProps = dispatch => ({
