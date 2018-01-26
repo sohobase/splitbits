@@ -11,10 +11,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
-  selected: {
-    backgroundColor: COLOR.PRIMARY,
-  },
-
   avatar: {
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
@@ -27,5 +23,8 @@ export default StyleSheet.create({
 
   icon: {
     tintColor: COLOR.WHITE,
+    width: AVATAR_SIZE / 2,
+    height: AVATAR_SIZE / 2,
+    alignSelf: 'center',
   },
 });

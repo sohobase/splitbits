@@ -7,9 +7,10 @@ import Icon from './Icon';
 import styles from './Avatar.style';
 
 const { SERVICE } = C;
+const DEFAULT_ICON = 'face';
 
-const Avatar = ({ value, selected, style }) => (
-  <View style={[styles.container, styles.avatar, (selected && styles.selected), style]}>
+const Avatar = ({ icon, value, style }) => (
+  <View style={[styles.container, styles.avatar, style]}>
     { value
       ?
         <Image
@@ -17,19 +18,22 @@ const Avatar = ({ value, selected, style }) => (
           source={{ uri: `${SERVICE}public/${value}?timestamp=${new Date().getTime().toString().substr(0, 8)}` }}
         />
       :
-        <Icon value="face" style={[styles.avatar, styles.icon]} /> }
+        <Icon
+          value={icon}
+          style={[styles.icon, icon === DEFAULT_ICON ? styles.avatar : styles.iconDefault]}
+        /> }
   </View>
 );
 
 Avatar.propTypes = {
+  icon: string,
   value: string,
-  selected: bool,
   style: oneOfType([array, number]),
 };
 
 Avatar.defaultProps = {
+  icon: DEFAULT_ICON,
   value: undefined,
-  selected: false,
   style: [],
 };
 
