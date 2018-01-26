@@ -4,7 +4,7 @@ import { View as Motion } from 'react-native-animatable';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { Amount, QRreader } from '../../components';
+import { Amount, Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { ConnectionService, TransactionService } from '../../services';
 import { updateRecipientAction, updateTransactionsAction } from '../../store/actions';
@@ -122,17 +122,26 @@ class Transaction extends Component {
         <AmountTransaction {...amountProps} onAmount={_onAmount} />
         <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
           { editable ? <Recipient {...recipientProps} /> : <Info item={item} /> }
-          { (editable || item.state === REQUESTED) &&
-            <ButtonSubmit
-              amount={editable ? amount / SATOSHI : item.amount}
-              concept={concept}
-              item={item}
-              onCancel={_onCancel}
-              onPress={_onSubmit}
+          <View style={styles.buttons}>
+            { (editable || item.state === REQUESTED) &&
+              <ButtonSubmit
+                amount={editable ? amount / SATOSHI : item.amount}
+                concept={concept}
+                item={item}
+                onCancel={_onCancel}
+                onPress={_onSubmit}
+                processing={processing}
+                type={type}
+                wallet={wallet}
+              /> }
+            <Button
+              caption={i18n.CANCEL_PAYMENT}
+              motion={{ animation: 'bounceInUp', delay: 700 }}
+              onPress={_onCancel}
               processing={processing}
-              type={type}
-              wallet={wallet}
-            /> }
+              style={styles.buttonCancel}
+            />
+          </View>
           { fee > 0 &&
             <Motion animation="bounceIn" style={styles.centered}>
               <Amount

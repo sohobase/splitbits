@@ -8,6 +8,7 @@ export default {
     BALANCE: 'Balance',
 
     CANCEL: 'Cancel',
+    CANCEL_PAYMENT: 'Cancel payment',
     CANCEL_REQUEST: 'Cancel request',
     CHANGE_YOUR_AVATAR: 'Change your avatar',
     CHOOSE_A_FRIEND: 'Choose a friend',
@@ -136,6 +137,7 @@ export default {
     BALANCE: 'Balance',
 
     CANCEL: 'Cancelar',
+    CANCEL_PAYMENT: 'Cancelar pago',
     CANCEL_REQUEST: 'Cancelar peticion',
     CHANGE_YOUR_AVATAR: 'Cambia tu avatar',
     CHOOSE_A_FRIEND: 'Selecciona un amigo',

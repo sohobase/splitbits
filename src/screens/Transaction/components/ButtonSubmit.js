@@ -1,6 +1,5 @@
 import { number, func, shape, string } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Amount, Button } from '../../../components';
@@ -19,24 +18,22 @@ const ButtonSubmit = ({
     (((type === REQUEST && item) || type === SEND) && balance < amount);
 
   return (
-    <View style={styles.wrapper}>
-      <Button
-        {...inherit}
-        accent
-        caption={cancel ? i18n.CANCEL_REQUEST : undefined}
-        disabled={!cancel && disabled}
-        motion={{ animation: 'bounceInUp', delay: 600 }}
-        onPress={cancel ? onCancel : onPress}
-      >
-        { !cancel &&
-          <Amount
-            caption={`${(editable && type === REQUEST) ? i18n.REQUEST : i18n.SEND} `}
-            coin={coin}
-            style={styles.buttonCaption}
-            value={amount}
-          /> }
-      </Button>
-    </View>
+    <Button
+      {...inherit}
+      accent
+      caption={cancel ? i18n.CANCEL_REQUEST : undefined}
+      disabled={!cancel && disabled}
+      motion={{ animation: 'bounceInUp', delay: 600 }}
+      onPress={cancel ? onCancel : onPress}
+    >
+      { !cancel &&
+        <Amount
+          caption={`${(editable && type === REQUEST) ? i18n.REQUEST : i18n.SEND} `}
+          coin={coin}
+          style={styles.buttonCaption}
+          value={amount}
+        /> }
+    </Button>
   );
 };
 

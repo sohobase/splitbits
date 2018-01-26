@@ -7,28 +7,25 @@ import { connect } from 'react-redux';
 import { Amount, Button, Modal, Option } from '../components';
 import { C, SHAPE, STYLE, THEME } from '../config';
 import { WalletService } from '../services';
-import { removeWalletAction } from '../store/actions';
-import ModalMnemonic from './ModalMnemonic';
+import { removeWalletAction, updateTransactionsAction } from '../store/actions';
 import styles from './ModalWallet.style';
 
-const { TYPE: { PRO } } = C;
+const { SATOSHI, PRICE_PRO, TYPE: { PRO } } = C;
 const { QR_SIZE } = THEME;
 
 class ModalWallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mnemonic: false,
       pro: false,
     };
     this._onArchive = this._onArchive.bind(this);
-    this._onModal = this._onModal.bind(this);
+    this._onModalPro = this._onModalPro.bind(this);
     this._onPro = this._onPro.bind(this);
-    this._onMnemonic = this._onMnemonic.bind(this);
   }
 
   componentWillReceiveProps() {
-    this.setState({ mnemonic: false, pro: false });
+    this.setState({ pro: false });
   }
 
   async _onArchive() {
@@ -37,38 +34,46 @@ class ModalWallet extends Component {
     onClose();
   }
 
-  _onModal(key) {
-    this.setState({ [key]: !this.state[key] });
+  _onModalPro() {
+    this.setState({ pro: !this.state.pro });
   }
 
-  _onPro() {
-    this._onModal('pro');
-    this.props.onRecover();
-  }
+  async _onPro() {
+    const {
+      _onModalPro,
+      props: {
+        currencies, device: { currency }, onClose, updateTransactions, wallet: { coin, id },
+      },
+    } = this;
 
-  _onMnemonic(hexSeed) {
-    this._onModal('mnemonic');
-    this.props.onRecover(hexSeed);
+    const transaction = await WalletService.switchToPRO({
+      id,
+      amount: parseInt((PRICE_PRO[coin] / SATOSHI) * currencies[currency][coin], 10),
+    });
+    if (transaction && transaction.id) {
+      updateTransactions(transaction);
+      _onModalPro();
+      onClose();
+    }
   }
 
   render() {
     const {
-      _onArchive, _onModal, _onMnemonic, _onPro,
+      _onArchive, _onModalPro, _onPro,
       props: {
-        i18n, onClose, visible, wallet,
+        i18n, onBackup, onClose, visible, wallet,
+        device: { currency },
       },
-      state: {
-        mnemonic, pro,
-      },
+      state: { pro },
     } = this;
     const {
-      address, backup, imported, readOnly, type,
+      address, backup, coin, imported, readOnly, type,
     } = wallet;
     const created = !imported && !readOnly;
 
     return (
       <View>
-        <Modal title={i18n.WALLET} visible={visible && !pro && !mnemonic} onClose={onClose}>
+        <Modal title={i18n.WALLET} visible={visible && !pro} onClose={onClose}>
           <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.content]}>
             <QRCode value={address} size={QR_SIZE} />
             <Text style={styles.address}>{address}</Text>
@@ -79,7 +84,7 @@ class ModalWallet extends Component {
                 caption={i18n.CREATE_BACKUP}
                 hint={i18n.CAPTION.CREATE_BACKUP}
                 icon="backup"
-                onPress={() => _onModal('mnemonic')}
+                onPress={onBackup}
               /> }
             <Option
               caption={i18n.ARCHIVE_WALLET}
@@ -93,12 +98,12 @@ class ModalWallet extends Component {
                 caption={i18n.SWITCH_PRO}
                 hint={i18n.CAPTION.SWITCH_PRO}
                 icon="star"
-                onPress={() => _onModal('pro')}
+                onPress={_onModalPro}
               /> }
           </View>
         </Modal>
 
-        <Modal title={i18n.SWITCH_PRO} visible={visible && pro} onClose={() => _onModal('pro')}>
+        <Modal title={i18n.SWITCH_PRO} visible={visible && pro} onClose={_onModalPro}>
           <View style={[STYLE.CENTERED, styles.content]}>
             <Text style={styles.subtitle}>{i18n.CAPTION.SWITCH_PRO}</Text>
             <Text style={styles.text}>Real time push notifications</Text>
@@ -108,44 +113,44 @@ class ModalWallet extends Component {
           </View>
           <View style={styles.buttons}>
             <Button accent onPress={_onPro}>
-              <Amount caption="Upgrade for " coin="USD" value={4.99} style={styles.button} />
+              <Amount caption="Upgrade for " coin={currency} value={PRICE_PRO[coin]} style={styles.button} />
             </Button>
           </View>
         </Modal>
-
-        <ModalMnemonic
-          visible={visible && mnemonic}
-          onClose={() => _onModal('mnemonic')}
-          onRecover={_onMnemonic}
-          wallet={wallet}
-        />
       </View>
     );
   }
 }
 
 ModalWallet.propTypes = {
+  currencies: shape(SHAPE.CURRENCIES).isRequired,
+  device: shape(SHAPE.DEVICE).isRequired,
   i18n: shape(SHAPE.I18N).isRequired,
+  onBackup: func,
   onClose: func,
-  onRecover: func,
   removeWallet: func,
+  updateTransactions: func,
   visible: bool,
   wallet: shape(SHAPE.WALLET).isRequired,
 };
 
 ModalWallet.defaultProps = {
+  onBackup() {},
   onClose() {},
-  onRecover() {},
   removeWallet() {},
+  updateTransactions() {},
   visible: false,
 };
 
-const mapStateToProps = ({ i18n }) => ({
+const mapStateToProps = ({ currencies, i18n, device }) => ({
+  currencies,
   i18n,
+  device,
 });
 
 const mapDispatchToProps = dispatch => ({
   removeWallet: wallet => dispatch(removeWalletAction(wallet)),
+  updateTransactions: transaction => dispatch(updateTransactionsAction([transaction])),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalWallet);

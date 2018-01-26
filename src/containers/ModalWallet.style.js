@@ -33,5 +33,6 @@ export default StyleSheet.create({
 
   button: {
     color: COLOR.WHITE,
+    fontWeight: FONT.WEIGHT.BOLD,
   },
 });

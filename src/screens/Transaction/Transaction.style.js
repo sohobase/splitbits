@@ -5,6 +5,14 @@ import { THEME } from '../../config';
 const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
+  buttons: {
+    margin: OFFSET,
+  },
+
+  buttonCancel: {
+    marginTop: OFFSET,
+  },
+
   content: {
     backgroundColor: 'white',
   },

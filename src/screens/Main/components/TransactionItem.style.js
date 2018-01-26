@@ -39,7 +39,6 @@ export default StyleSheet.create({
   },
 
   title: {
-    // fontSize: FONT.SIZE.DEFAULT,
     fontWeight: FONT.WEIGHT.BOLD,
   },
 

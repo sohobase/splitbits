@@ -8,7 +8,9 @@ import { C, SHAPE, STYLE } from '../../../config';
 import { DateService } from '../../../services';
 import styles from './TransactionItem.style';
 
-const { MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI } = C;
+const {
+  MIN_CONFIRMATIONS, PRODUCT: { PRO_WALLET }, STATE: { CONFIRMED, REQUESTED }, SATOSHI,
+} = C;
 
 const verboseTitle = ({
   emitter, concept, i18n, isTransfer, other: { name = '' }, state, payment,
@@ -21,7 +23,7 @@ const verboseTitle = ({
 
 const TransactionItem = ({
   currencies,
-  data: transactionData,
+  data,
   device,
   i18n,
   onPress,
@@ -29,14 +31,14 @@ const TransactionItem = ({
 }) => {
   const { currency, devices } = device;
   const {
-    amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
-  } = transactionData;
+    amount, confirmations = 0, coin, createdAt, payment, product, state, from = {}, to = {},
+  } = data;
   const isTransfer = from.device === to.device;
   const other = isTransfer
     ? device
     : (devices.find(({ id }) => id === from.device || id === to.device) || {});
   const emitter = address !== to.address;
-  const concept = transactionData.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
+  const concept = data.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
 
   let icon = 'operations';
   if ([CONFIRMED, REQUESTED].includes(state) && !isTransfer) icon = (payment || emitter) ? 'arrowForward' : 'arrowBack';
@@ -45,7 +47,11 @@ const TransactionItem = ({
     <Touchable onPress={() => onPress(payment)}>
       <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
         <View>
-          <Avatar value={other.image} />
+          {
+            product !== PRO_WALLET
+            ? <Avatar value={other.image} />
+            : <Avatar icon="star" style={styles.avatarProWallet} selected />
+          }
           <View style={[styles.icon, styles.iconLayout, (confirmations < MIN_CONFIRMATIONS && styles.iconAlert)]}>
             <Icon value={icon} style={[styles.iconLayout, styles.iconColor]} />
           </View>

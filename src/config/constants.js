@@ -47,6 +47,15 @@ export default {
     ETH: DEV ? 'testnet' : 'ethereum',
   },
 
+  PRICE_PRO: {
+    BTC: 4.99,
+    LTC: 0.99,
+  },
+
+  PRODUCT: {
+    PRO_WALLET: 'pro_wallet',
+  },
+
   SYMBOL: {
     EUR: '€',
     USD: '$',

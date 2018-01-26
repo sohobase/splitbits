@@ -129,7 +129,7 @@ class Main extends Component {
           onSuccess={_onModalWallet}
         />
         { wallet &&
-          <ModalWallet visible={showWallet} wallet={wallet} onBackup={_onMnemonic} onClose={_onWallet} /> }
+          <ModalWallet visible={showWallet && !showMnemonic} wallet={wallet} onBackup={_onMnemonic} onClose={_onWallet} /> }
         <ModalMnemonic visible={showMnemonic} onClose={_onMnemonic} onRecover={_onRecover} wallet={wallet} />
       </View>
     );

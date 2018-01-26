@@ -52,6 +52,7 @@ export default {
     createdAt: date,
     fee: number,
     payment: bool,
+    product: string,
     state: string,
     from: object,
     to: object,
