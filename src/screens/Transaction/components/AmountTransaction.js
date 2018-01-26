@@ -90,14 +90,20 @@ class AmountTransaction extends Component {
             <View style={styles.balance}>
               {
                 state === undefined || state === REQUESTED
-                ? <Amount caption={`${i18n.BALANCE} `} coin={coin} style={[styles.label, styles.small]} value={balance} />
+                ?
+                  <Amount
+                    caption={`${i18n.BALANCE} `}
+                    coin={coin}
+                    style={[styles.label, styles.small]}
+                    value={balance}
+                  />
                 :
-                <Amount
-                  caption={`${i18n.FEE} `}
-                  coin={currency}
-                  style={[styles.label, styles.small]}
-                  value={((fee + charge) * SATOSHI) / currencies[coin]}
-                />
+                  <Amount
+                    caption={`${i18n.FEE} `}
+                    coin={currency}
+                    style={[styles.label, styles.small]}
+                    value={((fee + charge) * SATOSHI) / currencies[coin]}
+                  />
               }
             </View>
           </View>
@@ -109,7 +115,7 @@ class AmountTransaction extends Component {
 
 AmountTransaction.propTypes = {
   coin: string,
-  currencies: shape(SHAPE.CURRENCIES),
+  currencies: shape(SHAPE.CURRENCIES).isRequired,
   device: shape(SHAPE.DEVICE).isRequired,
   i18n: shape(SHAPE.I18N).isRequired,
   editable: bool,
@@ -121,7 +127,6 @@ AmountTransaction.propTypes = {
 
 AmountTransaction.defaultProps = {
   coin: undefined,
-  currencies: {},
   editable: true,
   item: undefined,
   onAmount() {},
