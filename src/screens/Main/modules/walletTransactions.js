@@ -4,7 +4,7 @@ const { STATE: { ARCHIVED, REQUESTED } } = C;
 
 export default (device = {}, wallet = {}, txs = []) => (
   txs.filter(({
-    coin, from, state, to,
+    coin, from, product, state, to,
   }) => (
     coin === wallet.coin &&
     state !== ARCHIVED &&
@@ -14,7 +14,7 @@ export default (device = {}, wallet = {}, txs = []) => (
         state === REQUESTED &&
         (
           to.wallet === wallet.id || // Request from me: Only from the wallet I requested from
-          (from.device === device.id && !wallet.readOnly) // Request to me: show in all non-read-only wallets
+          (from.device === device.id && !product && !wallet.readOnly) // Request to me: show in all non-read-only wallets
         )
       )
     )
