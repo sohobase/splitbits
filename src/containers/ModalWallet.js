@@ -17,6 +17,7 @@ class ModalWallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      processing: false,
       pro: false,
     };
     this._onArchive = this._onArchive.bind(this);
@@ -46,12 +47,15 @@ class ModalWallet extends Component {
       },
     } = this;
 
+    this.setState({ processing: true });
+
     const transaction = await WalletService.switchToPRO({
       id,
       amount: parseInt((PRICE_PRO[coin] / SATOSHI) * currencies[currency][coin], 10),
     });
     if (transaction && transaction.id) {
       updateTransactions(transaction);
+      this.setState({ processing: false });
       _onModalPro();
       onClose();
     }
@@ -64,7 +68,7 @@ class ModalWallet extends Component {
         i18n, onBackup, onClose, visible, wallet,
         device: { currency },
       },
-      state: { pro },
+      state: { pro, processing },
     } = this;
     const {
       address, backup, coin, imported, readOnly, type,
@@ -112,7 +116,7 @@ class ModalWallet extends Component {
             <Text style={styles.text}>...and more coming features.</Text>
           </View>
           <View style={styles.buttons}>
-            <Button accent onPress={_onPro}>
+            <Button accent onPress={_onPro} processing={processing}>
               <Amount caption="Upgrade for " coin={currency} value={PRICE_PRO[coin]} style={styles.button} />
             </Button>
           </View>
