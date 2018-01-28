@@ -13,7 +13,7 @@ import { submit } from './modules';
 import styles from './Transaction.style';
 
 const {
-  CONNECTION: { WIFI }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
+  CONNECTION: { WIFI }, PRODUCT: { PRO_WALLET }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
 } = C;
 let timeout;
 
@@ -134,13 +134,14 @@ class Transaction extends Component {
                 type={type}
                 wallet={wallet}
               /> }
-            <Button
-              caption={i18n.CANCEL_PAYMENT}
-              motion={{ animation: 'bounceInUp', delay: 700 }}
-              onPress={_onCancel}
-              processing={processing}
-              style={styles.buttonCancel}
-            />
+            { item.product === PRO_WALLET && item.state === REQUESTED &&
+              <Button
+                caption={i18n.CANCEL_PAYMENT}
+                motion={{ animation: 'bounceInUp', delay: 700 }}
+                onPress={_onCancel}
+                processing={processing}
+                style={styles.buttonCancel}
+              /> }
           </View>
           { fee > 0 &&
             <Motion animation="bounceIn" style={styles.centered}>
