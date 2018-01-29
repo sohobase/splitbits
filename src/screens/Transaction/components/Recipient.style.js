@@ -2,13 +2,12 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../config';
 
-const { COLOR, FONT } = THEME;
+const { COLOR, FONT, OFFSET, ROW_MIN_HEIGHT } = THEME;
 
 export default StyleSheet.create({
   item: {
     borderBottomWidth: 0,
-    width: '100%',
-    minWidth: '90%',
+    minWidth: '100%',
     minHeight: 'auto',
     paddingTop: 0,
     paddingBottom: 0,
@@ -16,23 +15,20 @@ export default StyleSheet.create({
     paddingRight: 0,
   },
 
-  friend: {
-    flex: 1,
-  },
-
   value: {
-    flex: 1,
-    fontSize: FONT.SIZE.LARGE,
-    lineHeight: FONT.SIZE.LARGE,
-    maxHeight: FONT.SIZE.LARGE,
+    fontSize: FONT.SIZE.DEFAULT,
+    marginRight: ROW_MIN_HEIGHT,
   },
 
   placeholder: {
+    fontSize: FONT.SIZE.LARGE,
     color: COLOR.TEXT_DISABLED,
-    //   opacity: 0.675,
   },
 
   icon: {
+    position: 'absolute',
+    right: OFFSET,
     tintColor: COLOR.TEXT_SECONDARY,
+    zIndex: 1,
   },
 });

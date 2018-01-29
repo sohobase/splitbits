@@ -25,10 +25,7 @@ const Recipient = ({
       <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
         { recipient.device
           ? <DeviceItem data={recipient.device} style={styles.item} />
-          :
-          <Touchable onPress={() => navigate('Friends', { selectMode: true })} style={styles.friend}>
-            <Text style={[styles.value, styles.placeholder]}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
-          </Touchable>
+          : <Text style={styles.placeholder}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
         }
         <Icon style={styles.icon} value="add" />
       </View>
@@ -39,10 +36,7 @@ const Recipient = ({
         <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
           { recipient.wallet
             ? <WalletItem data={recipient.wallet} style={styles.item} />
-            :
-            <Text style={[styles.value, (!recipient.wallet && styles.placeholder)]}>
-              {recipient.wallet ? recipient.wallet.name : `...${i18n.CHOOSE_YOUR_WALLET}...`}
-            </Text>
+            : <Text style={styles.placeholder}>{`...${i18n.CHOOSE_YOUR_WALLET}...`}</Text>
           }
           <Icon style={styles.icon} value="operations" />
         </View>
@@ -51,7 +45,7 @@ const Recipient = ({
     { type === SEND &&
       <Touchable onPress={onCamera}>
         <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
-          <Text style={[styles.value, (!recipient.address && styles.placeholder)]}>
+          <Text style={!recipient.address ? styles.placeholder : styles.value}>
             {recipient.address || `...${i18n.USE_PUBLIC_ADDRESS}`}
           </Text>
           <Icon style={styles.icon} value="camera" />

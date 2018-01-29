@@ -7,7 +7,7 @@ import { SHAPE, STYLE } from '../config';
 import styles from './WalletItem.style';
 
 const WalletItem = ({ data = {}, onPress, style }) => (
-  <Touchable onPress={() => onPress(data)} activeOpacity={0.95}>
+  <Touchable onPress={() => onPress(data)}>
     <View style={[STYLE.LIST_ITEM, style]}>
       <Text style={styles.name}>{data.name}</Text>
       <Amount coin={data.coin} value={data.balance} style={styles.balance} />
