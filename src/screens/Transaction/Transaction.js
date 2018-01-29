@@ -134,7 +134,7 @@ class Transaction extends Component {
                 type={type}
                 wallet={wallet}
               /> }
-            { item.product === PRO_WALLET && item.state === REQUESTED &&
+            { !editable && item.product === PRO_WALLET && item.state === REQUESTED &&
               <Button
                 caption={i18n.CANCEL_PAYMENT}
                 motion={{ animation: 'bounceInUp', delay: 700 }}
