@@ -1,6 +1,6 @@
 import { array, node, number, object, oneOfType, shape, string } from 'prop-types';
-import React from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { BackHandler, StatusBar, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 
 import { SHAPE, STYLE, THEME } from '../config';
@@ -10,40 +10,70 @@ import styles from './Header.style';
 const { BUTTON, NAVIGATION } = SHAPE;
 const { COLOR } = THEME;
 
-const Header = ({
-  animation, buttonRight, children, navigation, style, tintColor, title,
-}) => (
-  <View style={[STYLE.ROW, styles.header, style]}>
-    <StatusBar
-      animated
-      backgroundColor={tintColor !== COLOR.WHITE ? COLOR.WHITE : COLOR.PRIMARY}
-      barStyle={tintColor !== COLOR.WHITE ? 'dark-content' : 'light-content'}
-    />
-    { navigation &&
-      <Button
-        motion={{ animation, delay: 100 }}
-        icon="arrowBack"
-        onPress={() => navigation.goBack()}
-        raised
-        style={styles.button}
-        captionStyle={{ tintColor }}
-      /> }
-    <Motion animation={animation} delay={200} style={styles.content}>
-      <View style={STYLE.CENTERED}>
-        { title && <Text style={[styles.title, (tintColor && { color: tintColor })]}>{title}</Text> }
-        { children }
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this._onBack = this._onBack.bind(this);
+  }
+
+  componentWillMount() {
+    const { _onBack } = this;
+    BackHandler.addEventListener('hardwareBackPress', _onBack);
+  }
+
+  componentWillUnmount() {
+    const { _onBack } = this;
+    BackHandler.removeEventListener('hardwareBackPress', _onBack);
+  }
+
+  _onBack() {
+    const { navigation } = this.props;
+    if (navigation) navigation.goBack();
+    return navigation !== undefined;
+  }
+
+  render() {
+    const {
+      _onBack,
+      props: {
+        animation, buttonRight, children, navigation, style, tintColor, title,
+      },
+    } = this;
+
+    return (
+      <View style={[STYLE.ROW, styles.header, style]}>
+        <StatusBar
+          animated
+          backgroundColor={tintColor !== COLOR.WHITE ? COLOR.WHITE : COLOR.PRIMARY}
+          barStyle={tintColor !== COLOR.WHITE ? 'dark-content' : 'light-content'}
+        />
+        { navigation &&
+          <Button
+            motion={{ animation, delay: 100 }}
+            icon="arrowBack"
+            onPress={_onBack}
+            raised
+            style={styles.button}
+            captionStyle={{ tintColor }}
+          /> }
+        <Motion animation={animation} delay={200} style={styles.content}>
+          <View style={STYLE.CENTERED}>
+            { title && <Text style={[styles.title, (tintColor && { color: tintColor })]}>{title}</Text> }
+            { children }
+          </View>
+        </Motion>
+        { navigation &&
+          <Button
+            motion={{ animation, delay: 300 }}
+            {...buttonRight}
+            raised
+            style={styles.button}
+            captionStyle={{ tintColor }}
+          /> }
       </View>
-    </Motion>
-    { navigation &&
-      <Button
-        motion={{ animation, delay: 300 }}
-        {...buttonRight}
-        raised
-        style={styles.button}
-        captionStyle={{ tintColor }}
-      /> }
-  </View>
-);
+    );
+  }
+}
 
 Header.propTypes = {
   animation: string,
