@@ -70,8 +70,8 @@ class Transaction extends Component {
   }
 
   async _updateFees(amount) {
-    const { wallet: { balance, id } } = this.props;
-    if (balance > 0) this.setState({ fees: await TransactionService.fees(id, amount) });
+    const { wallet: { balance, id }, item: { product } = {} } = this.props;
+    if (balance > 0) this.setState({ fees: await TransactionService.fees(id, amount, product) });
   }
 
   async _onSubmit() {
