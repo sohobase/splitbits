@@ -1,7 +1,7 @@
 import { func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
-import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Amount, Button, QRreader } from '../../components';
@@ -120,43 +120,45 @@ class Transaction extends Component {
     return (
       <View style={STYLE.SCREEN}>
         <AmountTransaction {...amountProps} onAmount={_onAmount} />
-        <View style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
-          { editable ? <Recipient {...recipientProps} /> : <Info item={item} /> }
-          <View style={styles.buttons}>
-            { (editable || item.state === REQUESTED) &&
-              <ButtonSubmit
-                amount={editable ? amount / SATOSHI : item.amount}
-                concept={concept}
-                item={item}
-                onCancel={_onCancel}
-                onPress={_onSubmit}
-                processing={processing}
-                type={type}
-                wallet={wallet}
-              /> }
-            { !editable && item.product === PRO_WALLET && item.state === REQUESTED &&
-              <Button
-                caption={i18n.CANCEL_PAYMENT}
-                motion={{ animation: 'bounceInUp', delay: 700 }}
-                onPress={_onCancel}
-                processing={processing}
-                style={styles.buttonCancel}
-              /> }
+        <ScrollView style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
+          <View>
+            { editable ? <Recipient {...recipientProps} /> : <Info item={item} /> }
+            <View style={styles.buttons}>
+              { (editable || item.state === REQUESTED) &&
+                <ButtonSubmit
+                  amount={editable ? amount / SATOSHI : item.amount}
+                  concept={concept}
+                  item={item}
+                  onCancel={_onCancel}
+                  onPress={_onSubmit}
+                  processing={processing}
+                  type={type}
+                  wallet={wallet}
+                /> }
+              { !editable && item.product === PRO_WALLET && item.state === REQUESTED &&
+                <Button
+                  caption={i18n.CANCEL_PAYMENT}
+                  motion={{ animation: 'bounceInUp', delay: 700 }}
+                  onPress={_onCancel}
+                  processing={processing}
+                  style={styles.buttonCancel}
+                /> }
+            </View>
+            { fee > 0 &&
+              <Motion animation="bounceIn" style={styles.centered}>
+                <Amount
+                  caption={`${i18n.FEE} `}
+                  coin={currency}
+                  value={(fee * SATOSHI) / currencies[currency][coin]}
+                  style={styles.caption}
+                />
+              </Motion> }
+            { editable && connection === WIFI &&
+              <Motion animation="bounceIn" delay={700} style={styles.centered}>
+                <Text style={[styles.caption, styles.error]}>{i18n.UNSECURED_CONNECTION}</Text>
+              </Motion> }
           </View>
-          { fee > 0 &&
-            <Motion animation="bounceIn" style={styles.centered}>
-              <Amount
-                caption={`${i18n.FEE} `}
-                coin={currency}
-                value={(fee * SATOSHI) / currencies[currency][coin]}
-                style={styles.caption}
-              />
-            </Motion> }
-          { editable && connection === WIFI &&
-            <Motion animation="bounceIn" delay={700} style={styles.centered}>
-              <Text style={[styles.caption, styles.error]}>{i18n.UNSECURED_CONNECTION}</Text>
-            </Motion> }
-        </View>
+        </ScrollView>
         <QRreader active={camera} onClose={_onCamera} onRead={_onAddress} />
       </View>
     );
