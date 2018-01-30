@@ -4,7 +4,7 @@
     "description": "Next-gen private & friendly mobile wallet for your cryptos.",
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
-    "sdkVersion": "24.0.0",
+    "sdkVersion": "25.0.0",
     "version": "0.8.0",
     "orientation": "portrait",
     "primaryColor": "#2f2bad",
