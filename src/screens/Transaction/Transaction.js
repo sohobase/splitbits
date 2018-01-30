@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Amount, Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
-import { ConnectionService, TransactionService } from '../../services';
+import { ConnectionService, FingerprintService, TransactionService } from '../../services';
 import { updateRecipientAction, updateTransactionsAction } from '../../store/actions';
 import { AmountTransaction, ButtonSubmit, Recipient, Info } from './components';
 import { submit } from './modules';
@@ -28,6 +28,8 @@ class Transaction extends Component {
       concept: undefined,
       connection: undefined,
       fees: {},
+      hasFingerprint: false,
+      unlock: true,
       processing: false,
     };
     this._onAddress = this._onAddress.bind(this);
@@ -40,10 +42,25 @@ class Transaction extends Component {
   }
 
   async componentWillMount() {
-    const { _updateFees, props: { updateRecipient, item: { amount, state, to } = {}, wallet } } = this;
+    const {
+      _updateFees,
+      props: {
+        i18n, item: { amount, state, to } = {}, type, updateRecipient, wallet,
+      },
+    } = this;
     updateRecipient();
     if (state === REQUESTED && wallet.address !== to.address) _updateFees(amount);
+
     this.setState({ connection: await ConnectionService.get() });
+
+    if (state || type === SEND) {
+      const hasFingerprint = await FingerprintService.isEnrolled();
+      this.setState({ hasFingerprint, unlock: !hasFingerprint });
+      if (hasFingerprint && await FingerprintService.authenticate(i18n.USE_FINGERPRINT)) {
+        FingerprintService.cancel();
+        this.setState({ unlock: true });
+      }
+    }
   }
 
   _onAddress(address) {
@@ -101,21 +118,25 @@ class Transaction extends Component {
     const {
       _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onSubmit,
       props: {
-        currencies, device: { currency }, i18n, item, navigation, type, wallet,
+        currencies, device: { currency }, i18n, item, navigation, recipient, type, wallet,
       },
       state: {
-        amount = 0, camera, concept, connection, fees = {}, processing,
+        amount = 0, camera, concept, connection, fees = {}, hasFingerprint, unlock, processing,
       },
     } = this;
     const { coin } = wallet;
     const editable = !item;
-    const fee = fees.total;
     const amountProps = {
       coin, editable, item, navigation, wallet,
     };
     const recipientProps = {
       concept, navigation, onCamera: _onCamera, onConcept: _onConcept, type, wallet,
     };
+
+    const disabled =
+      !unlock ||
+      (editable && (!concept || !recipient || !amount)) ||
+      (((type === REQUEST && item) || type === SEND) && wallet.balance < amount);
 
     return (
       <View style={STYLE.SCREEN}>
@@ -124,32 +145,31 @@ class Transaction extends Component {
           <View>
             { editable ? <Recipient {...recipientProps} /> : <Info item={item} /> }
             <View style={styles.buttons}>
-              { (editable || item.state === REQUESTED) &&
+              { (editable || (item.state === REQUESTED && wallet.address !== item.to.address)) &&
                 <ButtonSubmit
                   amount={editable ? amount / SATOSHI : item.amount}
-                  concept={concept}
+                  coin={coin}
+                  disabled={disabled}
+                  fingerprint={hasFingerprint}
                   item={item}
-                  onCancel={_onCancel}
                   onPress={_onSubmit}
                   processing={processing}
                   type={type}
-                  wallet={wallet}
                 /> }
-              { !editable && item.product === PRO_WALLET && item.state === REQUESTED &&
+              { !editable && !processing && item.state === REQUESTED &&
                 <Button
-                  caption={i18n.CANCEL_PAYMENT}
+                  caption={item.product === PRO_WALLET ? i18n.CANCEL_PAYMENT : i18n.CANCEL_REQUEST}
                   motion={{ animation: 'bounceInUp', delay: 700 }}
                   onPress={_onCancel}
-                  processing={processing}
                   style={styles.buttonCancel}
                 /> }
             </View>
-            { fee > 0 &&
+            { fees.total > 0 &&
               <Motion animation="bounceIn" style={styles.centered}>
                 <Amount
                   caption={`${i18n.FEE} `}
                   coin={currency}
-                  value={(fee * SATOSHI) / currencies[currency][coin]}
+                  value={(fees.total * SATOSHI) / currencies[currency][coin]}
                   style={styles.caption}
                 />
               </Motion> }

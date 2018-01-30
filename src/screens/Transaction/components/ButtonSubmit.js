@@ -1,5 +1,6 @@
-import { number, func, shape, string } from 'prop-types';
+import { bool, number, func, shape, string } from 'prop-types';
 import React from 'react';
+import { Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Amount, Button } from '../../../components';
@@ -9,59 +10,52 @@ import styles from './ButtonSubmit.style';
 const { TYPE: { REQUEST, SEND } } = C;
 
 const ButtonSubmit = ({
-  amount = 0, concept, i18n, item, onCancel, onPress, recipient, type, wallet, ...inherit
+  amount = 0, coin, disabled, fingerprint, i18n, item, onPress, type, wallet, ...inherit
 }) => {
   const editable = !item;
-  const { balance, coin } = wallet;
-  const cancel = !editable && wallet.address === item.to.address;
-  const disabled = (editable && (!concept || !recipient || !amount)) ||
-    (((type === REQUEST && item) || type === SEND) && balance < amount);
 
   return (
     <Button
       {...inherit}
       accent
-      caption={cancel ? i18n.CANCEL_REQUEST : undefined}
-      disabled={!cancel && disabled}
+      disabled={disabled}
       motion={{ animation: 'bounceInUp', delay: 600 }}
-      onPress={cancel ? onCancel : onPress}
+      onPress={onPress}
     >
-      { !cancel &&
-        <Amount
-          caption={`${(editable && type === REQUEST) ? i18n.REQUEST : i18n.SEND} `}
-          coin={coin}
-          style={styles.buttonCaption}
-          value={amount}
-        /> }
+      <Amount
+        caption={`${(editable && type === REQUEST) ? i18n.REQUEST : i18n.SEND} `}
+        coin={coin}
+        style={styles.buttonCaption}
+        value={amount}
+      />
+      { fingerprint && disabled && <Text style={styles.hint}>{i18n.FINGERPRINT_TO_UNLOCK}</Text> }
     </Button>
   );
 };
 
 ButtonSubmit.propTypes = {
   amount: number,
-  concept: string,
+  coin: string,
+  disabled: bool,
+  fingerprint: bool,
   i18n: shape(SHAPE.I18N).isRequired,
   item: shape(SHAPE.TRANSACTION),
-  onCancel: func,
   onPress: func,
-  recipient: shape(SHAPE.RECIPIENT),
   type: string,
-  wallet: shape(SHAPE.WALLET),
 };
 
 ButtonSubmit.defaultProps = {
   amount: 0,
-  concept: undefined,
+  coin: undefined,
+  disabled: true,
+  fingerprint: false,
   item: undefined,
-  onCancel() {},
   onPress() {},
-  recipient: undefined,
   type: SEND,
-  wallet: undefined,
 };
 
-const mapStateToProps = ({ i18n, recipient }) => ({
-  i18n, recipient,
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
 });
 
 export default connect(mapStateToProps)(ButtonSubmit);

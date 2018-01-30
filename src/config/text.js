@@ -31,6 +31,7 @@ export default {
     ERROR_CONNECTION: 'Oops, seems you are not connected to splitbits server.',
 
     FEE: 'Fee',
+    FINGERPRINT_TO_UNLOCK: 'Use your fingerprint to unlock',
     FRIENDS: 'Friends',
     FRIEND_REQUEST_SWIPE: 'Request friendship, swipe left...',
     FRIEND_REQUEST_SENT: 'Friend request already sent',
@@ -55,7 +56,7 @@ export default {
     PAPER_WALLET: 'Your paper key is the only way to restore your wallet if your phone is lost, stolen, broken, or upgraded. This is your list of words to write down on a piece of paper and keep safe.',
     PAY: 'Pay',
     PAYMENT: 'Payment',
-    PAYMENT_REQUEST: 'Payment requests',
+    PAYMENT_REQUEST: 'Payment request',
     PORTFOLIO: 'Stay on top of your portfolio. Anytime. Anywhere.',
     PROCESSING: 'Processing...',
     PROFILE_QR: 'This QR will help your friends to find you easily.',
@@ -160,6 +161,7 @@ export default {
     ERROR_CONNECTION: 'Oops, parece que no estas conectado al servidor Splitbits.',
 
     FEE: 'Comision',
+    FINGERPRINT_TO_UNLOCK: 'Usa tu huella para desbloquear',
     FRIENDS: 'Amigos',
     FRIEND_REQUEST_SWIPE: 'Solicitud de amistad, desliza a la izquierda...',
     FRIEND_REQUEST_SENT: 'Solicitud de amistad ya enviada',
