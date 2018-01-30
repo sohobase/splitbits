@@ -73,7 +73,7 @@ class AmountTransaction extends Component {
         />
         <Motion animation="bounceIn" delay={400} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
-            <Text style={[styles.label]}>{fromCoin}</Text>
+            { editable && <Text style={styles.label}>{fromCoin}</Text> }
             { editable
               ? <Input
                 autoFocus={editable}
@@ -86,7 +86,7 @@ class AmountTransaction extends Component {
               />
               : <Amount coin={coin} style={styles.input} value={amount} />
             }
-            <Amount coin={toCoin} value={conversion} style={[styles.label]} />
+            <Amount coin={toCoin} value={conversion} style={styles.label} />
             <View style={styles.balance}>
               {
                 state === undefined || state === REQUESTED
