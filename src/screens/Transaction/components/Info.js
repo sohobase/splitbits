@@ -25,7 +25,7 @@ const AddressField = ({ value, image, title }) => ( //eslint-disable-line
     <Avatar value={image} style={styles.avatar} />
     <View>
       <Text style={[styles.value, styles.title]}>{title}</Text>
-      <Text style={STYLE.LABEL}>{value}</Text>
+      { value && <Text style={STYLE.LABEL}>{value}</Text> }
     </View>
   </View>
 );
