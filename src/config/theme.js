@@ -1,6 +1,9 @@
 import Color from 'color';
 import { Dimensions, Platform } from 'react-native';
 
+import C from './constants';
+
+const { DEV } = C;
 const UNIT = 10;
 const OFFSET = UNIT * 1.6;
 const PRIMARY = '#2F2BAD';
@@ -33,7 +36,7 @@ export default {
   BUTTON_CIRCLE_SIZE: UNIT * 6.4,
 
   COLOR: {
-    PRIMARY,
+    PRIMARY: DEV ? BLACK : PRIMARY,
     ACCENT,
     BLUE: '#303498',
     PINK: '#ff4566',
@@ -81,7 +84,7 @@ export default {
     },
   },
 
-  FOOTER_OFFSET: isIphoneX() ? IPHONEX_OFFSET : 0,
+  FOOTER_OFFSET: isIphoneX() ? IPHONEX_OFFSET : OFFSET,
   FOOTER_SIZE,
 
   HEADER_SIZE: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
