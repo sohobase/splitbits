@@ -92,6 +92,12 @@ export default StyleSheet.create({
     marginHorizontal: UNIT / 4,
   },
 
+  optionLabel: {
+    fontSize: FONT.SIZE.TINY,
+    fontWeight: FONT.WEIGHT.BOLD,
+    color: COLOR.TEXT_HIGHLIGHT,
+  },
+
   button: {
     backgroundColor: COLOR.WHITE,
     transform: [{ scale: 0.75 }],

@@ -2,9 +2,20 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../config';
 
-const { COLOR, FONT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
+  container: {
+    minWidth: '100%',
+    paddingHorizontal: OFFSET,
+  },
+
+  amounts: {
+    flex: 1,
+  },
+
   amount: {
     color: COLOR.TEXT_HIGHLIGHT,
     fontSize: FONT.SIZE.LARGE,
@@ -12,9 +23,14 @@ export default StyleSheet.create({
     backgroundColor: COLOR.TRANSPARENT,
   },
 
-  trend: {
+  tag: {
+    marginLeft: UNIT / 2,
+  },
+
+  title: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
-    fontSize: FONT.SIZE.SMALL,
+    fontSize: FONT.SIZE.TINY,
+    fontWeight: FONT.WEIGHT.BOLD,
     backgroundColor: COLOR.TRANSPARENT,
   },
 });

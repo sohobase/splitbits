@@ -108,7 +108,13 @@ class Settings extends Component {
 
     return (
       <View style={styles.screen}>
-        <Header title={i18n.SETTINGS} navigation={navigation} style={styles.header} tintColor={COLOR.TEXT_DEFAULT} />
+        <Header
+          buttonRight={{ icon: 'addDevice', onPress: () => navigation.navigate('Profile') }}
+          title={i18n.SETTINGS}
+          navigation={navigation}
+          style={styles.header}
+          tintColor={COLOR.TEXT_DEFAULT}
+        />
         <Motion animation="bounceInUp" delay={400} style={styles.form}>
           <View>
             <View style={[STYLE.LIST_ITEM, STYLE.CENTERED, styles.thumb]}>

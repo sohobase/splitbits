@@ -39,7 +39,7 @@ class Profile extends Component {
     return (
       <View style={styles.screen}>
         <Header
-          buttonRight={{ icon: 'addDevice', onPress: () => navigation.navigate('Friends') }}
+          buttonRight={{ icon: 'search', onPress: () => navigation.navigate('Friends') }}
           navigation={navigation}
           tintColor={COLOR.TEXT_DEFAULT}
           title={i18n.FRIENDS}

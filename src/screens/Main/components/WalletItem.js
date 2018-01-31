@@ -96,7 +96,7 @@ const WalletItem = ({
                     style={styles.button}
                     captionStyle={styles.buttonCaption}
                   />
-                  <Text style={styles.tagLabel}>{i18n[key]}</Text>
+                  <Text style={styles.optionLabel}>{i18n[key]}</Text>
                 </View>)) }
             </View>
           </View>

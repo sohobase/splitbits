@@ -85,6 +85,7 @@ export default {
 
     TAKE_PHOTO: 'Take photo',
     TO: 'To',
+    TOTAL_BALANCE: 'Total Balance',
     TRANSACTION: 'Transaction',
     TRANSFER: 'Transfer',
     TREND: 'Trend',
@@ -215,6 +216,7 @@ export default {
 
     TAKE_PHOTO: 'Toma una foto',
     TO: 'Para',
+    TOTAL_BALANCE: 'Balance Total',
     TRANSACTION: 'Transaccion',
     TRANSFER: 'Transferencia',
     TREND: 'Tendencia',

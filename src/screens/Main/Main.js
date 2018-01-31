@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { C, SHAPE, STYLE, THEME } from '../../config';
 import { ModalMnemonic, ModalTransaction, ModalWallet, ModalWalletNew } from '../../containers';
-import { Header, Footer, TransactionButton, Transactions, Wallets } from './components';
+import { Header, TransactionButton, Transactions, Wallets } from './components';
 import { onAppActive, onNotification } from './modules';
 import { ConnectionService, CurrenciesService, DeviceService } from '../../services';
 import { updateCurrenciesAction, updateDeviceAction } from '../../store/actions';
@@ -100,7 +100,7 @@ class Main extends Component {
   render() {
     const {
       _onNewTransaction, _onMnemonic, _onModal, _onModalWallet, _onRecover, _onSwipe, _onWallet,
-      props: { i18n, navigation: { navigate }, wallets },
+      props: { i18n, navigation, wallets },
       state: {
         connection, context, hexSeed, showMnemonic, showTransaction, showWalletNew, showWallet, walletIndex,
       },
@@ -113,12 +113,11 @@ class Main extends Component {
     return (
       <View style={STYLE.SCREEN}>
         <LinearGradient colors={COLOR.GRADIENT} style={STYLE.LAYOUT_TOP} >
-          <Header />
+          <Header navigation={navigation} />
           <Wallets index={walletIndex} onNew={_onModalWallet} onOptions={_onWallet} onSwipe={_onSwipe} />
           { connection === WIFI && <Text style={styles.warning}>{i18n.UNSECURED_CONNECTION}</Text> }
         </LinearGradient>
-        <Transactions navigate={navigate} wallet={wallet} />
-        <Footer navigate={navigate} elevation={focus} />
+        <Transactions navigate={navigation.navigate} wallet={wallet} />
         <TransactionButton onPress={_onModal} visible={focus && wallet !== undefined && !isOffline} />
         <ModalTransaction visible={showTransaction} onClose={_onModal} onPress={_onNewTransaction} wallet={wallet} />
         <ModalWalletNew
