@@ -2,13 +2,17 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../config';
 
-const { FOOTER_OFFSET, FOOTER_SIZE } = THEME;
+const { BUTTON_CIRCLE_SIZE, FOOTER_OFFSET } = THEME;
 
 export default StyleSheet.create({
-  button: {
+  container: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: (FOOTER_SIZE * 0.3) + FOOTER_OFFSET,
+    borderRadius: BUTTON_CIRCLE_SIZE / 2,
+    bottom: FOOTER_OFFSET,
+  },
+
+  button: {
     elevation: 10,
   },
 });
