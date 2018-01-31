@@ -76,8 +76,9 @@ Build Status Dependencies Status Known Vulnerabilities
 | Blockchain activity & push notifications   | Complete | In BETA for all kinds of wallets | 2017-12-06 |
 | Language localization process              | Complete | Available languages EN & ES      | 2017-12-18 |
 | Transfer coins between wallets             | Complete |                                  | 2018-01-07 |
+| Send amount using fingerprint validation   | Complete |                                  | 2018-01-31 |
+| Wallet PRO                                 | 80%      |                                  |            |
 | Segwit wallets as watch-only mode          | 50%      |                                  | 2018-01-17 |
-| Wallet PRO                                 | 50%      |                                  |            |
 | Convert coins between wallets              | 20%      |                                  |            |
 | ETH Wallet support                         | 10%      |                                  |            |
 | External storage for Private Keys          | 5%       |                                  |            |
