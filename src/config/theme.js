@@ -49,7 +49,7 @@ export default {
     ETH: 'transparent',
     LTC: '#B6B6BA',
 
-    BACKGROUND: Color(WHITE).darken(0.03),
+    BACKGROUND: WHITE,
     BACKGROUND_HIGHLIGHT: Color(WHITE).alpha(0.15),
     BACKGROUND_DARK: Color(BLACK).alpha(0.75),
     BACKGROUND_DISABLED: Color(BLACK).alpha(DISABLED),
@@ -88,6 +88,7 @@ export default {
   FOOTER_SIZE,
 
   HEADER_SIZE: isIphoneX() ? (HEADER_SIZE + IPHONEX_OFFSET) : HEADER_SIZE,
+  HEADER_OFFSET: isIphoneX() ? IPHONEX_OFFSET : 0,
 
   ICON_SIZE: UNIT * 3.2,
 

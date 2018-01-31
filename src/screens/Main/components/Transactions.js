@@ -4,14 +4,13 @@ import { FlatList, RefreshControl, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 
-import { C, SHAPE, STYLE, THEME } from '../../../config';
+import { SHAPE, STYLE, THEME } from '../../../config';
 import { TransactionService, WalletService } from '../../../services';
 import { updateTransactionsAction, updateWalletAction } from '../../../store/actions';
 import { walletTransactions } from '../modules';
 import TransactionItem from './TransactionItem';
 import styles from './Transactions.style';
 
-const { STATE: { ARCHIVED, REQUESTED } } = C;
 const { TRANSACTION, WALLET } = SHAPE;
 const { ANIMATION: { DURATION } } = THEME;
 let timeout;
@@ -21,7 +20,6 @@ class Transactions extends Component {
     super(props);
     this.state = { refreshing: false };
     this._onRefresh = this._onRefresh.bind(this);
-    this._renderTransaction = this._renderTransaction.bind(this);
   }
 
   componentWillMount() {
@@ -44,15 +42,10 @@ class Transactions extends Component {
     this.setState({ refreshing: false });
   }
 
-  _renderTransaction({ item }) {
-    const { navigate, wallet } = this.props;
-    return <TransactionItem data={item} onPress={() => navigate('Transaction', { item, wallet })} wallet={wallet} />;
-  }
-
   render() {
     const {
-      _onRefresh, _renderTransaction,
-      props: { transactions = [] },
+      _onRefresh,
+      props: { navigate, transactions = [], wallet },
       state: { refreshing },
     } = this;
 
@@ -63,7 +56,8 @@ class Transactions extends Component {
             data={transactions}
             keyExtractor={item => item.id}
             refreshControl={<RefreshControl onRefresh={_onRefresh} refreshing={refreshing} />}
-            renderItem={_renderTransaction}
+            renderItem={({ item }) =>
+              <TransactionItem data={item} onPress={() => navigate('Transaction', { item, wallet })} wallet={wallet} />}
             style={styles.list}
           />
         </Motion>

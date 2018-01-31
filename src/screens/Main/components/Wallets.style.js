@@ -2,16 +2,17 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../config';
 
-const { OFFSET, WALLET_HEIGHT } = THEME;
+const {
+  WALLET_HEIGHT, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   wallets: {
-    height: '100%',
-    marginBottom: OFFSET,
-    minHeight: WALLET_HEIGHT + (OFFSET * 2),
+    height: WALLET_HEIGHT,
+    paddingTop: UNIT / 2,
   },
 
   item: {
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
 });

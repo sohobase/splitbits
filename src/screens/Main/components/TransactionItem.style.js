@@ -8,7 +8,7 @@ const {
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.BACKGROUND,
+    backgroundColor: COLOR.WHITE,
   },
 
   icon: {

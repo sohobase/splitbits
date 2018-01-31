@@ -50,7 +50,7 @@ export default StyleSheet.create({
 
   LAYOUT_TOP: {
     flex: 0,
-    height: LAYOUT.WALLET_HEIGHT + HEADER_SIZE + (OFFSET * 2.5),
+    height: LAYOUT.WALLET_HEIGHT + HEADER_SIZE + (OFFSET * 2),
     backgroundColor: COLOR.PRIMARY,
   },
 
@@ -60,7 +60,6 @@ export default StyleSheet.create({
   },
 
   LIST_ITEM: {
-    // flex: 1,
     width: '100%',
     borderBottomColor: COLOR.DIVIDER,
     borderBottomWidth: 1,

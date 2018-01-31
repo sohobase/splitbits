@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 import { THEME } from '../config';
 
 const {
-  COLOR, FONT, HEADER_SIZE, UNIT,
+  COLOR, FONT, HEADER_OFFSET, HEADER_SIZE, UNIT,
 } = THEME;
 const iOS = Platform.OS === 'ios';
 
@@ -11,7 +11,8 @@ export default StyleSheet.create({
   header: {
     height: HEADER_SIZE,
     padding: 0,
-    alignItems: iOS ? 'flex-end' : 'center',
+    alignItems: 'center',
+    paddingTop: HEADER_OFFSET,
   },
 
   content: {

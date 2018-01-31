@@ -1,6 +1,5 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
 
 import { Button } from '../../../components';
 import { THEME } from '../../../config';
@@ -9,20 +8,18 @@ import styles from './TransactionButton.style';
 const { DURATION } = THEME.ANIMATION;
 
 const TransactionButton = ({ onPress, visible }) => (
-  <View style={styles.container}>
-    <Button
-      accent
-      motion={{
-        animation: (visible ? 'bounceInUp' : 'bounceOutDown'),
-        delay: (visible ? DURATION / 2 : 100),
-        duration: DURATION,
-      }}
-      circle
-      icon="operations"
-      onPress={onPress}
-      style={styles.button}
-    />
-  </View>
+  <Button
+    accent
+    motion={{
+      animation: (visible ? 'bounceInUp' : 'bounceOutDown'),
+      delay: (visible ? DURATION / 2 : 100),
+      duration: DURATION,
+    }}
+    circle
+    icon="operations"
+    onPress={onPress}
+    style={styles.button}
+  />
 );
 
 TransactionButton.propTypes = {
