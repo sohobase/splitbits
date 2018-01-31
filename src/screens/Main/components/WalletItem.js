@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { ASSETS, C, SHAPE, STYLE, THEME } from '../../../config';
 import { Amount, Button, Touchable } from '../../../components';
 import { walletTransactions } from '../modules';
+import Tag from './Tag';
 import styles from './WalletItem.style';
 
 const { SATOSHI, TYPE } = C;
@@ -57,9 +58,8 @@ const WalletItem = ({
                 <View style={STYLE.ROW}>
                   <Amount coin={coin} value={balance} style={[styleText, styles.amount]} />
                   <View style={styles.tags}>
-                    { isPRO && !readOnly && <View style={styles.tag}><Text style={styles.tagLabel}>PRO</Text></View> }
-                    { readOnly &&
-                      <View style={styles.tag}><Text style={styles.tagLabel}>{i18n.READ_ONLY}</Text></View> }
+                    { isPRO && !readOnly && <Tag title="PRO" /> }
+                    { readOnly && <Tag title={i18n.READ_ONLY} /> }
                   </View>
                 </View>
                 <Amount

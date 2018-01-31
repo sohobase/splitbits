@@ -79,18 +79,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
 
-  tag: {
-    padding: UNIT / 2,
-    borderRadius: BORDER_RADIUS,
-    backgroundColor: COLOR.PLACEHOLDER_HIGHLIGHT,
-  },
-
-  tagLabel: {
-    color: COLOR.WHITE,
-    fontWeight: FONT.WEIGHT.BOLD,
-    fontSize: FONT.SIZE.TINY,
-  },
-
   text: {
     color: COLOR.DEFAULT,
   },
