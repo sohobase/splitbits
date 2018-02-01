@@ -31,6 +31,12 @@ export default {
     title: string,
     message: string,
   },
+  FEES: {
+    fast: number,
+    regular: number,
+    slow: number,
+    charge: number,
+  },
   I18N: {},
   NAVIGATION: {
     navigate: func,

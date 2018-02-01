@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 import { connect } from 'react-redux';
 
-import { Amount, Button, QRreader } from '../../components';
+import { Button, QRreader } from '../../components';
 import { C, SHAPE, STYLE } from '../../config';
 import { ConnectionService, FingerprintService, TransactionService } from '../../services';
 import { updateRecipientAction, updateTransactionsAction } from '../../store/actions';
@@ -13,9 +13,8 @@ import { submit } from './modules';
 import styles from './Transaction.style';
 
 const {
-  CONNECTION: { WIFI }, PRODUCT: { PRO_WALLET }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
+  CONNECTION: { WIFI }, FEES, PRODUCT: { PRO_WALLET }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
 } = C;
-let timeout;
 
 class Transaction extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class Transaction extends Component {
       camera: false,
       concept: undefined,
       connection: undefined,
-      fees: {},
+      fee: FEES.REGULAR,
       hasFingerprint: false,
       unlock: true,
       processing: false,
@@ -37,19 +36,17 @@ class Transaction extends Component {
     this._onCamera = this._onCamera.bind(this);
     this._onCancel = this._onCancel.bind(this);
     this._onConcept = this._onConcept.bind(this);
+    this._onFee = this._onFee.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
-    this._updateFees = this._updateFees.bind(this);
   }
 
   async componentWillMount() {
     const {
-      _updateFees,
       props: {
-        i18n, item: { amount, state, to } = {}, type, updateRecipient, wallet,
+        i18n, item: { state } = {}, type, updateRecipient,
       },
     } = this;
     updateRecipient();
-    if (state === REQUESTED && wallet.address !== to.address) _updateFees(amount);
 
     this.setState({ connection: await ConnectionService.get() });
 
@@ -69,37 +66,11 @@ class Transaction extends Component {
   }
 
   _onAmount(amount) {
-    const { _updateFees, props: { type } } = this;
-    this.setState({ amount, fees: {} });
-    clearTimeout(timeout);
-
-    if (type === SEND && amount > 0) {
-      timeout = setTimeout(() => _updateFees(Math.round(amount / SATOSHI)), 300);
-    }
+    this.setState({ amount });
   }
 
   _onCamera() {
     this.setState({ camera: !this.state.camera });
-  }
-
-  _onConcept(concept) {
-    this.setState({ concept });
-  }
-
-  async _updateFees(amount) {
-    const { wallet: { balance, id }, item: { product } = {} } = this.props;
-    if (balance > 0) this.setState({ fees: await TransactionService.fees(id, amount, product) });
-  }
-
-  async _onSubmit() {
-    this.setState({ processing: true });
-    const transaction = await submit(this);
-    if (transaction && transaction.id) {
-      const { navigation, updateTransactions } = this.props;
-      updateTransactions(transaction);
-      this.setState({ processing: false });
-      navigation.goBack();
-    }
   }
 
   async _onCancel() {
@@ -114,20 +85,39 @@ class Transaction extends Component {
     }
   }
 
+  _onConcept(concept) {
+    this.setState({ concept });
+  }
+
+  _onFee(fee) {
+    this.setState({ fee });
+  }
+
+  async _onSubmit() {
+    this.setState({ processing: true });
+    const transaction = await submit(this);
+    if (transaction && transaction.id) {
+      const { navigation, updateTransactions } = this.props;
+      updateTransactions(transaction);
+      this.setState({ processing: false });
+      navigation.goBack();
+    }
+  }
+
   render() {
     const {
-      _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onSubmit,
+      _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onFee, _onSubmit,
       props: {
-        currencies, device: { currency }, i18n, item, navigation, recipient, type, wallet,
+        i18n, item, navigation, recipient, type, wallet,
       },
       state: {
-        amount = 0, camera, concept, connection, fees = {}, hasFingerprint, unlock, processing,
+        amount = 0, camera, concept, connection, fee, hasFingerprint, unlock, processing,
       },
     } = this;
     const { coin } = wallet;
     const editable = !item;
     const amountProps = {
-      coin, editable, item, navigation, wallet,
+      coin, editable, fee, item, navigation, type, wallet,
     };
     const recipientProps = {
       concept, navigation, onCamera: _onCamera, onConcept: _onConcept, type, wallet,
@@ -140,7 +130,7 @@ class Transaction extends Component {
 
     return (
       <View style={STYLE.SCREEN}>
-        <AmountTransaction {...amountProps} onAmount={_onAmount} />
+        <AmountTransaction {...amountProps} onAmount={_onAmount} onFee={_onFee} />
         <ScrollView style={[STYLE.LAYOUT_BOTTOM, styles.content]}>
           <View>
             { editable ? <Recipient {...recipientProps} /> : <Info item={item} /> }
@@ -164,15 +154,6 @@ class Transaction extends Component {
                   style={styles.buttonCancel}
                 /> }
             </View>
-            { fees.total > 0 &&
-              <Motion animation="bounceIn" style={styles.centered}>
-                <Amount
-                  caption={`${i18n.FEE} `}
-                  coin={currency}
-                  value={(fees.total * SATOSHI) / currencies[currency][coin]}
-                  style={styles.caption}
-                />
-              </Motion> }
             { editable && connection === WIFI &&
               <Motion animation="bounceIn" delay={700} style={styles.centered}>
                 <Text style={[styles.caption, styles.error]}>{i18n.UNSECURED_CONNECTION}</Text>
@@ -186,8 +167,6 @@ class Transaction extends Component {
 }
 
 Transaction.propTypes = {
-  currencies: shape(SHAPE.CURRENCIES).isRequired,
-  device: shape(SHAPE.DEVICE).isRequired,
   i18n: shape({}).isRequired,
   item: shape(SHAPE.TRANSACTION),
   navigation: shape(SHAPE.NAVIGATION).isRequired,
@@ -203,16 +182,11 @@ Transaction.defaultProps = {
   recipient: undefined,
 };
 
-const mapStateToProps = (
-  {
-    currencies, device, i18n, recipient,
-  },
-  props,
-) => {
+const mapStateToProps = ({ i18n, recipient }, props) => {
   const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
 
   return {
-    currencies, device, i18n, item, recipient, type, wallet,
+    i18n, item, recipient, type, wallet,
   };
 };
 

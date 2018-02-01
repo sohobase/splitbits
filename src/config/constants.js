@@ -25,6 +25,12 @@ export default {
 
   DEV,
 
+  FEES: {
+    FAST: 'fast',
+    REGULAR: 'regular',
+    SLOW: 'slow',
+  },
+
   FIAT: {
     EUR: 'EUR',
     USD: 'USD',

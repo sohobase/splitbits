@@ -4,7 +4,7 @@ import { C } from '../config';
 import { SecureStore } from '../store';
 import { service } from './modules';
 
-const { NETWORKS } = C;
+const { NETWORKS, FEES } = C;
 
 export default {
 
@@ -22,7 +22,7 @@ export default {
 
   async send(props, { coin, address, imported }) {
     const network = BitcoinJS.networks[NETWORKS[coin]];
-    const { tx: hexTx, fee } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
+    const { tx: hexTx, fees } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
     const tx = BitcoinJS.TransactionBuilder.fromTransaction(BitcoinJS.Transaction.fromHex(hexTx), network);
     const secret = await SecureStore.get(`${coin}_${address}`);
     const ECPair = imported
@@ -33,8 +33,15 @@ export default {
     tx.inputs.forEach((_, i) => {
       tx.sign(i, ECPair); // @TODO try/catch
     });
-    const body = JSON.stringify({ ...props, fee, tx: tx.build().toHex() });
-    return service('transaction/send', { method: 'POST', body });
+    return service('transaction/send', {
+      method: 'POST',
+      body: JSON.stringify({
+        ...props,
+        charge: fees.charge,
+        fee: fees[props.fee || FEES.REGULAR],
+        tx: tx.build().toHex(),
+      }),
+    });
   },
 
   archive(id, walletId) {

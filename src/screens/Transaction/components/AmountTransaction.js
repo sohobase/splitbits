@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 
 import { Amount, Header, Input } from '../../../components';
 import { C, SHAPE, STYLE, THEME } from '../../../config';
+import Fees from './Fees';
 import styles from './AmountTransaction.style';
 
-const { SATOSHI, STATE: { REQUESTED } } = C;
+const { SATOSHI, STATE: { REQUESTED }, TYPE: { SEND } } = C;
 const { COLOR } = THEME;
 
 class AmountTransaction extends Component {
@@ -26,7 +27,10 @@ class AmountTransaction extends Component {
   }
 
   _onAmount(amount = 0) {
-    const { props: { coin, currencies, onAmount }, state: { swap } } = this;
+    const {
+      props: { currencies, onAmount, wallet: { coin } },
+      state: { swap },
+    } = this;
     onAmount(swap ? amount * currencies[coin] : amount);
     this.setState({ amount });
   }
@@ -39,24 +43,20 @@ class AmountTransaction extends Component {
     const {
       _onAmount, _onSwap,
       props: {
-        coin, currencies, editable, navigation,
+        currencies, editable, fee, i18n, item = {}, navigation, onFee, type, wallet,
         device: { currency },
-        i18n,
-        item: {
-          charge = 0, fee = 0, payment = false, state, from = {}, to = {},
-        } = {},
-        wallet: { balance },
       },
       state: { amount, swap },
     } = this;
-    const fromCoin = swap ? currency : coin;
-    const toCoin = swap ? coin : currency;
-    let conversion;
-    if (editable) {
-      conversion = swap ? ((amount || 0) / SATOSHI) * currencies[coin] : (amount || 0) / currencies[coin];
-    } else {
-      conversion = (amount * SATOSHI) / currencies[coin];
-    }
+    const { balance, coin } = wallet;
+    const {
+      payment = false, state, from = {}, to = {},
+    } = item;
+
+    const conversion = editable // eslint-disable-line
+      ? (swap ? ((amount || 0) / SATOSHI) * currencies[coin] : (amount || 0) / currencies[coin])
+      : (amount * SATOSHI) / currencies[coin];
+
     let title = i18n.TRANSACTION;
     if (state) {
       title = payment ? i18n.PAYMENT : i18n.DEPOSIT;
@@ -73,7 +73,7 @@ class AmountTransaction extends Component {
         />
         <Motion animation="bounceIn" delay={400} style={styles.preview}>
           <View style={[STYLE.CENTERED, styles.preview]}>
-            { editable && <Text style={styles.label}>{fromCoin}</Text> }
+            { editable && <Text style={styles.label}>{swap ? currency : coin}</Text> }
             { editable
               ? <Input
                 autoFocus={editable}
@@ -86,7 +86,18 @@ class AmountTransaction extends Component {
               />
               : <Amount coin={coin} style={styles.input} value={amount} />
             }
-            <Amount coin={toCoin} value={conversion} style={styles.label} />
+            <Amount coin={swap ? coin : currency} value={conversion} style={styles.label} />
+
+            { editable && type === SEND &&
+              <Fees
+                active={fee}
+                amount={parseFloat(amount, 10)}
+                conversion={currencies[coin]}
+                currency={currency}
+                onPress={onFee}
+                wallet={wallet}
+              /> }
+
             <View style={styles.balance}>
               {
                 state === undefined || state === REQUESTED
@@ -102,7 +113,7 @@ class AmountTransaction extends Component {
                     caption={`${i18n.FEE} `}
                     coin={currency}
                     style={[styles.label, styles.small]}
-                    value={((fee + charge) * SATOSHI) / currencies[coin]}
+                    value={((item.fee + item.charge) * SATOSHI) / currencies[coin]}
                   />
               }
             </View>
@@ -114,23 +125,25 @@ class AmountTransaction extends Component {
 }
 
 AmountTransaction.propTypes = {
-  coin: string,
   currencies: shape(SHAPE.CURRENCIES).isRequired,
   device: shape(SHAPE.DEVICE).isRequired,
-  i18n: shape(SHAPE.I18N).isRequired,
   editable: bool,
+  fee: string,
+  i18n: shape(SHAPE.I18N).isRequired,
   item: shape(SHAPE.TRANSACTION),
   navigation: shape(SHAPE.NAVIGATION).isRequired,
   onAmount: func,
-  wallet: shape(SHAPE.WALLET),
+  onFee: func,
+  type: string.isRequired,
+  wallet: shape(SHAPE.WALLET).isRequired,
 };
 
 AmountTransaction.defaultProps = {
-  coin: undefined,
   editable: true,
+  fee: undefined,
   item: undefined,
   onAmount() {},
-  wallet: {},
+  onFee() {},
 };
 
 const mapStateToProps = ({ currencies, device, i18n }) => ({
