@@ -91,7 +91,7 @@ class AmountTransaction extends Component {
             { editable && type === SEND &&
               <Fees
                 active={fee}
-                amount={parseFloat(amount, 10)}
+                amount={parseInt((swap ? amount * currencies[coin] : amount) / SATOSHI, 10)}
                 conversion={currencies[coin]}
                 currency={currency}
                 onPress={onFee}
