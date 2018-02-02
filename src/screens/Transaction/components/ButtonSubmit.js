@@ -10,7 +10,7 @@ import styles from './ButtonSubmit.style';
 const { TYPE: { REQUEST, SEND } } = C;
 
 const ButtonSubmit = ({
-  amount = 0, coin, disabled, fingerprint, i18n, item, onPress, type, wallet, ...inherit
+  amount = 0, coin, disabled, fingerprint, i18n, item, onPress, type, ...inherit
 }) => {
   const editable = !item;
 

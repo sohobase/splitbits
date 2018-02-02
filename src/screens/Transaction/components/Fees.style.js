@@ -3,12 +3,13 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
 const {
-  BORDER_RADIUS, COLOR, FONT, ROW_MIN_HEIGHT,
+  BORDER_RADIUS, COLOR, FONT, ROW_MIN_HEIGHT, UNIT
 } = THEME;
 
 export default StyleSheet.create({
   option: {
     backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
+    marginTop: UNIT / 2,
     marginHorizontal: 1,
     width: ROW_MIN_HEIGHT,
     height: ROW_MIN_HEIGHT / 2,
@@ -28,7 +29,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.TEXT_HIGHLIGHT_DISABLED,
   },
 
-  title: {
+  label: {
     color: COLOR.TEXT_HIGHLIGHT_SECONDARY,
     fontSize: FONT.SIZE.TINY,
   },

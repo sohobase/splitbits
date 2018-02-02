@@ -122,11 +122,11 @@ class Transaction extends Component {
     const recipientProps = {
       concept, navigation, onCamera: _onCamera, onConcept: _onConcept, type, wallet,
     };
-
+    const satoshis = amount / SATOSHI;
     const disabled =
       !unlock ||
       (editable && (!concept || !recipient || !amount)) ||
-      (((type === REQUEST && item) || type === SEND) && wallet.balance < amount);
+      (((type === REQUEST && item) || type === SEND) && wallet.balance < satoshis);
 
     return (
       <View style={STYLE.SCREEN}>
@@ -137,7 +137,7 @@ class Transaction extends Component {
             <View style={styles.buttons}>
               { (editable || (item.state === REQUESTED && wallet.address !== item.to.address)) &&
                 <ButtonSubmit
-                  amount={editable ? amount / SATOSHI : item.amount}
+                  amount={editable ? satoshis : item.amount}
                   coin={coin}
                   disabled={disabled}
                   fingerprint={hasFingerprint}

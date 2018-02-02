@@ -1,6 +1,7 @@
 import { func, number, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Amount, Touchable } from '../../../components';
 import { C, SHAPE, STYLE } from '../../../config';
@@ -40,27 +41,30 @@ class Fees extends Component {
   render() {
     const {
       props: {
-        active, conversion, currency, onPress,
+        active, conversion, currency, onPress, i18n,
       },
-      state: { fees = {} },
+      state: { fees },
     } = this;
 
     return (
-      <View style={STYLE.ROW}>
-        {
-          Object.keys(fees).map(key => (
-            <Touchable key={key} onPress={() => onPress(key)}>
-              <View style={[STYLE.CENTERED, styles.option, styles[key], active === key && styles.active]}>
-                <Text style={styles.title}>{key}</Text>
-                <Amount
-                  coin={currency}
-                  style={styles.fee}
-                  value={((fees[key] || 0) * SATOSHI) / conversion}
-                />
-              </View>
-            </Touchable>
-          ))
-        }
+      <View style={STYLE.CENTERED}>
+        { fees && <Text style={styles.label}>{i18n.TRANSACTION_SPEED}</Text> }
+        <View style={STYLE.ROW}>
+          {
+            Object.keys(fees || {}).map(key => (
+              <Touchable key={key} onPress={() => onPress(key)}>
+                <View style={[STYLE.CENTERED, styles.option, styles[key], active === key && styles.active]}>
+                  <Text style={styles.label}>{key.toUpperCase()}</Text>
+                  <Amount
+                    coin={currency}
+                    style={styles.fee}
+                    value={((fees[key] || 0) * SATOSHI) / conversion}
+                  />
+                </View>
+              </Touchable>
+            ))
+          }
+        </View>
       </View>
     );
   }
@@ -71,6 +75,7 @@ Fees.propTypes = {
   amount: number,
   conversion: number,
   currency: string,
+  i18n: shape(SHAPE.I18N).isRequired,
   onPress: func,
   wallet: shape(SHAPE.WALLET).isRequired,
 };
@@ -83,4 +88,8 @@ Fees.defaultProps = {
   onPress() {},
 };
 
-export default Fees;
+const mapStateToProps = ({ i18n }) => ({
+  i18n,
+});
+
+export default connect(mapStateToProps)(Fees);
