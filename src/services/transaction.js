@@ -4,12 +4,12 @@ import { C } from '../config';
 import { SecureStore } from '../store';
 import { service } from './modules';
 
-const { NETWORKS, FEES } = C;
+const { NETWORKS } = C;
 
 export default {
 
-  fees(walletId, amount, product) {
-    return service(`transaction/fee?walletId=${walletId}&amount=${amount}&product=${product || ''}`);
+  fees(walletId, amount) {
+    return service(`transaction/fee?walletId=${walletId}&amount=${amount}`);
   },
 
   list({ walletId, lastBlock = 0 }) {
@@ -22,7 +22,9 @@ export default {
 
   async send(props, { coin, address, imported }) {
     const network = BitcoinJS.networks[NETWORKS[coin]];
-    const { tx: hexTx, fees } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
+
+    const { tx: hexTx } = await service('transaction/prepare', { method: 'POST', body: JSON.stringify(props) });
+
     const tx = BitcoinJS.TransactionBuilder.fromTransaction(BitcoinJS.Transaction.fromHex(hexTx), network);
     const secret = await SecureStore.get(`${coin}_${address}`);
     const ECPair = imported
@@ -33,14 +35,10 @@ export default {
     tx.inputs.forEach((_, i) => {
       tx.sign(i, ECPair); // @TODO try/catch
     });
+
     return service('transaction/send', {
       method: 'POST',
-      body: JSON.stringify({
-        ...props,
-        charge: fees.charge,
-        fee: fees[props.fee || FEES.REGULAR],
-        tx: tx.build().toHex(),
-      }),
+      body: JSON.stringify({ ...props, tx: tx.build().toHex() }),
     });
   },
 

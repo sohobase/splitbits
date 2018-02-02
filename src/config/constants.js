@@ -58,10 +58,6 @@ export default {
     LTC: 0.99,
   },
 
-  PRODUCT: {
-    PRO_WALLET: 'pro_wallet',
-  },
-
   SYMBOL: {
     EUR: '€',
     USD: '$',
@@ -111,7 +107,6 @@ export default {
     CREATE: 'create',
     DEFAULT: 'default',
     IMPORT: 'import',
-    PRO: 'pro',
     RECOVER: 'recover',
     REQUEST: 'request',
     SEND: 'send',

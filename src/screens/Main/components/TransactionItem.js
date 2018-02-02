@@ -9,7 +9,7 @@ import { DateService } from '../../../services';
 import styles from './TransactionItem.style';
 
 const {
-  MIN_CONFIRMATIONS, PRODUCT: { PRO_WALLET }, STATE: { CONFIRMED, REQUESTED }, SATOSHI,
+  MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI,
 } = C;
 
 const verboseTitle = ({
@@ -31,7 +31,7 @@ const TransactionItem = ({
 }) => {
   const { currency, devices } = device;
   const {
-    amount, confirmations = 0, coin, createdAt, payment, product, state, from = {}, to = {},
+    amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
   } = data;
   const isTransfer = from.device === to.device;
   const other = isTransfer
@@ -47,11 +47,7 @@ const TransactionItem = ({
     <Touchable onPress={() => onPress(payment)}>
       <View style={[STYLE.ROW, STYLE.LIST_ITEM, styles.container]}>
         <View>
-          {
-            product !== PRO_WALLET
-            ? <Avatar value={other.image} />
-            : <Avatar icon="star" style={styles.avatarProWallet} selected />
-          }
+          <Avatar value={other.image} />
           <View style={[styles.icon, styles.iconLayout, (confirmations < MIN_CONFIRMATIONS && styles.iconAlert)]}>
             <Icon value={icon} style={[styles.iconLayout, styles.iconColor]} />
           </View>

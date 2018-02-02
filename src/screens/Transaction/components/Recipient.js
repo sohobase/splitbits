@@ -8,7 +8,7 @@ import { C, SHAPE, STYLE } from '../../../config';
 import { DeviceItem, WalletItem } from '../../../containers';
 import styles from './Recipient.style';
 
-const { TYPE: { SEND, PRO } } = C;
+const { TYPE: { SEND } } = C;
 
 const Recipient = ({
   concept, i18n, navigation: { navigate }, onCamera, onConcept, recipient = {}, type, wallet,
@@ -31,7 +31,7 @@ const Recipient = ({
       </View>
     </Touchable>
 
-    { type === SEND && wallet.type === PRO &&
+    { type === SEND &&
       <Touchable onPress={() => navigate('Wallets', { wallet })}>
         <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
           { recipient.wallet

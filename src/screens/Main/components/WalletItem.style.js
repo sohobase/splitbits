@@ -52,10 +52,6 @@ export default StyleSheet.create({
     backgroundColor: COLOR.WHITE,
   },
 
-  containerPRO: {
-    backgroundColor: COLOR.ACCENT,
-  },
-
   containerEmpty: {
     backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
     elevation: 0,

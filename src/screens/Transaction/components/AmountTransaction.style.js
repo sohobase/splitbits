@@ -7,11 +7,14 @@ const {
 } = THEME;
 
 export default StyleSheet.create({
-  preview: {
+  container: {
     flex: 1,
-    paddingLeft: OFFSET,
-    paddingRight: OFFSET,
-    paddingBottom: UNIT,
+    paddingHorizontal: OFFSET,
+    paddingBottom: UNIT / 2,
+  },
+
+  summary: {
+    flex: 1,
   },
 
   input: {
@@ -31,10 +34,5 @@ export default StyleSheet.create({
 
   small: {
     fontSize: FONT.SIZE.SMALL,
-  },
-
-  balance: {
-    position: 'absolute',
-    bottom: 0,
   },
 });

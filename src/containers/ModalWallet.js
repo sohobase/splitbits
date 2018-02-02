@@ -10,7 +10,7 @@ import { WalletService } from '../services';
 import { removeWalletAction, updateTransactionsAction } from '../store/actions';
 import styles from './ModalWallet.style';
 
-const { SATOSHI, PRICE_PRO, TYPE: { PRO } } = C;
+const { SATOSHI, PRICE_PRO } = C;
 const { QR_SIZE } = THEME;
 
 class ModalWallet extends Component {
@@ -21,7 +21,7 @@ class ModalWallet extends Component {
       pro: false,
     };
     this._onArchive = this._onArchive.bind(this);
-    this._onModalPro = this._onModalPro.bind(this);
+    this._onModalDonate = this._onModalDonate.bind(this);
     this._onPro = this._onPro.bind(this);
   }
 
@@ -35,35 +35,35 @@ class ModalWallet extends Component {
     onClose();
   }
 
-  _onModalPro() {
+  _onModalDonate() {
     this.setState({ pro: !this.state.pro });
   }
 
   async _onPro() {
-    const {
-      _onModalPro,
-      props: {
-        currencies, device: { currency }, onClose, updateTransactions, wallet: { coin, id },
-      },
-    } = this;
+    // const {
+    //   _onModalDonate,
+    //   props: {
+    //     currencies, device: { currency }, onClose, updateTransactions, wallet: { coin, id },
+    //   },
+    // } = this;
 
-    this.setState({ processing: true });
+    // this.setState({ processing: true });
 
-    const transaction = await WalletService.switchToPRO({
-      id,
-      amount: parseInt((PRICE_PRO[coin] / SATOSHI) * currencies[currency][coin], 10),
-    });
-    if (transaction && transaction.id) {
-      updateTransactions(transaction);
-      this.setState({ processing: false });
-      _onModalPro();
-      onClose();
-    }
+    // const transaction = await WalletService.switchToPRO({
+    //   id,
+    //   amount: parseInt((PRICE_PRO[coin] / SATOSHI) * currencies[currency][coin], 10),
+    // });
+    // if (transaction && transaction.id) {
+    //   updateTransactions(transaction);
+    //   this.setState({ processing: false });
+    //   _onModalDonate();
+    //   onClose();
+    // }
   }
 
   render() {
     const {
-      _onArchive, _onModalPro, _onPro,
+      _onArchive, _onModalDonate, _onPro,
       props: {
         i18n, onBackup, onClose, visible, wallet,
         device: { currency },
@@ -71,7 +71,7 @@ class ModalWallet extends Component {
       state: { pro, processing },
     } = this;
     const {
-      address, backup, coin, imported, readOnly, type,
+      address, backup, coin, imported, readOnly,
     } = wallet;
     const created = !imported && !readOnly;
 
@@ -97,19 +97,19 @@ class ModalWallet extends Component {
               disabled={created && !backup}
               onPress={_onArchive}
             />
-            { type !== PRO &&
-              <Option
-                caption={i18n.SWITCH_PRO}
-                hint={i18n.CAPTION.SWITCH_PRO}
-                icon="star"
-                onPress={_onModalPro}
-              /> }
+            <Option
+              caption={i18n.SUPPORT_US}
+              hint={i18n.CAPTION.SUPPORT_US}
+              icon="star"
+              onPress={_onModalDonate}
+              disabled
+            />
           </View>
         </Modal>
 
-        <Modal title={i18n.SWITCH_PRO} visible={visible && pro} onClose={_onModalPro}>
+        <Modal title={i18n.SUPPORT_US} visible={visible && pro} onClose={_onModalDonate}>
           <View style={[STYLE.CENTERED, styles.content]}>
-            <Text style={styles.subtitle}>{i18n.CAPTION.SWITCH_PRO}</Text>
+            <Text style={styles.subtitle}>{i18n.CAPTION.SUPPORT_US}</Text>
             <Text style={styles.text}>Real time push notifications</Text>
             <Text style={styles.text}>Transfer balance between your wallets</Text>
             <Text style={styles.text}>Lower fees</Text>

@@ -48,7 +48,7 @@ class AmountTransaction extends Component {
       },
       state: { amount, swap },
     } = this;
-    const { balance, coin } = wallet;
+    const { coin } = wallet;
     const {
       payment = false, state, from = {}, to = {},
     } = item;
@@ -71,22 +71,24 @@ class AmountTransaction extends Component {
           title={title}
           navigation={navigation}
         />
-        <Motion animation="bounceIn" delay={400} style={styles.preview}>
-          <View style={[STYLE.CENTERED, styles.preview]}>
-            { editable && <Text style={styles.label}>{swap ? currency : coin}</Text> }
-            { editable
-              ? <Input
-                autoFocus={editable}
-                highlight
-                keyboardType="numeric"
-                onChangeText={_onAmount}
-                placeholder="0.00"
-                style={styles.input}
-                value={amount && amount.toString()}
-              />
-              : <Amount coin={coin} style={styles.input} value={amount} />
-            }
-            <Amount coin={swap ? coin : currency} value={conversion} style={styles.label} />
+        <Motion animation="bounceIn" delay={400} style={styles.container}>
+          <View style={[STYLE.CENTERED, styles.container]}>
+            <View style={[STYLE.CENTERED, styles.summary]}>
+              { editable && <Text style={styles.label}>{swap ? currency : coin}</Text> }
+              { editable
+                ? <Input
+                  autoFocus={editable}
+                  highlight
+                  keyboardType="numeric"
+                  onChangeText={_onAmount}
+                  placeholder="0.00"
+                  style={styles.input}
+                  value={amount && amount.toString()}
+                />
+                : <Amount coin={coin} style={styles.input} value={amount} />
+              }
+              <Amount coin={swap ? coin : currency} value={conversion} style={styles.label} />
+            </View>
 
             { editable && type === SEND &&
               <Fees
@@ -97,26 +99,13 @@ class AmountTransaction extends Component {
                 onPress={onFee}
                 wallet={wallet}
               /> }
-
-            <View style={styles.balance}>
-              {
-                state === undefined || state === REQUESTED
-                ?
-                  <Amount
-                    caption={`${i18n.BALANCE} `}
-                    coin={coin}
-                    style={[styles.label, styles.small]}
-                    value={balance}
-                  />
-                :
-                  <Amount
-                    caption={`${i18n.FEE} `}
-                    coin={currency}
-                    style={[styles.label, styles.small]}
-                    value={((item.fee + item.charge) * SATOSHI) / currencies[coin]}
-                  />
-              }
-            </View>
+            { item.fee &&
+              <Amount
+                caption={`${i18n.FEE} `}
+                coin={currency}
+                style={[styles.label, styles.small]}
+                value={(item.fee * SATOSHI) / currencies[coin]}
+              /> }
           </View>
         </Motion>
       </LinearGradient>

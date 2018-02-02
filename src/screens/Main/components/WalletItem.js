@@ -26,7 +26,7 @@ const MMYY = (value) => {
 const WalletItem = ({
   currencies,
   data: {
-    address, balance = 0, coin, id, name = '', readOnly, type,
+    address, balance = 0, coin, id, name = '', readOnly,
   } = {},
   device: { currency },
   firstTransaction: { createdAt } = {},
@@ -34,8 +34,7 @@ const WalletItem = ({
   onPress,
   style,
 }) => {
-  const isPRO = type === TYPE.PRO;
-  const styleText = isPRO || readOnly ? styles.textHighlight : styles.text;
+  const styleText = readOnly ? styles.textHighlight : styles.text;
 
   return (
     <Motion
@@ -45,8 +44,7 @@ const WalletItem = ({
       style={[
         STYLE.ELEVATION,
         styles.container,
-        !isPRO && !readOnly ? styles.containerDefault : undefined,
-        isPRO ? styles.containerPRO : undefined,
+        !readOnly ? styles.containerDefault : undefined,
         (!id || readOnly) ? styles.containerEmpty : undefined,
         style]}
     >
@@ -58,7 +56,6 @@ const WalletItem = ({
                 <View style={STYLE.ROW}>
                   <Amount coin={coin} value={balance} style={[styleText, styles.amount]} />
                   <View style={styles.tags}>
-                    { isPRO && !readOnly && <Tag title="PRO" /> }
                     { readOnly && <Tag title={i18n.READ_ONLY} /> }
                   </View>
                 </View>

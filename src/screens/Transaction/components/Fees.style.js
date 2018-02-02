@@ -3,14 +3,10 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../../config';
 
 const {
-  BORDER_RADIUS, COLOR, FONT, OFFSET, ROW_MIN_HEIGHT,
+  BORDER_RADIUS, COLOR, FONT, ROW_MIN_HEIGHT,
 } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    marginVertical: OFFSET / 2,
-  },
-
   option: {
     backgroundColor: COLOR.BACKGROUND_HIGHLIGHT,
     marginHorizontal: 1,

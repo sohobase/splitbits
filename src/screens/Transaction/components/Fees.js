@@ -8,7 +8,6 @@ import { TransactionService } from '../../../services';
 import styles from './Fees.style';
 
 const { FEES, SATOSHI } = C;
-const CHARGE_KEY = 'charge';
 let timeout;
 
 class Fees extends Component {
@@ -25,15 +24,15 @@ class Fees extends Component {
   }
 
   componentWillReceiveProps({ amount }) {
-    this._updateFees(amount);
+    if (amount !== this.props.amount) this._updateFees(amount);
   }
 
   _updateFees(amount = this.props.amount) {
-    const { wallet: { balance, id }, product } = this.props;
+    const { wallet: { balance, id } } = this.props;
     clearTimeout(timeout);
     if (amount > 0 && balance > 0) {
       timeout = setTimeout(async() => {
-        this.setState({ fees: await TransactionService.fees(id, amount, product) });
+        this.setState({ fees: await TransactionService.fees(id, amount) });
       }, 500);
     }
   }
@@ -47,17 +46,16 @@ class Fees extends Component {
     } = this;
 
     return (
-      <View style={[STYLE.ROW, styles.container]}>
+      <View style={STYLE.ROW}>
         {
           Object.keys(fees).map(key => (
-            key !== CHARGE_KEY &&
             <Touchable key={key} onPress={() => onPress(key)}>
               <View style={[STYLE.CENTERED, styles.option, styles[key], active === key && styles.active]}>
                 <Text style={styles.title}>{key}</Text>
                 <Amount
                   coin={currency}
                   style={styles.fee}
-                  value={(((fees[key] + fees[CHARGE_KEY]) || 0) * SATOSHI) / conversion}
+                  value={((fees[key] || 0) * SATOSHI) / conversion}
                 />
               </View>
             </Touchable>
@@ -74,7 +72,6 @@ Fees.propTypes = {
   conversion: number,
   currency: string,
   onPress: func,
-  product: string,
   wallet: shape(SHAPE.WALLET).isRequired,
 };
 
@@ -83,7 +80,6 @@ Fees.defaultProps = {
   amount: 0,
   conversion: 1,
   currency: undefined,
-  product: undefined,
   onPress() {},
 };
 

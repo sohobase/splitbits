@@ -76,13 +76,6 @@ export default {
     });
   },
 
-  async switchToPRO(props) {
-    return service('wallet/pro', {
-      method: 'POST',
-      body: JSON.stringify(props),
-    });
-  },
-
   addressFromHexSeed(hexSeed, coin = BTC) {
     if (!hexSeed) return undefined;
 

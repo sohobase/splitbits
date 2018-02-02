@@ -9,7 +9,7 @@ export default async(component) => {
       recipient = {}, type, wallet,
       item: { id, amount: itemAmount } = {},
     },
-    state: { amount, concept, fee },
+    state: { amount, concept, feeType },
   } = component;
   const { coin, id: walletId } = wallet;
 
@@ -21,7 +21,7 @@ export default async(component) => {
     coin,
     concept,
     deviceId: recipient.device ? recipient.device.id : undefined,
-    fee,
+    feeType,
     id,
     walletId,
   };

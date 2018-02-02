@@ -13,7 +13,7 @@ import { submit } from './modules';
 import styles from './Transaction.style';
 
 const {
-  CONNECTION: { WIFI }, FEES, PRODUCT: { PRO_WALLET }, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
+  CONNECTION: { WIFI }, FEES, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
 } = C;
 
 class Transaction extends Component {
@@ -26,7 +26,7 @@ class Transaction extends Component {
       camera: false,
       concept: undefined,
       connection: undefined,
-      fee: FEES.REGULAR,
+      feeType: FEES.REGULAR,
       hasFingerprint: false,
       unlock: true,
       processing: false,
@@ -89,8 +89,8 @@ class Transaction extends Component {
     this.setState({ concept });
   }
 
-  _onFee(fee) {
-    this.setState({ fee });
+  _onFee(feeType) {
+    this.setState({ feeType });
   }
 
   async _onSubmit() {
@@ -111,13 +111,13 @@ class Transaction extends Component {
         i18n, item, navigation, recipient, type, wallet,
       },
       state: {
-        amount = 0, camera, concept, connection, fee, hasFingerprint, unlock, processing,
+        amount = 0, camera, concept, connection, feeType, hasFingerprint, unlock, processing,
       },
     } = this;
     const { coin } = wallet;
     const editable = !item;
     const amountProps = {
-      coin, editable, fee, item, navigation, type, wallet,
+      coin, editable, fee: feeType, item, navigation, type, wallet,
     };
     const recipientProps = {
       concept, navigation, onCamera: _onCamera, onConcept: _onConcept, type, wallet,
@@ -148,7 +148,7 @@ class Transaction extends Component {
                 /> }
               { !editable && !processing && item.state === REQUESTED &&
                 <Button
-                  caption={item.product === PRO_WALLET ? i18n.CANCEL_PAYMENT : i18n.CANCEL_REQUEST}
+                  caption={i18n.CANCEL_REQUEST}
                   motion={{ animation: 'bounceInUp', delay: 700 }}
                   onPress={_onCancel}
                   style={styles.buttonCancel}
