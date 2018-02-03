@@ -1,4 +1,4 @@
-import { func, shape, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
@@ -108,7 +108,7 @@ class Transaction extends Component {
     const {
       _onAddress, _onAmount, _onCancel, _onCamera, _onConcept, _onFee, _onSubmit,
       props: {
-        i18n, item, navigation, recipient, type, wallet,
+        i18n, item, navigation, recipient, support, type, wallet,
       },
       state: {
         amount = 0, camera, concept, connection, feeType, hasFingerprint, unlock, processing,
@@ -171,6 +171,7 @@ Transaction.propTypes = {
   item: shape(SHAPE.TRANSACTION),
   navigation: shape(SHAPE.NAVIGATION).isRequired,
   recipient: shape(SHAPE.RECIPIENT),
+  support: bool,
   type: string.isRequired,
   updateRecipient: func.isRequired,
   updateTransactions: func.isRequired,
@@ -180,13 +181,16 @@ Transaction.propTypes = {
 Transaction.defaultProps = {
   item: undefined,
   recipient: undefined,
+  support: false,
 };
 
 const mapStateToProps = ({ i18n, recipient }, props) => {
-  const { item, type = REQUEST, wallet = {} } = props.navigation.state.params;
+  const {
+    item, support, type = REQUEST, wallet = {},
+  } = props.navigation.state.params;
 
   return {
-    i18n, item, recipient, type, wallet,
+    i18n, item, recipient, support, type, wallet,
   };
 };
 

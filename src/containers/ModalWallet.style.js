@@ -10,21 +10,15 @@ export default StyleSheet.create({
     padding: OFFSET,
   },
 
+  text: {
+    color: COLOR.TEXT_SECONDARY,
+    fontSize: FONT.SIZE.DEFAULT,
+    textAlign: 'center',
+  },
+
   address: {
     marginTop: OFFSET,
     color: COLOR.TEXT_SECONDARY,
-  },
-
-  subtitle: {
-    fontSize: FONT.SIZE.DEFAULT,
-    fontWeight: FONT.WEIGHT.BOLD,
-    marginBottom: UNIT,
-  },
-
-  text: {
-    color: COLOR.TEXT_SECONDARY,
-    fontSize: FONT.SIZE.SMALL,
-    marginVertical: UNIT / 4,
   },
 
   buttons: {

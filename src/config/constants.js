@@ -53,11 +53,6 @@ export default {
     ETH: DEV ? 'testnet' : 'ethereum',
   },
 
-  PRICE_PRO: {
-    BTC: 4.99,
-    LTC: 0.99,
-  },
-
   SYMBOL: {
     EUR: '€',
     USD: '$',

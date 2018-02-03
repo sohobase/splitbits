@@ -54,7 +54,7 @@ class Fees extends Component {
             Object.keys(fees || {}).map(key => (
               <Touchable key={key} onPress={() => onPress(key)}>
                 <View style={[STYLE.CENTERED, styles.option, styles[key], active === key && styles.active]}>
-                  <Text style={styles.label}>{key.toUpperCase()}</Text>
+                  <Text style={styles.label}>{key}</Text>
                   <Amount
                     coin={currency}
                     style={styles.fee}

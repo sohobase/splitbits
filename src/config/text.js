@@ -82,6 +82,7 @@ export default {
     START: 'Start',
     STATE: 'State',
     SUPPORT_US: 'Support us',
+    SUPPORT_US_ACCEPT: 'Sure, I will support you',
 
     TAKE_PHOTO: 'Take photo',
     TO: 'To',
@@ -126,6 +127,7 @@ export default {
       NETWORK: 'Forget public addresses or QR codes. You can create your own private network of friends to speed up your payments.',
       PRIVACY: 'You do not need to give us your personal information. We do not want to know your email or social networks. We just want you to enjoy this wallet.',
       PRIVATE_KEYS: 'Your private keys always go with you, we never save them in our cloud. We offer you tools so that you can recover them easily.',
+      SUPPORT_US: 'We work on Splitbits every day to bring you the best experience with your cryptos. It is an OpenSource project so that anyone can participate and improve it every day.\n\nIf you really like our work and want to support us, we will be eternally grateful.',
       WALLET: 'The last step is to create your first splitbits wallet. Later you can import or recover other wallets that you have.',
       WELCOME: 'Swipe to learn more.',
     },
@@ -214,6 +216,7 @@ export default {
     START: 'Comenzar',
     STATE: 'Estado',
     SUPPORT_US: 'Apoyanos',
+    SUPPORT_US_ACCEPT: 'Claro que os voy a ayudar',
 
     TAKE_PHOTO: 'Toma una foto',
     TO: 'Para',
@@ -257,6 +260,7 @@ export default {
       NETWORK: 'Olvidate de direcciones públicas o códigos QR. Puedes crear tu propia red privada de amigos para acelerar todas tus pagos.',
       PRIVACY: 'No necesitamos tus datos personales. No queremos saber tu email o tus redes sociales. Solo queremos que disfrutes de Splitbits.',
       PRIVATE_KEYS: 'Tus claves privadas siempre van contigo, nunca las guardamos en nuestra nube. Te ofrecemos herramientas para que pueda recuperarlas fácilmente.',
+      SUPPORT_US: 'Trabajamos en splitbits todos los días para brindarle la mejor experiencia con sus criptos. Es un proyecto OpenSource por lo que cualquier persona puede participar y mejorar Splitbits cada dia. \n\nSi realmente te gusta nuestro trabajo y quieres apoyarnos, estaremos eternamente agradecidos.',
       WALLET: 'El último paso es crear tu primera cartera Splitbits. Mas tarde podras importar o recuperar otras carteras que tengas.',
       WELCOME: 'Desliza para obtener más información.',
     },
