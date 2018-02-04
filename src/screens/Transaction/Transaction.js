@@ -117,10 +117,10 @@ class Transaction extends Component {
     const { coin } = wallet;
     const editable = !item;
     const amountProps = {
-      coin, editable, fee: feeType, item, navigation, type, wallet,
+      coin, editable, fee: feeType, item, navigation, support, type, wallet,
     };
     const recipientProps = {
-      concept, navigation, onCamera: _onCamera, onConcept: _onConcept, type, wallet,
+      concept, navigation, onCamera: _onCamera, onConcept: _onConcept, support, type, wallet,
     };
     const satoshis = amount / SATOSHI;
     const disabled =

@@ -43,7 +43,7 @@ class AmountTransaction extends Component {
     const {
       _onAmount, _onSwap,
       props: {
-        currencies, editable, fee, i18n, item = {}, navigation, onFee, type, wallet,
+        currencies, editable, fee, i18n, item = {}, navigation, onFee, support, type, wallet,
         device: { currency },
       },
       state: { amount, swap },
@@ -63,6 +63,7 @@ class AmountTransaction extends Component {
       if (state === REQUESTED) title = i18n.PAYMENT_REQUEST;
       if (from.device === to.device) title = i18n.TRANSFER;
     }
+    if (support) title = i18n.SUPPORT_US;
 
     return (
       <LinearGradient colors={COLOR.GRADIENT} style={STYLE.LAYOUT_TOP}>
@@ -123,6 +124,7 @@ AmountTransaction.propTypes = {
   navigation: shape(SHAPE.NAVIGATION).isRequired,
   onAmount: func,
   onFee: func,
+  support: bool,
   type: string.isRequired,
   wallet: shape(SHAPE.WALLET).isRequired,
 };
@@ -133,6 +135,7 @@ AmountTransaction.defaultProps = {
   item: undefined,
   onAmount() {},
   onFee() {},
+  support: false,
 };
 
 const mapStateToProps = ({ currencies, device, i18n }) => ({

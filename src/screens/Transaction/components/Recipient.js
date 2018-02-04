@@ -1,4 +1,4 @@
-import { func, shape, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -11,7 +11,7 @@ import styles from './Recipient.style';
 const { TYPE: { SEND } } = C;
 
 const Recipient = ({
-  concept, i18n, navigation: { navigate }, onCamera, onConcept, recipient = {}, type, wallet,
+  concept, i18n, navigation: { navigate }, onCamera, onConcept, recipient = {}, support, type, wallet,
 }) => (
   <View>
     <Input
@@ -21,9 +21,9 @@ const Recipient = ({
       style={[STYLE.ROW, STYLE.LIST_ITEM]}
       value={concept}
     />
-    <Touchable onPress={() => navigate('Friends', { selectMode: true })}>
+    <Touchable onPress={() => !support && navigate('Friends', { selectMode: true })}>
       <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
-        { recipient.device
+        { support || recipient.device
           ? <DeviceItem data={recipient.device} style={styles.item} />
           : <Text style={styles.placeholder}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
         }
@@ -31,7 +31,7 @@ const Recipient = ({
       </View>
     </Touchable>
 
-    { type === SEND &&
+    { !support && type === SEND &&
       <Touchable onPress={() => navigate('Wallets', { wallet })}>
         <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
           { recipient.wallet
@@ -40,9 +40,8 @@ const Recipient = ({
           }
           <Icon style={styles.icon} value="operations" />
         </View>
-      </Touchable>
-    }
-    { type === SEND &&
+      </Touchable> }
+    { !support && type === SEND &&
       <Touchable onPress={onCamera}>
         <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
           <Text style={!recipient.address ? styles.placeholder : styles.value}>
@@ -50,8 +49,7 @@ const Recipient = ({
           </Text>
           <Icon style={styles.icon} value="camera" />
         </View>
-      </Touchable>
-    }
+      </Touchable> }
   </View>
 );
 
@@ -62,6 +60,7 @@ Recipient.propTypes = {
   onCamera: func,
   onConcept: func,
   recipient: shape(SHAPE.RECIPIENT),
+  support: bool,
   type: string,
   wallet: shape(SHAPE.WALLET).isRequired,
 };
@@ -72,6 +71,7 @@ Recipient.defaultProps = {
   onCamera() {},
   onConcept: undefined,
   recipient: undefined,
+  support: false,
   type: undefined,
 };
 
