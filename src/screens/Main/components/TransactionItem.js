@@ -9,7 +9,7 @@ import { DateService } from '../../../services';
 import styles from './TransactionItem.style';
 
 const {
-  MIN_CONFIRMATIONS, STATE: { CONFIRMED, REQUESTED }, SATOSHI,
+  MIN_CONFIRMATIONS, SATOSHI, STATE: { CONFIRMED, REQUESTED }, SUPPORT_WALLET,
 } = C;
 
 const verboseTitle = ({
@@ -34,9 +34,11 @@ const TransactionItem = ({
     amount, confirmations = 0, coin, createdAt, payment, state, from = {}, to = {},
   } = data;
   const isTransfer = from.device === to.device;
-  const other = isTransfer
+  let other = isTransfer
     ? device
     : (devices.find(({ id }) => id === from.device || id === to.device) || {});
+  if (SUPPORT_WALLET.ADDRESS[coin] === to.address) other = SUPPORT_WALLET;
+
   const emitter = address !== to.address;
   const concept = data.concept || (payment ? 'Unknown payment' : 'Unknown top-up');
 

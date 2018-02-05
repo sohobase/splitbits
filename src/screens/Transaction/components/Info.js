@@ -10,7 +10,7 @@ import { DateService, TransactionService } from '../../../services';
 import { updateTransactionsAction } from '../../../store/actions';
 import styles from './Info.style';
 
-const { BLOCKCHAIN_EXPLORER_URL } = C;
+const { BLOCKCHAIN_EXPLORER_URL, SUPPORT_WALLET } = C;
 let timeout;
 
 const Field = ({ caption, value, style }) => ( //eslint-disable-line
@@ -55,9 +55,11 @@ class TransactionInfo extends Component {
         },
       },
     } = this;
-    const device = devices.find(({ id }) => id === from.device || id === to.device);
     const isTransfer = from.device === to.device;
     const address = payment || isTransfer ? to.address : from.address;
+    const device = address === SUPPORT_WALLET.ADDRESS[coin]
+      ? SUPPORT_WALLET
+      : devices.find(({ id }) => id === from.device || id === to.device);
 
     return (
       <Motion animation="bounceInUp" delay={500}>

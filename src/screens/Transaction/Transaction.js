@@ -13,7 +13,7 @@ import { submit } from './modules';
 import styles from './Transaction.style';
 
 const {
-  CONNECTION: { WIFI }, FEES, SATOSHI, STATE: { REQUESTED }, TYPE: { SEND, REQUEST },
+  CONNECTION: { WIFI }, FEES, SATOSHI, STATE: { REQUESTED }, SUPPORT_WALLET, TYPE: { SEND, REQUEST },
 } = C;
 
 class Transaction extends Component {
@@ -43,10 +43,10 @@ class Transaction extends Component {
   async componentWillMount() {
     const {
       props: {
-        i18n, item: { state } = {}, type, updateRecipient,
+        i18n, item: { state } = {}, support, type, updateRecipient, wallet: { coin },
       },
     } = this;
-    updateRecipient();
+    updateRecipient(support ? { address: SUPPORT_WALLET.ADDRESS[coin] } : undefined);
 
     this.setState({ connection: await ConnectionService.get() });
 

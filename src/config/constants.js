@@ -77,6 +77,16 @@ export default {
 
   SOHOBASE_SUPPORT: 'support@sohobase.co',
 
+  SUPPORT_WALLET: {
+    name: 'Splitbits team',
+    image: 'app-icon.png',
+
+    ADDRESS: (
+      DEV
+        ? { BTC: 'mzEMUC3bAwSXcgkP5JytmHw5fYXeubUcFz', LTC: 'mk1m96pKaxnW8KEf8bnkHHRqPhM7bRg3g1' }
+        : { BTC: '1CHdC5RhN5pFeC2MARVn1LEokeZX9JMsnu', LTC: 'LbxrjQSPMcHwuB4Nnx4EB1ULVw5dPp9acP' } ),
+  },
+
   STATE: {
     // -- Transactions
     REQUESTED: 'requested',

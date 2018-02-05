@@ -8,7 +8,7 @@ import { C, SHAPE, STYLE } from '../../../config';
 import { DeviceItem, WalletItem } from '../../../containers';
 import styles from './Recipient.style';
 
-const { TYPE: { SEND } } = C;
+const { SUPPORT_WALLET, TYPE: { SEND } } = C;
 
 const Recipient = ({
   concept, i18n, navigation: { navigate }, onCamera, onConcept, recipient = {}, support, type, wallet,
@@ -21,13 +21,14 @@ const Recipient = ({
       style={[STYLE.ROW, STYLE.LIST_ITEM]}
       value={concept}
     />
+
     <Touchable onPress={() => !support && navigate('Friends', { selectMode: true })}>
       <View style={[STYLE.LIST_ITEM, STYLE.ROW]}>
         { support || recipient.device
-          ? <DeviceItem data={recipient.device} style={styles.item} />
+          ? <DeviceItem data={support ? SUPPORT_WALLET : recipient.device} style={styles.item} />
           : <Text style={styles.placeholder}>{`${i18n.CHOOSE_A_FRIEND}...`}</Text>
         }
-        <Icon style={styles.icon} value="add" />
+        { !support && <Icon style={styles.icon} value="add" /> }
       </View>
     </Touchable>
 
