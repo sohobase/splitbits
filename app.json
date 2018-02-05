@@ -20,14 +20,14 @@
     },
     "ios": {
       "bundleIdentifier": "com.sohobase.splitbits",
-      "buildNumber": "800",
+      "buildNumber": "900",
       "supportsTablet": false,
       "bundleIdentifier": "com.sohobase.xcryptos",
     },
     "android": {
       "package": "com.sohobase.splitbits",
       "permissions": ["ACCESS_NETWORK_STATE", "CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
-      "versionCode": 800
+      "versionCode": 900
     },
     "androidStatusBar": {
       "backgroundColor": "#2f2bad",
