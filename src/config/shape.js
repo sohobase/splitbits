@@ -32,7 +32,7 @@ export default {
     message: string,
   },
   FEES: {
-    fast: number,
+    priority: number,
     regular: number,
     slow: number,
   },

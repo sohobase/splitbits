@@ -15,7 +15,7 @@ export default StyleSheet.create({
     height: ROW_MIN_HEIGHT / 2,
   },
 
-  fast: {
+  priority: {
     borderTopLeftRadius: BORDER_RADIUS,
     borderBottomLeftRadius: BORDER_RADIUS,
   },
@@ -36,6 +36,7 @@ export default StyleSheet.create({
 
   fee: {
     color: COLOR.TEXT_HIGHLIGHT,
-    fontSize: FONT.SIZE.SMALL,
+    fontWeight: FONT.WEIGHT.BOLD,
+    fontSize: FONT.SIZE.TINY,
   },
 });

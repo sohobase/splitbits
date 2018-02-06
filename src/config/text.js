@@ -88,7 +88,7 @@ export default {
     TO: 'To',
     TOTAL_BALANCE: 'Total Balance',
     TRANSACTION: 'Transaction',
-    TRANSACTION_SPEED: 'Transaction speed',
+    TRANSACTION_TIME: 'Transaction time',
     TRANSFER: 'Transfer',
     TREND: 'Trend',
     TRENDS: {
@@ -222,7 +222,7 @@ export default {
     TO: 'Para',
     TOTAL_BALANCE: 'Balance Total',
     TRANSACTION: 'Transaccion',
-    TRANSACTION_SPEED: 'Velocidad transferencia',
+    TRANSACTION_TIME: 'Velocidad transferencia',
     TRANSFER: 'Transferencia',
     TREND: 'Tendencia',
     TRENDS: {

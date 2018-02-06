@@ -9,6 +9,11 @@ import { TransactionService } from '../../../services';
 import styles from './Fees.style';
 
 const { FEES, SATOSHI } = C;
+const TIME = {
+  priority: '~0-60 min',
+  regular: '1+ hour',
+  slow: '3+ hour',
+};
 let timeout;
 
 class Fees extends Component {
@@ -48,13 +53,13 @@ class Fees extends Component {
 
     return (
       <View style={STYLE.CENTERED}>
-        { fees && <Text style={styles.label}>{i18n.TRANSACTION_SPEED}</Text> }
+        { fees && <Text style={styles.label}>{i18n.TRANSACTION_TIME}</Text> }
         <View style={STYLE.ROW}>
           {
             Object.keys(fees || {}).map(key => (
               <Touchable key={key} onPress={() => onPress(key)}>
                 <View style={[STYLE.CENTERED, styles.option, styles[key], active === key && styles.active]}>
-                  <Text style={styles.label}>{key}</Text>
+                  <Text style={styles.label}>{TIME[key]}</Text>
                   <Amount
                     coin={currency}
                     style={styles.fee}

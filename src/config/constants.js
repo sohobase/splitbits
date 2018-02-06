@@ -26,7 +26,7 @@ export default {
   DEV,
 
   FEES: {
-    FAST: 'fast',
+    PRIORITY: 'priority',
     REGULAR: 'regular',
     SLOW: 'slow',
   },
@@ -84,7 +84,7 @@ export default {
     ADDRESS: (
       DEV
         ? { BTC: 'mzEMUC3bAwSXcgkP5JytmHw5fYXeubUcFz', LTC: 'mk1m96pKaxnW8KEf8bnkHHRqPhM7bRg3g1' }
-        : { BTC: '1CHdC5RhN5pFeC2MARVn1LEokeZX9JMsnu', LTC: 'LbxrjQSPMcHwuB4Nnx4EB1ULVw5dPp9acP' } ),
+        : { BTC: '1CHdC5RhN5pFeC2MARVn1LEokeZX9JMsnu', LTC: 'LbxrjQSPMcHwuB4Nnx4EB1ULVw5dPp9acP' }),
   },
 
   STATE: {
