@@ -9,7 +9,6 @@ const { DURATION } = THEME.ANIMATION;
 
 const TransactionButton = ({ onPress, visible }) => (
   <Button
-    accent
     motion={{
       animation: (visible ? 'bounceInUp' : 'bounceOutDown'),
       delay: (visible ? DURATION / 2 : 100),

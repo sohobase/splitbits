@@ -117,7 +117,6 @@ class ModalWalletNew extends Component {
             <Input editable={false} style={[styles.input, styles.inputAddress]} value={wif || address} /> }
           <View style={styles.button}>
             <Button
-              accent
               caption={buttonCaption}
               disabled={!coin || !name}
               processing={processing}

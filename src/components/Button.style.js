@@ -25,24 +25,22 @@ export default StyleSheet.create({
     backgroundColor: COLOR.TRANSPARENT,
   },
 
-  primary: {
-    backgroundColor: COLOR.PRIMARY,
-    shadowColor: COLOR.PRIMARY,
-    shadowOffset: { height: 6 },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
+  disabled: {
+    backgroundColor: COLOR.DIVIDER,
   },
 
-  accent: {
+  gradient: {
     backgroundColor: COLOR.ACCENT,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    right: 0,
     shadowColor: COLOR.ACCENT,
     shadowOffset: { height: 6 },
     shadowOpacity: 0.5,
     shadowRadius: 6,
-  },
-
-  disabled: {
-    backgroundColor: COLOR.DIVIDER,
+    top: 0,
+    zIndex: -1,
   },
 
   disabledOpacity: {

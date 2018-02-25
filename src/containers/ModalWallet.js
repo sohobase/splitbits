@@ -99,7 +99,7 @@ class ModalWallet extends Component {
             {i18n.HINT.SUPPORT_US}
           </Text>
           <View style={styles.buttons}>
-            <Button accent onPress={_onSupport} processing={processing} caption={i18n.SUPPORT_US_ACCEPT} />
+            <Button onPress={_onSupport} processing={processing} caption={i18n.SUPPORT_US_ACCEPT} />
           </View>
         </Modal>
       </View>

@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo';
 import { array, bool, func, node, number, object, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
@@ -10,7 +11,7 @@ import { SHAPE, STYLE, THEME } from '../config';
 import styles from './Button.style';
 
 const Button = ({
-  accent, caption, captionStyle, children, circle, disabled, i18n, icon, onPress, processing, raised, style, motion,
+  caption, captionStyle, children, circle, disabled, i18n, icon, onPress, processing, raised, style, motion,
 }) => (
   <Touchable
     onPress={!disabled && !processing ? onPress : undefined}
@@ -24,14 +25,22 @@ const Button = ({
         STYLE.CENTERED,
         (circle && styles.circle),
         (!circle && !raised && styles.square),
-        (!disabled && !processing && !raised && !accent && styles.primary),
-        (!disabled && !processing && !raised && accent && styles.accent),
         (raised && styles.raised),
         ((disabled || processing) && !raised && styles.disabled),
         (disabled && raised && styles.disabledOpacity),
         style,
       ])}
     >
+      { !disabled && !processing && !raised &&
+        <LinearGradient
+          colors={[THEME.COLOR.ACCENT_DARKEN, THEME.COLOR.ACCENT]}
+          start={[0, 0]}
+          end={[1, 0]}
+          style={StyleSheet.flatten([
+            styles.gradient,
+            circle ? styles.circle : styles.square,
+          ])}
+        />}
       { icon &&
         <Icon value={icon} style={[styles.icon, captionStyle]} /> }
       { caption && !processing && <Text style={[styles.caption, captionStyle]}>{caption}</Text> }
@@ -45,7 +54,6 @@ const Button = ({
 );
 
 Button.propTypes = {
-  accent: bool,
   caption: string,
   captionStyle: oneOfType([array, number, object]),
   children: node,
@@ -61,7 +69,6 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  accent: false,
   caption: undefined,
   captionStyle: [],
   children: undefined,

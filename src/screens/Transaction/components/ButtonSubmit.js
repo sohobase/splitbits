@@ -17,7 +17,6 @@ const ButtonSubmit = ({
   return (
     <Button
       {...inherit}
-      accent
       disabled={disabled}
       motion={{ animation: 'bounceInUp', delay: 600 }}
       onPress={onPress}

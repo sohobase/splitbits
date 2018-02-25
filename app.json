@@ -5,31 +5,31 @@
     "slug": "sohobase-splitbits",
     "privacy": "unlisted",
     "sdkVersion": "25.0.0",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "orientation": "portrait",
-    "primaryColor": "#2f2bad",
+    "primaryColor": "#141414",
     "icon": "./assets/app-icon.png",
     "loading": {
       "icon": "./assets/app-sohobase.png",
       "hideExponentText": true,
-      "backgroundColor": "#2f2bad"
+      "backgroundColor": "#141414"
     },
     "notification": {
       "icon": "./assets/app-notification.png",
-      "color": "#2f2bad"
+      "color": "#141414"
     },
     "ios": {
       "bundleIdentifier": "com.sohobase.splitbits",
-      "buildNumber": "901",
+      "buildNumber": "902",
       "supportsTablet": false,
     },
     "android": {
       "package": "com.sohobase.splitbits",
       "permissions": ["ACCESS_NETWORK_STATE", "CAMERA", "VIBRATE", "USE_FINGERPRINT", "WRITE_EXTERNAL_STORAGE"],
-      "versionCode": 901
+      "versionCode": 902
     },
     "androidStatusBar": {
-      "backgroundColor": "#2f2bad",
+      "backgroundColor": "#141414",
       "barStyle": "light-content"
     },
     "assetBundlePatterns": [

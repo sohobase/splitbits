@@ -68,7 +68,6 @@ class DeviceItem extends Component {
             </View>
             { request && !requested &&
               <Button
-                accent
                 caption={i18n.REQUEST}
                 style={styles.button}
                 captionStyle={styles.buttonCaption}
