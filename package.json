@@ -37,8 +37,9 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "prepare": "node_modules_patches/apply.sh",
-    "test": "node_modules/.bin/jest"
+    "prepare": "npm run snyk-protect; node_modules_patches/apply.sh",
+    "test": "node_modules/.bin/jest",
+    "snyk-protect": "snyk protect"
   },
   "jest": {
     "preset": "jest-expo"
@@ -70,6 +71,8 @@
     "sha.js": "2.4.10",
     "stream-browserify": "2.0.1",
     "timeago.js": "3.0.2",
-    "wif": "2.0.6"
-  }
+    "wif": "2.0.6",
+    "snyk": "^1.88.0"
+  },
+  "snyk": true
 }
