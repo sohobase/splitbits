@@ -57,7 +57,7 @@
     "more-entropy": "0.0.7",
     "prop-types": "15.6.0",
     "react": "16.2.0",
-    "react-native": "0.52.0",
+    "react-native": "0.59.0",
     "react-native-animatable": "1.2.4",
     "react-native-qrcode": "0.2.6",
     "react-native-snap-carousel": "^3.5.0",
